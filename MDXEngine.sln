@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MDXEngine", "MDXEngine\MDXEngine.csproj", "{B11ED3C2-35CF-4316-87D9-A0E24250875D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{6B7428BF-D315-41E7-90E4-ACEE4FF20C8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{23C68662-CD86-4356-BCC4-F8E962A29DAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B11ED3C2-35CF-4316-87D9-A0E24250875D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B11ED3C2-35CF-4316-87D9-A0E24250875D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B11ED3C2-35CF-4316-87D9-A0E24250875D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B11ED3C2-35CF-4316-87D9-A0E24250875D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B7428BF-D315-41E7-90E4-ACEE4FF20C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B7428BF-D315-41E7-90E4-ACEE4FF20C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B7428BF-D315-41E7-90E4-ACEE4FF20C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B7428BF-D315-41E7-90E4-ACEE4FF20C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
