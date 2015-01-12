@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <HLSLFiles Include="$(MSBuildProjectDirectory)\..\hlsl\*.*" />
+  </ItemGroup>
+  <Target Name="Build" Inputs="@(HLSLFiles)" Outputs="$(MSBuildProjectDirectory)\..\HLSLResources.cs">
+    <Message Text="Building HLSL resource" />
+    <Message Text="Command is $(MSBuildProjectDirectory)\..\..\ResourceBuilder\bin\Debug --namespace=MDXEngine --classname=HLSLResources  $(MSBuildProjectDirectory)\..\hlsl"/>
+    <Exec Command="$(MSBuildProjectDirectory)\..\..\ResourceBuilder\bin\Debug\ResourceBuilder.exe --namespace=MDXEngine --classname=HLSLResources  -sourceDir=$(MSBuildProjectDirectory)\..\hlsl" WorkingDirectory="$(MSBuildProjectDirectory)\..\"/>
+  </Target>
+</Project>

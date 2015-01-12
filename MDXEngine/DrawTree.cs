@@ -52,6 +52,8 @@ namespace MDXEngine
 
         internal void ComputeSizes()
         {
+            int OffI=0;
+            int OffV=0;
             _root.ForAllInOrder(
                 node =>
                 {
@@ -64,6 +66,10 @@ namespace MDXEngine
                             {
                                 info.SizeI = info.Shape.NIndices();
                                 info.SizeV = info.Shape.NVertices();
+                                info.OffI = OffI;
+                                info.OffV = OffV;
+                                OffI += info.SizeI;
+                                OffV += info.SizeV;
                                 break;
                             }
                         case DrawInfoType.SHAPE_GROUP:
@@ -75,13 +81,19 @@ namespace MDXEngine
                                     info.SizeI += child.GetData().SizeI;
                                     info.SizeV += child.GetData().SizeV;
                                 }
+                                if (node.GetChilds().Count != 0)
+                                {
+                                    info.OffV = node.GetChilds().First().GetData().OffV;
+                                    info.OffI = node.GetChilds().First().GetData().OffI;
+                                }
+                                
                                 break;
                             }
                         case DrawInfoType.COMMAND_SEQUENCE:
                             {
+                                    info.SizeI = info.SizeV = 0;
                                 foreach (var child in node.GetChilds())
                                 {
-                                    info.SizeI = info.SizeV = 0;
                                     if (child.GetData().Type == DrawInfoType.SHAPE_GROUP)
                                     {
                                         info.SizeI += child.GetData().SizeI;
@@ -90,6 +102,8 @@ namespace MDXEngine
                                     else
                                         throw new Exception("Root should have only ShapeGroups as childs");
                                 }
+                                info.OffI = 0;
+                                info.OffV = 0;
                                 break;
                             }
                     }
@@ -108,8 +122,6 @@ namespace MDXEngine
             _vertices = new T[_root.GetData().SizeV];
             _indices = new int[_root.GetData().SizeI];
 
-            int OffI = 0;
-            int OffV = 0;
             _root.ForAllInOrder(
                 node =>
                 {
@@ -117,25 +129,14 @@ namespace MDXEngine
                     switch (info.Type)
                     {
                         case DrawInfoType.SHAPE:
-                            var vV = new SubArray<T>(_vertices, OffV, info.SizeV);
-                            var vI = new SubArray<int>(_indices, OffI, info.SizeI);
-                            info.OffV = OffV;
-                            info.OffI = OffI;
+                            var vV = new SubArray<T>(_vertices, info.OffV, info.SizeV);
+                            var vI = new SubArray<int>(_indices,info.OffI, info.SizeI);
                             info.Shape.Write(vV, vI);
-                            //Adjust Indices;
+
+                        //Adjust Indices;
                             for (int i = info.OffI; i < info.SizeI; i++)
                             {
-                                _indices[i] += OffI;
-                            }
-                            OffI += info.SizeI;
-                            OffV += info.SizeV;
-                            break;
-                        case DrawInfoType.SHAPE_GROUP:
-                            var childs = node.GetChilds();
-                            if (childs.Count != 0)
-                            {
-                                info.OffV = childs.First().GetData().OffV;
-                                info.OffI = childs.First().GetData().OffI;
+                                _indices[i] += info.OffI;
                             }
                             break;
                     }

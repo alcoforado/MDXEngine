@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using TechTalk.SpecFlow;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Should.Fluent;
+using FluentAssertions;
 namespace UnitTests
 {
     [Binding]
@@ -37,7 +37,7 @@ namespace UnitTests
         {
             //TODO: implement assert (verification) logic
             
-            c.Should().Be.Equals(7);
+            c.Should().Be(7);
         }
     }
 }

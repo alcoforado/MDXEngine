@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MDXEngine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Should.Fluent;
+using FluentAssertions;
 namespace UnitTests
 {
     [TestClass]
@@ -50,8 +50,8 @@ namespace UnitTests
 
             t.TriggerChange();
 
-            ob1.sum.Should().Be.Equals(1);
-            ob2.sum.Should().Be.Equals(1);
+            ob1.sum.Should().Be(1);
+            ob2.sum.Should().Be(1);
 
         }
 
@@ -71,8 +71,8 @@ namespace UnitTests
 
             t.TriggerChange();
 
-            ob1.sum.Should().Be.Equals(1);
-            ob2.sum.Should().Be.Equals(1);
+            ob1.sum.Should().Be(1);
+            ob2.sum.Should().Be(1);
         }
 
 
@@ -88,14 +88,14 @@ namespace UnitTests
 
             t.TriggerChange();
 
-            ob1.sum.Should().Be.Equals(1);
-            ob2.sum.Should().Be.Equals(1);
+            ob1.sum.Should().Be(1);
+            ob2.sum.Should().Be(1);
 
             t.DetachObserver(ob2);
 
             t.TriggerChange();
-            ob1.sum.Should().Be.Equals(2);
-            ob2.sum.Should().Be.Equals(1);
+            ob1.sum.Should().Be(2);
+            ob2.sum.Should().Be(1);
 
         
         }
@@ -112,14 +112,14 @@ namespace UnitTests
 
             t.TriggerChange();
 
-            ob1.sum.Should().Be.Equals(1);
-            ob2.sum.Should().Be.Equals(1);
+            ob1.sum.Should().Be(1);
+            ob2.sum.Should().Be(1);
 
             t.DetachObserver(ob2);
             t.DetachObserver(ob2);
             t.TriggerChange();
-            ob1.sum.Should().Be.Equals(2);
-            ob2.sum.Should().Be.Equals(1);
+            ob1.sum.Should().Be(2);
+            ob2.sum.Should().Be(1);
 
 
         }

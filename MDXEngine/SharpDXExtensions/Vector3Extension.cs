@@ -10,10 +10,17 @@ namespace MDXEngine.SharpDXExtensions
 {
     public static class Vector3Extension
     {
+
         public static void Set(this Vector3 v,float c)
         {
             v.X = v.Y = v.Z = c;
         }
+        public static  Vector4 ToVector4(this Vector3 v,float W=1)
+        {
+           return  new Vector4(v.X,v.Y,v.Z,W);
+        }
+
+
 
     }
 }
