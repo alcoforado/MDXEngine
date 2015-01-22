@@ -57,17 +57,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="HLSLProgram.cs" />
     <Compile Include="HLSLResources.cs" />
+    <Compile Include="ITopology2D.cs" />
+    <Compile Include="Painters\CyclicColorizer.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="ShaderColor2D.cs" />
+    <Compile Include="Shaders\ShaderColor2D.cs" />
     <Compile Include="DrawInfo.cs" />
     <Compile Include="DrawTree.cs" />
-    <Compile Include="DxApp.cs" />
     <Compile Include="DxControl.cs" />
     <Compile Include="IArray.cs" />
     <Compile Include="IDxContext.cs" />
@@ -85,6 +87,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="ShapeMarshalling.cs" />
+    <Compile Include="Shapes\Shape2D.cs" />
+    <Compile Include="Topologies\Triangle2DIndexed.cs" />
+    <Compile Include="SharpDXExtensions\Vector2Extension.cs" />
     <Compile Include="SharpDXExtensions\Vector3Extension.cs" />
     <Compile Include="SharpDXExtensions\Vector4Extensions.cs" />
     <Compile Include="SubArray.cs" />

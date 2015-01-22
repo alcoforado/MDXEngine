@@ -9,7 +9,7 @@ namespace MDXEngine
     class Shape<T> : Observable<IShape<T>>, IShape<T>  where T: IPosition
     {
         ITopology    _topology;
-        IRenderer<T> _renderer;
+        IPainter<T> _renderer;
 
 
         public int NIndices() {return _topology.NIndices();}
@@ -18,7 +18,7 @@ namespace MDXEngine
         {
             var vVPos = new Vertex3DArray<T>(vV);
             _topology.Write(vVPos, vI);
-            _renderer.write(vV);
+            _renderer.Write(vV);
         }
         public TopologyType GetTopology() { return _topology.GetTopologyType(); }
     }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using SharpDX;
+using SharpDX.Direct3D11;
 namespace MDXEngine
 {
     public class DrawTree<T>
@@ -113,7 +115,6 @@ namespace MDXEngine
 
         }
 
-
         public void FullSyncTree()
         {
             if (_root.GetData().Changed)
@@ -142,9 +143,20 @@ namespace MDXEngine
                     }
                     info.Changed = false;
                 });
+        }
 
+        public void Draw(IDxContext dx, HLSLProgram program)
+        {
+            this.FullSyncTree();
+            var dcontext = dx.DeviceContext;
 
+            //dcontext.InputAssembler.InputLayout = program.GetLayout();
+            //dcontext.InputAssembler.
+            
+            
+            //_vertices.
 
         }
+
     }
 }

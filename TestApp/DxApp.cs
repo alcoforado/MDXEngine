@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MDXEngine;
-
-namespace myDXCSharp
+using MDXEngine.Shaders;
+namespace TestApp
 {
     public class DxApp
     {
@@ -14,6 +14,7 @@ namespace myDXCSharp
         Form _main;
         Control _display;
         DxControl dx;
+        ShaderColor2D _shaderColor2D;
         public DxApp(Form main, Control display)
         {
             dx = new DxControl(display);
@@ -61,6 +62,9 @@ namespace myDXCSharp
                 dx.Display();
 
             }
+            dx.Dispose();
+            
+
         }
         public void EasyRun()
         {

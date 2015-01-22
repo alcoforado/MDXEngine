@@ -13,5 +13,6 @@ namespace MDXEngine
     public interface IDxContext
     {
         Device Device { get;  }
+        DeviceContext DeviceContext { get; }
     }
 }

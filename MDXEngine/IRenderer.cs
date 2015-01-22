@@ -5,8 +5,8 @@ using System.Text;
 
 namespace MDXEngine
 {
-    public interface IRenderer<T>
+    public interface IPainter<T>
     {
-        void write(IArray<T> vV);
+        void Write(IArray<T> vV);
     }
 }

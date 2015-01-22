@@ -20,7 +20,7 @@ namespace ResourceBuilder
             writer.WriteLine(String.Format(@"
 namespace {0}
     {{
-        internal class {1}
+        static internal class {1}
     {{
 ", Namespace, ClassName));
 
@@ -33,7 +33,7 @@ namespace {0}
                 var fs = file.OpenText();
                 string text = fs.ReadToEnd();
                 text=text.Replace("\"", "\"\"");
-                text = "\t\tpublic readonly string " + memberName + "= @\"" + text + "\";\n";
+                text = "\t\t static public readonly string " + memberName + "= @\"" + text + "\";\n";
                 writer.WriteLine(text);
             }
 

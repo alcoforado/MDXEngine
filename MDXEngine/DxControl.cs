@@ -29,13 +29,10 @@ namespace MDXEngine
             this.InitializeDX();
         }
 
-        public Device Device
-        {
-            get
-            {
-                return _device;
-            }
-        }        
+
+        public DeviceContext DeviceContext { get { return _device.ImmediateContext; } }
+        public Device Device {   get {return _device; } }
+        
 
         public void Resize()
         {
@@ -105,11 +102,34 @@ namespace MDXEngine
 
 
         }
+        public void Clear()
+        {
+            // Clear views
+            //_device.ImmediateContext.ClearDepthStencilView(_depthView, DepthStencilClearFlags.Depth, 1.0f, 0);
+            _device.ImmediateContext.ClearRenderTargetView(_renderView, Color.Black);
+            _swapChain.Present(0, PresentFlags.None);
+        }
+
         public void Display()
         {
+            this.Clear();
+        }
+        
+        public void Clear(Color color)
+        {
+
 
         }
 
+        public void Dispose()
+        {
+            Utilities.Dispose(ref _backBuffer);
+            Utilities.Dispose(ref _renderView);
+            Utilities.Dispose(ref _depthBuffer);
+            Utilities.Dispose(ref _depthView);
+            Utilities.Dispose(ref _swapChain);
+            Utilities.Dispose(ref _device);
+        }
 
     }
 }

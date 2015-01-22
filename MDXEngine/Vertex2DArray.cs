@@ -4,28 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
+using System.Diagnostics;
 namespace MDXEngine
 {
     public class Vertex2DArray<T> : IArray<Vector2> where T : IPosition2D
     {
-        SubArray<T> vSub;
+        IArray<T> _data;
 
-        public Vertex2DArray(T[] data, int start, int size)
+        public Vertex2DArray(IArray<T> data)
         {
-            vSub = new SubArray<T>(data, start, size);
+            _data = data;
         }
 
-        public int Length { get { return vSub.size; } }
+        public int Length { get { return _data.Length; } }
 
         public Vector2 this[int index]
         {
             get
             {
-                return vSub[index].Position;
+                return _data[index].Position2D;
             }
             set
             {
-                vSub[index].Position = value;
+                _data[index].Position2D = value;
             }
         }
     }

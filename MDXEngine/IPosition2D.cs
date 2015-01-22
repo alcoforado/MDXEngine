@@ -7,6 +7,6 @@ namespace MDXEngine
 {
     public interface IPosition2D
     {
-        Vector2 Position { get; set; }
+        Vector2 Position2D { get; set; }
     }
 }
