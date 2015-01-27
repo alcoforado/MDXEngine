@@ -26,7 +26,9 @@ namespace MDXEngine
             }
             set
             {
-                _data[index].Position2D = value;
+                var elem = _data[index];
+                elem.Position2D = value;
+                _data[index] = elem;
             }
         }
     }

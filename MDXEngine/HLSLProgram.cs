@@ -10,7 +10,7 @@ using SharpDX.Direct3D11;
 using Device = SharpDX.Direct3D11.Device;
 namespace MDXEngine
 {
-    public class HLSLProgram
+    public class HLSLProgram : IDisposable
     {
         VertexShader _vertexShader;
         PixelShader _pixelShader;
@@ -27,7 +27,7 @@ namespace MDXEngine
             _vertexShader = new VertexShader(device, vertexShaderByteCode);
 
 
-            var pixelShaderByteCode = ShaderBytecode.CompileFromFile(HLSLResources.Color2D_hlsl, "PS", "ps_4_0");
+            var pixelShaderByteCode = ShaderBytecode.Compile(HLSLResources.Color2D_hlsl, "PS", "ps_4_0");
             _pixelShader = new PixelShader(device, pixelShaderByteCode);
 
 
@@ -52,8 +52,9 @@ namespace MDXEngine
         public void SetAsCurrent(IDxContext dx)
         {
             dx.DeviceContext.InputAssembler.InputLayout = _layout;
-            dx.DeviceContext.InputAss
-
+            dx.DeviceContext.VertexShader.Set(_vertexShader);
+            dx.DeviceContext.PixelShader.Set(_pixelShader);
+     
         }
 
     }

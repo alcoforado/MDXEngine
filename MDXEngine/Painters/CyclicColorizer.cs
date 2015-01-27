@@ -26,7 +26,9 @@ namespace MDXEngine.Painters
             int k=0;
             for (int i=0;i<vV.Length;i++)
             {
-                vV[i].Color = _colors[k++].ToVector4();
+                Color2D elem = vV[i];
+                elem.Color = _colors[k++].ToVector4();
+                vV[i] = elem;
                 if (k == _colors.Length)
                     k = 0;
             }

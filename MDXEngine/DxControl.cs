@@ -7,6 +7,7 @@ using SharpDX;
 using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
+using MDXEngine.Shaders;
 using SharpDX.Properties;
 using Device = SharpDX.Direct3D11.Device;
 namespace MDXEngine
@@ -22,17 +23,29 @@ namespace MDXEngine
         DepthStencilView _depthView;
         SwapChainDescription _desc;
 
+        List<IShader> _shaders;
 
         public DxControl(Control control)
         {
             renderControl=control;
             this.InitializeDX();
+            _shaders = new List<IShader>();
         }
+
+
 
 
         public DeviceContext DeviceContext { get { return _device.ImmediateContext; } }
         public Device Device {   get {return _device; } }
         
+        public void AddShader(IShader shader)
+        {
+            if (_shaders.Where(x=>x==shader).FirstOrDefault() == null)
+            {
+                _shaders.Add(shader);
+            }
+        }
+
 
         public void Resize()
         {
@@ -72,8 +85,7 @@ namespace MDXEngine
             _device.ImmediateContext.Rasterizer.SetViewport(new Viewport(0, 0, renderControl.ClientSize.Width, renderControl.ClientSize.Height, 0.0f, 1.0f));
             _device.ImmediateContext.OutputMerger.SetTargets(_depthView, _renderView);
         }
-
-
+        
         private void InitializeDX()
         {
             _desc = new SwapChainDescription()
@@ -99,28 +111,26 @@ namespace MDXEngine
             //Ignore all windows events
             var factory = _swapChain.GetParent<Factory>();
             factory.MakeWindowAssociation(renderControl.Handle, WindowAssociationFlags.IgnoreAll);
-
-
         }
+
         public void Clear()
         {
             // Clear views
-            //_device.ImmediateContext.ClearDepthStencilView(_depthView, DepthStencilClearFlags.Depth, 1.0f, 0);
+            _device.ImmediateContext.ClearDepthStencilView(_depthView, DepthStencilClearFlags.Depth, 1.0f, 0);
             _device.ImmediateContext.ClearRenderTargetView(_renderView, Color.Black);
-            _swapChain.Present(0, PresentFlags.None);
+      
         }
 
         public void Display()
         {
             this.Clear();
+            foreach (var shd in _shaders)
+            {
+                shd.Draw(this);
+            }
+            _swapChain.Present(0, PresentFlags.None);
         }
         
-        public void Clear(Color color)
-        {
-
-
-        }
-
         public void Dispose()
         {
             Utilities.Dispose(ref _backBuffer);
@@ -129,7 +139,8 @@ namespace MDXEngine
             Utilities.Dispose(ref _depthView);
             Utilities.Dispose(ref _swapChain);
             Utilities.Dispose(ref _device);
+            foreach (var shd in _shaders)
+                shd.Dispose();
         }
-
     }
 }

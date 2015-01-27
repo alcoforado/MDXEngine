@@ -7,11 +7,12 @@ using SharpDX.D3DCompiler;
 using SharpDX;
 using SharpDX.DXGI;
 using SharpDX.Direct3D11;
+using MDXEngine.Shapes;
 namespace MDXEngine.Shaders
 {
-    public class ShaderColor2D
+    public class ShaderColor2D : IShader
     {
-        IDxContext _dx;
+        IDxContext  _dx;
         HLSLProgram _program;
         DrawTree<Color2D> _root;
 
@@ -32,6 +33,23 @@ namespace MDXEngine.Shaders
 
         public DrawTree<Color2D> Root { get { return _root; } }
 
+        public void Draw(IDxContext dx)
+        {
+            _program.SetAsCurrent(dx);
+            _root.Draw(dx);
+            
+        }
 
+        public void Add(ITopology2D topology,IPainter<Color2D> painter  )
+        {
+            var shape = new Shape2D<Color2D>(topology,painter);
+            _root.Add(shape);
+        }
+        
+        public void Dispose()
+        {
+            Utilities.Dispose(ref _root); 
+            Utilities.Dispose(ref _program);
+        }
     }
 }

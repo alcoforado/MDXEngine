@@ -24,6 +24,7 @@ namespace MDXEngine.Shapes
         {
             var vV1 = new Vertex2DArray<T>(vV);
             _topology.Write(vV1, vI);
+            _renderer.Write(vV);
         }
         
 

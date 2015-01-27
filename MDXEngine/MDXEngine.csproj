@@ -59,6 +59,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="HLSLProgram.cs" />
     <Compile Include="HLSLResources.cs" />
+    <Compile Include="IShader.cs" />
     <Compile Include="ITopology2D.cs" />
     <Compile Include="Painters\CyclicColorizer.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

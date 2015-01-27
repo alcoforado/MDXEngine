@@ -30,8 +30,8 @@ namespace MDXEngine.Shapes
             vV[2] = P2;
 
             vI[0] = 0;
-            vI[0] = 1;
-            vI[1] = 2; 
+            vI[1] = 1;
+            vI[2] = 2; 
         }
     }
 }
