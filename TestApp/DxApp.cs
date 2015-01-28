@@ -38,8 +38,8 @@ namespace TestApp
 
             var triangle = new Triangle2DI(
             new Vector2(0f, 0f),
-            new Vector2(0f, 1f),
-            new Vector2(0.5f, 0f));
+            new Vector2(0.5f, 0f),
+            new Vector2(0f, 1f));
 
             var Aquamarine = new CyclicColorizer(Color.Aquamarine); 
 

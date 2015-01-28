@@ -111,6 +111,19 @@ namespace MDXEngine
             //Ignore all windows events
             var factory = _swapChain.GetParent<Factory>();
             factory.MakeWindowAssociation(renderControl.Handle, WindowAssociationFlags.IgnoreAll);
+
+            //Set right hand convention
+            var rasterizerState = new RasterizerState(_device, new RasterizerStateDescription
+            {
+                CullMode=CullMode.Back,
+                FillMode=FillMode.Solid,
+                IsAntialiasedLineEnabled=true,
+                IsFrontCounterClockwise=true,
+                IsMultisampleEnabled=false,
+                IsScissorEnabled=false,
+                
+            });
+            _device.ImmediateContext.Rasterizer.State = rasterizerState;
         }
 
         public void Clear()
