@@ -81,6 +81,7 @@ namespace TestApp
 
         private void pointsOffToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            /*
             if (this.pointsOffToolStripMenuItem.Text == "Points Off")
             {
                 //_dxApp.setPointsOnly(true);
@@ -91,6 +92,7 @@ namespace TestApp
                 //_dxApp.setPointsOnly(false);
                 this.pointsOffToolStripMenuItem.Text = "Points Off";
             }
+             */ 
         }
 
         private void cubeFractalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -102,6 +104,8 @@ namespace TestApp
                 //_dxApp.SetCubeFractal(_fracDiag.Matrix);            
 
         }
+
+       
 
       
     }
