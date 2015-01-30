@@ -22,8 +22,53 @@ namespace MDXEngine
         Texture2D _depthBuffer;
         DepthStencilView _depthView;
         SwapChainDescription _desc;
-
+        RasterizerState _rasterizerState;
         List<IShader> _shaders;
+      
+        private void InitializeDX()
+        {
+            _desc = new SwapChainDescription()
+            {
+                BufferCount = 1,
+                ModeDescription =
+                    new ModeDescription(renderControl.ClientSize.Width, renderControl.ClientSize.Height,
+                                        new Rational(60, 1), Format.B8G8R8A8_UNorm),
+                IsWindowed = true,
+                OutputHandle = renderControl.Handle,
+                SampleDescription = new SampleDescription(1, 0),
+                SwapEffect = SwapEffect.Discard,
+                Usage = Usage.RenderTargetOutput
+            };
+
+            Device.CreateWithSwapChain(
+                DriverType.Hardware,
+                DeviceCreationFlags.Debug,
+                _desc,
+                out _device,
+                out _swapChain);
+
+            //Ignore all windows events
+            var factory = _swapChain.GetParent<Factory>();
+            factory.MakeWindowAssociation(renderControl.Handle, WindowAssociationFlags.IgnoreAll);
+
+            //Set right hand convention
+            _rasterizerState = new RasterizerState(_device, new RasterizerStateDescription
+            {
+                CullMode=CullMode.Back,
+                FillMode=FillMode.Solid,
+                IsAntialiasedLineEnabled=true,
+                IsFrontCounterClockwise=true,
+                IsMultisampleEnabled=false,
+                IsScissorEnabled=false,
+                
+            });
+            _device.ImmediateContext.Rasterizer.State = _rasterizerState;
+            
+        }
+        
+        public DeviceContext DeviceContext { get { return _device.ImmediateContext; } }
+        
+        public Device Device {   get {return _device; } }
 
         public DxControl(Control control)
         {
@@ -32,11 +77,15 @@ namespace MDXEngine
             _shaders = new List<IShader>();
         }
 
+        public void Reset()
+        {
+            foreach (var shd in _shaders)
+                shd.Dispose();
+            _device.ImmediateContext.Rasterizer.State = _rasterizerState;
+        }
 
 
-
-        public DeviceContext DeviceContext { get { return _device.ImmediateContext; } }
-        public Device Device {   get {return _device; } }
+        
         
         public void AddShader(IShader shader)
         {
@@ -86,45 +135,6 @@ namespace MDXEngine
             _device.ImmediateContext.OutputMerger.SetTargets(_depthView, _renderView);
         }
         
-        private void InitializeDX()
-        {
-            _desc = new SwapChainDescription()
-            {
-                BufferCount = 1,
-                ModeDescription =
-                    new ModeDescription(renderControl.ClientSize.Width, renderControl.ClientSize.Height,
-                                        new Rational(60, 1), Format.B8G8R8A8_UNorm),
-                IsWindowed = true,
-                OutputHandle = renderControl.Handle,
-                SampleDescription = new SampleDescription(1, 0),
-                SwapEffect = SwapEffect.Discard,
-                Usage = Usage.RenderTargetOutput
-            };
-
-            Device.CreateWithSwapChain(
-                DriverType.Hardware,
-                DeviceCreationFlags.Debug,
-                _desc,
-                out _device,
-                out _swapChain);
-
-            //Ignore all windows events
-            var factory = _swapChain.GetParent<Factory>();
-            factory.MakeWindowAssociation(renderControl.Handle, WindowAssociationFlags.IgnoreAll);
-
-            //Set right hand convention
-            var rasterizerState = new RasterizerState(_device, new RasterizerStateDescription
-            {
-                CullMode=CullMode.Back,
-                FillMode=FillMode.Solid,
-                IsAntialiasedLineEnabled=true,
-                IsFrontCounterClockwise=true,
-                IsMultisampleEnabled=false,
-                IsScissorEnabled=false,
-                
-            });
-            _device.ImmediateContext.Rasterizer.State = rasterizerState;
-        }
 
         public void Clear()
         {
@@ -151,7 +161,9 @@ namespace MDXEngine
             Utilities.Dispose(ref _depthBuffer);
             Utilities.Dispose(ref _depthView);
             Utilities.Dispose(ref _swapChain);
+            Utilities.Dispose(ref _rasterizerState);
             Utilities.Dispose(ref _device);
+           
             foreach (var shd in _shaders)
                 shd.Dispose();
         }

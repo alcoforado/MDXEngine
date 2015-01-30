@@ -14,20 +14,21 @@ namespace TestApp
     public class DxApp
     {
         bool _bResize;
-        Form _main;
+        MainWindow _main;
         Control _display;
         DxControl dx;
-        ShaderColor2D _shaderColor2D;
-        public DxApp(Form main, Control display)
+        
+        public DxApp(MainWindow main, Control display)
         {
             dx = new DxControl(display);
             _bResize = true;
             _main = main;
             _display = display;
-            _shaderColor2D = new ShaderColor2D(dx);
             _main.Resize += (events, args) => _bResize = true;
-            dx.AddShader(_shaderColor2D);
+            _main.SetDxApp(this);
         }
+
+        public DxControl DxControl { get { return dx;} }
 
         public void PsychoRun()
         {
@@ -36,17 +37,7 @@ namespace TestApp
             watch.Start();
             long limit = 6000;
 
-            var triangle = new Triangle2DI(
-            new Vector2(0f, 0f),
-            new Vector2(0.5f, 0f),
-            new Vector2(0f, 1f));
-
-            var Aquamarine = new CyclicColorizer(Color.Aquamarine); 
-
-
-            _shaderColor2D.Add(triangle,Aquamarine);
-
-
+           
             _main.Show();
             while (_main.Created)
             {

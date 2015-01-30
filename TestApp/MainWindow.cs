@@ -19,9 +19,11 @@ namespace TestApp
     public partial class MainWindow : Form
     {
         TextBoxStreamWriter _boxWriter;
-        CubeFractalDialog _fracDiag;
+        private IApp _currentApp;
         
         internal DxApp _dxApp;
+        private DxControl _dx;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -30,12 +32,31 @@ namespace TestApp
             splitContainer1.Panel1.MouseLeave += (sender, e) => this.Focus();
             splitContainer1.Panel1.MouseEnter += (sender, e) => splitContainer1.Panel1.Focus();
             this.KeyPreview=true;
-
+            _currentApp = null;
         }
 
 
-        public void SetDxApp(DxApp app) { _dxApp = app; }
+        public void SetDxApp(DxApp app) { _dxApp = app; _dx = _dxApp.DxControl; }
         
+
+        private void RemoveCurrentApp()
+        {
+            if (_currentApp != null)
+                _currentApp.Dispose();
+            _currentApp = null;
+            _dx.Reset();
+            _dx.Display();
+        }
+
+        private void SetCurrentApp(IApp app)
+        {
+            if (_currentApp != null)
+                throw new Exception("Before Assign a new IApp make sure you remove the old one by calling MainWindow.RemoveCurrentApp");
+            _currentApp = app;
+        }
+
+       
+
         private void MainWindow_Load(object sender, EventArgs e)
         {
 
@@ -95,16 +116,21 @@ namespace TestApp
              */ 
         }
 
-        private void cubeFractalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void fractalCubeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_fracDiag == null)
-                _fracDiag = new CubeFractalDialog();
-            //if (_fracDiag.ShowDialog(this) == DialogResult.OK)
-                
-                //_dxApp.SetCubeFractal(_fracDiag.Matrix);            
-
+            this.RemoveCurrentApp();
+            var app = new TestApp.Actions.CubeFractal.CubeFractal(_dx);
+            this.SetCurrentApp(app);
         }
 
+        private void rGBTriangleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.RemoveCurrentApp();
+            var app = new TestApp.Actions.ColorTriangle.ColorTriangle(_dx);
+            this.SetCurrentApp(app);
+        }
+
+      
        
 
       

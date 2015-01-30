@@ -32,6 +32,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.testsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fractalCubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rGBTriangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -77,9 +79,26 @@
             // 
             // testsToolStripMenuItem
             // 
+            this.testsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fractalCubeToolStripMenuItem,
+            this.rGBTriangleToolStripMenuItem});
             this.testsToolStripMenuItem.Name = "testsToolStripMenuItem";
             this.testsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.testsToolStripMenuItem.Text = "Tests";
+            // 
+            // fractalCubeToolStripMenuItem
+            // 
+            this.fractalCubeToolStripMenuItem.Name = "fractalCubeToolStripMenuItem";
+            this.fractalCubeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fractalCubeToolStripMenuItem.Text = "Fractal Cube";
+            this.fractalCubeToolStripMenuItem.Click += new System.EventHandler(this.fractalCubeToolStripMenuItem_Click);
+            // 
+            // rGBTriangleToolStripMenuItem
+            // 
+            this.rGBTriangleToolStripMenuItem.Name = "rGBTriangleToolStripMenuItem";
+            this.rGBTriangleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rGBTriangleToolStripMenuItem.Text = "RGB Triangle";
+            this.rGBTriangleToolStripMenuItem.Click += new System.EventHandler(this.rGBTriangleToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -108,6 +127,8 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem testsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fractalCubeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rGBTriangleToolStripMenuItem;
 
     }
 }
