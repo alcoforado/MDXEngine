@@ -17,9 +17,7 @@ namespace TestApp.Actions.ColorTriangle
         public ColorTriangle(DxControl dx)
         {
             _shaderColor2D = new ShaderColor2D(dx);
-            dx.AddShader(_shaderColor2D);
-                        dx.AddShader(_shaderColor2D);
-            var triangle = new Triangle2DI(
+           var triangle = new Triangle2DI(
                         new Vector2(-1f, -1f),
                         new Vector2(1f, -1f),
                         new Vector2(0f, 1f));
@@ -28,6 +26,7 @@ namespace TestApp.Actions.ColorTriangle
             _shaderColor2D.Add(triangle, colors);
         }
 
-        public void Dispose() { }
+        public void Dispose() 
+        { }
     }
 }
