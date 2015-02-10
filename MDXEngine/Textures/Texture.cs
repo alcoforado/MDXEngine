@@ -8,5 +8,6 @@ namespace MDXEngine.Textures
 {
     public class Texture :  ITexture
     {
+
     }
 }
