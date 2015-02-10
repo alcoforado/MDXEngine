@@ -21,7 +21,7 @@ namespace MDXEngine.Painters
             _colors = new Color[]{color};
         }
 
-        public void Write(IArray<Color2D> vV)
+        public void Write(IArray<Color2D> vV,IArray<int> vI, TopologyType topologyType)
         {
             int k=0;
             for (int i=0;i<vV.Length;i++)

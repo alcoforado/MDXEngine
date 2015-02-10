@@ -43,6 +43,10 @@ namespace MDXEngine.Shaders
             Utilities.Dispose(ref _root);
             Utilities.Dispose(ref _program);
         }
+
+        public void Add(ITopology2D topology, IPainter<VerticeTexture2D> painter, ITexture texture)
+        { }
+
         
 
     }

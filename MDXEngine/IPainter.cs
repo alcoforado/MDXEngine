@@ -7,6 +7,6 @@ namespace MDXEngine
 {
     public interface IPainter<T>
     {
-        void Write(IArray<T> vV);
+        void Write(IArray<T> vV, IArray<int> vI, TopologyType topologyType);
     }
 }
