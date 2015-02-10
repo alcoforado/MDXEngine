@@ -11,6 +11,11 @@ namespace MDXEngine
         ITopology    _topology;
         IPainter<T> _renderer;
 
+        public Shape(ITopology topology,IPainter<T> painter)
+        {
+            _topology = topology;
+            _renderer = painter;
+        }
 
         public int NIndices() {return _topology.NIndices();}
         public int NVertices() { return _topology.NVertices(); }

@@ -90,6 +90,9 @@
     <Compile Include="Shape.cs" />
     <Compile Include="ShapeMarshalling.cs" />
     <Compile Include="Shapes\Shape2D.cs" />
+    <Compile Include="Textures\ITexture.cs" />
+    <Compile Include="Textures\Texture.cs" />
+    <Compile Include="Textures\TextureRegion.cs" />
     <Compile Include="Topologies\Triangle2DIndexed.cs" />
     <Compile Include="SharpDXExtensions\Vector2Extension.cs" />
     <Compile Include="SharpDXExtensions\Vector3Extension.cs" />
@@ -112,6 +115,7 @@
     <Content Include="hlsl\Color2D.hlsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="hlsl\Texture2D.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
