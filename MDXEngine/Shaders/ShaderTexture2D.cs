@@ -45,7 +45,11 @@ namespace MDXEngine.Shaders
         }
 
         public void Add(ITopology2D topology, IPainter<VerticeTexture2D> painter, ITexture texture)
-        { }
+        {
+ 
+            
+        
+        }
 
         
 
