@@ -93,6 +93,7 @@
     <Compile Include="ShapeMarshalling.cs" />
     <Compile Include="Shapes\Shape2D.cs" />
     <Compile Include="ITexture.cs" />
+    <Compile Include="Shapes\Sprite.cs" />
     <Compile Include="Textures\Texture.cs" />
     <Compile Include="Textures\TextureRegion.cs" />
     <Compile Include="Topologies\Triangle2DIndexed.cs" />

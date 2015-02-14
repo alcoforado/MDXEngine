@@ -8,5 +8,6 @@ namespace MDXEngine
 {
     public interface ITexture
     {
+
     }
 }
