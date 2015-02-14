@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,23 @@ namespace MDXEngine
             vSub = new SubArray<T>(data,start,size);
         }
 
+
+
+
         public int Length{get {return vSub.size;}}
 
+
+        public void CopyFrom(Vector3[] array)
+        {
+            Debug.Assert(array.Length == this.Length);
+            var len = this.Length;
+            for (int i = 0; i < len; i++)
+            {
+                this[i] = array[i];
+            }
+        }
+        
+        
         public Vector3 this[int index]
         {
             get
@@ -28,5 +44,9 @@ namespace MDXEngine
                 vSub[index].Normal = value;
             }
         }
+
+
+
+
     }
 }

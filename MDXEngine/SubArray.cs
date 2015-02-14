@@ -41,6 +41,21 @@ namespace MDXEngine
             
             }
 
+            public void CopyFrom(T[] array)
+            {
+                Debug.Assert(array.Length == this.Length);
+                Debug.Assert(data.Length < this.Length);
+                Array.Copy(array,0,data,this.start,this.Length);
+            }
+
+            public void CopyTo(T[] array)
+            {
+                Debug.Assert(array.Length == this.Length);
+                Debug.Assert(data.Length < this.Length);
+                Array.Copy(data, this.start, array, 0, this.Length);
+            }
+
+
             public void reinit(T[] lst,int start,int size)
             {
                 Debug.Assert(start + size < lst.Count());
@@ -64,6 +79,8 @@ namespace MDXEngine
                     data[index+start]=value;
                 }
             }
+
+
      
  
         }

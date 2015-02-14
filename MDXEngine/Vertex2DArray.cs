@@ -17,6 +17,29 @@ namespace MDXEngine
         }
 
         public int Length { get { return _data.Length; } }
+        
+        public void CopyFrom(Vector2[] array)
+        {
+            Debug.Assert(array.Length == this.Length);
+            var len = this.Length;
+            for (int i = 0; i < len; i++)
+            {
+                this[i] = array[i];
+            }
+        }
+
+        public void CopyTo(Vector2[] array)
+        {
+            Debug.Assert(array.Length == this.Length);
+            var len = this.Length;
+            for (int i = 0; i < len; i++)
+            {
+                array[i]=this[i];
+            }
+        }
+
+
+
 
         public Vector2 this[int index]
         {
@@ -31,6 +54,9 @@ namespace MDXEngine
                 _data[index] = elem;
             }
         }
+
+
+
     }
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,18 @@ namespace MDXEngine
         }
 
         public int Length{get {return data.Length;}}
+
+
+        public void CopyFrom(Vector3[] array)
+        {
+            Debug.Assert(array.Length == this.Length);
+            var len = this.Length;
+            for (int i = 0; i < len; i++)
+            {
+                this[i] = array[i];
+            }
+        }
+
 
         public Vector3 this[int index]
         {
