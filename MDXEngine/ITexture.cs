@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MDXEngine
 {
-    public interface ITexture
+    public interface ITexture : IDisposable
     {
 
     }

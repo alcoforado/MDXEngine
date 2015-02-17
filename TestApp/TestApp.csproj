@@ -81,6 +81,7 @@
     <Compile Include="Actions\CubeFractal\CubeFractalDialog.Designer.cs">
       <DependentUpon>CubeFractalDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Actions\TextureDisplay\TextureDisplay.cs" />
     <Compile Include="Array2DDataView.cs" />
     <Compile Include="IApp.cs" />
     <Compile Include="DxApp.cs" />
@@ -92,6 +93,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities.cs" />
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>

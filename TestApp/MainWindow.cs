@@ -126,7 +126,19 @@ namespace TestApp
         private void rGBTriangleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.RemoveCurrentApp();
-            var app = new TestApp.Actions.ColorTriangle.ColorTriangle(_dx);
+            var app = new TestApp.Actions.ColorTriangle(_dx);
+            this.SetCurrentApp(app);
+        }
+
+        private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Properties.Settings.Default.Save();
+        }
+
+        private void loadTextureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.RemoveCurrentApp();
+            var app = new TestApp.Actions.TextureDisplay(_dx);
             this.SetCurrentApp(app);
         }
 

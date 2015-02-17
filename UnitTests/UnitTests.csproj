@@ -93,7 +93,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Calculator.feature</DependentUpon>
     </Compile>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="SubArrayTests.cs" />
     <Compile Include="UnitTestExtensions.cs" />
     <Compile Include="UnitTestDrawTree.cs" />
     <Compile Include="UnitTestObservers.cs" />

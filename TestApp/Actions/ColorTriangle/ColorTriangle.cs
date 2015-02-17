@@ -8,7 +8,7 @@ using MDXEngine.Shapes;
 using MDXEngine.Shaders;
 using SharpDX;
 using MDXEngine.Painters;
-namespace TestApp.Actions.ColorTriangle
+namespace TestApp.Actions
 {
     public class ColorTriangle : IApp
     {
@@ -26,7 +26,10 @@ namespace TestApp.Actions.ColorTriangle
             _shaderColor2D.Add(triangle, colors);
         }
 
-        public void Dispose() 
-        { }
+        public void Dispose()
+        {
+        }
+
+
     }
 }

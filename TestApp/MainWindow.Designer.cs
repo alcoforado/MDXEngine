@@ -34,6 +34,7 @@
             this.testsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fractalCubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rGBTriangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -81,7 +82,8 @@
             // 
             this.testsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fractalCubeToolStripMenuItem,
-            this.rGBTriangleToolStripMenuItem});
+            this.rGBTriangleToolStripMenuItem,
+            this.loadTextureToolStripMenuItem});
             this.testsToolStripMenuItem.Name = "testsToolStripMenuItem";
             this.testsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.testsToolStripMenuItem.Text = "Tests";
@@ -100,6 +102,13 @@
             this.rGBTriangleToolStripMenuItem.Text = "RGB Triangle";
             this.rGBTriangleToolStripMenuItem.Click += new System.EventHandler(this.rGBTriangleToolStripMenuItem_Click);
             // 
+            // loadTextureToolStripMenuItem
+            // 
+            this.loadTextureToolStripMenuItem.Name = "loadTextureToolStripMenuItem";
+            this.loadTextureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadTextureToolStripMenuItem.Text = "LoadTexture";
+            this.loadTextureToolStripMenuItem.Click += new System.EventHandler(this.loadTextureToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -109,6 +118,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "MainWindow";
             this.Text = "MainWindow";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
@@ -129,6 +139,7 @@
         private System.Windows.Forms.ToolStripMenuItem testsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fractalCubeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rGBTriangleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadTextureToolStripMenuItem;
 
     }
 }

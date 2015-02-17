@@ -119,7 +119,7 @@ PS_IN VS(VS_IN input)
 
 float4 PS(PS_IN input) : SV_Target
 {
-	return gTexture.Sample(samAnisotropic,input.Tex);
+	return gTexture.Sample(samAnisotropic,input.tex);
 }
 
 ";

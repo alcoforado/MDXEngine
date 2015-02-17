@@ -23,7 +23,7 @@ namespace MDXEngine.Shaders
             _program = new HLSLProgram(_dx.Device,HLSLResources.Texture2D_hlsl,  new[]
                     {
                         new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
-                        new InputElement("TEX", 0, Format.R32G32_Float, 16, 0)
+                        new InputElement("TEXCOORD", 0, Format.R32G32_Float, 16, 0)
                     });
 
 

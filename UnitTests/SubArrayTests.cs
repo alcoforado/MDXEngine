@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SharpDX;
 using MDXEngine;
@@ -111,6 +112,23 @@ namespace UnitTests
             array[1].Position2D.ShouldBeEquivalentTo(p0);
             array[2].Position2D.ShouldBeEquivalentTo(p1);
    
+
+        }
+
+        [TestMethod]
+        public void SubArrayCopyFromShouldCopyElementsFromArray()
+        {
+        var t = new int[] {1, 2, 3, 4, 5, 6};
+
+            var sub = new SubArray<int>(t, 1, 3);
+            var t2 = new int[] {6, 6, 6};
+
+            sub.CopyFrom(t2);
+
+            t.Should().ContainInOrder(new[] {1, 6, 6, 6, 5, 6});
+
+
+
 
         }
 
