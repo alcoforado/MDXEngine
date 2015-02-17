@@ -65,6 +65,7 @@ namespace MDXEngine
 
         }
 
+        //TODO: Implement Set Texture given a variable name
         public void SetTexture(string variableName, Texture texture)
         {
             

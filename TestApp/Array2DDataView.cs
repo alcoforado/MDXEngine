@@ -116,35 +116,35 @@ namespace TestApp
 
 		public void AddIndex(PropertyDescriptor property)
 		{
-			// TODO:  Add ArrayDataView.AddIndex implementation
+			//   Add ArrayDataView.AddIndex implementation
 		}
 
 		public bool AllowNew
 		{
 			get
 			{
-				// TODO:  Add ArrayDataView.AllowNew getter implementation
+				//   Add ArrayDataView.AllowNew getter implementation
 				return false;
 			}
 		}
 
 		public void ApplySort(PropertyDescriptor property, System.ComponentModel.ListSortDirection direction)
 		{
-			// TODO:  Add ArrayDataView.ApplySort implementation
+			//   Add ArrayDataView.ApplySort implementation
 		}
 
 		public PropertyDescriptor SortProperty
 		{
 			get
 			{
-				// TODO:  Add ArrayDataView.SortProperty getter implementation
+				//   Add ArrayDataView.SortProperty getter implementation
 				return null;
 			}
 		}
 
 		public int Find(PropertyDescriptor property, object key)
 		{
-			// TODO:  Add ArrayDataView.Find implementation
+			//   Add ArrayDataView.Find implementation
 			return 0;
 		}
 
@@ -152,7 +152,7 @@ namespace TestApp
 		{
 			get
 			{
-				// TODO:  Add ArrayDataView.SupportsSorting getter implementation
+				//   Add ArrayDataView.SupportsSorting getter implementation
 				return false;
 			}
 		}
@@ -161,7 +161,7 @@ namespace TestApp
 		{
 			get
 			{
-				// TODO:  Add ArrayDataView.IsSorted getter implementation
+				//   Add ArrayDataView.IsSorted getter implementation
 				return false;
 			}
 		}
@@ -170,7 +170,7 @@ namespace TestApp
 		{
 			get
 			{
-				// TODO:  Add ArrayDataView.AllowRemove getter implementation
+				//   Add ArrayDataView.AllowRemove getter implementation
 				return false;
 			}
 		}
@@ -179,7 +179,7 @@ namespace TestApp
 		{
 			get
 			{
-				// TODO:  Add ArrayDataView.SupportsSearching getter implementation
+				//   Add ArrayDataView.SupportsSearching getter implementation
 				return false;
 			}
 		}
@@ -188,7 +188,7 @@ namespace TestApp
 		{
 			get
 			{
-				// TODO:  Add ArrayDataView.SortDirection getter implementation
+				//   Add ArrayDataView.SortDirection getter implementation
 				return new System.ComponentModel.ListSortDirection ();
 			}
 		}
@@ -213,12 +213,12 @@ namespace TestApp
 
 		public void RemoveSort()
 		{
-			// TODO:  Add ArrayDataView.RemoveSort implementation
+			//   Add ArrayDataView.RemoveSort implementation
 		}
 
 		public object AddNew()
 		{
-			// TODO:  Add ArrayDataView.AddNew implementation
+			//   Add ArrayDataView.AddNew implementation
 			return null;
 		}
 
@@ -232,7 +232,7 @@ namespace TestApp
 
 		public void RemoveIndex(PropertyDescriptor property)
 		{
-			// TODO:  Add ArrayDataView.RemoveIndex implementation
+			//   Add ArrayDataView.RemoveIndex implementation
 		}
 
 		#endregion
@@ -261,39 +261,39 @@ namespace TestApp
 
 		public void RemoveAt(int index)
 		{
-			// TODO:  Add ArrayDataView.RemoveAt implementation
+			//   Add ArrayDataView.RemoveAt implementation
 		}
 
 		public void Insert(int index, object value)
 		{
-			// TODO:  Add ArrayDataView.Insert implementation
+			//   Add ArrayDataView.Insert implementation
 		}
 
 		public void Remove(object value)
 		{
-			// TODO:  Add ArrayDataView.Remove implementation
+			//   Add ArrayDataView.Remove implementation
 		}
 
 		public bool Contains(object value)
 		{
-			// TODO:  Add ArrayDataView.Contains implementation
+			//   Add ArrayDataView.Contains implementation
 			return false;
 		}
 
 		public void Clear()
 		{
-			// TODO:  Add ArrayDataView.Clear implementation
+			//   Add ArrayDataView.Clear implementation
 		}
 
 		public int IndexOf(object value)
 		{
-			// TODO:  Add ArrayDataView.IndexOf implementation
+			//   Add ArrayDataView.IndexOf implementation
 			return 0;
 		}
 
 		public int Add(object value)
 		{
-			// TODO:  Add ArrayDataView.Add implementation
+			//   Add ArrayDataView.Add implementation
 			return 0;
 		}
 
@@ -313,7 +313,7 @@ namespace TestApp
 		{
 			get
 			{
-				// TODO:  Add ArrayDataView.IsSynchronized getter implementation
+				//   Add ArrayDataView.IsSynchronized getter implementation
 				return false;
 			}
 		}
@@ -322,21 +322,21 @@ namespace TestApp
 		{
 			get
 			{
-				// TODO:  Add ArrayDataView.Count getter implementation
+				//   Add ArrayDataView.Count getter implementation
 				return _rows.Length;
 			}
 		}
 
 		public void CopyTo(System.Array array, int index)
 		{
-			// TODO:  Add ArrayDataView.CopyTo implementation
+			//   Add ArrayDataView.CopyTo implementation
 		}
 
 		public object SyncRoot
 		{
 			get
 			{
-				// TODO:  Add ArrayDataView.SyncRoot getter implementation
+				//   Add ArrayDataView.SyncRoot getter implementation
 				return null;
 			}
 		}
@@ -347,7 +347,7 @@ namespace TestApp
 
 		public System.Collections.IEnumerator GetEnumerator()
 		{
-			// TODO:  Add ArrayDataView.GetEnumerator implementation
+			//   Add ArrayDataView.GetEnumerator implementation
 			return _rows.GetEnumerator();
 		}
 
@@ -487,7 +487,7 @@ namespace TestApp
 
 		public TypeConverter GetConverter()
 		{
-			// TODO:  Add ArrayColumn.GetConverter implementation
+			//   Add ArrayColumn.GetConverter implementation
 			return null;
 		}
 
@@ -559,17 +559,17 @@ namespace TestApp
 
 		public void EndEdit()
 		{
-			// TODO:  Add ArrayRowView.EndEdit implementation
+			//   Add ArrayRowView.EndEdit implementation
 		}
 
 		public void CancelEdit()
 		{
-			// TODO:  Add ArrayRowView.CancelEdit implementation
+			//   Add ArrayRowView.CancelEdit implementation
 		}
 
 		public void BeginEdit()
 		{
-			// TODO:  Add ArrayRowView.BeginEdit implementation
+			//   Add ArrayRowView.BeginEdit implementation
 		}
 
 		#endregion
@@ -580,7 +580,7 @@ namespace TestApp
 		{
 			get
 			{
-				// TODO:  Add ArrayRowView.this getter implementation
+				//   Add ArrayRowView.this getter implementation
 				return null;
 			}
 		}
@@ -589,7 +589,7 @@ namespace TestApp
 		{
 			get
 			{
-				// TODO:  Add ArrayRowView.Error getter implementation
+				//   Add ArrayRowView.Error getter implementation
 				return null;
 			}
 		}
