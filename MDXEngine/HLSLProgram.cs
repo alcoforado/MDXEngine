@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MDXEngine.Textures;
 using SharpDX.D3DCompiler;
 using SharpDX;
 using SharpDX.DXGI;
@@ -64,5 +65,12 @@ namespace MDXEngine
 
         }
 
+        public void SetTexture(string variableName, Texture texture)
+        {
+            
+        }
+
+
     }
+
 }
