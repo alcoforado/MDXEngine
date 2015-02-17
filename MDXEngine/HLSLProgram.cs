@@ -23,7 +23,7 @@ namespace MDXEngine
 
         public HLSLProgram(Device device, String program, InputElement[] elems)
         {
-            
+
             var vertexShaderByteCode = ShaderBytecode.Compile(program, "VS", "vs_4_0");
             _vertexShader = new VertexShader(device, vertexShaderByteCode);
 
@@ -35,9 +35,9 @@ namespace MDXEngine
             // Layout from VertexShader input signature
             var signature = ShaderSignature.GetInputSignature(vertexShaderByteCode);
             _layout = new InputLayout(device, signature, elems);
-            
-          
-           _vertexReflection = new ShaderReflection(vertexShaderByteCode);
+
+
+            _vertexReflection = new ShaderReflection(vertexShaderByteCode);
             _pixelReflection = new ShaderReflection(pixelShaderByteCode);
 
 
@@ -49,9 +49,11 @@ namespace MDXEngine
 
         public void Dispose()
         {
+            _vertexReflection.Dispose();
+            _pixelReflection.Dispose();
             _vertexShader.Dispose();
-           _pixelShader.Dispose();
-           _layout.Dispose();
+            _pixelShader.Dispose();
+            _layout.Dispose();
         }
 
         public void SetAsCurrent(IDxContext dx)
@@ -59,7 +61,7 @@ namespace MDXEngine
             dx.DeviceContext.InputAssembler.InputLayout = _layout;
             dx.DeviceContext.VertexShader.Set(_vertexShader);
             dx.DeviceContext.PixelShader.Set(_pixelShader);
-     
+
         }
 
     }
