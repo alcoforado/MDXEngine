@@ -34,7 +34,7 @@ namespace MDXEngine.Shaders
 
         public void Draw(IDxContext dx)
         {
-            _program.SetAsCurrent(dx);
+            dx.CurrentProgram = _program;
             _root.Draw(dx);
 
         }

@@ -14,16 +14,17 @@ namespace MDXEngine
 {
     public class DxControl : IDxContext
     {
-        Control renderControl;
-        Device _device;
-        SwapChain _swapChain;
-        Texture2D _backBuffer;
-        RenderTargetView _renderView;
-        Texture2D _depthBuffer;
-        DepthStencilView _depthView;
-        SwapChainDescription _desc;
-        RasterizerState _rasterizerState;
-        List<IShader> _shaders;
+       private Device _device;
+       private Control renderControl;
+       private SwapChain _swapChain;
+       private Texture2D _backBuffer;
+       private RenderTargetView _renderView;
+       private Texture2D _depthBuffer;
+       private DepthStencilView _depthView;
+       private SwapChainDescription _desc;
+       private RasterizerState _rasterizerState;
+       private List<IShader> _shaders;
+       private HLSLProgram _hlslProgram;
       
         private void InitializeDX()
         {
@@ -70,6 +71,9 @@ namespace MDXEngine
         
         public Device Device {   get {return _device; } }
 
+
+
+
         public DxControl(Control control)
         {
             renderControl=control;
@@ -85,7 +89,21 @@ namespace MDXEngine
         }
 
 
-        
+        public HLSLProgram CurrentProgram
+        {
+            get
+            {
+                return _hlslProgram;
+            }
+            set
+            {
+                this.DeviceContext.VertexShader.Set(value.VertexShader);
+                this.DeviceContext.InputAssembler.InputLayout = value.GetLayout();
+                this.DeviceContext.PixelShader.Set(value.PixelShader);
+                _hlslProgram = value;
+            }
+
+        }
         
         public void AddShader(IShader shader)
         {

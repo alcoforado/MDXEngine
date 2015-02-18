@@ -46,6 +46,11 @@ namespace MDXEngine
         private readonly ShaderReflection _vertexReflection;
         private readonly ShaderReflection _pixelReflection;
 
+        internal VertexShader VertexShader { get { return _vertexShader; } }
+        internal PixelShader PixelShader {get { return _pixelShader; }}
+        internal InputLayout InputLayout { get { return _layout; } }
+
+
         public List<TextureSlot> TextureSlots { get; private set; } 
         public InputLayout GetLayout() { return _layout; }
 
@@ -99,13 +104,7 @@ namespace MDXEngine
             _layout.Dispose();
         }
 
-        public void SetAsCurrent(IDxContext dx)
-        {
-            dx.DeviceContext.InputAssembler.InputLayout = _layout;
-            dx.DeviceContext.VertexShader.Set(_vertexShader);
-            dx.DeviceContext.PixelShader.Set(_pixelShader);
-
-        }
+       
 
         public int GetTextureSlot(String name)
         {
