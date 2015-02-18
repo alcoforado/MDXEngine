@@ -45,6 +45,7 @@ namespace MDXEngine
         readonly InputLayout _layout;
         private readonly ShaderReflection _vertexReflection;
         private readonly ShaderReflection _pixelReflection;
+        private IDxContext _dx;
 
         internal VertexShader VertexShader { get { return _vertexShader; } }
         internal PixelShader PixelShader {get { return _pixelShader; }}
@@ -54,9 +55,9 @@ namespace MDXEngine
         public List<TextureSlot> TextureSlots { get; private set; } 
         public InputLayout GetLayout() { return _layout; }
 
-        public HLSLProgram(Device device, String program, InputElement[] elems)
+        public HLSLProgram(IDxContext dx, String program, InputElement[] elems)
         {
-
+            var device = dx.Device;
             var vertexShaderByteCode = ShaderBytecode.Compile(program, "VS", "vs_4_0");
             _vertexShader = new VertexShader(device, vertexShaderByteCode);
 
@@ -88,7 +89,7 @@ namespace MDXEngine
                 }
             }
 
-
+            _dx = dx;
             vertexShaderByteCode.Dispose();
             pixelShaderByteCode.Dispose();
             signature.Dispose();
@@ -117,12 +118,23 @@ namespace MDXEngine
             throw new Exception(String.Format("Texture Slot with Name {0} does not exist",name));
         }
 
-
-        public bool IsCurrent(IDxContext dx)
+        public ITextureSlot GetTextureSlot(int slot)
         {
-            return dx.CurrentProgram == this;
+            return TextureSlots.Find(x => x.Slot == slot);
         }
 
+
+
+        public bool IsCurrent()
+        {
+            return _dx.CurrentProgram == this;
+        }
+
+        public void SetAsCurrent()
+        {
+            if (!IsCurrent())
+                _dx.CurrentProgram = this;
+        }
         
         //TODO: Implement Set Texture given a variable name
         public void SetTexture(string variableName, Texture texture)
@@ -139,7 +151,11 @@ namespace MDXEngine
 
         public void LoadTexture(int textureSlot, Texture texture)
         {
+            if (!IsCurrent())
+                throw new Exception("HLSLProgram is not the current loaded program");
+            System.Diagnostics.Debug.Assert(this.GetTextureSlot(textureSlot) != null);
             
+            _dx.DeviceContext.PixelShader.SetShaderResource(textureSlot,);
         }
     }
 
