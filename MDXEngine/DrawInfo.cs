@@ -11,11 +11,7 @@ namespace MDXEngine
 
     internal enum DrawInfoType { SHAPE_GROUP, SHAPE, ROOT }
 
-    internal interface IDrawTreeAction
-    {
-        void Execute();
-    }
-    
+   
     
     internal class DrawInfo<T>
     {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using MDXEngine.Textures;
@@ -15,7 +17,15 @@ namespace MDXEngine
 
     public class HLSLProgram : IDisposable
     {
-        public class TextureSlot
+
+        public interface ITextureSlot
+        {
+            Texture Texture { get; }
+            int Slot { get;  }
+            string Name { get; }
+        }
+
+        public class TextureSlot : ITextureSlot
         {
             public TextureSlot(int slot, string name)
             {
@@ -45,7 +55,7 @@ namespace MDXEngine
             var vertexShaderByteCode = ShaderBytecode.Compile(program, "VS", "vs_4_0");
             _vertexShader = new VertexShader(device, vertexShaderByteCode);
 
-
+            
             var pixelShaderByteCode = ShaderBytecode.Compile(program, "PS", "ps_4_0");
             _pixelShader = new PixelShader(device, pixelShaderByteCode);
 
@@ -97,6 +107,21 @@ namespace MDXEngine
 
         }
 
+        public int GetTextureSlot(String name)
+        {
+            int i = 0;
+            for (; i < TextureSlots.Count; i++)
+            {
+                if (TextureSlots[i].Name == name)
+                    return TextureSlots[i].Slot;
+            }
+            throw new Exception(String.Format("Texture Slot with Name {0} does not exist",name));
+        }
+        
+        
+
+
+        
         //TODO: Implement Set Texture given a variable name
         public void SetTexture(string variableName, Texture texture)
         {
@@ -104,13 +129,16 @@ namespace MDXEngine
 
         }
 
-        public void SetTexture(int slot, Texture texture)
+        public void SetTexture(int textureIndex, Texture texture)
         {
             
         }
 
 
-
+        public void LoadTexture(int textureSlot, Texture texture)
+        {
+            
+        }
     }
 
 }

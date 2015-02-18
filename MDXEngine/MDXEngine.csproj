@@ -59,6 +59,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="HLSLProgram.cs" />
     <Compile Include="HLSLResources.cs" />
+    <Compile Include="IDrawTreeAction.cs" />
     <Compile Include="IShader.cs" />
     <Compile Include="ITEX.cs" />
     <Compile Include="ITopology2D.cs" />

@@ -15,5 +15,6 @@ namespace MDXEngine
         Device Device { get;  }
         DeviceContext DeviceContext { get; }
         void AddShader(IShader shader);
+        //HLSLProgram CurrentProgram { get; set; }
     }
 }
