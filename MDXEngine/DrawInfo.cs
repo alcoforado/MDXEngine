@@ -9,7 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace MDXEngine
 {
 
-    internal enum DrawInfoType { COMMAND_SEQUENCE, SHAPE_GROUP, SHAPE, ROOT }
+    internal enum DrawInfoType { SHAPE_GROUP, SHAPE, ROOT }
 
     internal interface IDrawTreeAction
     {
@@ -74,7 +74,7 @@ namespace MDXEngine
             
         }
         
-        
+        /*
         static public DrawInfo<T> CreateCommandSequence(IDrawTreeAction action)
         {
             return new DrawInfo<T>
@@ -88,7 +88,7 @@ namespace MDXEngine
 
             };
         }
-
+        */
         static public DrawInfo<T> CreateShape(IShape<T> shape)
         {
             return new DrawInfo<T>
