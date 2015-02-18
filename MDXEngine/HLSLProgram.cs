@@ -116,9 +116,12 @@ namespace MDXEngine
             }
             throw new Exception(String.Format("Texture Slot with Name {0} does not exist",name));
         }
-        
-        
 
+
+        public bool IsCurrent(IDxContext dx)
+        {
+            return dx.CurrentProgram == this;
+        }
 
         
         //TODO: Implement Set Texture given a variable name
