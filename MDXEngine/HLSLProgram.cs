@@ -59,7 +59,7 @@ namespace MDXEngine
             _pixelReflection = new ShaderReflection(pixelShaderByteCode);
 
 
-            //Check Texture Slots
+            //Create Texture Slots
             TextureSlots = new List<TextureSlot>();
 
             var nSlots = _pixelReflection.Description.BoundResources;
@@ -103,6 +103,12 @@ namespace MDXEngine
             var nSlots = _pixelReflection.InterfaceSlotCount;
 
         }
+
+        public void SetTexture(int slot, Texture texture)
+        {
+            
+        }
+
 
 
     }

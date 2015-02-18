@@ -65,7 +65,7 @@ namespace MDXEngine
 
                                 break;
                             }
-                        case DrawInfoType.COMMAND_SEQUENCE:
+                        case DrawInfoType.ROOT:
                             {
                                 info.SizeI = info.SizeV = 0;
                                 foreach (var child in node.GetChilds())
@@ -116,7 +116,7 @@ namespace MDXEngine
 
         public DrawTree(int nVertices = 0, int nIndices = 0)
         {
-            _root = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateCommandSequence());
+            _root = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateRoot());
            
         }
 
@@ -192,6 +192,8 @@ namespace MDXEngine
                 var node = child.GetData();
                 if (child.GetData().Type == DrawInfoType.SHAPE_GROUP)
                 {
+                    node.ExecuteAction();
+
                     switch (node.GetTopology())
                     {
                         case TopologyType.TRIANGLES:
