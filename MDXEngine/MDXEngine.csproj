@@ -63,6 +63,7 @@
     <Compile Include="IShader.cs" />
     <Compile Include="ITEX.cs" />
     <Compile Include="ITopology2D.cs" />
+    <Compile Include="MayNotExist.cs" />
     <Compile Include="Painters\CyclicColorizer.cs" />
     <Compile Include="Painters\GridTextureMapping.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
