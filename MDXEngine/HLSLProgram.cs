@@ -21,7 +21,7 @@ namespace MDXEngine
         public interface ITextureSlot
         {
             Texture Texture { get; }
-            int Slot { get;  }
+            int Slot { get; }
             string Name { get; }
         }
 
@@ -48,11 +48,11 @@ namespace MDXEngine
         private IDxContext _dx;
 
         internal VertexShader VertexShader { get { return _vertexShader; } }
-        internal PixelShader PixelShader {get { return _pixelShader; }}
+        internal PixelShader PixelShader { get { return _pixelShader; } }
         internal InputLayout InputLayout { get { return _layout; } }
 
 
-        public List<TextureSlot> TextureSlots { get; private set; } 
+        public List<TextureSlot> TextureSlots { get; private set; }
         public InputLayout GetLayout() { return _layout; }
 
         public HLSLProgram(IDxContext dx, String program, InputElement[] elems)
@@ -61,7 +61,7 @@ namespace MDXEngine
             var vertexShaderByteCode = ShaderBytecode.Compile(program, "VS", "vs_4_0");
             _vertexShader = new VertexShader(device, vertexShaderByteCode);
 
-            
+
             var pixelShaderByteCode = ShaderBytecode.Compile(program, "PS", "ps_4_0");
             _pixelShader = new PixelShader(device, pixelShaderByteCode);
 
@@ -71,7 +71,7 @@ namespace MDXEngine
             _layout = new InputLayout(device, signature, elems);
 
 
-            _vertexReflection = new ShaderReflection( vertexShaderByteCode);
+            _vertexReflection = new ShaderReflection(vertexShaderByteCode);
             _pixelReflection = new ShaderReflection(pixelShaderByteCode);
 
 
@@ -105,7 +105,7 @@ namespace MDXEngine
             _layout.Dispose();
         }
 
-       
+
 
         public int GetTextureSlot(String name)
         {
@@ -115,12 +115,12 @@ namespace MDXEngine
                 if (TextureSlots[i].Name == name)
                     return TextureSlots[i].Slot;
             }
-            throw new Exception(String.Format("Texture Slot with Name {0} does not exist",name));
+            throw new Exception(String.Format("Texture Slot with Name {0} does not exist", name));
         }
 
-        public ITextureSlot GetTextureSlot(int slot)
+        public MayNotExist<ITextureSlot> GetTextureSlot(int slot)
         {
-            return TextureSlots.Find(x => x.Slot == slot);
+            return new MayNotExist<ITextureSlot>(TextureSlots.Find(x => x.Slot == slot));
         }
 
 
@@ -135,27 +135,24 @@ namespace MDXEngine
             if (!IsCurrent())
                 _dx.CurrentProgram = this;
         }
-        
-        //TODO: Implement Set Texture given a variable name
-        public void SetTexture(string variableName, Texture texture)
-        {
-            var nSlots = _pixelReflection.InterfaceSlotCount;
-
-        }
-
-        public void SetTexture(int textureIndex, Texture texture)
-        {
-            
-        }
 
 
-        public void LoadTexture(int textureSlot, Texture texture)
+
+
+        public void LoadTexture(int textureSlotID, Texture texture)
         {
             if (!IsCurrent())
                 throw new Exception("HLSLProgram is not the current loaded program");
-            System.Diagnostics.Debug.Assert(this.GetTextureSlot(textureSlot) != null);
-            
-            _dx.DeviceContext.PixelShader.SetShaderResource(textureSlot,);
+            var slot = GetTextureSlot(textureSlotID);
+            if (slot.Exists)
+                _dx.DeviceContext.PixelShader.SetShaderResource(textureSlotID, texture.GetResourceView());
+            else
+                throw new Exception(String.Format("Texture Slot {0} does not exist", textureSlotID));
+        }
+
+        private bool TextureSlotExists(int textureSlot)
+        {
+            return GetTextureSlot(textureSlot) != null;
         }
     }
 

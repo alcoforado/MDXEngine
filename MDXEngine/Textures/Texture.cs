@@ -24,7 +24,10 @@ namespace MDXEngine.Textures
             _resource.Dispose();
         }
 
-
+        public ShaderResourceView GetResourceView()
+        {
+            return _view;
+        }
 
     }
 }
