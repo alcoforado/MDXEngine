@@ -61,6 +61,7 @@
     <Compile Include="HLSLResources.cs" />
     <Compile Include="IDrawTreeAction.cs" />
     <Compile Include="IShader.cs" />
+    <Compile Include="IShaderResource.cs" />
     <Compile Include="ITEX.cs" />
     <Compile Include="ITopology2D.cs" />
     <Compile Include="MayNotExist.cs" />

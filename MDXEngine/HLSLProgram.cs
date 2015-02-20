@@ -145,7 +145,9 @@ namespace MDXEngine
                 throw new Exception("HLSLProgram is not the current loaded program");
             var slot = GetTextureSlot(textureSlotID);
             if (slot.Exists)
+            {
                 _dx.DeviceContext.PixelShader.SetShaderResource(textureSlotID, texture.GetResourceView());
+            }
             else
                 throw new Exception(String.Format("Texture Slot {0} does not exist", textureSlotID));
         }

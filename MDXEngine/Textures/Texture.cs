@@ -7,7 +7,7 @@ using SharpDX;
 using SharpDX.Direct3D11;
 namespace MDXEngine.Textures
 {
-    public class Texture :  ITexture
+    public class Texture :  ITexture, IShaderResource
     {
         private SharpDX.Direct3D11.Texture2D _resource;
         private SharpDX.Direct3D11.ShaderResourceView _view;
@@ -29,5 +29,9 @@ namespace MDXEngine.Textures
             return _view;
         }
 
+        public void Load(HLSLProgram program, int slotId)
+        {
+            program.LoadTexture(slotId,this);
+        }
     }
 }

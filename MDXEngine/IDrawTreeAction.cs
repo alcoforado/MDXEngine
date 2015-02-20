@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using MDXEngine.Textures;
@@ -13,26 +14,38 @@ namespace MDXEngine
         bool TryMerge(IDrawTreeAction action);
     }
 
-    internal class DrawTreeActionLoadTexture
+
+    internal class ResourceLoadCommand
     {
-        private Texture _texture;
-        private int _textureSlot;
+       public  int SlotId { get; set; }
+       
+       public IShaderResource Resource { get; set; }
+    }
+
+
+    internal class LoadResourcesDrawTreeAction
+    {
+        private Dictionary<int, ResourceLoadCommand> _loadCommands;
         private HLSLProgram _program;
 
-        public DrawTreeActionLoadTexture(HLSLProgram program,String name,Texture texture)
+        public LoadResourcesDrawTreeAction(HLSLProgram program)
         {
             _program = program;
-            _texture = texture;
-            _textureSlot=_program.GetTextureSlot(name);
-
+            _loadCommands = new Dictionary<int, ResourceLoadCommand>();
         }
 
         public void Execute()
         {
-            /*
-            _program.LoadTexture(_textureSlot, _texture);*/
+            foreach (var pair in _loadCommands)
+            {
+                var elem = pair.Value;
+                elem.Resource.Load(_program, elem.SlotId);
+            }
         }
 
+
+        
+       
 
     }
 
