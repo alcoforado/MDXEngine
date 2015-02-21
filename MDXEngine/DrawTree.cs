@@ -1,24 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using SharpDX;
-using SharpDX.Direct3D11;
 using SharpDX.Direct3D;
+using SharpDX.Direct3D11;
+using SharpDX.DXGI;
 using Buffer = SharpDX.Direct3D11.Buffer;
+
 namespace MDXEngine
 {
     public class DrawTree<T> : IDisposable where T : struct
     {
-        internal NTreeNode<DrawInfo<T>> _root;
-        internal T[] _vertices;
-        internal int[] _indices;
+        private readonly NTreeNode<DrawInfo<T>> _root;
+        private  T[] _vertices;
+        private int[] _indices;
         Buffer _vI;
         Buffer _vV;
 
 
+
+        public  T[] Vertices { get { return _vertices; } }
+        public int[] Indices { get { return _indices; } }
 
         internal NTreeNodeIterator<DrawInfo<T>> BeginIterator()
         {
@@ -28,8 +29,8 @@ namespace MDXEngine
 
         internal void ComputeSizes()
         {
-            int OffI = 0;
-            int OffV = 0;
+            int offI = 0;
+            int offV = 0;
             _root.ForAllInOrder(
                 node =>
                 {
@@ -42,10 +43,10 @@ namespace MDXEngine
                             {
                                 info.SizeI = info.Shape.NIndices();
                                 info.SizeV = info.Shape.NVertices();
-                                info.OffI = OffI;
-                                info.OffV = OffV;
-                                OffI += info.SizeI;
-                                OffV += info.SizeV;
+                                info.OffI = offI;
+                                info.OffV = offV;
+                                offI += info.SizeI;
+                                offV += info.SizeV;
                                 break;
                             }
                         case DrawInfoType.SHAPE_GROUP:
@@ -102,12 +103,12 @@ namespace MDXEngine
             if (_indices.Length != 0)
             {
 
-                _vI = Buffer.Create<int>(context.Device, BindFlags.IndexBuffer, _indices);
-                context.DeviceContext.InputAssembler.SetIndexBuffer(_vI, SharpDX.DXGI.Format.R32_UInt, 0);
+                _vI = Buffer.Create(context.Device, BindFlags.IndexBuffer, _indices);
+                context.DeviceContext.InputAssembler.SetIndexBuffer(_vI, Format.R32_UInt, 0);
             }
             if (_vertices.Length != 0)
             {
-                _vV = Buffer.Create<T>(context.Device, BindFlags.VertexBuffer, _vertices);
+                _vV = Buffer.Create(context.Device, BindFlags.VertexBuffer, _vertices);
                 context.DeviceContext.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(_vV, Utilities.SizeOf<T>(), 0));
             }
         }
@@ -116,16 +117,18 @@ namespace MDXEngine
 
         public DrawTree(int nVertices = 0, int nIndices = 0)
         {
+
             _root = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateRoot());
-           
+            _vertices=new T[nVertices];
+            _indices = new int[nIndices];
         }
 
         public void Add(IShape<T> shape)
         {
-            var drawShape = DrawInfo<T>.CreateShape(shape);
+            
             foreach (var node in _root.GetChilds())
             {
-                var drawInfo = node.GetData();
+                
                 if (node.GetData().CanHaveShapeAsChild(shape))
                 {
                     //Add the shape in the tree
@@ -148,7 +151,7 @@ namespace MDXEngine
         public void FullSyncTree()
         {
 
-            this.ComputeSizes();
+            ComputeSizes();
 
            
             

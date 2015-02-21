@@ -302,7 +302,7 @@ namespace UnitTests
             var tree = new DrawTree<ColorVerticeData>();
             tree.Add(mShapeI5V3.Object);
             tree.FullSyncTree();
-            tree._indices.Should().Equal(new int[]{0,1,2,3,4},(int left,int right) => left==right);
+            tree.Indices.Should().Equal(new int[]{0,1,2,3,4},(int left,int right) => left==right);
             mShapeI5V3.Verify(x => x.Write(It.IsAny<IArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()));
         }
 
@@ -334,7 +334,7 @@ namespace UnitTests
                 new ColorVerticeData(){Position=new Vector3(2f)}
             };
 
-            tree._vertices.Should().Equal(result, (left,right) => left.Position == right.Position);
+            tree.Vertices.Should().Equal(result, (left,right) => left.Position == right.Position);
             mShapeI5V3.Verify(x => x.Write(It.IsAny<IArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()));
         }
 
