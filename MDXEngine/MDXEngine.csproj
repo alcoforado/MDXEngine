@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="CommandsSequence.cs" />
     <Compile Include="HLSLProgram.cs" />
     <Compile Include="HLSLResources.cs" />
     <Compile Include="IDrawTreeAction.cs" />

@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using MDXEngine.Textures;
 using SharpDX.D3DCompiler;
-using SharpDX;
-using SharpDX.DXGI;
 using SharpDX.Direct3D11;
-using Device = SharpDX.Direct3D11.Device;
+
 namespace MDXEngine
 {
 
@@ -45,7 +38,7 @@ namespace MDXEngine
         readonly InputLayout _layout;
         private readonly ShaderReflection _vertexReflection;
         private readonly ShaderReflection _pixelReflection;
-        private IDxContext _dx;
+        private readonly IDxContext _dx;
 
         internal VertexShader VertexShader { get { return _vertexShader; } }
         internal PixelShader PixelShader { get { return _pixelShader; } }
@@ -79,7 +72,6 @@ namespace MDXEngine
             TextureSlots = new List<TextureSlot>();
 
             var nSlots = _pixelReflection.Description.BoundResources;
-            int slotI = 0;
             for (int i = 0; i < nSlots; i++)
             {
                 var desc = _pixelReflection.GetResourceBindingDescription(i);
@@ -107,15 +99,9 @@ namespace MDXEngine
 
 
 
-        public int GetTextureSlot(String name)
+        public MayNotExist<ITextureSlot> GetTextureSlot(String name)
         {
-            int i = 0;
-            for (; i < TextureSlots.Count; i++)
-            {
-                if (TextureSlots[i].Name == name)
-                    return TextureSlots[i].Slot;
-            }
-            throw new Exception(String.Format("Texture Slot with Name {0} does not exist", name));
+            return new MayNotExist<ITextureSlot>(TextureSlots.Find(x => x.Name == name));
         }
 
         public MayNotExist<ITextureSlot> GetTextureSlot(int slot)
@@ -139,23 +125,22 @@ namespace MDXEngine
 
 
 
-        public void LoadTexture(int textureSlotID, Texture texture)
+        public void LoadTexture(int textureSlotId, Texture texture)
         {
             if (!IsCurrent())
                 throw new Exception("HLSLProgram is not the current loaded program");
-            var slot = GetTextureSlot(textureSlotID);
+            var slot = GetTextureSlot(textureSlotId);
             if (slot.Exists)
             {
-                _dx.DeviceContext.PixelShader.SetShaderResource(textureSlotID, texture.GetResourceView());
+                _dx.DeviceContext.PixelShader.SetShaderResource(textureSlotId, texture.GetResourceView());
             }
             else
-                throw new Exception(String.Format("Texture Slot {0} does not exist", textureSlotID));
+                throw new Exception(String.Format("Texture Slot {0} does not exist", textureSlotId));
         }
 
-        private bool TextureSlotExists(int textureSlot)
-        {
-            return GetTextureSlot(textureSlot) != null;
-        }
+      
+
+       
     }
 
 }
