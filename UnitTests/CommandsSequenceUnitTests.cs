@@ -27,9 +27,9 @@ namespace UnitTests
             var command = new CommandsSequence(_hlslProgram);
             var texture = new Texture(Utilities.GetDxContext(), "./Images/fox.jpg");
 
-            command.TryAddCommand("texture1", texture).Should().BeTrue();
-            command.TryAddCommand("texture1", texture).Should().BeTrue();
-            command.AddCommand("texture1", texture);
+            command.TryAddLoadCommand("texture1", texture).Should().BeTrue();
+            command.TryAddLoadCommand("texture1", texture).Should().BeTrue();
+            command.AddLoadCommand("texture1", texture);
         }
 
         [TestMethod]
@@ -39,9 +39,9 @@ namespace UnitTests
             var texture1 = new Texture(Utilities.GetDxContext(), "./Images/fox.jpg");
             var texture2 = new Texture(Utilities.GetDxContext(), "./Images/fox.jpg");
            
-            command.TryAddCommand("texture1", texture1).Should().BeTrue();
-            command.TryAddCommand("texture1", texture2).Should().BeFalse();
-            command.Invoking(x=>x.AddCommand("texture1", texture2)).ShouldThrow<Exception>();
+            command.TryAddLoadCommand("texture1", texture1).Should().BeTrue();
+            command.TryAddLoadCommand("texture1", texture2).Should().BeFalse();
+            command.Invoking(x=>x.AddLoadCommand("texture1", texture2)).ShouldThrow<Exception>();
         }
 
 
@@ -54,8 +54,8 @@ namespace UnitTests
             var texture1 = new Texture(Utilities.GetDxContext(), "./Images/fox.jpg");
             var texture2 = new Texture(Utilities.GetDxContext(), "./Images/fox.jpg");
 
-            command1.TryAddCommand("texture1", texture1).Should().BeTrue();
-            command2.TryAddCommand("texture2", texture2).Should().BeTrue();
+            command1.TryAddLoadCommand("texture1", texture1).Should().BeTrue();
+            command2.TryAddLoadCommand("texture2", texture2).Should().BeTrue();
             command1.CanMerge(command2).Should().BeTrue();
             command2.CanMerge(command1).Should().BeTrue();
             command1.TryMerge(command2).Should().BeTrue();
@@ -71,8 +71,8 @@ namespace UnitTests
             var res2 = new Mock<IShaderResource>();
 
           
-            command.TryAddCommand("texture1", res1.Object).Should().BeTrue();
-            command.TryAddCommand("texture2", res2.Object).Should().BeTrue();
+            command.TryAddLoadCommand("texture1", res1.Object).Should().BeTrue();
+            command.TryAddLoadCommand("texture2", res2.Object).Should().BeTrue();
 
             command.Execute();
 

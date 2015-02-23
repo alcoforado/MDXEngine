@@ -75,7 +75,7 @@ namespace MDXEngine
         }
 
 
-        public bool TryAddCommand(string varName,IShaderResource resource)
+        public bool TryAddLoadCommand(string varName,IShaderResource resource)
         {
             var result = _program.GetTextureSlot(varName);
             Debug.Assert(result.Exists);
@@ -93,9 +93,9 @@ namespace MDXEngine
             return true;
         }
 
-        public void AddCommand(string varName, IShaderResource resource)
+        public void AddLoadCommand(string varName, IShaderResource resource)
         {
-            if (!TryAddCommand(varName, resource))
+            if (!TryAddLoadCommand(varName, resource))
             {
                 throw new Exception("Could not add command to the Sequence");
             }

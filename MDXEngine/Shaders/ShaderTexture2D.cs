@@ -49,8 +49,7 @@ namespace MDXEngine.Shaders
         public void Add(IShape<VerticeTexture2D> shape, Texture texture)
         {
             var command = new CommandsSequence(_program);
-            command.AddCommand("texture", texture);
-        
+            command.AddLoadCommand("texture", texture);
             _root.Add(shape,command);
         
         
