@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using MDXEngine.Textures;
 
 namespace MDXEngine
@@ -12,9 +13,9 @@ namespace MDXEngine
     }
 
 
-    internal class CommandsSequence
+    public class CommandsSequence
     {
-        private Dictionary<int, ResourceLoadCommand> _loadCommands;
+        private readonly Dictionary<int, ResourceLoadCommand> _loadCommands;
         private readonly HLSLProgram _program;
 
         public CommandsSequence(HLSLProgram program)
@@ -22,6 +23,7 @@ namespace MDXEngine
             _program = program;
             _loadCommands = new Dictionary<int, ResourceLoadCommand>();
         }
+
 
         public void Execute()
         {
@@ -31,6 +33,46 @@ namespace MDXEngine
                 elem.Resource.Load(_program, elem.SlotId);
             }
         }
+
+        public bool CanAddLoadCommand(int slotId,IShaderResource resource)
+        {
+            if (_loadCommands.ContainsKey(slotId))
+            {
+                return _loadCommands[slotId].Resource == resource;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
+
+        public bool CanMerge(CommandsSequence commands )
+        {
+            return _program == commands._program && commands._loadCommands.All(elem => this.CanAddLoadCommand(elem.Value.SlotId, elem.Value.Resource));
+        }
+
+        public bool TryMerge(CommandsSequence commands)
+        {
+            if (CanMerge(commands))
+            {
+                foreach (var elem in commands._loadCommands)
+                {
+                    if (_loadCommands.ContainsKey(elem.Key))
+                        Debug.Assert(_loadCommands[elem.Key].Resource == elem.Value.Resource);
+                    else
+                        _loadCommands[elem.Value.SlotId] = new ResourceLoadCommand()
+                        {
+                            Resource = elem.Value.Resource,
+                            SlotId = elem.Value.SlotId
+                        };
+                }
+                return true;
+            }
+            return false;
+        }
+
 
         public bool TryAddCommand(string varName,Texture texture)
         {
@@ -54,7 +96,4 @@ namespace MDXEngine
        
 
     }
-
-
-   
 }

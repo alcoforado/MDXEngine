@@ -11,14 +11,14 @@ namespace MDXEngine
     public class DrawTree<T> : IDisposable where T : struct
     {
         private readonly NTreeNode<DrawInfo<T>> _root;
-        private  T[] _vertices;
+        private T[] _vertices;
         private int[] _indices;
         Buffer _vI;
         Buffer _vV;
 
 
 
-        public  T[] Vertices { get { return _vertices; } }
+        public T[] Vertices { get { return _vertices; } }
         public int[] Indices { get { return _indices; } }
 
         internal NTreeNodeIterator<DrawInfo<T>> BeginIterator()
@@ -119,31 +119,42 @@ namespace MDXEngine
         {
 
             _root = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateRoot());
-            _vertices=new T[nVertices];
+            _vertices = new T[nVertices];
             _indices = new int[nIndices];
         }
 
-        public void Add(IShape<T> shape)
+        public void Add(IShape<T> shape, CommandsSequence commands = null)
         {
-            
+
             foreach (var node in _root.GetChilds())
             {
-                
-                if (node.GetData().CanHaveShapeAsChild(shape))
+                var shapeGroup = node.GetData();
+                if (shapeGroup.CanHaveShapeAsChild(shape))
                 {
-                    //Add the shape in the tree
-                    var newNode = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateShape(shape));
-                    node.AppendChild(newNode);
-                    newNode.ForAllParents(nd => nd.GetData().Changed = true);
-                    return;
+                    //Check if the command Sequence is compatible
+                    if (commands == null || shapeGroup.CanAddCommandsSequence(commands))
+                    {
+                        if (commands != null)
+                            shapeGroup.AddCommandsSequence(commands);
+
+                        //Add the shape in the shape group tree
+                        var newNode = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateShape(shape));
+                        node.AppendChild(newNode);
+                        newNode.ForAllParents(nd => nd.GetData().Changed = true);
+                        return;
+                    }
+
                 }
             }
             //If we reach here, there is no group to add this shape.
-            //Create one
+            //Create one]
+
             var shapeNode = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateShape(shape));
             var groupNode = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateGroupForShape(shape));
+            
             groupNode.AppendChild(shapeNode);
             _root.AppendChild(groupNode);
+            
             shapeNode.ForAllParents(nd => nd.GetData().Changed = true);
         }
 
@@ -153,8 +164,8 @@ namespace MDXEngine
 
             ComputeSizes();
 
-           
-            
+
+
             _vertices = new T[_root.GetData().SizeV];
             _indices = new int[_root.GetData().SizeI];
 
