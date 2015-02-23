@@ -8,7 +8,7 @@ namespace MDXEngine.Textures
 {
     public class TextureRegion
     {
-        ITexture _texture;
+        Texture _texture;
 
 
         public Vector2 UL { get; private set; }
@@ -20,7 +20,7 @@ namespace MDXEngine.Textures
 
          
 
-        public TextureRegion(ITexture texture,Vector2 p,Vector2 q)
+        public TextureRegion(Texture texture,Vector2 p,Vector2 q)
         {
             this.UL = new Vector2(Math.Min(p.X,q.X),Math.Min(p.Y,q.Y));
             this.BR = new Vector2(Math.Max(p.X,q.X),Math.Max(p.Y,q.Y));

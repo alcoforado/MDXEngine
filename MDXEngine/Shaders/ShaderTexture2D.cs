@@ -15,7 +15,7 @@ namespace MDXEngine.Shaders
     {
         IDxContext _dx;
         HLSLProgram _program;
-        DrawTree<Color2D> _root;
+        DrawTree<VerticeTexture2D> _root;
 
         public ShaderTexture2D(IDxContext dxContext)
         {
@@ -28,7 +28,7 @@ namespace MDXEngine.Shaders
                     });
 
 
-            _root = new DrawTree<Color2D>();
+            _root = new DrawTree<VerticeTexture2D>();
 
         }
 
@@ -48,7 +48,12 @@ namespace MDXEngine.Shaders
 
         public void Add(IShape<VerticeTexture2D> shape, Texture texture)
         {
-           
+            var command = new CommandsSequence(_program);
+            command.AddCommand("texture", texture);
+        
+            _root.Add(shape,command);
+        
+        
         }
 
     }

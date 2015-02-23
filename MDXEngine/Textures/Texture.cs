@@ -7,7 +7,7 @@ using SharpDX;
 using SharpDX.Direct3D11;
 namespace MDXEngine.Textures
 {
-    public class Texture :  ITexture, IShaderResource
+    public class Texture :  IShaderResource
     {
         private SharpDX.Direct3D11.Texture2D _resource;
         private SharpDX.Direct3D11.ShaderResourceView _view;

@@ -148,13 +148,10 @@ namespace MDXEngine
             }
             //If we reach here, there is no group to add this shape.
             //Create one]
-
             var shapeNode = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateShape(shape));
-            var groupNode = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateGroupForShape(shape));
-            
+            var groupNode = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateGroupForShape(shape,commands));
             groupNode.AppendChild(shapeNode);
             _root.AppendChild(groupNode);
-            
             shapeNode.ForAllParents(nd => nd.GetData().Changed = true);
         }
 

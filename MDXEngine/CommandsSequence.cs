@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using MDXEngine.Textures;
@@ -92,8 +93,18 @@ namespace MDXEngine
             return true;
         }
 
-        
-       
+        public void AddCommand(string varName, Texture texture)
+        {
+            if (!TryAddCommand(varName, texture))
+            {
+                throw new Exception("Could not add command to the Sequence");
+            }
+            
+        }
 
+        public int Count
+        {
+            get { return _loadCommands.Count; }
+        }
     }
 }
