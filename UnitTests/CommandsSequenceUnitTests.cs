@@ -3,6 +3,7 @@ using FluentAssertions;
 using MDXEngine;
 using MDXEngine.Textures;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 
 namespace UnitTests
@@ -60,6 +61,24 @@ namespace UnitTests
             command1.TryMerge(command2).Should().BeTrue();
             command1.Count.Should().Be(2);
            
+        }
+
+        [TestMethod]
+        public void CommandsSequence_Execute_Should_Load_All_Resources()
+        {
+            var command = new CommandsSequence(_hlslProgram);
+            var res1 = new Mock<IShaderResource>();
+            var res2 = new Mock<IShaderResource>();
+
+          
+            command.TryAddCommand("texture1", res1.Object).Should().BeTrue();
+            command.TryAddCommand("texture2", res2.Object).Should().BeTrue();
+
+            command.Execute();
+
+            res1.Verify(x => x.Load(It.IsAny<HLSLProgram>(), It.IsAny<int>()));
+            res2.Verify(x => x.Load(It.IsAny<HLSLProgram>(), It.IsAny<int>()));
+
         }
 
 

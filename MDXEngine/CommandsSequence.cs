@@ -75,7 +75,7 @@ namespace MDXEngine
         }
 
 
-        public bool TryAddCommand(string varName,Texture texture)
+        public bool TryAddCommand(string varName,IShaderResource resource)
         {
             var result = _program.GetTextureSlot(varName);
             Debug.Assert(result.Exists);
@@ -83,19 +83,19 @@ namespace MDXEngine
 
             if (_loadCommands.ContainsKey(slot.Slot))
             {
-                return _loadCommands[slot.Slot].Resource == texture;
+                return _loadCommands[slot.Slot].Resource == resource;
             }
             _loadCommands[slot.Slot] = new ResourceLoadCommand()
             {
                 SlotId = slot.Slot,
-                Resource = texture
+                Resource = resource
             };
             return true;
         }
 
-        public void AddCommand(string varName, Texture texture)
+        public void AddCommand(string varName, IShaderResource resource)
         {
-            if (!TryAddCommand(varName, texture))
+            if (!TryAddCommand(varName, resource))
             {
                 throw new Exception("Could not add command to the Sequence");
             }
