@@ -142,6 +142,11 @@ namespace TestApp
             this.SetCurrentApp(app);
         }
 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
       
        
 

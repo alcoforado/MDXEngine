@@ -55,6 +55,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.textBox1);
+            this.splitContainer1.Panel2Collapsed = true;
             this.splitContainer1.Size = new System.Drawing.Size(469, 431);
             this.splitContainer1.SplitterDistance = 327;
             this.splitContainer1.TabIndex = 0;
@@ -67,6 +68,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(469, 100);
             this.textBox1.TabIndex = 0;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // menuStrip1
             // 
@@ -91,21 +93,21 @@
             // fractalCubeToolStripMenuItem
             // 
             this.fractalCubeToolStripMenuItem.Name = "fractalCubeToolStripMenuItem";
-            this.fractalCubeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fractalCubeToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.fractalCubeToolStripMenuItem.Text = "Fractal Cube";
             this.fractalCubeToolStripMenuItem.Click += new System.EventHandler(this.fractalCubeToolStripMenuItem_Click);
             // 
             // rGBTriangleToolStripMenuItem
             // 
             this.rGBTriangleToolStripMenuItem.Name = "rGBTriangleToolStripMenuItem";
-            this.rGBTriangleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rGBTriangleToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.rGBTriangleToolStripMenuItem.Text = "RGB Triangle";
             this.rGBTriangleToolStripMenuItem.Click += new System.EventHandler(this.rGBTriangleToolStripMenuItem_Click);
             // 
             // loadTextureToolStripMenuItem
             // 
             this.loadTextureToolStripMenuItem.Name = "loadTextureToolStripMenuItem";
-            this.loadTextureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadTextureToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.loadTextureToolStripMenuItem.Text = "LoadTexture";
             this.loadTextureToolStripMenuItem.Click += new System.EventHandler(this.loadTextureToolStripMenuItem_Click);
             // 
