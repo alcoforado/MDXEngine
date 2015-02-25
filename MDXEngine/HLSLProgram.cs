@@ -77,7 +77,7 @@ namespace MDXEngine
                 var desc = _pixelReflection.GetResourceBindingDescription(i);
                 if (desc.Type == ShaderInputType.Texture)
                 {
-                    TextureSlots.Add(new TextureSlot(i, desc.Name));
+                    TextureSlots.Add(new TextureSlot(desc.BindPoint, desc.Name));
                 }
             }
 
@@ -129,10 +129,13 @@ namespace MDXEngine
         {
             if (!IsCurrent())
                 throw new Exception("HLSLProgram is not the current loaded program");
-            var slot = GetTextureSlot(textureSlotId);
-            if (slot.Exists)
+            var slot = TextureSlots.Find(x => x.Slot == textureSlotId);
+            
+            
+            if (slot!=null)
             {
-                _dx.DeviceContext.PixelShader.SetShaderResource(textureSlotId, texture.GetResourceView());
+                    slot.Texture = texture;
+                    _dx.DeviceContext.PixelShader.SetShaderResource(textureSlotId, slot.Texture.GetResourceView());
             }
             else
                 throw new Exception(String.Format("Texture Slot {0} does not exist", textureSlotId));

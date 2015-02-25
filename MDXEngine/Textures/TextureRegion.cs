@@ -28,6 +28,14 @@ namespace MDXEngine.Textures
             Dimensions = BR - UL;
         }
 
+        public TextureRegion(Texture texture)
+        {
+            this.UL = new Vector2(0f,0f);
+            this.BR = new Vector2(1f,1f);
+            _texture = texture;
+            Dimensions = BR - UL;
+        }
+
 
 
     }

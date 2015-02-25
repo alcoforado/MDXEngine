@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using MDXEngine;
 using MDXEngine.Shaders;
+using MDXEngine.Shapes;
 using MDXEngine.Textures;
+using SharpDX;
 
 namespace TestApp.Actions
 {
@@ -21,6 +23,10 @@ namespace TestApp.Actions
                 return;
 
             var texture = new Texture(dx,file);
+
+            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new TextureRegion(texture));
+
+            shaderTexture.Add(shape,texture);
 
         }
 

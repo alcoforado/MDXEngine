@@ -16,9 +16,9 @@ namespace MDXEngine.Shapes
         private TextureRegion _texture;
 
 
-        public Sprite(Vector2 UR, float width, float height, TextureRegion texture)
+        public Sprite(Vector2 BL, float width, float height, TextureRegion texture)
         {
-            _p = UR;
+            _p = BL;
             _width = width;
             _height = height;
             _texture = texture;
@@ -30,20 +30,23 @@ namespace MDXEngine.Shapes
             vV[0] = new VerticeTexture2D()
             {
                 Position2D = new Vector2(_p.X, _p.Y),
-                TEX = _texture.UR
+                TEX = _texture.BL
             };
             vV[1]=new VerticeTexture2D(){
-                Position2D = new Vector2(_p.X,_p.Y+_height), 
+                Position2D = new Vector2(_p.X+_width,_p.Y), 
                 TEX= _texture.BR
             };
             vV[2]=new VerticeTexture2D(){
                 Position2D = new Vector2(_p.X+_width,_p.Y+_height), 
-                TEX= _texture.BL
+                TEX= _texture.UR
             };
             vV[3]=new VerticeTexture2D(){
-                Position2D = new Vector2(_p.X+_width,_p.Y), 
+                Position2D = new Vector2(_p.X,_p.Y+_height), 
                 TEX= _texture.UL
             };
+
+            vI.CopyFrom(new int[]{0,1,3,1,2,3});
+
         }
 
 

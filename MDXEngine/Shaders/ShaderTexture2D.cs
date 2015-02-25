@@ -35,6 +35,20 @@ namespace MDXEngine.Shaders
         public void Draw(IDxContext dx)
         {
             dx.CurrentProgram = _program;
+           var sampler = new SamplerState(dx.Device, new SamplerStateDescription()
+            {
+                Filter = Filter.MinMagMipPoint,
+                AddressU = TextureAddressMode.Wrap,
+                AddressV = TextureAddressMode.Wrap,
+                AddressW = TextureAddressMode.Wrap,
+                BorderColor = Color.Black,
+                ComparisonFunction = Comparison.Never,
+                MaximumAnisotropy = 16,
+                MipLodBias = 0,
+                MinimumLod = 0,
+                MaximumLod = 16,
+            });
+            _dx.DeviceContext.PixelShader.SetSampler(0,sampler);
             _root.Draw(dx);
 
         }
@@ -45,15 +59,13 @@ namespace MDXEngine.Shaders
             Utilities.Dispose(ref _program);
         }
 
-
         public void Add(IShape<VerticeTexture2D> shape, Texture texture)
         {
             var command = new CommandsSequence(_program);
-            command.AddLoadCommand("texture", texture);
+            command.AddLoadCommand("gTexture", texture);
             _root.Add(shape,command);
-        
-        
         }
+
 
     }
 }

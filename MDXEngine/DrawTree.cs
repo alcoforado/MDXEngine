@@ -217,18 +217,14 @@ namespace MDXEngine
                                 else
                                 {
                                     dx.DeviceContext.Draw(node.SizeV, node.OffV);
-
-                                }
+                               }
                                 break;
                             }
                         default:
                             throw new Exception("Draw Tree, Topology not supported yet");
                     }
-
                 }
             }
-
-
         }
 
     }

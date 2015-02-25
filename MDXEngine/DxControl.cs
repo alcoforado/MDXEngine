@@ -52,7 +52,7 @@ namespace MDXEngine
             //Set right hand convention
             _rasterizerState = new RasterizerState(_device, new RasterizerStateDescription
             {
-                CullMode=CullMode.Back,
+                CullMode=CullMode.None,
                 FillMode=FillMode.Solid,
                 IsAntialiasedLineEnabled=true,
                 IsFrontCounterClockwise=true,
