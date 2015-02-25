@@ -23,7 +23,8 @@ namespace MDXEngine.Textures
         public void Dispose()
         {
             _resource.Dispose();
-            
+            _view.Dispose();
+
         }
 
 

@@ -176,9 +176,11 @@ namespace MDXEngine
 
         public void Dispose()
         {
-            _resourceManager.DisposeAllResources();
             foreach (var shd in _shaders)
                 shd.Dispose();
+
+            _resourceManager.DisposeAllResources();
+           
 
             Utilities.Dispose(ref _backBuffer);
             Utilities.Dispose(ref _renderView);
