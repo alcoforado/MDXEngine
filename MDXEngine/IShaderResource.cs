@@ -7,5 +7,6 @@ namespace MDXEngine
     {
         void Load(HLSLProgram program, int slotId);
         ShaderResourceView GetResourceView();
+        bool IsDisposed();
     }
 }

@@ -9,10 +9,12 @@ using Device = SharpDX.Direct3D11.Device;
 
 namespace MDXEngine
 {
+    
     public class DxControl : IDxContext
     {
        private Device _device;
        private readonly Control _renderControl;
+       private readonly ResourcesManager _resourceManager;
        private SwapChain _swapChain;
        private Texture2D _backBuffer;
        private RenderTargetView _renderView;
@@ -22,7 +24,7 @@ namespace MDXEngine
        private RasterizerState _rasterizerState;
        private readonly List<IShader> _shaders;
        private HLSLProgram _hlslProgram;
-       private ResourcesManager _resourceManager;
+      
         private void InitializeDX()
         {
             _desc = new SwapChainDescription
@@ -174,6 +176,10 @@ namespace MDXEngine
 
         public void Dispose()
         {
+            _resourceManager.DisposeAllResources();
+            foreach (var shd in _shaders)
+                shd.Dispose();
+
             Utilities.Dispose(ref _backBuffer);
             Utilities.Dispose(ref _renderView);
             Utilities.Dispose(ref _depthBuffer);
@@ -182,8 +188,8 @@ namespace MDXEngine
             Utilities.Dispose(ref _rasterizerState);
             Utilities.Dispose(ref _device);
            
-            foreach (var shd in _shaders)
-                shd.Dispose();
+
+
         }
     }
 }

@@ -17,16 +17,24 @@ namespace MDXEngine.Textures
             _resource=Texture2D.FromFile<Texture2D>(dx.Device, fileName, ImageLoadInformation.Default);
             _view = new ShaderResourceView(dx.Device,_resource);
             _dx = dx;
+            _dx.ResourcesManager.Add(this);
         }
 
         public void Dispose()
         {
             _resource.Dispose();
+            
         }
+
 
         public ShaderResourceView GetResourceView()
         {
             return _view;
+        }
+
+        public bool IsDisposed()
+        {
+            return _resource.IsDisposed && _view.IsDisposed;
         }
 
         public void Load(HLSLProgram program, int slotId)

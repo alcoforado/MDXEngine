@@ -35,6 +35,7 @@ namespace MDXEngine.Shaders
         public void Draw(IDxContext dx)
         {
             dx.CurrentProgram = _program;
+            /*
            var sampler = new SamplerState(dx.Device, new SamplerStateDescription()
             {
                 Filter = Filter.MinMagMipPoint,
@@ -49,7 +50,8 @@ namespace MDXEngine.Shaders
                 MaximumLod = 16,
             });
             _dx.DeviceContext.PixelShader.SetSampler(0,sampler);
-            _root.Draw(dx);
+            */
+              _root.Draw(dx);
 
         }
 

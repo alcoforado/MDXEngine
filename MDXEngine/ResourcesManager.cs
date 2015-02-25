@@ -23,11 +23,11 @@ namespace MDXEngine
 
         public void DisposeAllResources()
         {
-            foreach (var elem in _resources)
+            foreach (var elem in _resources.Where(elem => !elem.IsDisposed()))
             {
                 elem.Dispose();
             }
+            _resources.Clear();
         }
-
     }
 }
