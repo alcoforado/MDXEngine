@@ -74,6 +74,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="ResourcesManager.cs" />
     <Compile Include="Shaders\ShaderColor2D.cs" />
     <Compile Include="DrawInfo.cs" />
     <Compile Include="DrawTree.cs" />

@@ -22,7 +22,7 @@ namespace MDXEngine
        private RasterizerState _rasterizerState;
        private readonly List<IShader> _shaders;
        private HLSLProgram _hlslProgram;
-      
+       private ResourcesManager _resourceManager;
         private void InitializeDX()
         {
             _desc = new SwapChainDescription
@@ -75,6 +75,7 @@ namespace MDXEngine
         {
             _renderControl=control;
             InitializeDX();
+            _resourceManager = new ResourcesManager();
             _shaders = new List<IShader>();
         }
 
@@ -168,7 +169,9 @@ namespace MDXEngine
             }
             _swapChain.Present(0, PresentFlags.None);
         }
-        
+
+        public ResourcesManager ResourcesManager { get { return _resourceManager; } }
+
         public void Dispose()
         {
             Utilities.Dispose(ref _backBuffer);
