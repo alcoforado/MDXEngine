@@ -7,7 +7,7 @@ using MDXEngine.SharpDXExtensions;
 using SharpDX;
 namespace MDXEngine.Painters
 {
-    public class CyclicColorizer : IPainter<Color2D>
+    public class CyclicColorizer : IPainter<VerticeColor>
     {
         Color[] _colors;
         
@@ -21,12 +21,12 @@ namespace MDXEngine.Painters
             _colors = new Color[]{color};
         }
 
-        public void Write(IArray<Color2D> vV,IArray<int> vI, TopologyType topologyType)
+        public void Write(IArray<VerticeColor> vV,IArray<int> vI, TopologyType topologyType)
         {
             int k=0;
             for (int i=0;i<vV.Length;i++)
             {
-                Color2D elem = vV[i];
+                VerticeColor elem = vV[i];
                 elem.Color = _colors[k++].ToVector4();
                 vV[i] = elem;
                 if (k == _colors.Length)

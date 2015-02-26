@@ -154,7 +154,7 @@ namespace MDXEngine
         
 #endregion      
 
-        void SetCameraFromSphericCoordinates(double r, double alpha, double theta)
+        public void SetCameraFromSphericCoordinates(double r, double alpha, double theta)
         {
 
             _alpha = alpha;

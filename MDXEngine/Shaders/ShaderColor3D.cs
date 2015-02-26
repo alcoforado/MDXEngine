@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SharpDX.D3DCompiler;
-using SharpDX;
-using SharpDX.DXGI;
-using SharpDX.Direct3D11;
 using MDXEngine.Shapes;
+using SharpDX;
+using SharpDX.Direct3D11;
+using SharpDX.DXGI;
+
 namespace MDXEngine.Shaders
 {
-    public class ShaderColor2D : IShader
+    public class ShaderColor3D : IShader
     {
         IDxContext  _dx;
         HLSLProgram _program;
         DrawTree<VerticeColor> _root;
 
 
-        public ShaderColor2D(IDxContext dxContext)
+        public ShaderColor3D(IDxContext dxContext)
         {
             _dx = dxContext;
             _dx.AddShader(this);
-            _program = new HLSLProgram(_dx,HLSLResources.Color2D_hlsl,  new[]
+            _program = new HLSLProgram(_dx,HLSLResources.Color3D_hlsl,  new[]
                     {
                         new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
                         new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0)

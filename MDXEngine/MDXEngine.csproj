@@ -93,6 +93,7 @@
     <Compile Include="Observable.cs" />
     <Compile Include="IObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shaders\ShaderColor3D.cs" />
     <Compile Include="Shaders\ShaderTexture2D.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="ShapeMarshalling.cs" />
@@ -107,7 +108,7 @@
     <Compile Include="SubArray.cs" />
     <Compile Include="Vertex2DArray.cs" />
     <Compile Include="Vertex3DArray.cs" />
-    <Compile Include="VerticeData\Color2D.cs" />
+    <Compile Include="VerticeData\VerticeColor.cs" />
     <Compile Include="VerticeData\VerticeTexture2D.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +118,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hlsl\Color.hlsl">
+    <Content Include="hlsl\Color3D.hlsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="hlsl\Color2D.hlsl">

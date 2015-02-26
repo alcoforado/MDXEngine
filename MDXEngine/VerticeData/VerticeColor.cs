@@ -7,7 +7,7 @@ using SharpDX;
 using MDXEngine.SharpDXExtensions;
 namespace MDXEngine
 {
-    public struct Color2D : IPosition, IPosition2D
+    public struct VerticeColor : IPosition, IPosition2D
     {
         public Vector4 _Position;
         public Vector4 Color;
