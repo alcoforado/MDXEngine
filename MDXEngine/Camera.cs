@@ -265,7 +265,7 @@ namespace MDXEngine
             OnCameraChange();
         }
 
-        public void 
+       
 
         private void OnCameraChange()
         {

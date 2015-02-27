@@ -31,5 +31,15 @@ namespace UnitTests
 
         }
 
+        [TestMethod]
+        public void Extensions_Vector3_Norm2()
+        {
+            Vector3 v = new Vector3(1f, 2f, 3f);
+            float c = v.Norm2();
+            c.Should().BeApproximately(14f,1e-8f);
+
+        }
+
+
     }
 }
