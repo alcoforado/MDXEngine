@@ -88,11 +88,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>App.config</DependentUpon>
     </Compile>
-    <Compile Include="Calculator.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Calculator.feature</DependentUpon>
-    </Compile>
+    <Compile Include="CameraTests.cs" />
     <Compile Include="CommandsSequenceUnitTests.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -122,10 +118,6 @@
       <LastGenOutput>App.Designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="Calculator.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Calculator.feature.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\fox.jpg">

@@ -63,7 +63,13 @@ namespace MDXEngine
 
 
 #region Properties Access 
-        public Vector3 Focus { get { return _focus; } set { _focus = value; } }
+
+        public Vector3 Focus
+        {
+            get { return _focus; } 
+            
+            set { _focus = value; OnCameraChange();}
+        }
 
         public Vector3 Pos
         {
@@ -203,7 +209,7 @@ namespace MDXEngine
             double sin_alpha_90 = -cos_alpha;
 
             _pos.X=(float)(_r * cos_theta * sin_alpha);
-            _pos.Y = (float)(_r * sin_theta * sin_alpha);
+            _pos.Y= (float)(_r * sin_theta * sin_alpha);
             _pos.Z=(float)(_r * cos_alpha);
             _pos+=_focus;
 
@@ -220,40 +226,46 @@ namespace MDXEngine
 
 
 
-        public void moveSpheric(float d_theta, float d_alpha)
+        public void MoveSpheric(float dr,float d_theta, float d_alpha)
         {
             Alpha += d_alpha;
             Theta += d_theta;
-        }
-
-        public void moveRadius(float dr)
-        {
             R += dr;
             if (R < 0f)
                 R = 0f;
         }
 
-        public Matrix getWorldViewMatrix()
+        public void OrthonormalizeUp()
+        {
+            var v = new Vector3();
+            v = _pos - _focus;
+            float c=Vector3.Dot(v, _up)/((float) Math.Sqrt(v.Norm2()));
+            _up = _up - c*v;
+            _up.Normalize();
+        }
+
+        public Matrix GetWorldViewMatrix()
         {
             if (_bNormalCoordinatesNeedUpdate)
                 this.UpdateCameraFromSphericCoordinates();
             return Matrix.Multiply(Matrix.LookAtRH(_pos, _focus, _up),proj);
         }
 
-        public Matrix getWorldMatrix()
+        public Matrix GetWorldMatrix()
         {
             if (_bNormalCoordinatesNeedUpdate)
                 this.UpdateCameraFromSphericCoordinates();
             return Matrix.LookAtRH(_pos, _focus, _up);
         }
 
-        public void setLens(int X,int Y)
+        public void SetLens(int X,int Y)
         {
             proj = Matrix.Identity;
             proj=Matrix.PerspectiveFovRH((float)Math.PI / 4.0f, (float) X / (float) Y, 0.1f, 100.0f);
             OnCameraChange();
         }
 
+        public void 
 
         private void OnCameraChange()
         {

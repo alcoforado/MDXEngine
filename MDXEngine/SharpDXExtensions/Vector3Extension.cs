@@ -20,7 +20,10 @@ namespace MDXEngine.SharpDXExtensions
            return  new Vector4(v.X,v.Y,v.Z,W);
         }
 
-
+        public static float Norm2(this Vector3 v)
+        {
+            return v.X*v.X + v.Y*v.Y + v.Z*v.Z;
+        }
 
     }
 }
