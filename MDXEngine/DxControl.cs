@@ -85,6 +85,7 @@ namespace MDXEngine
         {
             foreach (var shd in _shaders)
                 shd.Dispose();
+            _shaders.Clear();
             _device.ImmediateContext.Rasterizer.State = _rasterizerState;
         }
 
