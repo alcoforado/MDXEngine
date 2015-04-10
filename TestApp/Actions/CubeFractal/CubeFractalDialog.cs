@@ -22,7 +22,7 @@ namespace TestApp.Actions.CubeFractal
             webControl = new WebControl();
             this.Controls.Add(webControl);
             webControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            webControl.Source = new Uri("http://www.google.com");
+            //webControl.Source = new Uri("http://www.google.com");
         }
 
         protected override void OnClosed(EventArgs e)

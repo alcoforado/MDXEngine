@@ -1,0 +1,12 @@
+﻿class Hello {
+    print: string;
+
+
+
+
+
+
+
+
+
+}
