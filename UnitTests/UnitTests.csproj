@@ -97,6 +97,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="HLSLProgramUnitTest.cs" />
+    <Compile Include="MFreeTypeTests.cs" />
     <Compile Include="SubArrayTests.cs" />
     <Compile Include="UnitTestExtensions.cs" />
     <Compile Include="UnitTestDrawTree.cs" />
@@ -111,11 +112,18 @@
       <Project>{b11ed3c2-35cf-4316-87d9-a0e24250875d}</Project>
       <Name>MDXEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MFreeType\MFreeType.vcxproj">
+      <Project>{f205b978-0ff6-41b0-b779-82ed0aaa022f}</Project>
+      <Name>MFreeType</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>App.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="data\fonts\verdana.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
