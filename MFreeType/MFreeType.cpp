@@ -1,11 +1,10 @@
 // This is the main DLL file.
-#include <msclr\marshal_cppstd.h>
 #include "stdafx.h"
 #include "MFreeType.h"
 #include <vcclr.h>
 #include <cstdlib>
 #include <string>
-
+#include "InteropUtilities.h"
 
 namespace MFreeType {
 	
@@ -20,7 +19,7 @@ namespace MFreeType {
 		
 		
 		if (error)
-			throw gcnew Exception(this->GetErrorMessage(error));
+			throw gcnew MFreeTypeException(error);
 	}
 
 	MFont^ MFreeType::GetFont(FileInfo^ file)
@@ -29,21 +28,18 @@ namespace MFreeType {
 
 		if (!_font_cash.ContainsKey(file->FullName))
 		{
-			std::string str;
-
-			const char *p = str.c_str();
+			
 
 			//Else load the font add it in cash and return
-			msclr::interop::marshal_context context;
-			std::string fileName = context.marshal_as<std::string>(file->FullName);
+			std::string fileName = InteropUtilities::ConvertToASCII(file->FullName);
 			FT_Face face;
 			int error = FT_New_Face(library, fileName.c_str(), 0, &face);
 
 			if (error)
 			{
-				throw gcnew Exception(this->GetErrorMessage(error));
+				throw gcnew MFreeTypeException(error);
 			}
-
+			
 			MFont^ font = gcnew MFont(face);
 			_font_cash.Add(file->FullName, font);
 		}
@@ -57,16 +53,18 @@ namespace MFreeType {
 
 	String^  MFreeType::GetErrorMessage(int error)
 	{
-		if (_error_map.Count == 0)
+		if (_error_map == nullptr)
 		{
-				#undef FTERRORS_H                                                
-				#define FT_ERRORDEF( e, v, s )  _error_map.Add(e,s);        
-			    #define FT_ERROR_START_LIST  {                   
-			    #define FT_ERROR_END_LIST    }          
-			    #include <fterrors.h>
+			_error_map = gcnew  Dictionary<int, String^>();
+
+			#undef __FTERRORS_H__                                                
+			#define FT_ERRORDEF( e, v, s )  _error_map->Add(e,s);        
+			#define FT_ERROR_START_LIST  {                   
+			#define FT_ERROR_END_LIST    }    
+			#include <fterrors.h>
 		}
 		
-		if (_error_map.ContainsKey(error))
+		if (_error_map->ContainsKey(error))
 			return _error_map[error];
 		else
 			return "Unknown Error has occured";

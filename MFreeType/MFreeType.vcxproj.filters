@@ -27,6 +27,15 @@
     <ClInclude Include="MFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MFreeTypeException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InteropUtilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Units.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFreeType.cpp">
@@ -38,10 +47,16 @@
     <ClCompile Include="Stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FreeTypeException.cpp">
+    <ClCompile Include="MFont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MFont.cpp">
+    <ClCompile Include="MFreeTypeException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InteropUtilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Units.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

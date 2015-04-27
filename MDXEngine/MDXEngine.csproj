@@ -66,6 +66,7 @@
     <Compile Include="ITEX.cs" />
     <Compile Include="ITopology2D.cs" />
     <Compile Include="MayNotExist.cs" />
+    <Compile Include="Painters\ColorGenerator.cs" />
     <Compile Include="Painters\CyclicColorizer.cs" />
     <Compile Include="Painters\GridTextureMapping.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -99,6 +100,7 @@
     <Compile Include="ShapeMarshalling.cs" />
     <Compile Include="Shapes\Shape2D.cs" />
     <Compile Include="Shapes\Sprite.cs" />
+    <Compile Include="SharpDXExtensions\ColorExtension.cs" />
     <Compile Include="Textures\Texture.cs" />
     <Compile Include="Textures\TextureRegion.cs" />
     <Compile Include="Topologies\Triangle2DIndexed.cs" />

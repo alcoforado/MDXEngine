@@ -22,7 +22,7 @@ namespace MFreeType {
 	{
 		FT_Library library;
 		Dictionary<String^, MFont^> _font_cash;
-		static Dictionary<int,String^> _error_map;
+		static Dictionary<int,String^>^ _error_map=nullptr;
 	private:
 		String^ GetErrorMessage(int error);
 	
