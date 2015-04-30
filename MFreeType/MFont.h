@@ -57,6 +57,8 @@ namespace MFreeType {
 
 			}
 		}
+		
+		Bitmap^ GetBitmap(int char_code);
 
 		void SetSizeInPts(int pts, int horizontal_dpi, int vertical_dpi)
 		{

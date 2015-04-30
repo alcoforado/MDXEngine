@@ -2,6 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MFreeType;
 using FluentAssertions;
+using MDXEngine.Painters;
+using MDXEngine.SharpDXExtensions;
+using System.Linq;
 namespace UnitTests
 {
     [TestClass]
@@ -38,16 +41,25 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void RasterizingAFontShouldNotThrowExceptions()
+        public void RasterizingACharactgerFontShouldNotThrowExceptions()
         {
+            var colors = ColorGenerator.CreateLinearGradient(SharpDX.Color4.Black, SharpDX.Color4.White, 256).Select(x => x.ToSystemColor()).ToList();
             MFreeType.MFreeType tp = new MFreeType.MFreeType();
             var font = tp.GetFont(new System.IO.FileInfo("./data/fonts/verdana.ttf"));
             new System.IO.FileInfo("./data/fonts/verdana.ttf").Exists.Should().BeTrue();
             font.SetSizeInPixels(100, 100);
-            var bitmap = font.Rasterize("AB");
+            String str = "B";
+            var bitmap = font.GetBitmap((int) str[0]);
             
-            bitmap.Save("./Hello.bmp");
+            
+            var palette = bitmap.Palette;
+            for (int i=0;i<palette.Entries.Count();i++)
+            {
+                palette.Entries[i] = colors[i];
+            }
+            bitmap.Palette = palette;
 
+            bitmap.Save("./B.bmp");
 
         }
 
