@@ -8,6 +8,7 @@
 #include "Units.h"
 #include "MFreeTypeException.h"
 #include "InteropUtilities.h"
+#include "MFontMap.h"
 using namespace System::Drawing;
 namespace MFreeType {
 	public ref class MFont
@@ -87,6 +88,9 @@ namespace MFreeType {
 		{
 			return FT_HAS_KERNING(_face) != 0;
 		}
+
+		MFontMap^ GetFontMapForChars(String^ str);
+		
 
 		Bitmap^ Rasterize(String^ text);
 		

@@ -81,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InteropUtilities.h" />
+    <ClInclude Include="MFontMap.h" />
+    <ClInclude Include="MFontMapEntry.h" />
     <ClInclude Include="MFreeTypeException.h" />
     <ClInclude Include="MFont.h" />
     <ClInclude Include="MFreeType.h" />
@@ -91,6 +93,8 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="InteropUtilities.cpp" />
+    <ClCompile Include="MFontMap.cpp" />
+    <ClCompile Include="MFontMapEntry.cpp" />
     <ClCompile Include="MFreeTypeException.cpp" />
     <ClCompile Include="MFont.cpp" />
     <ClCompile Include="MFreeType.cpp" />
