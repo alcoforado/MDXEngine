@@ -69,6 +69,10 @@ Bitmap^ MFont::Rasterize(String^ text)
 	Bitmap^ MFont::GetBitmap(int char_code)
 	{
 		
+		if (char_code == 32)
+		{
+			return nullptr;
+		}
 			this->LoadGlyph(char_code);
 
 
@@ -82,6 +86,7 @@ Bitmap^ MFont::Rasterize(String^ text)
 			int bitmap_width = _face->glyph->bitmap.width;
 
 			int pen_x = 0;
+			
 			Bitmap^ result = gcnew Bitmap(bitmap_width,bitmap_height, PixelFormat::Format8bppIndexed);
 			auto bitmapData = result->LockBits(
 				Rectangle(0, 0, result->Width, result->Height),
@@ -109,4 +114,19 @@ Bitmap^ MFont::Rasterize(String^ text)
 			return result;
 	}
 
+	MFontMap^ MFont::GetFontMapForChars(String^ str)
+	{
+		List<MFontMapEntry^> ^entries = gcnew List<MFontMapEntry^>();
+		for (int i = 0; i < str->Length; i++)
+		{
+			Bitmap^ bitmap = this->GetBitmap(str[i]);
+			entries->Add(gcnew MFontMapEntry(
+				bitmap,
+				_face->glyph->advance.x,
+				(int)str[i],
+				i));
+			
+		}
+		return gcnew MFontMap(entries);
+	}
 

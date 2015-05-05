@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InteropUtilities.h" />
+    <ClInclude Include="LockBitmap.h" />
     <ClInclude Include="MFontMap.h" />
     <ClInclude Include="MFontMapEntry.h" />
     <ClInclude Include="MFreeTypeException.h" />
@@ -88,11 +89,13 @@
     <ClInclude Include="MFreeType.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="TextRenderingOptions.h" />
     <ClInclude Include="Units.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="InteropUtilities.cpp" />
+    <ClCompile Include="LockBitmap.cpp" />
     <ClCompile Include="MFontMap.cpp" />
     <ClCompile Include="MFontMapEntry.cpp" />
     <ClCompile Include="MFreeTypeException.cpp" />

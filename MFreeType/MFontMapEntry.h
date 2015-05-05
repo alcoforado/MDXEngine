@@ -8,10 +8,14 @@ namespace MFreeType {
 		Bitmap^ _bitmap;
 		int _advance;
 		int _char_code;
+		int _index;
 	public:
-		MFontMapEntry(Bitmap^ _bitmap, int advance,int char_code);
+		MFontMapEntry(Bitmap^ _bitmap, int advance,int char_code,int index);
 		
 		int GetCharCode(){ return _char_code; }
+		int GetAdvance(){ return _advance; }
+		Bitmap^ GetBitmap() { return _bitmap; }
+		int GetIndex() { return _index; }
 	};
 
 }

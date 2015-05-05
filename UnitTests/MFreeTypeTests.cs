@@ -63,6 +63,23 @@ namespace UnitTests
 
         }
 
+        [TestMethod]
+        public void GettingFontMapShouldNotThrowExceptions()
+        {
+            MFreeType.MFreeType tp = new MFreeType.MFreeType();
+            var font = tp.GetFont(new System.IO.FileInfo("./data/fonts/verdana.ttf"));
+            new System.IO.FileInfo("./data/fonts/verdana.ttf").Exists.Should().BeTrue();
+            font.SetSizeInPixels(100, 100);
+            String fontmap_codes = " !\"#$%&'{}*+/-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+
+            var fontmap = font.GetFontMapForChars(fontmap_codes);
+
+
+          
+
+        }
+
+
 
 
 
