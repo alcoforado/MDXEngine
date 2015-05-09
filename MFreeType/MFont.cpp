@@ -11,7 +11,7 @@ Bitmap^ MFont::Rasterize(String^ text)
 		std::wstring str = InteropUtilities::ConvertToUnicode16(text);
 		int advance = 0;
 		int totalWidth = 0;
-		int totalHeight = 0;
+		unsigned int totalHeight = 0;
 		for (unsigned i = 0; i < str.size(); i++)
 		{
 			this->LoadGlyph((int)str[i]);
@@ -55,7 +55,7 @@ Bitmap^ MFont::Rasterize(String^ text)
 			int bitmap_width = _face->glyph->bitmap.width;
 			for (int y = 0; y < bitmap_rows; y++)
 			{
-				assert(totalWidth*y + pen_x < totalWidth*totalHeight);
+				assert(totalWidth*y + pen_x < totalWidth*(int) totalHeight);
 				memcpy(
 					pdata + totalWidth*y + pen_x,
 					_face->glyph->bitmap.buffer + bitmap_stride*y,
@@ -122,7 +122,7 @@ Bitmap^ MFont::Rasterize(String^ text)
 			Bitmap^ bitmap = this->GetBitmap(str[i]);
 			entries->Add(gcnew MFontMapEntry(
 				bitmap,
-				_face->glyph->advance.x,
+				_face->glyph->advance.x >> 6,
 				(int)str[i],
 				i));
 			

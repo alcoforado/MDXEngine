@@ -1,7 +1,7 @@
 #pragma once
 
 namespace MFreeType {
-	public struct  TextRenderingOptions
+	public ref class  TextRenderingOptions
 	{
 
 	public:
@@ -10,10 +10,8 @@ namespace MFreeType {
 		int padding_right;
 		int padding_left;
 
-
-		TextRenderingOptions()
-		{
-		}
+		TextRenderingOptions(){}
+		
 
 	};
 

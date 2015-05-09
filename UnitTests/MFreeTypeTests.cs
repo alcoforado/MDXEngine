@@ -63,6 +63,35 @@ namespace UnitTests
 
         }
 
+
+        [TestMethod]
+        public void GettingFontMapWithSpaceCharShouldNotThrowExceptions()
+        {
+            MFreeType.MFreeType tp = new MFreeType.MFreeType();
+            var font = tp.GetFont(new System.IO.FileInfo("./data/fonts/verdana.ttf"));
+            new System.IO.FileInfo("./data/fonts/verdana.ttf").Exists.Should().BeTrue();
+            font.SetSizeInPixels(100, 100);
+            String fontmap_codes = " ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            var fontmap = font.GetFontMapForChars(fontmap_codes);
+        }
+
+
+        [TestMethod]
+        public void GettingFontMapWithRepeatedCharsShouldNotThrowExceptions()
+        {
+            MFreeType.MFreeType tp = new MFreeType.MFreeType();
+            var font = tp.GetFont(new System.IO.FileInfo("./data/fonts/verdana.ttf"));
+            new System.IO.FileInfo("./data/fonts/verdana.ttf").Exists.Should().BeTrue();
+            font.SetSizeInPixels(100, 100);
+            String fontmap_codes = "ABCDEABCDE";
+
+            var fontmap = font.GetFontMapForChars(fontmap_codes);
+        }
+
+
+
+
         [TestMethod]
         public void GettingFontMapShouldNotThrowExceptions()
         {
@@ -73,13 +102,38 @@ namespace UnitTests
             String fontmap_codes = " !\"#$%&'{}*+/-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
             var fontmap = font.GetFontMapForChars(fontmap_codes);
-
-
-          
+        
 
         }
 
+        [TestMethod]
+        public void RenderingWithFontMapShouldNotThrowExceptionsAndReturnRenderedBitmap()
+        {
+            MFreeType.MFreeType tp = new MFreeType.MFreeType();
+            var font = tp.GetFont(new System.IO.FileInfo("./data/fonts/verdana.ttf"));
+            new System.IO.FileInfo("./data/fonts/verdana.ttf").Exists.Should().BeTrue();
+            font.SetSizeInPixels(100, 100);
+            String fontmap_codes = " !\"#$%&'{}*+/-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
+            var fontmap = font.GetFontMapForChars(fontmap_codes);
+            var bitmap = fontmap.RenderLineText("IMACULADA", new TextRenderingOptions
+            {
+                padding_left = 10,
+                padding_top=5
+            });
+            
+            //set palette
+            var colors = ColorGenerator.CreateLinearGradient(SharpDX.Color4.Black, SharpDX.Color4.White, 256).Select(x => x.ToSystemColor()).ToList();
+            var palette = bitmap.Palette;
+            for (int i = 0; i < palette.Entries.Count(); i++)
+            {
+                palette.Entries[i] = colors[i];
+            }
+            bitmap.Palette = palette;
+            
+            bitmap.Save("M.bmp");
+
+        }
 
 
 

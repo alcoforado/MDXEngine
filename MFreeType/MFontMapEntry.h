@@ -3,7 +3,7 @@ using namespace System::Drawing;
 
 
 namespace MFreeType {
-	ref class MFontMapEntry
+	public ref class MFontMapEntry
 	{
 		Bitmap^ _bitmap;
 		int _advance;
@@ -16,6 +16,7 @@ namespace MFreeType {
 		int GetAdvance(){ return _advance; }
 		Bitmap^ GetBitmap() { return _bitmap; }
 		int GetIndex() { return _index; }
+		bool HasBitmap() { return _bitmap != nullptr; }
 	};
 
 }

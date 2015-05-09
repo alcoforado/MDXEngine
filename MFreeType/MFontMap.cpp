@@ -14,11 +14,17 @@ MFontMap::MFontMap(List<MFontMapEntry^> ^entries)
 	for (int i = 0; i < entries->Count; i++)
 	{
 		auto elem = entries[i];
+		if (_dictionary->ContainsKey(elem->GetCharCode()))
+		{
+			continue;
+		}
+		
+		
 		if (elem->GetAdvance() > max_width)
 		{
 			max_width = elem->GetAdvance();
 		}
-		if (elem->GetCharCode != 32)//space doesn't have bitmap
+		if (elem->GetCharCode() != 32)//space doesn't have bitmap
 		{
 			if (elem->GetBitmap()->Height > max_height)
 			{
@@ -31,9 +37,9 @@ MFontMap::MFontMap(List<MFontMapEntry^> ^entries)
 	}
 }
 
-Bitmap^ MFontMap::RenderLineText(String^ str,TextRenderingOptions options)
+Bitmap^ MFontMap::RenderLineText(String^ str,TextRenderingOptions^ options)
 {
-	int line_height = options.padding_bottom + options.padding_top + max_height;
+	int line_height = options->padding_bottom + options->padding_top + max_height;
 
 	//Bitmap^ bitmap = gcnew Bitmap()
 	//Decide the width of the bitmap
@@ -50,14 +56,14 @@ Bitmap^ MFontMap::RenderLineText(String^ str,TextRenderingOptions options)
 		line_width += fontEntry->GetAdvance();
 	
 	}
-	line_width += options.padding_left + options.padding_right;
+	line_width += options->padding_left + options->padding_right;
 
 	//Create Bitmap
 	Bitmap^ bitmap=gcnew Bitmap(line_width, line_height, PixelFormat::Format8bppIndexed);
 	
 	LockedBitmap^ draw = gcnew LockedBitmap(bitmap);
-	int Y = options.padding_top;
-	int X = options.padding_left;
+	int Y = options->padding_top;
+	int X = options->padding_left;
 	for (int i = 0; i < str->Length; i++)
 	{
 		MFontMapEntry^ fontEntry;
@@ -66,11 +72,9 @@ Bitmap^ MFontMap::RenderLineText(String^ str,TextRenderingOptions options)
 		{
 			throw gcnew Exception("Charcode is not part of this fontmap");
 		}
-		
-		draw->Copy(X, Y, fontEntry->GetBitmap());
+		if (fontEntry->HasBitmap())
+			draw->Copy(X, Y, fontEntry->GetBitmap());
+		X += fontEntry->GetAdvance();
 	}
-
-
-
-
+	return bitmap;
 }

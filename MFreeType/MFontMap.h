@@ -13,7 +13,7 @@ namespace MFreeType {
 		Dictionary<int, MFontMapEntry^>^ _dictionary;
 	public:
 		MFontMap(List<MFontMapEntry^> ^entries);
-		Bitmap^ RenderLineText(String^ str, TextRenderingOptions options);
+		Bitmap^ RenderLineText(String^ str, TextRenderingOptions^ options);
 
 	};
 
