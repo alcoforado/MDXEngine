@@ -6,66 +6,8 @@ using namespace System::Drawing;
 
 using namespace MFreeType;
 
-Bitmap^ MFont::Rasterize(String^ text)
-	{
-		std::wstring str = InteropUtilities::ConvertToUnicode16(text);
-		int advance = 0;
-		int totalWidth = 0;
-		unsigned int totalHeight = 0;
-		for (unsigned i = 0; i < str.size(); i++)
-		{
-			this->LoadGlyph((int)str[i]);
-			
-
-			if (_face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
-			{
-				FT_Render_Glyph(_face->glyph, FT_RENDER_MODE_NORMAL);
-			}
-			if (_face->glyph->bitmap.rows > totalHeight)
-			{
-				totalHeight = _face->glyph->bitmap.rows;
-			}
-			totalWidth += _face->glyph->bitmap.width;
-			advance += _face->glyph->advance.x;
-		}
-		advance = Units::FontUnitToPixel(advance);
 
 
-		int pen_x = 0;
-		Bitmap^ result = gcnew Bitmap(totalWidth, totalHeight, PixelFormat::Format8bppIndexed);
-		
-		auto bitmapData = result->LockBits(
-			Rectangle(0, 0, result->Width, result->Height),
-			ImageLockMode::ReadWrite,
-			PixelFormat::Format8bppIndexed);
-		Byte* pdata = reinterpret_cast<Byte*>(bitmapData->Scan0.ToPointer());
-
-
-
-		for (unsigned i = 0; i < str.size(); i++)
-		{
-			this->LoadGlyph((int)str[i]);
-			//if it is not bitmap, create one
-			if (_face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
-			{
-				FT_Render_Glyph(_face->glyph, FT_RENDER_MODE_NORMAL);
-			}
-			int bitmap_rows = _face->glyph->bitmap.rows;
-			int bitmap_stride = _face->glyph->bitmap.pitch;
-			int bitmap_width = _face->glyph->bitmap.width;
-			for (int y = 0; y < bitmap_rows; y++)
-			{
-				assert(totalWidth*y + pen_x < totalWidth*(int) totalHeight);
-				memcpy(
-					pdata + totalWidth*y + pen_x,
-					_face->glyph->bitmap.buffer + bitmap_stride*y,
-					bitmap_width);
-			}
-		}
-		return result;
-
-
-	}
 	Bitmap^ MFont::GetBitmap(int char_code)
 	{
 		
@@ -116,17 +58,39 @@ Bitmap^ MFont::Rasterize(String^ text)
 
 	MFontMap^ MFont::GetFontMapForChars(String^ str)
 	{
+		array<array<int>^> ^kerning_table = nullptr;
 		List<MFontMapEntry^> ^entries = gcnew List<MFontMapEntry^>();
 		for (int i = 0; i < str->Length; i++)
 		{
 			Bitmap^ bitmap = this->GetBitmap(str[i]);
 			entries->Add(gcnew MFontMapEntry(
 				bitmap,
-				_face->glyph->advance.x >> 6,
+				this->_face->glyph->advance.x/64,
 				(int)str[i],
 				i));
-			
+
 		}
-		return gcnew MFontMap(entries);
+		//assembly kerning
+		if (FT_HAS_KERNING(_face))
+		{
+			kerning_table = gcnew array<array<int>^>(entries->Count);
+			for (int i = 0; i < str->Length; i++)
+			{
+				int glyph_i_index = FT_Get_Char_Index(_face, str[i]);
+				kerning_table[i] = gcnew array<int>(entries->Count);
+				for (int k = 0; k < str->Length; k++)
+				{
+					int glyph_k_index = FT_Get_Char_Index(_face, str[k]);
+					FT_Vector delta;
+					FT_Get_Kerning(_face, glyph_i_index , glyph_k_index, FT_KERNING_DEFAULT, &delta);
+					kerning_table[i][k] = delta.x >> 6; // this->ConvertFontPointsToPixelHorizontal(delta.x);
+				}
+			}
+		}
+		else
+		{
+			kerning_table = nullptr;
+		}
+		return gcnew MFontMap(entries,kerning_table);
 	}
 

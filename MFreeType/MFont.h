@@ -14,6 +14,8 @@ namespace MFreeType {
 	public ref class MFont
 	{
 		FT_Face _face;
+		int _horizontal_dpi;
+		int _vertical_dpi;
 	
 	private:
 		int GetCharIndex(int charcode)
@@ -35,6 +37,22 @@ namespace MFreeType {
 				throw gcnew MFreeTypeException(error);
 			}
 		}
+		int ConvertPoints_64ToPixelHorizontal(int pts_64)
+		{
+			return pts_64*_horizontal_dpi / (64 * 72);
+		}
+		
+		int ConvertFontPointsToPixelHorizontal(int pts)
+		{
+			return pts * _horizontal_dpi/72;
+		}
+
+		int ConvertPoints_64ToPixelVertical(int pts_64)
+		{
+			return pts_64*_vertical_dpi / (64 * 72);
+		}
+
+
 
 	public:
 		MFont(FT_Face face)
@@ -49,21 +67,45 @@ namespace MFreeType {
 		{
 			return ((_face->face_flags)&FT_FACE_FLAG_SCALABLE) != 0;
 		}
-		void SetSizeInPixels(int width, int height)
+		void SetSizeInPixels(int width, int height,int horizontal_dpi,int vertical_dpi)
 		{
-			int error = FT_Set_Pixel_Sizes(_face, width, height);
+			//One point is 1/64
+			//np = pts/(64*72)*dpi
+			//pts = np*64*72/dpi
+			_horizontal_dpi = horizontal_dpi;
+			_vertical_dpi = vertical_dpi;
+			int error = FT_Set_Char_Size(_face, width*64*72/horizontal_dpi, height*64*72/vertical_dpi, horizontal_dpi, vertical_dpi); 
 			if (error)
 			{
 				throw gcnew MFreeTypeException(error);
-
 			}
 		}
 		
+		void SetSizeInPixels(int width, int height)
+		{
+			//One point is 1/64
+			//np = pts/(64*72)*dpi
+			//pts = np*64*72/dpi
+			_horizontal_dpi = 72;
+			_vertical_dpi = 72;
+			int error = FT_Set_Char_Size(_face, width * 64 * 72 / _horizontal_dpi, height * 64 * 72 / _vertical_dpi, _horizontal_dpi, _vertical_dpi);
+			if (error)
+			{
+				throw gcnew MFreeTypeException(error);
+			}
+		}
+
 		Bitmap^ GetBitmap(int char_code);
 
-		void SetSizeInPts(int pts, int horizontal_dpi, int vertical_dpi)
+		
+		void SetSizeInMM(int mm, int horizontal_dpi, int vertical_dpi)
 		{
-			int error = FT_Set_Char_Size(_face, pts * 64, pts * 64, horizontal_dpi, vertical_dpi);
+			//One inch has 25.4 mm.
+			//1/64 points is 1/(72*64) inches == 1/(72*64)*25.4 == 0.00551215277mm
+			//1 mm has 181.417322835 (1/64)points
+			_horizontal_dpi = horizontal_dpi;
+			_vertical_dpi = vertical_dpi;
+			int error = FT_Set_Char_Size(_face, 181.417322835 * mm, 181.417322835 * mm, horizontal_dpi, vertical_dpi);
 			if (error)
 			{
 				throw gcnew MFreeTypeException(error);
@@ -80,7 +122,7 @@ namespace MFreeType {
 				this->LoadGlyph((int)str[i]);
 				totalWidth += _face->glyph->metrics.horiAdvance;
 			}
-			totalWidth = Units::FontUnitToPixel(totalWidth);
+			totalWidth = this->ConvertPoints_64ToPixelHorizontal(totalWidth);
 			return totalWidth;
 		}
 
@@ -92,7 +134,7 @@ namespace MFreeType {
 		MFontMap^ GetFontMapForChars(String^ str);
 		
 
-		Bitmap^ Rasterize(String^ text);
+		
 		
 
 	};

@@ -11,10 +11,12 @@ namespace MFreeType {
 		int max_height;
 		int max_width;
 		Dictionary<int, MFontMapEntry^>^ _dictionary;
+		array<array<int>^>^ _kerning_table;
 	public:
-		MFontMap(List<MFontMapEntry^> ^entries);
+		MFontMap(List<MFontMapEntry^> ^entries, array<array<int>^>^ kerning_table);
 		Bitmap^ RenderLineText(String^ str, TextRenderingOptions^ options);
-
+		bool HasKerning() { return _kerning_table != nullptr; }
+		String^ PrintKerningTable();
 	};
 
 

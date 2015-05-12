@@ -9,5 +9,4 @@ MFontMapEntry::MFontMapEntry(Bitmap^ bitmap, int advance, int char_code,int inde
 	_advance = advance;
 	_char_code = char_code;
 	_index = index;
-
 }

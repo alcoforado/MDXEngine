@@ -107,13 +107,13 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void RenderingWithFontMapShouldNotThrowExceptionsAndReturnRenderedBitmap()
+        public void RenderingWithFontMapShouldNotThrowExceptionsAndShouldReturnRenderedBitmap()
         {
             MFreeType.MFreeType tp = new MFreeType.MFreeType();
             var font = tp.GetFont(new System.IO.FileInfo("./data/fonts/verdana.ttf"));
             new System.IO.FileInfo("./data/fonts/verdana.ttf").Exists.Should().BeTrue();
             font.SetSizeInPixels(100, 100);
-            String fontmap_codes = " !\"#$%&'{}*+/-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+            String fontmap_codes = "IMACULADA";
 
             var fontmap = font.GetFontMapForChars(fontmap_codes);
             var bitmap = fontmap.RenderLineText("IMACULADA", new TextRenderingOptions
@@ -132,6 +132,24 @@ namespace UnitTests
             bitmap.Palette = palette;
             
             bitmap.Save("M.bmp");
+
+        }
+
+        [TestMethod]
+        public void FontMapKerningTest()
+        {
+            MFreeType.MFreeType tp = new MFreeType.MFreeType();
+            var font = tp.GetFont(new System.IO.FileInfo("./data/fonts/verdana.ttf"));
+            new System.IO.FileInfo("./data/fonts/verdana.ttf").Exists.Should().BeTrue();
+            font.SetSizeInPixels(100, 100);
+            String fontmap_codes = "IMACULADA";
+
+            var fontmap = font.GetFontMapForChars(fontmap_codes);
+
+            var str=fontmap.PrintKerningTable();
+
+            System.Diagnostics.Debug.Write(str);
+            
 
         }
 
