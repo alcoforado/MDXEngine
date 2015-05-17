@@ -98,6 +98,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="UnitTestGDITextRendering.cs" />
     <Compile Include="HLSLProgramUnitTest.cs" />
     <Compile Include="MFreeTypeTests.cs" />
     <Compile Include="SubArrayTests.cs" />

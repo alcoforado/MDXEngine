@@ -101,6 +101,8 @@
     <Compile Include="Shapes\Shape2D.cs" />
     <Compile Include="Shapes\Sprite.cs" />
     <Compile Include="SharpDXExtensions\ColorExtension.cs" />
+    <Compile Include="Textures\GDITextRendering.cs" />
+    <Compile Include="Textures\GDITexture.cs" />
     <Compile Include="Textures\Texture.cs" />
     <Compile Include="Textures\TextureRegion.cs" />
     <Compile Include="Topologies\Triangle2DIndexed.cs" />

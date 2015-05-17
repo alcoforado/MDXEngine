@@ -35,6 +35,7 @@
             this.fractalCubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rGBTriangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helloWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -66,7 +67,7 @@
             this.textBox1.Location = new System.Drawing.Point(0, 0);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(469, 100);
+            this.textBox1.Size = new System.Drawing.Size(150, 46);
             this.textBox1.TabIndex = 0;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -85,7 +86,8 @@
             this.testsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fractalCubeToolStripMenuItem,
             this.rGBTriangleToolStripMenuItem,
-            this.loadTextureToolStripMenuItem});
+            this.loadTextureToolStripMenuItem,
+            this.helloWorldToolStripMenuItem});
             this.testsToolStripMenuItem.Name = "testsToolStripMenuItem";
             this.testsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.testsToolStripMenuItem.Text = "Tests";
@@ -93,23 +95,30 @@
             // fractalCubeToolStripMenuItem
             // 
             this.fractalCubeToolStripMenuItem.Name = "fractalCubeToolStripMenuItem";
-            this.fractalCubeToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.fractalCubeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fractalCubeToolStripMenuItem.Text = "Fractal Cube";
             this.fractalCubeToolStripMenuItem.Click += new System.EventHandler(this.fractalCubeToolStripMenuItem_Click);
             // 
             // rGBTriangleToolStripMenuItem
             // 
             this.rGBTriangleToolStripMenuItem.Name = "rGBTriangleToolStripMenuItem";
-            this.rGBTriangleToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.rGBTriangleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rGBTriangleToolStripMenuItem.Text = "RGB Triangle";
             this.rGBTriangleToolStripMenuItem.Click += new System.EventHandler(this.rGBTriangleToolStripMenuItem_Click);
             // 
             // loadTextureToolStripMenuItem
             // 
             this.loadTextureToolStripMenuItem.Name = "loadTextureToolStripMenuItem";
-            this.loadTextureToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.loadTextureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadTextureToolStripMenuItem.Text = "LoadTexture";
             this.loadTextureToolStripMenuItem.Click += new System.EventHandler(this.loadTextureToolStripMenuItem_Click);
+            // 
+            // helloWorldToolStripMenuItem
+            // 
+            this.helloWorldToolStripMenuItem.Name = "helloWorldToolStripMenuItem";
+            this.helloWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.helloWorldToolStripMenuItem.Text = "Hello World";
+            this.helloWorldToolStripMenuItem.Click += new System.EventHandler(this.helloWorldToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -142,6 +151,7 @@
         private System.Windows.Forms.ToolStripMenuItem fractalCubeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rGBTriangleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadTextureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helloWorldToolStripMenuItem;
 
     }
 }

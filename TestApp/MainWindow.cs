@@ -147,6 +147,13 @@ namespace TestApp
 
         }
 
+        private void helloWorldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.RemoveCurrentApp();
+            var app = new TestApp.Actions.HelloWorld(_dx);
+            this.SetCurrentApp(app);
+        }
+
       
        
 
