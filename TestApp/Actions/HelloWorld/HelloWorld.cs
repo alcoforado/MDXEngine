@@ -19,7 +19,16 @@ namespace TestApp.Actions
         {
             var shaderTexture = new ShaderTexture2D(dx);
             dx.AddShader(shaderTexture);
-            
+
+            var texture = new GDITexture(dx, "Hello\nWorld", new TextWriteOptions()
+            {
+                color = SharpDX.Color.Red,
+                font_size = 25,
+            });
+            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new TextureRegion(texture));
+            shaderTexture.Add(shape, texture);
+
+            /*
             using (var bitmap = new Bitmap(300, 300, PixelFormat.Format32bppArgb))
             {
                 using(var graphics = Graphics.FromImage(bitmap))
@@ -30,11 +39,11 @@ namespace TestApp.Actions
                         );
                     graphics.Flush();
                     bitmap.Save("hello.png");
-                    var texture = new Texture(dx, bitmap);
+                    var texture = new GDITexture(dx, bitmap);
                     var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new TextureRegion(texture));
                     shaderTexture.Add(shape, texture);
                 }
-            }
+            }*/
         }
         public void Dispose() { }
     }

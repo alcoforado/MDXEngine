@@ -105,6 +105,7 @@
     <Compile Include="Textures\GDITexture.cs" />
     <Compile Include="Textures\Texture.cs" />
     <Compile Include="Textures\TextureRegion.cs" />
+    <Compile Include="Textures\TextWriteOptions.cs" />
     <Compile Include="Topologies\Triangle2DIndexed.cs" />
     <Compile Include="SharpDXExtensions\Vector2Extension.cs" />
     <Compile Include="SharpDXExtensions\Vector3Extension.cs" />
