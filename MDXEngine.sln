@@ -18,8 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6D4CE1
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFreeType", "MFreeType\MFreeType.vcxproj", "{F205B978-0FF6-41B0-B779-82ED0AAA022F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,20 +80,6 @@ Global
 		{9A102EB9-6B34-4095-8671-E4A91CF18D7C}.Release|Win32.Build.0 = Release|x86
 		{9A102EB9-6B34-4095-8671-E4A91CF18D7C}.Release|x86.ActiveCfg = Release|x86
 		{9A102EB9-6B34-4095-8671-E4A91CF18D7C}.Release|x86.Build.0 = Release|x86
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Debug|Win32.Build.0 = Debug|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Debug|x86.ActiveCfg = Debug|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Debug|x86.Build.0 = Debug|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Release|Any CPU.ActiveCfg = Release|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Release|Win32.ActiveCfg = Release|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Release|Win32.Build.0 = Release|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Release|x86.ActiveCfg = Release|Win32
-		{F205B978-0FF6-41B0-B779-82ED0AAA022F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
