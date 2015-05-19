@@ -64,7 +64,7 @@
     <Compile Include="IShader.cs" />
     <Compile Include="IShaderResource.cs" />
     <Compile Include="ITEX.cs" />
-    <Compile Include="ITopology2D.cs" />
+    <Compile Include="Topologies\ITopology2D.cs" />
     <Compile Include="MayNotExist.cs" />
     <Compile Include="Painters\ColorGenerator.cs" />
     <Compile Include="Painters\CyclicColorizer.cs" />
@@ -87,7 +87,7 @@
     <Compile Include="IPosition2D.cs" />
     <Compile Include="IPainter.cs" />
     <Compile Include="IShape.cs" />
-    <Compile Include="ITopology.cs" />
+    <Compile Include="Topologies\ITopology.cs" />
     <Compile Include="Normal3DArray.cs" />
     <Compile Include="NTreeNode.cs" />
     <Compile Include="NTreeNodeIterator.cs" />
@@ -98,6 +98,7 @@
     <Compile Include="Shaders\ShaderTexture2D.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="ShapeMarshalling.cs" />
+    <Compile Include="Shapes\Cube.cs" />
     <Compile Include="Shapes\Shape2D.cs" />
     <Compile Include="Shapes\Sprite.cs" />
     <Compile Include="SharpDXExtensions\ColorExtension.cs" />
