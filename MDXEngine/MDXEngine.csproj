@@ -64,6 +64,7 @@
     <Compile Include="IShader.cs" />
     <Compile Include="IShaderResource.cs" />
     <Compile Include="ITEX.cs" />
+    <Compile Include="Geometry\Angle.cs" />
     <Compile Include="Topologies\ITopology2D.cs" />
     <Compile Include="MayNotExist.cs" />
     <Compile Include="Painters\ColorGenerator.cs" />

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
 using MDXEngine.SharpDXExtensions;
-
+using MDXEngine.Geometry;
 namespace MDXEngine
 {
 
@@ -25,7 +25,9 @@ namespace MDXEngine
         Vector3 _focus;
         
         //spheric coordinates
-        double _r, _alpha, _theta;
+        double _r; 
+        Angle _alpha;
+        Angle _theta;
         
 
         //boolean to keep track wich coordinates need updates
@@ -49,6 +51,7 @@ namespace MDXEngine
             _up = up;
             _focus.Set(0);
             _bSphericCoordinatesNeedUpdate = true;
+            _bNormalCoordinatesNeedUpdate = false;
             OnCameraChange();
         }
 
@@ -58,6 +61,7 @@ namespace MDXEngine
             _up = up;
             _focus = focus;
             _bSphericCoordinatesNeedUpdate = true;
+            _bNormalCoordinatesNeedUpdate = false;
             OnCameraChange();
         }
 
@@ -68,7 +72,13 @@ namespace MDXEngine
         {
             get { return _focus; } 
             
-            set { _focus = value; OnCameraChange();}
+            set {
+                if (_bNormalCoordinatesNeedUpdate)
+                    UpdateCameraFromSphericCoordinates();
+                _focus = value;
+                _bSphericCoordinatesNeedUpdate = true;
+                OnCameraChange();
+            }
         }
 
         public Vector3 Pos
@@ -83,8 +93,8 @@ namespace MDXEngine
             {
                 if (_bNormalCoordinatesNeedUpdate)
                     UpdateCameraFromSphericCoordinates();
-                _bSphericCoordinatesNeedUpdate = true;
                 _pos = value;
+                _bSphericCoordinatesNeedUpdate = true;
                 OnCameraChange();
             }
         }
@@ -100,8 +110,8 @@ namespace MDXEngine
             {
                 if (_bNormalCoordinatesNeedUpdate)
                     UpdateCameraFromSphericCoordinates();
-                _bSphericCoordinatesNeedUpdate = true;
                 _up = value;
+                _bSphericCoordinatesNeedUpdate = true;
                 OnCameraChange();
             }
         }
@@ -118,12 +128,12 @@ namespace MDXEngine
             {
                 if (_bSphericCoordinatesNeedUpdate)
                     UpdateSphericCoordinatesFromCamera();
-                _bNormalCoordinatesNeedUpdate = true;
                 _r = value;
+                _bNormalCoordinatesNeedUpdate = true;
                 OnCameraChange();
             }
         }
-        public double Alpha
+        public Angle Alpha
         {
             get
             {
@@ -135,12 +145,12 @@ namespace MDXEngine
             {
                 if (_bSphericCoordinatesNeedUpdate)
                     UpdateSphericCoordinatesFromCamera();
-                _bNormalCoordinatesNeedUpdate = true;
                 _alpha = value;
+                _bNormalCoordinatesNeedUpdate = true;
                 OnCameraChange();
             }
         }
-        public double Theta
+        public Angle Theta
         {
             get
             {
@@ -152,39 +162,38 @@ namespace MDXEngine
             {
                 if (_bSphericCoordinatesNeedUpdate)
                     UpdateSphericCoordinatesFromCamera();
-                _bNormalCoordinatesNeedUpdate = true;
                 _theta = value;
+                _bNormalCoordinatesNeedUpdate = true;
                 OnCameraChange();
             }
         }
         
 #endregion      
 
-        public void SetCameraFromSphericCoordinates(double r, double alpha, double theta)
+        public void SetCameraFromSphericCoordinates(double r, Angle alpha, Angle theta)
         {
 
             _alpha = alpha;
             _theta = theta;
             _r = r;
-            UpdateCameraFromSphericCoordinates();
             _bSphericCoordinatesNeedUpdate = false;
-            _bNormalCoordinatesNeedUpdate = false;
+            _bNormalCoordinatesNeedUpdate = true;
             OnCameraChange();
         }
 
         private void UpdateCameraFromSphericCoordinates()
         {
             
-            double sin_alpha=Math.Sin(_alpha);
+            /*double sin_alpha=Math.Sin(_alpha);
             double cos_alpha=Math.Cos(_alpha);
             double sin_theta=Math.Sin(_theta);
             double cos_theta=Math.Cos(_theta);
             double cos_alpha_90 = sin_alpha;
-            double sin_alpha_90 = -cos_alpha;
+            double sin_alpha_90 = -cos_alpha;*/
 
-            _pos.X=(float)(_r * cos_theta * sin_alpha);
-            _pos.Y = (float)(_r * sin_theta * sin_alpha);
-            _pos.Z=(float)(_r * cos_alpha);
+            _pos.X=(float)(_r * _theta.Cos * _alpha.Sin);
+            _pos.Y = (float)(_r *_theta.Sin* _alpha.Sin);
+            _pos.Z=(float)(_r * _alpha.Cos);
             _pos+=_focus;
 
             _up.X = (float)(_r * cos_theta * sin_alpha_90);
@@ -208,14 +217,14 @@ namespace MDXEngine
             double cos_alpha_90 = sin_alpha;
             double sin_alpha_90 = -cos_alpha;
 
-            _pos.X=(float)(_r * cos_theta * sin_alpha);
+            _pos.X= (float)(_r * cos_theta * sin_alpha);
             _pos.Y= (float)(_r * sin_theta * sin_alpha);
-            _pos.Z=(float)(_r * cos_alpha);
+            _pos.Z= (float)(_r * cos_alpha);
             _pos+=_focus;
 
-            _up.X = (float)(_r * cos_theta * sin_alpha_90);
-            _up.Y = (float)(_r * sin_theta * sin_alpha_90);
-            _up.Z = (float)(_r * cos_alpha_90);
+            _up.X = (float)(cos_theta * sin_alpha_90);
+            _up.Y = (float)(sin_theta * sin_alpha_90);
+            _up.Z = (float)(cos_alpha_90);
 
             //DXApp.log.WriteLine("{0} {1}", _pos, _up);
            

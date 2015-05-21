@@ -5,7 +5,7 @@ using SharpDX;
 using MDXEngine;
 using FluentAssertions;
 using Moq;
-
+using MDXEngine.Geometry;
 
 namespace UnitTests
 {
@@ -98,7 +98,7 @@ namespace UnitTests
             var cam = new Camera();
             cam.AddObserver(observer.Object);
 
-            cam.SetCameraFromSphericCoordinates(0.0, 0.0, 0.0);
+            cam.SetCameraFromSphericCoordinates(0.0, new Angle(0.0), new Angle(0.0));
 
             observer.Verify(x => x.CameraChanged(It.IsAny<Camera>()));
         }
@@ -111,7 +111,7 @@ namespace UnitTests
             var cam = new Camera();
             cam.AddObserver(observer.Object);
             cam.RemoveObserver(observer.Object);
-            cam.SetCameraFromSphericCoordinates(0.0, 0.0, 0.0);
+            cam.SetCameraFromSphericCoordinates(0.0, new Angle(0.0), new Angle(0.0));
 
        
 
@@ -132,5 +132,9 @@ namespace UnitTests
 
             observer.Invoking(obs => obs.Verify(x => x.CameraChanged(It.IsAny<Camera>()))).ShouldThrow<Exception>();
         }
+    
+        
+
+    
     }
 }

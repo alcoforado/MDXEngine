@@ -25,5 +25,10 @@ namespace MDXEngine.SharpDXExtensions
             return v.X*v.X + v.Y*v.Y + v.Z*v.Z;
         }
 
+
+        public static float Norm(this Vector3 v)
+        {
+            return (float) Math.Sqrt(v.X * v.X + v.Y * v.Y + v.Z * v.Z);
+        }
     }
 }
