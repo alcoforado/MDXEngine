@@ -5,7 +5,7 @@ using System.Text;
 using SharpDX;
 namespace MDXEngine
 {
-    interface ITopology
+    public  interface ITopology
     {
         int NIndices();
         int NVertices();

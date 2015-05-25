@@ -69,6 +69,8 @@ namespace MDXEngine.Geometry
             return this;
         }
 
+       
+
         public Angle Add90()
         {
             return new Angle(-_sin, _cos);
@@ -80,6 +82,20 @@ namespace MDXEngine.Geometry
                 _cos * angle._cos - angle._sin * _sin,
                 _sin * angle._cos + angle._sin * _cos
                 );
+        }
+
+
+        public Angle Sub(Angle angle)
+        {
+            return new Angle(
+                _cos * angle._cos + angle._sin * _sin,
+                _sin * angle._cos - angle._sin * _cos
+                );
+        }
+
+        public Angle Neg()
+        {
+            return new Angle(_cos, -_sin);
         }
 
     }

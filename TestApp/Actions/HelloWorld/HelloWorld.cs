@@ -1,5 +1,4 @@
 ﻿using MDXEngine;
-using MDXEngine.Shaders;
 using MDXEngine.Shapes;
 using MDXEngine.Textures;
 using SharpDX;

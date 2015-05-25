@@ -7,8 +7,9 @@ using MDXEngine.Shapes;
 using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
+using MDXEngine;
 
-namespace MDXEngine.Shaders
+namespace MDXEngine
 {
     public class ShaderColor3D : IShader
     {
@@ -41,9 +42,9 @@ namespace MDXEngine.Shaders
             
         }
 
-        public void Add(ITopology2D topology,IPainter<VerticeColor> painter  )
+        public void Add(ITopology topology,IPainter<VerticeColor> painter  )
         {
-            var shape = new Shape2D<VerticeColor>(topology,painter);
+            var shape = new Shape3D<VerticeColor>(topology,painter);
             _root.Add(shape);
         }
         

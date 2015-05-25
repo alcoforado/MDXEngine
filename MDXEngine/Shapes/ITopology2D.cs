@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
-namespace MDXEngine
+namespace MDXEngine.Shapes
 {
     public interface ITopology2D
     {

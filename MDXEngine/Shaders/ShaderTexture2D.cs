@@ -9,7 +9,7 @@ using SharpDX;
 using SharpDX.DXGI;
 using SharpDX.Direct3D11;
 
-namespace MDXEngine.Shaders
+namespace MDXEngine
 {
     public class ShaderTexture2D : IShader
     {

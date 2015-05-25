@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MDXEngine;
 using MDXEngine.Shapes;
-using MDXEngine.Shaders;
 using SharpDX;
 using MDXEngine.Painters;
 namespace TestApp

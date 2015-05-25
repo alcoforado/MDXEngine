@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MDXEngine;
-using MDXEngine.Shapes;
-using MDXEngine.Shaders;
 using SharpDX;
 using MDXEngine.Painters;
+using MDXEngine.Shapes;
 namespace TestApp.Actions
 {
     public class ColorTriangle : IApp

@@ -8,7 +8,7 @@ using SharpDX;
 using SharpDX.DXGI;
 using SharpDX.Direct3D11;
 using MDXEngine.Shapes;
-namespace MDXEngine.Shaders
+namespace MDXEngine
 {
     public class ShaderColor2D : IShader
     {

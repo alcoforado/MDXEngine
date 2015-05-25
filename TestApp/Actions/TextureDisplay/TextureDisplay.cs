@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MDXEngine;
-using MDXEngine.Shaders;
 using MDXEngine.Shapes;
 using MDXEngine.Textures;
 using SharpDX;
+using MDXEngine;
 
 namespace TestApp.Actions
 {

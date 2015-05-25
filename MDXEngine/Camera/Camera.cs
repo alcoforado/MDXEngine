@@ -15,6 +15,15 @@ namespace MDXEngine
         void CameraReleased();
     }
 
+    public struct CameraShpericCoordinates
+    {
+        //spheric coordinates
+       public  double R;
+       public  Angle Alpha;
+       public  Angle Theta;
+       public  Vector3 Up;
+       public  Vector3 Focus;
+    }
 
     public class Camera
     {
@@ -181,6 +190,36 @@ namespace MDXEngine
             OnCameraChange();
         }
 
+        public void SetCamera(CameraShpericCoordinates s)
+        {
+            _pos.X=(float)(s.R *s.Theta.Cos * s.Alpha.Sin);
+            _pos.Y=(float)(s.R *s.Theta.Sin*  s.Alpha.Sin);
+            _pos.Z=(float)(s.R *s.Alpha.Cos);
+            _pos+=s.Focus;
+
+            _up = s.Up;
+            _focus = s.Focus;
+            OnCameraChange();
+        }
+
+        public CameraShpericCoordinates GetCameraSphericCoordinates()
+        {
+            CameraShpericCoordinates result;
+
+            Vector3 r = _pos - _focus;
+            var XYNorm2 = r.X*r.X + r.Y*r.Y;
+            var ZXYNorm2 = r.Z * r.Z + XYNorm2;
+
+            result.R =  Math.Sqrt(ZXYNorm2);
+            result.Theta = new Angle(r.X,r.Y);
+            result.Alpha = new Angle(r.Z,Math.Sqrt(XYNorm2));
+            result.Focus = _focus;
+            result.Up = _up;
+
+            return result;
+        }
+
+
         private void UpdateCameraFromSphericCoordinates()
         {
             
@@ -196,9 +235,11 @@ namespace MDXEngine
             _pos.Z=(float)(_r * _alpha.Cos);
             _pos+=_focus;
 
-            _up.X = (float)(_r * cos_theta * sin_alpha_90);
-            _up.Y = (float)(_r * sin_theta * sin_alpha_90);
-            _up.Z = (float)(_r * cos_alpha_90);
+            Angle alpha_90 = _alpha.Add90();
+
+            _up.X = (float)(_r * _theta.Cos * alpha_90.Sin);
+            _up.Y = (float)(_r * _theta.Sin * alpha_90.Sin);
+            _up.Z = (float)(_r * alpha_90.Cos);
 
             //DXApp.log.WriteLine("{0} {1}", _pos, _up);
            
@@ -209,7 +250,7 @@ namespace MDXEngine
 
         private void UpdateSphericCoordinatesFromCamera()
         {
-            
+            /*
             double sin_alpha=Math.Sin(_alpha);
             double cos_alpha=Math.Cos(_alpha);
             double sin_theta=Math.Sin(_theta);
@@ -230,10 +271,10 @@ namespace MDXEngine
            
             _bNormalCoordinatesNeedUpdate=false;
             _bSphericCoordinatesNeedUpdate=false;
-            
+            */
         }
 
-
+        /*
 
         public void MoveSpheric(float dr,float d_theta, float d_alpha)
         {
@@ -243,12 +284,12 @@ namespace MDXEngine
             if (R < 0f)
                 R = 0f;
         }
-
+        */
         public void OrthonormalizeUp()
         {
             var v = new Vector3();
             v = _pos - _focus;
-            float c=Vector3.Dot(v, _up)/((float) Math.Sqrt(v.Norm2()));
+            float c=Vector3.Dot(v, _up)/((float) v.Norm2());
             _up = _up - c*v;
             _up.Normalize();
         }

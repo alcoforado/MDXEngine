@@ -56,7 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera.cs" />
+    <Compile Include="Camera\Camera.cs" />
+    <Compile Include="Camera\MouseSphericNavigator.cs" />
+    <Compile Include="Camera\SphericVisualization.cs" />
     <Compile Include="CommandsSequence.cs" />
     <Compile Include="HLSLProgram.cs" />
     <Compile Include="HLSLResources.cs" />
@@ -65,7 +67,8 @@
     <Compile Include="IShaderResource.cs" />
     <Compile Include="ITEX.cs" />
     <Compile Include="Geometry\Angle.cs" />
-    <Compile Include="Topologies\ITopology2D.cs" />
+    <Compile Include="Shapes\Shape3D.cs" />
+    <Compile Include="Shapes\ITopology2D.cs" />
     <Compile Include="MayNotExist.cs" />
     <Compile Include="Painters\ColorGenerator.cs" />
     <Compile Include="Painters\CyclicColorizer.cs" />
@@ -88,7 +91,7 @@
     <Compile Include="IPosition2D.cs" />
     <Compile Include="IPainter.cs" />
     <Compile Include="IShape.cs" />
-    <Compile Include="Topologies\ITopology.cs" />
+    <Compile Include="Shapes\ITopology.cs" />
     <Compile Include="Normal3DArray.cs" />
     <Compile Include="NTreeNode.cs" />
     <Compile Include="NTreeNodeIterator.cs" />
@@ -108,7 +111,7 @@
     <Compile Include="Textures\Texture.cs" />
     <Compile Include="Textures\TextureRegion.cs" />
     <Compile Include="Textures\TextWriteOptions.cs" />
-    <Compile Include="Topologies\Triangle2DIndexed.cs" />
+    <Compile Include="Shapes\Triangle2DIndexed.cs" />
     <Compile Include="SharpDXExtensions\Vector2Extension.cs" />
     <Compile Include="SharpDXExtensions\Vector3Extension.cs" />
     <Compile Include="SharpDXExtensions\Vector4Extensions.cs" />
