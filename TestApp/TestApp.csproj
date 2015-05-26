@@ -77,16 +77,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\ColorTriangle\ColorTriangle.cs" />
-    <Compile Include="Actions\CubeFractal\CubeFractal.cs" />
-    <Compile Include="Actions\CubeFractal\CubeFractalDialog.cs">
+    <Compile Include="Actions\ColorTriangle3D.cs" />
+    <Compile Include="Actions\ColorTriangle.cs" />
+    <Compile Include="Actions\CubeFractal.cs" />
+    <Compile Include="Actions\CubeFractalDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Actions\CubeFractal\CubeFractalDialog.Designer.cs">
+    <Compile Include="Actions\CubeFractalDialog.Designer.cs">
       <DependentUpon>CubeFractalDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Actions\HelloWorld\HelloWorld.cs" />
-    <Compile Include="Actions\TextureDisplay\TextureDisplay.cs" />
+    <Compile Include="Actions\HelloWorld.cs" />
+    <Compile Include="Actions\TextureDisplay.cs" />
     <Compile Include="Array2DDataView.cs" />
     <Compile Include="IApp.cs" />
     <Compile Include="DxApp.cs" />

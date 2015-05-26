@@ -49,9 +49,6 @@ namespace MDXEngine.Shapes
 
         }
 
-
-
-
         public int NVertices()
         {
             return 4;

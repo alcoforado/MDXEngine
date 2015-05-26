@@ -223,12 +223,7 @@ namespace MDXEngine
         private void UpdateCameraFromSphericCoordinates()
         {
             
-            /*double sin_alpha=Math.Sin(_alpha);
-            double cos_alpha=Math.Cos(_alpha);
-            double sin_theta=Math.Sin(_theta);
-            double cos_theta=Math.Cos(_theta);
-            double cos_alpha_90 = sin_alpha;
-            double sin_alpha_90 = -cos_alpha;*/
+            
 
             _pos.X=(float)(_r * _theta.Cos * _alpha.Sin);
             _pos.Y = (float)(_r *_theta.Sin* _alpha.Sin);
@@ -240,9 +235,7 @@ namespace MDXEngine
             _up.X = (float)(_r * _theta.Cos * alpha_90.Sin);
             _up.Y = (float)(_r * _theta.Sin * alpha_90.Sin);
             _up.Z = (float)(_r * alpha_90.Cos);
-
-            //DXApp.log.WriteLine("{0} {1}", _pos, _up);
-           
+          
             _bNormalCoordinatesNeedUpdate=false;
             
         }
