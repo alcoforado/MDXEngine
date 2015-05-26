@@ -77,7 +77,7 @@ namespace MDXEngine
 
         public bool TryAddLoadCommand(string varName,IShaderResource resource)
         {
-           var result = _program.GetTextureSlot(varName);
+           var result = _program.GetResourceSlot(varName);
 #if DEBUG
              if (!result.Exists)
                 throw new Exception(String.Format("Variable {0} is not defined in program",varName));
