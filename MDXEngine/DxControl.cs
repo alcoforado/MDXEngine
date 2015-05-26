@@ -24,7 +24,7 @@ namespace MDXEngine
        private RasterizerState _rasterizerState;
        private readonly List<IShader> _shaders;
        private HLSLProgram _hlslProgram;
-      
+       private readonly Camera _camera;
         private void InitializeDX()
         {
             _desc = new SwapChainDescription
@@ -70,7 +70,7 @@ namespace MDXEngine
         
         public Device Device {   get {return _device; } }
 
-
+        public Camera Camera { get { return _camera; } }
 
 
         public DxControl(Control control)
@@ -79,6 +79,7 @@ namespace MDXEngine
             InitializeDX();
             _resourceManager = new ResourcesManager();
             _shaders = new List<IShader>();
+            _camera = new Camera();
         }
 
         public void Reset()

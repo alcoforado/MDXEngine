@@ -17,5 +17,6 @@ namespace MDXEngine
         void AddShader(IShader shader);
         HLSLProgram CurrentProgram { get; set; }
         ResourcesManager ResourcesManager { get; }
+        Camera Camera { get; }
     }
 }

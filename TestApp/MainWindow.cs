@@ -154,6 +154,13 @@ namespace TestApp
             this.SetCurrentApp(app);
         }
 
+        private void rGBTriangle3DToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.RemoveCurrentApp();
+            var app = new TestApp.Actions.ColorTriangle3D(_dx);
+            this.SetCurrentApp(app);
+        }
+
       
        
 

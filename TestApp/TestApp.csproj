@@ -80,10 +80,10 @@
     <Compile Include="Actions\ColorTriangle3D.cs" />
     <Compile Include="Actions\ColorTriangle.cs" />
     <Compile Include="Actions\CubeFractal.cs" />
-    <Compile Include="Actions\CubeFractalDialog.cs">
+    <Compile Include="Dialogs\CubeFractalDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Actions\CubeFractalDialog.Designer.cs">
+    <Compile Include="Dialogs\CubeFractalDialog.Designer.cs">
       <DependentUpon>CubeFractalDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Actions\HelloWorld.cs" />

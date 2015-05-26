@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SharpDX;
 namespace MDXEngine.Shapes
 {
-    public class Triangle3DI : ITopology2D
+    public class Triangle3DI : ITopology
     {
         Vector3 P0;
         Vector3 P1;
