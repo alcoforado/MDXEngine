@@ -10,11 +10,6 @@ namespace MDXEngine
 
     public class HLSLProgram : IDisposable
     {
-
-
-       
-
-
         readonly VertexShader _vertexShader;
         readonly PixelShader _pixelShader;
         readonly InputLayout _layout;
@@ -85,12 +80,6 @@ namespace MDXEngine
             if (!IsCurrent())
                 _dx.CurrentProgram = this;
         }
-
-
-
-
-
-       
     }
 
 }

@@ -54,6 +54,12 @@ namespace MDXEngine.Textures
             return _resource.IsDisposed && _view.IsDisposed;
         }
 
+        /// <summary>
+        /// Effective load the resource into the program shader using IDxContext
+        /// Remember that you can access IDxContext throuth the HLSLProgram.DxContext property
+        /// </summary>
+        /// <param name="program"></param>
+        /// <param name="shaderVariableName"></param>
         public void Load(HLSLProgram program, String shaderVariableName)
         {
             if (!program.IsCurrent())

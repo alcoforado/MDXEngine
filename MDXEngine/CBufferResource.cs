@@ -9,19 +9,32 @@ using Buffer = SharpDX.Direct3D11.Buffer;
 namespace MDXEngine
 {
     /// <summary>
-    /// Incorporate the idea of a resource loaded in the program.
+    /// A Constant Buffer resource.
     /// It is use is simple, the user gives the data of type T to be copied to the constant buffer  and the resource and the variable name.
     /// When the shader is draw the shader will check if the buffer changed and need to be loaded again in memory
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class CBufferResource<T> : IShaderResource where T: struct 
     {
+        T _data;
+        bool _dataChanged;
+        public T Data { 
+            get { return _data; } 
+            
+            set { 
+                _data = value;
+                _dataChanged = true;
+            } 
+        }
+        
         Buffer _constantBuffer;
+        
+        
         public CBufferResource(HLSLProgram program,string varName)
         {
            var dx = program.DxContext;
            _constantBuffer = new Buffer(dx.Device, Utilities.SizeOf<T>(), ResourceUsage.Default, BindFlags.ConstantBuffer, CpuAccessFlags.None, ResourceOptionFlags.None, 0);
-
+           _dataChanged = false;
         }
         public bool IsDisposed()
         {
@@ -33,6 +46,31 @@ namespace MDXEngine
             _constantBuffer.Dispose();
         
         }
-        public void Load(HLSLProgram program, String varName) { }
+
+        public void UpdateBuffer()
+        {
+        }
+
+
+        public void Load(HLSLProgram program, String varName) 
+        {
+           
+            var slot = program.ProgramResourceSlots[varName].Value;
+
+            if (_dataChanged)
+            {
+                program.DxContext.DeviceContext.UpdateSubresource(ref _data, _constantBuffer);
+                _dataChanged = false;
+            }
+
+            
+            
+            if (slot.ShaderStage == ShaderStage.PixelShader)
+                program.DxContext.DeviceContext.PixelShader.SetConstantBuffer(slot.SlotId, _constantBuffer);
+            else if (slot.ShaderStage == ShaderStage.VertexShader)
+                program.DxContext.DeviceContext.VertexShader.SetConstantBuffer(slot.SlotId, _constantBuffer);            
+            
+        
+        }
     }
 }
