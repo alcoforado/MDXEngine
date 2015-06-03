@@ -18,15 +18,11 @@ namespace MDXEngine
         readonly VertexShader _vertexShader;
         readonly PixelShader _pixelShader;
         readonly InputLayout _layout;
-        private readonly ShaderReflection _vertexReflection;
-        private readonly ShaderReflection _pixelReflection;
         private readonly IDxContext _dx;
         private readonly ShaderSlotsCollection _slots;
 
         internal VertexShader VertexShader { get { return _vertexShader; } }
         internal PixelShader PixelShader { get { return _pixelShader; } }
-        private ShaderReflection PixelShaderReflection { get { return _pixelReflection; } }
-        private ShaderReflection VertexShaderReflection { get { return _vertexReflection; } }
         internal InputLayout InputLayout { get { return _layout; } }
         internal ShaderSlotsCollection ProgramResourceSlots { get { return _slots; } }
         
@@ -48,27 +44,27 @@ namespace MDXEngine
             _layout = new InputLayout(device, signature, elems);
 
 
-            _vertexReflection = new ShaderReflection(vertexShaderByteCode);
-            _pixelReflection  = new ShaderReflection(pixelShaderByteCode);
+            var vertexReflection = new ShaderReflection(vertexShaderByteCode);
+            var pixelReflection  = new ShaderReflection(pixelShaderByteCode);
 
            
             //Create Resource Slots
             _slots = new ShaderSlotsCollection();
-            _slots.AddResourceSlots(_pixelReflection, ShaderStage.PixelShader);
-            _slots.AddResourceSlots(_vertexReflection, ShaderStage.VertexShader);
+            _slots.AddResourceSlots(pixelReflection, ShaderStage.PixelShader);
+            _slots.AddResourceSlots(vertexReflection, ShaderStage.VertexShader);
            
 
             _dx = dx;
             vertexShaderByteCode.Dispose();
             pixelShaderByteCode.Dispose();
+            vertexReflection.Dispose();
+            pixelReflection.Dispose();
             signature.Dispose();
 
         }
 
         public void Dispose()
         {
-            _vertexReflection.Dispose();
-            _pixelReflection.Dispose();
             _vertexShader.Dispose();
             _pixelShader.Dispose();
             _layout.Dispose();
