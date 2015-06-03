@@ -59,6 +59,7 @@
     <Compile Include="Camera\Camera.cs" />
     <Compile Include="Camera\MouseSphericNavigator.cs" />
     <Compile Include="Camera\SphericVisualization.cs" />
+    <Compile Include="CBufferResource.cs" />
     <Compile Include="CommandsSequence.cs" />
     <Compile Include="HLSLProgram.cs" />
     <Compile Include="HLSLResources.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="IShaderResource.cs" />
     <Compile Include="ITEX.cs" />
     <Compile Include="Geometry\Angle.cs" />
+    <Compile Include="ShaderSlotsCollection.cs" />
     <Compile Include="Shapes\Shape3D.cs" />
     <Compile Include="Shapes\ITopology2D.cs" />
     <Compile Include="MayNotExist.cs" />

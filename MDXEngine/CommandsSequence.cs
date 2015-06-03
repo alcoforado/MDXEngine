@@ -8,7 +8,7 @@ namespace MDXEngine
 {
  internal class ResourceLoadCommand
     {
-       public  int SlotId { get; set; }
+       public  string SlotName { get; set; }
        
        public IShaderResource Resource { get; set; }
     }
@@ -16,13 +16,13 @@ namespace MDXEngine
 
     public class CommandsSequence
     {
-        private readonly Dictionary<int, ResourceLoadCommand> _loadCommands;
+        private readonly Dictionary<string, ResourceLoadCommand> _loadCommands;
         private readonly HLSLProgram _program;
 
         public CommandsSequence(HLSLProgram program)
         {
             _program = program;
-            _loadCommands = new Dictionary<int, ResourceLoadCommand>();
+            _loadCommands = new Dictionary<string, ResourceLoadCommand>();
         }
 
 
@@ -31,29 +31,31 @@ namespace MDXEngine
             foreach (var pair in _loadCommands)
             {
                 var elem = pair.Value;
-                elem.Resource.Load(_program, elem.SlotId);
+                elem.Resource.Load(_program, elem.SlotName);
             }
         }
 
-        public bool CanAddLoadCommand(int slotId,IShaderResource resource)
+        #region Merge Two Commands Sequence
+
+
+
+        /// <summary>
+        /// Check if two commands sequence can merge in just one command sequence.
+        /// This method returns true if not two different resources occupy the same slot.
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <returns></returns>
+        public bool CanMerge(CommandsSequence commands)
         {
-            if (_loadCommands.ContainsKey(slotId))
-            {
-                return _loadCommands[slotId].Resource == resource;
-            }
-            else
-            {
-                return true;
-            }
+            return _program == commands._program && commands._loadCommands.All(elem => this.CanAddLoadCommand(elem.Value.SlotName, elem.Value.Resource));
         }
 
-
-
-        public bool CanMerge(CommandsSequence commands )
-        {
-            return _program == commands._program && commands._loadCommands.All(elem => this.CanAddLoadCommand(elem.Value.SlotId, elem.Value.Resource));
-        }
-
+        /// <summary>
+        /// Try to merge into this  with another commands sequence.
+        /// 
+        /// </summary>
+        /// <param name="commands"></param>
+        /// <returns> true if merge was successfull, false otherwise</returns>
         public bool TryMerge(CommandsSequence commands)
         {
             if (CanMerge(commands))
@@ -63,39 +65,55 @@ namespace MDXEngine
                     if (_loadCommands.ContainsKey(elem.Key))
                         Debug.Assert(_loadCommands[elem.Key].Resource == elem.Value.Resource);
                     else
-                        _loadCommands[elem.Value.SlotId] = new ResourceLoadCommand()
+                        _loadCommands[elem.Value.SlotName] = new ResourceLoadCommand()
                         {
                             Resource = elem.Value.Resource,
-                            SlotId = elem.Value.SlotId
+                            SlotName = elem.Value.SlotName
                         };
                 }
                 return true;
             }
             return false;
         }
+       
+        #endregion
 
+
+        #region Add one command to the command sequence
 
         public bool TryAddLoadCommand(string varName,IShaderResource resource)
         {
-           var result = _program.GetResourceSlot(varName);
+           var result = _program.ProgramResourceSlots[varName];
 #if DEBUG
              if (!result.Exists)
                 throw new Exception(String.Format("Variable {0} is not defined in program",varName));
 #endif
            var slot = result.Value;
 
-            if (_loadCommands.ContainsKey(slot.Slot))
+            if (_loadCommands.ContainsKey(slot.Name))
             {
-                return _loadCommands[slot.Slot].Resource == resource;
+                return _loadCommands[slot.Name].Resource == resource;
             }
-            _loadCommands[slot.Slot] = new ResourceLoadCommand()
+            _loadCommands[slot.Name] = new ResourceLoadCommand()
             {
-                SlotId = slot.Slot,
+                SlotName = slot.Name,
                 Resource = resource
             };
             return true;
         }
 
+
+        public bool CanAddLoadCommand(string varName, IShaderResource resource)
+        {
+            if (_loadCommands.ContainsKey(varName))
+            {
+                return _loadCommands[varName].Resource == resource;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public void AddLoadCommand(string varName, IShaderResource resource)
         {
             if (!TryAddLoadCommand(varName, resource))
@@ -104,6 +122,7 @@ namespace MDXEngine
             }
             
         }
+        #endregion
 
         public int Count
         {

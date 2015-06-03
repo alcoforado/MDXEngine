@@ -54,9 +54,31 @@ namespace MDXEngine.Textures
             return _resource.IsDisposed && _view.IsDisposed;
         }
 
-        public void Load(HLSLProgram program, int slotId)
+        public void Load(HLSLProgram program, String shaderVariableName)
         {
-            program.LoadTexture(slotId, this);
+            if (!program.IsCurrent())
+                throw new Exception("HLSLProgram is not the current loaded program");
+            var slotRef = program.ProgramResourceSlots[shaderVariableName];
+            
+            
+            if (slotRef.Exists)
+            {
+                var slot = slotRef.Value;
+                if (slot.IsTexture())
+                {
+                    slot.Resource = this;
+                    _dx.DeviceContext.PixelShader.SetShaderResource(slot.SlotId, this._view);
+                }
+                else
+                {
+                    throw new Exception(String.Format("Slot {0} is not a texture", shaderVariableName));
+                }
+            }
+            else
+                throw new Exception(String.Format("Texture Slot {0} does not exist", shaderVariableName));
         }
+
+      
+       
     }
 }

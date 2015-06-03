@@ -76,8 +76,8 @@ namespace UnitTests
 
             command.Execute();
 
-            res1.Verify(x => x.Load(It.IsAny<HLSLProgram>(), It.IsAny<int>()));
-            res2.Verify(x => x.Load(It.IsAny<HLSLProgram>(), It.IsAny<int>()));
+            res1.Verify(x => x.Load(It.IsAny<HLSLProgram>(), It.IsAny<string>()));
+            res2.Verify(x => x.Load(It.IsAny<HLSLProgram>(), It.IsAny<string>()));
 
         }
 

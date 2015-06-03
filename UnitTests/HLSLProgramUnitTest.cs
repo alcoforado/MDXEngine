@@ -112,7 +112,7 @@ float4 PS(PS_IN input) : SV_Target
         [TestMethod]
         public void HLSLProgram_InvalidVariableNameShouldNotReturnAVariable()
         {
-            var result = _program.GetResourceSlot("NonExistentVariable");
+            var result = _program.ProgramResourceSlots["NonExistentVariable"];
             result.Exists.Should().BeFalse();
 
 
@@ -121,8 +121,8 @@ float4 PS(PS_IN input) : SV_Target
         [TestMethod]
         public void HLSLProgram_ValidVariableNameShouldReturnVariable()
         {
-            var result1 = _program.GetResourceSlot("texture1");
-            var result2 = _program.GetResourceSlot("texture2");
+            var result1 = _program.ProgramResourceSlots["texture1"];
+            var result2 = _program.ProgramResourceSlots["texture2"]; 
 
             result1.Exists.Should().BeTrue();
             result2.Exists.Should().BeTrue();
@@ -135,19 +135,8 @@ float4 PS(PS_IN input) : SV_Target
         [TestMethod]
         public void HLSLProgram_SearchForVariableNameOrSlotIdShouldBeConsistent()
         {
-            var result1 = _program.GetResourceSlot("texture1");
-            var result2 = _program.GetResourceSlot("texture2");
-
-            _program.GetResourceSlot(result1.Value.Slot).Exists.Should().BeTrue();
-            _program.GetResourceSlot(result2.Value.Slot).Exists.Should().BeTrue();
-
-            _program.GetResourceSlot(result1.Value.Slot).Value.Name.Should().Be("texture1");
-            _program.GetResourceSlot(result2.Value.Slot).Value.Name.Should().Be("texture2");
-            
-
-
-
-
+            _program.ProgramResourceSlots["texture1"].Value.Name.Should().Be("texture1");
+            _program.ProgramResourceSlots["texture2"].Value.Name.Should().Be("texture2");
         }
 
 

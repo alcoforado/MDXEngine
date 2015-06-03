@@ -11,31 +11,6 @@ namespace MDXEngine
     public class HLSLProgram : IDisposable
     {
 
-        public class ResourceSlot
-        {
-            public IShaderResource Resource { get; set; }
-            public int Slot { get; set; }
-            public string Name { get; set; }
-            public ShaderInputType ResourceType { get; set; }
-
-            public ResourceSlot(int slot,string name,ShaderInputType resourceType)
-            {
-                this.Slot = slot;
-                this.Name = name;
-                this.ResourceType = resourceType;
-            }
-
-            internal bool IsTexture()
-            {
-                return ResourceType == ShaderInputType.Texture;
-            }
-
-            internal bool HasResource()
-            {
-                return this.Resource != null;
-            }
-        }
-
 
        
 
@@ -46,13 +21,14 @@ namespace MDXEngine
         private readonly ShaderReflection _vertexReflection;
         private readonly ShaderReflection _pixelReflection;
         private readonly IDxContext _dx;
+        private readonly ShaderSlotsCollection _slots;
 
         internal VertexShader VertexShader { get { return _vertexShader; } }
         internal PixelShader PixelShader { get { return _pixelShader; } }
+        private ShaderReflection PixelShaderReflection { get { return _pixelReflection; } }
+        private ShaderReflection VertexShaderReflection { get { return _vertexReflection; } }
         internal InputLayout InputLayout { get { return _layout; } }
-
-
-        public List<ResourceSlot> ResourceSlots { get; private set; }
+        internal ShaderSlotsCollection ProgramResourceSlots { get { return _slots; } }
         
         public InputLayout GetLayout() { return _layout; }
 
@@ -73,21 +49,14 @@ namespace MDXEngine
 
 
             _vertexReflection = new ShaderReflection(vertexShaderByteCode);
-            _pixelReflection = new ShaderReflection(pixelShaderByteCode);
+            _pixelReflection  = new ShaderReflection(pixelShaderByteCode);
 
-
-            //Create Texture Slots and CBuffersSlots
-            ResourceSlots = new List<ResourceSlot>();
-
-            var nSlots = _pixelReflection.Description.BoundResources;
-            for (int i = 0; i < nSlots; i++)
-            {
-                var desc = _pixelReflection.GetResourceBindingDescription(i);
-                if (desc.Type == ShaderInputType.Texture)
-                {
-                    ResourceSlots.Add(new ResourceSlot(desc.BindPoint, desc.Name,desc.Type));
-                }
-            }
+           
+            //Create Resource Slots
+            _slots = new ShaderSlotsCollection();
+            _slots.AddResourceSlots(_pixelReflection, ShaderStage.PixelShader);
+            _slots.AddResourceSlots(_vertexReflection, ShaderStage.VertexShader);
+           
 
             _dx = dx;
             vertexShaderByteCode.Dispose();
@@ -107,17 +76,8 @@ namespace MDXEngine
 
 
 
-        public MayNotExist<ResourceSlot> GetResourceSlot(String name)
-        {
-            return new MayNotExist<ResourceSlot>(ResourceSlots.Find(x => x.Name == name));
-        }
-
-        public MayNotExist<ResourceSlot> GetResourceSlot(int slot)
-        {
-            return new MayNotExist<ResourceSlot>(ResourceSlots.Find(x => x.Slot == slot));
-        }
-
-
+        public IDxContext DxContext { get { return _dx; } }
+    
 
         public bool IsCurrent()
         {
@@ -133,27 +93,6 @@ namespace MDXEngine
 
 
 
-        public void LoadTexture(int textureSlotId, Texture texture)
-        {
-            if (!IsCurrent())
-                throw new Exception("HLSLProgram is not the current loaded program");
-            var slot = ResourceSlots.Find(x => x.Slot == textureSlotId);
-            
-            
-            if (slot!=null)
-            {
-                if (slot.IsTexture())
-                {
-                    slot.Resource = texture;
-                    _dx.DeviceContext.PixelShader.SetShaderResource(textureSlotId, slot.Resource.GetResourceView());
-                }
-                throw new Exception(String.Format("Slot {0} is not a texture", textureSlotId));
-            }
-            else
-                throw new Exception(String.Format("Texture Slot {0} does not exist", textureSlotId));
-        }
-
-      
 
        
     }
