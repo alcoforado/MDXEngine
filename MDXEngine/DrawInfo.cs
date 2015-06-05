@@ -20,20 +20,20 @@ namespace MDXEngine
 
         public DrawInfoType Type { get; set; }
         public IShape<T> Shape { get; set; }
-        private CommandsSequence Action { get; set; }
+        private CommandsSequence Commands { get; set; }
         public int OffI, OffV;
         public int SizeI, SizeV;
         public bool Changed;
 
         public void ExecuteAction()
         {
-            if (Action != null)
-                Action.Execute();
+            if (Commands != null)
+                Commands.Execute();
         }
         
         public bool HasAction()
         {
-            return Action != null;
+            return Commands != null;
         }
 
         public bool IsIndexed()
@@ -65,7 +65,7 @@ namespace MDXEngine
                 OffV = -1,
                 Type = DrawInfoType.ROOT,
                 Shape = null,
-                Action = null
+                Commands = null
             };
             
         }
@@ -96,7 +96,7 @@ namespace MDXEngine
                 _isIndexed = shape.NIndices() != 0,
                 _topology = shape.GetTopology(),
                 Type = DrawInfoType.SHAPE,
-                Action=null
+                Commands=null
             };
 
         }
@@ -112,7 +112,7 @@ namespace MDXEngine
                 Type       = DrawInfoType.SHAPE_GROUP,
                 _isIndexed = isIndexed,
                 _topology  = topology,
-                Action=action
+                Commands=action
             };
 
         }
@@ -128,7 +128,7 @@ namespace MDXEngine
             {
                 if (HasAction())
                 {
-                    return Action.CanMerge(commands);
+                    return Commands.CanMerge(commands);
                 }
                 return true;
             }
