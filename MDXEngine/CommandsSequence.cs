@@ -51,7 +51,7 @@ namespace MDXEngine
         }
 
         /// <summary>
-        /// Try to merge into this  with another commands sequence.
+        /// Try to merge two commands sequence.
         /// 
         /// </summary>
         /// <param name="commands"></param>

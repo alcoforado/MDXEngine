@@ -20,7 +20,7 @@ namespace MDXEngine
 
         public DrawInfoType Type { get; set; }
         public IShape<T> Shape { get; set; }
-        private CommandsSequence Commands { get; set; }
+        public CommandsSequence Commands { get; private set; }
         public int OffI, OffV;
         public int SizeI, SizeV;
         public bool Changed;
@@ -31,7 +31,7 @@ namespace MDXEngine
                 Commands.Execute();
         }
         
-        public bool HasAction()
+        public bool HasCommands()
         {
             return Commands != null;
         }
@@ -70,21 +70,7 @@ namespace MDXEngine
             
         }
         
-        /*
-        static public DrawInfo<T> CreateCommandSequence(IDrawTreeAction action)
-        {
-            return new DrawInfo<T>
-            {
-                Changed=true,
-                OffI=-1,
-                OffV=-1,
-                Type = DrawInfoType.COMMAND_SEQUENCE,
-                Shape = null,
-                Action =  action
-
-            };
-        }
-        */
+     
         static public DrawInfo<T> CreateShape(IShape<T> shape)
         {
             return new DrawInfo<T>
@@ -126,7 +112,7 @@ namespace MDXEngine
         {
             if (Type == DrawInfoType.SHAPE_GROUP)
             {
-                if (HasAction())
+                if (HasCommands())
                 {
                     return Commands.CanMerge(commands);
                 }
@@ -137,7 +123,12 @@ namespace MDXEngine
 
         public void AddCommandsSequence(CommandsSequence commands)
         {
-            bool result = commands.TryMerge(commands);
+            if (Commands == null)
+            {
+                Commands = commands;
+                return;
+            }
+            bool result = Commands.TryMerge(commands);
             if (!result)
             {
                 throw new Exception("Could not load commands into ShapeGroup node. Call CanAddAction method first to Check if it is possible to add the commands");
