@@ -27,22 +27,7 @@ namespace TestApp.Actions
             var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new TextureRegion(texture));
             shaderTexture.Add(shape, texture);
 
-            /*
-            using (var bitmap = new Bitmap(300, 300, PixelFormat.Format32bppArgb))
-            {
-                using(var graphics = Graphics.FromImage(bitmap))
-                {
-                    graphics.FillRectangle(
-                        new SolidBrush(System.Drawing.Color.Red),
-                        new System.Drawing.Rectangle(0,0,bitmap.Width,bitmap.Height)
-                        );
-                    graphics.Flush();
-                    bitmap.Save("hello.png");
-                    var texture = new GDITexture(dx, bitmap);
-                    var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new TextureRegion(texture));
-                    shaderTexture.Add(shape, texture);
-                }
-            }*/
+        
         }
         public void Dispose() { }
     }

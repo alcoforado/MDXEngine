@@ -62,9 +62,6 @@ namespace MDXEngine
                 program.DxContext.DeviceContext.UpdateSubresource(ref _data, _constantBuffer);
                 _dataChanged = false;
             }
-
-            
-            
             if (slot.ShaderStage == ShaderStage.PixelShader)
                 program.DxContext.DeviceContext.PixelShader.SetConstantBuffer(slot.SlotId, _constantBuffer);
             else if (slot.ShaderStage == ShaderStage.VertexShader)
