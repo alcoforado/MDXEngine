@@ -9,133 +9,80 @@ using System.Security.Cryptography.X509Certificates;
 namespace MDXEngine
 {
 
-    internal enum DrawInfoType { SHAPE_GROUP, SHAPE, ROOT }
-
-   
     
+    /// <summary>
+    /// The type stored in the NTree representing the DrawTree.
+    /// It can only store one of three type of nodes.
+    /// Shapes, Root, ShapeGroup. The info node is immutable.
+    /// You can only assign one of these three classes in its constructor.
+    /// To query which class is stored you have to call IsShape, IsShapeGroup, IsRoot
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     internal class DrawInfo<T>
     {
-        private bool _isIndexed;
-        private TopologyType _topology;
-
-        public DrawInfoType Type { get; set; }
-        public IShape<T> Shape { get; set; }
-        public CommandsSequence Commands { get; private set; }
-        public int OffI, OffV;
-        public int SizeI, SizeV;
-        public bool Changed;
-
-        public void ExecuteAction()
-        {
-            if (Commands != null)
-                Commands.Execute();
-        }
         
-        public bool HasCommands()
+        private ShapeGroupNode<T> _shapeGroupNode;
+        private ShapeNode<T> _shapeNode;
+        private RootNode _rootNode;
+
+        public bool Changed { get; set; }
+
+        public DrawInfo(ShapeGroupNode<T> node)
         {
-            return Commands != null;
+            _shapeGroupNode = node;
+            _shapeNode = null;
+            _rootNode = null;
+            Changed = true;
         }
 
-        public bool IsIndexed()
+        public DrawInfo(ShapeNode<T> node)
         {
-            Debug.Assert(Type == DrawInfoType.SHAPE || Type == DrawInfoType.SHAPE_GROUP);
-            return _isIndexed;
-        }
-
-        public TopologyType GetTopology()
-        {
-            Debug.Assert(Type == DrawInfoType.SHAPE || Type == DrawInfoType.SHAPE_GROUP);
-            return _topology;
-        }
-
-        public bool CanHaveShapeAsChild(IShape<T> shape)
-        {
-            return Type == DrawInfoType.SHAPE_GROUP &&
-                ((shape.NIndices() != 0) == _isIndexed) &&
-                (shape.GetTopology() == _topology);
+            _shapeGroupNode = null;
+            _shapeNode = node;
+            _rootNode = null;
+            Changed = true;
 
         }
 
-        static public DrawInfo<T> CreateRoot()
+        public DrawInfo(RootNode node)
         {
-            return new DrawInfo<T>
+            _shapeGroupNode = null;
+            _shapeNode = null;
+            _rootNode = node;
+            Changed = true;
+
+        }
+
+        public ShapeGroupNode<T> ShapeGroupNode { 
+            get {
+                if (_shapeGroupNode == null)
+                    throw new Exception("The DrawTree Info is not a ShapeGroupNode");
+               return _shapeGroupNode; 
+            } }
+        public ShapeNode<T> ShapeNode 
+        { 
+            get 
             {
-                Changed = true,
-                OffI = -1,
-                OffV = -1,
-                Type = DrawInfoType.ROOT,
-                Shape = null,
-                Commands = null
-            };
-            
+                if (_shapeNode == null)
+                    throw new Exception("The DrawTree Info is not a ShapeNode");
+               return _shapeNode; 
+            } 
         }
-        
-     
-        static public DrawInfo<T> CreateShape(IShape<T> shape)
-        {
-            return new DrawInfo<T>
+
+         public RootNode RootNode 
+        { 
+            get 
             {
-                Changed = true,
-                OffI = -1,
-                OffV = -1,
-                Shape = shape,
-                _isIndexed = shape.NIndices() != 0,
-                _topology = shape.GetTopology(),
-                Type = DrawInfoType.SHAPE,
-                Commands=null
-            };
-
+                if (_rootNode == null)
+                    throw new Exception("The DrawTree Info is not a RootNode");
+               return _rootNode; 
+            } 
         }
 
-        static public DrawInfo<T> CreateShapeGroup(bool isIndexed, TopologyType topology,CommandsSequence action=null)
-        {
-            return new DrawInfo<T>
-            {
-                Changed=true,
-                OffI=-1,
-                OffV=-1,
-                Shape      = null,
-                Type       = DrawInfoType.SHAPE_GROUP,
-                _isIndexed = isIndexed,
-                _topology  = topology,
-                Commands=action
-            };
-
-        }
-        static public DrawInfo<T> CreateGroupForShape(IShape<T> shape,CommandsSequence commands=null)
-        {
-            return CreateShapeGroup(shape.NIndices() != 0, shape.GetTopology(),commands);
-        }
-
-
-        public bool CanAddCommandsSequence(CommandsSequence commands)
-        {
-            if (Type == DrawInfoType.SHAPE_GROUP)
-            {
-                if (HasCommands())
-                {
-                    return Commands.CanMerge(commands);
-                }
-                return true;
-            }
-            return false;
-        }
-
-        public void AddCommandsSequence(CommandsSequence commands)
-        {
-            if (Commands == null)
-            {
-                Commands = commands;
-                return;
-            }
-            bool result = Commands.TryMerge(commands);
-            if (!result)
-            {
-                throw new Exception("Could not load commands into ShapeGroup node. Call CanAddAction method first to Check if it is possible to add the commands");
-            }
-        }
-
-
+        public bool IsShapeGroupNode() { return _shapeGroupNode != null; }
+        public bool IsShapeNode() { return _shapeNode != null; }
+        public bool IsRootNode() { return _rootNode != null; }
     } 
 
 }

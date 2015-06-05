@@ -61,6 +61,9 @@
     <Compile Include="Camera\SphericVisualization.cs" />
     <Compile Include="CBufferResource.cs" />
     <Compile Include="DrawTree\CommandsSequence.cs" />
+    <Compile Include="DrawTree\RootNode.cs" />
+    <Compile Include="DrawTree\ShapeGroupNode.cs" />
+    <Compile Include="DrawTree\ShapeNode.cs" />
     <Compile Include="HLSLProgram.cs" />
     <Compile Include="HLSLResources.cs" />
     <Compile Include="IDrawTreeAction.cs" />

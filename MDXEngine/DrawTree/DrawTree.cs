@@ -10,7 +10,7 @@ namespace MDXEngine
 {
     public class DrawTree<T> : IDisposable where T : struct
     {
-        private readonly NTreeNode<DrawInfo<T>> _root;
+        private readonly NTreeNode<DrawInfo<T>> _ntree;
         private T[] _vertices;
         private int[] _indices;
         Buffer _vI;
@@ -23,7 +23,7 @@ namespace MDXEngine
 
         internal NTreeNodeIterator<DrawInfo<T>> BeginIterator()
         {
-            return new NTreeNodeIterator<DrawInfo<T>>(_root);
+            return new NTreeNodeIterator<DrawInfo<T>>(_ntree);
 
         }
 
@@ -31,60 +31,60 @@ namespace MDXEngine
         {
             int offI = 0;
             int offV = 0;
-            _root.ForAllInOrder(
+            _ntree.ForAllInOrder(
                 node =>
                 {
                     var info = node.GetData();
                     if (!info.Changed)
-                        return;
-                    switch (info.Type)
                     {
-                        case DrawInfoType.SHAPE:
-                            {
-                                info.SizeI = info.Shape.NIndices();
-                                info.SizeV = info.Shape.NVertices();
-                                info.OffI = offI;
-                                info.OffV = offV;
-                                offI += info.SizeI;
-                                offV += info.SizeV;
-                                break;
-                            }
-                        case DrawInfoType.SHAPE_GROUP:
-                            {
-                                info.SizeI = 0;
-                                info.SizeV = 0;
-                                foreach (var child in node.GetChilds())
-                                {
-                                    info.SizeI += child.GetData().SizeI;
-                                    info.SizeV += child.GetData().SizeV;
-                                }
-                                if (node.GetChilds().Count != 0)
-                                {
-                                    info.OffV = node.GetChilds().First().GetData().OffV;
-                                    info.OffI = node.GetChilds().First().GetData().OffI;
-                                }
-
-                                break;
-                            }
-                        case DrawInfoType.ROOT:
-                            {
-                                info.SizeI = info.SizeV = 0;
-                                foreach (var child in node.GetChilds())
-                                {
-                                    if (child.GetData().Type == DrawInfoType.SHAPE_GROUP)
-                                    {
-                                        info.SizeI += child.GetData().SizeI;
-                                        info.SizeV += child.GetData().SizeV;
-                                    }
-                                    else
-                                        throw new Exception("Root should have only ShapeGroups as childs");
-                                }
-                                info.OffI = 0;
-                                info.OffV = 0;
-                                break;
-                            }
+                        return;
                     }
-                });
+                    if (info.IsShapeNode())
+                    {
+                        var shapeNode = info.ShapeNode;
+                        shapeNode.SizeI = shapeNode.Shape.NIndices();
+                        shapeNode.SizeV = shapeNode.Shape.NVertices();
+                        shapeNode.OffI = offI;
+                        shapeNode.OffV = offV;
+                        offI += shapeNode.SizeI;
+                        offV += shapeNode.SizeV;
+                    }
+                    if (info.IsShapeGroupNode())
+                    {
+                        var shapeGroupNode = info.ShapeGroupNode;
+                        shapeGroupNode.SizeI = 0;
+                        shapeGroupNode.SizeV = 0;
+                        foreach (var child in node.GetChilds())
+                        {
+                            shapeGroupNode.SizeI += child.GetData().ShapeNode.SizeI;
+                            shapeGroupNode.SizeV += child.GetData().ShapeNode.SizeV;
+                        }
+                        if (node.GetChilds().Count != 0)
+                        {
+                            shapeGroupNode.OffV = node.GetChilds().First().GetData().ShapeNode.OffV;
+                            shapeGroupNode.OffI = node.GetChilds().First().GetData().ShapeNode.OffI;
+                        }
+                    }
+                    if (info.IsRootNode())
+                    {
+                        var rootNode = info.RootNode;
+                        rootNode.SizeI = rootNode.SizeV = 0;
+                        foreach (var child in node.GetChilds())
+                        {
+                            if (child.GetData().IsShapeGroupNode())
+                            {
+                                rootNode.SizeI += child.GetData().ShapeGroupNode.SizeI;
+                                rootNode.SizeV += child.GetData().ShapeGroupNode.SizeV;
+                            }
+                            else
+                                throw new Exception("Root should have only ShapeGroups as childs");
+                        }
+                        rootNode.OffI = 0;
+                        rootNode.OffV = 0;
+
+                    }
+                }
+                );
 
 
 
@@ -118,7 +118,7 @@ namespace MDXEngine
         public DrawTree(int nVertices = 0, int nIndices = 0)
         {
 
-            _root = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateRoot());
+            _ntree = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new RootNode()));
             _vertices = new T[nVertices];
             _indices = new int[nIndices];
         }
@@ -126,19 +126,20 @@ namespace MDXEngine
         public void Add(IShape<T> shape, CommandsSequence commands = null)
         {
 
-            foreach (var node in _root.GetChilds())
+            foreach (var node in _ntree.GetChilds())
             {
-                var shapeGroup = node.GetData();
+
+                var shapeGroup = node.GetData().ShapeGroupNode;
                 if (shapeGroup.CanHaveShapeAsChild(shape))
                 {
                     //Check if the command Sequence is compatible
-                    if (commands == null || shapeGroup.CanAddCommandsSequence(commands))
+                    if (commands == null || shapeGroup.Commands.CanMerge(commands))
                     {
                         if (commands != null)
-                            shapeGroup.AddCommandsSequence(commands);
+                            shapeGroup.Commands.TryMerge(commands);
 
                         //Add the shape in the shape group tree
-                        var newNode = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateShape(shape));
+                        var newNode = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new ShapeNode<T>(shape)));
                         node.AppendChild(newNode);
                         newNode.ForAllParents(nd => nd.GetData().Changed = true);
                         return;
@@ -148,10 +149,10 @@ namespace MDXEngine
             }
             //If we reach here, there is no group to add this shape.
             //Create one]
-            var shapeNode = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateShape(shape));
-            var groupNode = new NTreeNode<DrawInfo<T>>(DrawInfo<T>.CreateGroupForShape(shape,commands));
+            var shapeNode = new NTreeNode<DrawInfo<T>>( new DrawInfo<T>( new ShapeNode<T>(shape)));
+            var groupNode = new NTreeNode<DrawInfo<T>>( new DrawInfo<T>( new ShapeGroupNode<T>(shape, commands)));
             groupNode.AppendChild(shapeNode);
-            _root.AppendChild(groupNode);
+            _ntree.AppendChild(groupNode);
             shapeNode.ForAllParents(nd => nd.GetData().Changed = true);
         }
 
@@ -163,26 +164,25 @@ namespace MDXEngine
 
 
 
-            _vertices = new T[_root.GetData().SizeV];
-            _indices = new int[_root.GetData().SizeI];
+            _vertices = new T[_ntree.GetData().RootNode.SizeV];
+            _indices  = new int[_ntree.GetData().RootNode.SizeI];
 
-            _root.ForAllInOrder(
+            _ntree.ForAllInOrder(
                 node =>
                 {
                     DrawInfo<T> info = node.GetData();
-                    switch (info.Type)
+                    if (info.IsShapeNode())
                     {
-                        case DrawInfoType.SHAPE:
-                            var vV = new SubArray<T>(_vertices, info.OffV, info.SizeV);
-                            var vI = new SubArray<int>(_indices, info.OffI, info.SizeI);
-                            info.Shape.Write(vV, vI);
+                        var shapeNode = info.ShapeNode;
+                        var vV = new SubArray<T>(_vertices, shapeNode.OffV, shapeNode.SizeV);
+                        var vI = new SubArray<int>(_indices, shapeNode.OffI, shapeNode.SizeI);
+                            shapeNode.Shape.Write(vV, vI);
 
                             //Adjust Indices;
-                            for (int i = info.OffI; i < info.SizeI; i++)
+                            for (int i = shapeNode.OffI; i < shapeNode.SizeI; i++)
                             {
-                                _indices[i] += info.OffI;
+                                _indices[i] += shapeNode.OffI;
                             }
-                            break;
                     }
                     info.Changed = false;
                 });
@@ -192,32 +192,34 @@ namespace MDXEngine
 
         public void Draw(IDxContext dx)
         {
-            if (_root.GetData().Changed)
+            if (_ntree.GetData().Changed)
             {
                 FullSyncTree();
                 CopyToDxBuffers(dx);
             }
 
-            foreach (var child in _root.GetChilds())
+            foreach (var child in _ntree.GetChilds())
             {
-                var node = child.GetData();
-                if (child.GetData().Type == DrawInfoType.SHAPE_GROUP)
+                var info = child.GetData();
+                if (child.GetData().IsShapeGroupNode())
                 {
-                    node.ExecuteAction();
+                    var shapeGroup = info.ShapeGroupNode;
+                    if (shapeGroup.Commands != null)
+                        shapeGroup.Commands.Execute();
 
-                    switch (node.GetTopology())
+                    switch (shapeGroup.GetTopology())
                     {
                         case TopologyType.TRIANGLES:
                             {
                                 dx.DeviceContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
-                                if (node.IsIndexed())
+                                if (shapeGroup.IsIndexed())
                                 {
-                                    dx.DeviceContext.DrawIndexed(node.SizeI, node.OffI, 0);
+                                    dx.DeviceContext.DrawIndexed(shapeGroup.SizeI, shapeGroup.OffI, 0);
                                 }
                                 else
                                 {
-                                    dx.DeviceContext.Draw(node.SizeV, node.OffV);
-                               }
+                                    dx.DeviceContext.Draw(shapeGroup.SizeV, shapeGroup.OffV);
+                                }
                                 break;
                             }
                         default:

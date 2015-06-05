@@ -80,16 +80,15 @@ namespace UnitTests
             var it = tree.BeginIterator();
             it.GotoChild().Should().BeTrue();
             it.GotoNextSibling().Should().BeFalse();
-            it.GetData().IsIndexed().Should().BeTrue();
-            it.GetData().Type.Should().Be(DrawInfoType.SHAPE_GROUP);
+            it.GetData().IsShapeGroupNode().Should().Be(true);
+            it.GetData().ShapeGroupNode.IsIndexed().Should().BeTrue();
             it.GotoChild().Should().BeTrue();
-            it.GetData().Type.Should().Be(DrawInfoType.SHAPE);
-            it.GetData().Shape.Should().NotBeNull();
-            it.GetData().Shape.NIndices().Should().Be(10);
+            it.GetData().IsShapeNode().Should().Be(true);
+            it.GetData().ShapeNode.Should().NotBeNull();
+            it.GetData().ShapeNode.Shape.NIndices().Should().Be(10);
             it.GotoNextSibling().Should().BeTrue();
-            it.GetData().Type.Should().Be(DrawInfoType.SHAPE);
-            it.GetData().Shape.Should().NotBeNull();
-            it.GetData().Shape.NIndices().Should().Be(4);
+            it.GetData().IsShapeNode().Should().Be(true);
+            it.GetData().ShapeNode.Shape.NIndices().Should().Be(4);
              
         }
 
@@ -105,26 +104,26 @@ namespace UnitTests
             //Check
             var it = tree.BeginIterator();
             it.GotoChild().Should().BeTrue();
-            it.GetData().Type.Should().Be(DrawInfoType.SHAPE_GROUP);
-            it.GetData().IsIndexed().Should().BeTrue();
-            it.GetData().GetTopology().Should().Be(TopologyType.TRIANGLES);
+            it.GetData().IsShapeGroupNode().Should().BeTrue();
+            it.GetData().ShapeGroupNode.IsIndexed().Should().BeTrue();
+            it.GetData().ShapeGroupNode.GetTopology().Should().Be(TopologyType.TRIANGLES);
             it.GetNode().GetChilds().Count.Should().Be(2);
             it.GetData().Changed.Should().BeTrue();
 
 
 
             it.GotoNextSibling().Should().BeTrue();
-            it.GetData().Type.Should().Be(DrawInfoType.SHAPE_GROUP);
-            it.GetData().IsIndexed().Should().BeFalse();
-            it.GetData().GetTopology().Should().Be(TopologyType.TRIANGLES);
+            it.GetData().IsShapeGroupNode().Should().BeTrue();
+            it.GetData().ShapeGroupNode.IsIndexed().Should().BeFalse();
+            it.GetData().ShapeGroupNode.GetTopology().Should().Be(TopologyType.TRIANGLES);
             it.GetNode().GetChilds().Count.Should().Be(1);
             it.GetData().Changed.Should().BeTrue();
 
 
             it.GotoNextSibling().Should().BeTrue();
-            it.GetData().Type.Should().Be(DrawInfoType.SHAPE_GROUP);
-            it.GetData().IsIndexed().Should().BeFalse();
-            it.GetData().GetTopology().Should().Be(TopologyType.POINTS);
+            it.GetData().IsShapeGroupNode().Should().BeTrue();
+            it.GetData().ShapeGroupNode.IsIndexed().Should().BeFalse();
+            it.GetData().ShapeGroupNode.GetTopology().Should().Be(TopologyType.POINTS);
             it.GetNode().GetChilds().Count.Should().Be(1);
             it.GetData().Changed.Should().BeTrue();
 
@@ -144,22 +143,22 @@ namespace UnitTests
             var it = tree.BeginIterator();
 
             //root
-            it.GetData().SizeI.Should().Be(10);
-            it.GetData().SizeV.Should().Be(4);
-            it.GetData().OffV.Should().Be(0);
-            it.GetData().OffI.Should().Be(0);
+            it.GetData().RootNode.SizeI.Should().Be(10);
+            it.GetData().RootNode.SizeV.Should().Be(4);
+            it.GetData().RootNode.OffV.Should().Be(0);
+            it.GetData().RootNode.OffI.Should().Be(0);
             //group
             it.GotoChild().Should().BeTrue();
-            it.GetData().SizeI.Should().Be(10);
-            it.GetData().SizeV.Should().Be(4);
-            it.GetData().OffV.Should().Be(0);
-            it.GetData().OffI.Should().Be(0);
+            it.GetData().ShapeGroupNode.SizeI.Should().Be(10);
+            it.GetData().ShapeGroupNode.SizeV.Should().Be(4);
+            it.GetData().ShapeGroupNode.OffV.Should().Be(0);
+            it.GetData().ShapeGroupNode.OffI.Should().Be(0);
             //the only shape
             it.GotoChild().Should().BeTrue();
-            it.GetData().SizeI.Should().Be(10);
-            it.GetData().SizeV.Should().Be(4);
-            it.GetData().OffV.Should().Be(0);
-            it.GetData().OffI.Should().Be(0);
+            it.GetData().ShapeNode.SizeI.Should().Be(10);
+            it.GetData().ShapeNode.SizeV.Should().Be(4);
+            it.GetData().ShapeNode.OffV.Should().Be(0);
+            it.GetData().ShapeNode.OffI.Should().Be(0);
 
 
         }
@@ -176,31 +175,31 @@ namespace UnitTests
             
             //root
             var it = tree.BeginIterator();
-            it.GetData().SizeI.Should().Be(15);
-            it.GetData().SizeV.Should().Be(7);
-            it.GetData().OffV.Should().Be(0);
-            it.GetData().OffI.Should().Be(0);
+            it.GetData().RootNode.SizeI.Should().Be(15);
+            it.GetData().RootNode.SizeV.Should().Be(7);
+            it.GetData().RootNode.OffV.Should().Be(0);
+            it.GetData().RootNode.OffI.Should().Be(0);
 
             //shape group
             it.GotoChild().Should().BeTrue();
-            it.GetData().SizeI.Should().Be(15);
-            it.GetData().SizeV.Should().Be(7);
-            it.GetData().OffV.Should().Be(0);
-            it.GetData().OffI.Should().Be(0);
+            it.GetData().ShapeGroupNode.SizeI.Should().Be(15);
+            it.GetData().ShapeGroupNode.SizeV.Should().Be(7);
+            it.GetData().ShapeGroupNode.OffV.Should().Be(0);
+            it.GetData().ShapeGroupNode.OffI.Should().Be(0);
 
             //shape 1
             it.GotoChild().Should().BeTrue();
-            it.GetData().SizeI.Should().Be(10);
-            it.GetData().SizeV.Should().Be(4);
-            it.GetData().OffV.Should().Be(0);
-            it.GetData().OffI.Should().Be(0);
+            it.GetData().ShapeNode.SizeI.Should().Be(10);
+            it.GetData().ShapeNode.SizeV.Should().Be(4);
+            it.GetData().ShapeNode.OffV.Should().Be(0);
+            it.GetData().ShapeNode.OffI.Should().Be(0);
 
             //shape 2
             it.GotoNextSibling().Should().BeTrue();
-            it.GetData().SizeI.Should().Be(5);
-            it.GetData().SizeV.Should().Be(3);
-            it.GetData().OffI.Should().Be(10);
-            it.GetData().OffV.Should().Be(4);
+            it.GetData().ShapeNode.SizeI.Should().Be(5);
+            it.GetData().ShapeNode.SizeV.Should().Be(3);
+            it.GetData().ShapeNode.OffI.Should().Be(10);
+            it.GetData().ShapeNode.OffV.Should().Be(4);
 
         }
 
@@ -219,54 +218,54 @@ namespace UnitTests
 
             //root
             var it = tree.BeginIterator();
-            it.GetData().SizeI.Should().Be(25);
-            it.GetData().SizeV.Should().Be(21);
-            it.GetData().OffV.Should().Be(0);
-            it.GetData().OffI.Should().Be(0);
+            it.GetData().RootNode.SizeI.Should().Be(25); 
+            it.GetData().RootNode.SizeV.Should().Be(21); 
+            it.GetData().RootNode.OffV.Should().Be(0); 
+            it.GetData().RootNode.OffI.Should().Be(0); 
 
             //shape group
             it.GotoChild().Should().BeTrue();
-            it.GetData().SizeI.Should().Be(25);
-            it.GetData().SizeV.Should().Be(17);
-            it.GetData().OffV.Should().Be(0);
-            it.GetData().OffI.Should().Be(0);
+            it.GetData().ShapeGroupNode.SizeI.Should().Be(25);
+            it.GetData().ShapeGroupNode.SizeV.Should().Be(17);
+            it.GetData().ShapeGroupNode.OffV.Should().Be(0);
+            it.GetData().ShapeGroupNode.OffI.Should().Be(0);
 
             //shape 1
             it.GotoChild().Should().BeTrue();
-            it.GetData().SizeI.Should().Be(10);
-            it.GetData().SizeV.Should().Be(4);
-            it.GetData().OffV.Should().Be(0);
-            it.GetData().OffI.Should().Be(0);
+            it.GetData().ShapeNode.SizeI.Should().Be(10);
+            it.GetData().ShapeNode.SizeV.Should().Be(4);
+            it.GetData().ShapeNode.OffV.Should().Be(0);
+            it.GetData().ShapeNode.OffI.Should().Be(0);
 
             //shape 2
             it.GotoNextSibling().Should().BeTrue();
-            it.GetData().SizeI.Should().Be(5);
-            it.GetData().SizeV.Should().Be(3);
-            it.GetData().OffI.Should().Be(10);
-            it.GetData().OffV.Should().Be(4);
+            it.GetData().ShapeNode.SizeI.Should().Be(5);
+            it.GetData().ShapeNode.SizeV.Should().Be(3);
+            it.GetData().ShapeNode.OffI.Should().Be(10);
+            it.GetData().ShapeNode.OffV.Should().Be(4);
 
 
             //shape 2
             it.GotoNextSibling().Should().BeTrue();
-            it.GetData().SizeI.Should().Be(10);
-            it.GetData().SizeV.Should().Be(10);
-            it.GetData().OffI.Should().Be(15);
-            it.GetData().OffV.Should().Be(7);
+            it.GetData().ShapeNode.SizeI.Should().Be(10);
+            it.GetData().ShapeNode.SizeV.Should().Be(10);
+            it.GetData().ShapeNode.OffI.Should().Be(15);
+            it.GetData().ShapeNode.OffV.Should().Be(7);
 
 
             it = tree.BeginIterator();
             it.GotoChild();
             it.GotoNextSibling().Should().BeTrue();
-            it.GetData().SizeI.Should().Be(0);
-            it.GetData().SizeV.Should().Be(4);
-            it.GetData().OffI.Should().Be(25);
-            it.GetData().OffV.Should().Be(17);
+            it.GetData().ShapeGroupNode.SizeI.Should().Be(0);
+            it.GetData().ShapeGroupNode.SizeV.Should().Be(4);
+            it.GetData().ShapeGroupNode.OffI.Should().Be(25);
+            it.GetData().ShapeGroupNode.OffV.Should().Be(17);
 
             it.GotoChild();
-            it.GetData().SizeI.Should().Be(0);
-            it.GetData().SizeV.Should().Be(4);
-            it.GetData().OffI.Should().Be(25);
-            it.GetData().OffV.Should().Be(17);
+            it.GetData().ShapeNode.SizeI.Should().Be(0);
+            it.GetData().ShapeNode.SizeV.Should().Be(4);
+            it.GetData().ShapeNode.OffI.Should().Be(25);
+            it.GetData().ShapeNode.OffV.Should().Be(17);
 
         }
 
