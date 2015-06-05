@@ -60,7 +60,7 @@
     <Compile Include="Camera\MouseSphericNavigator.cs" />
     <Compile Include="Camera\SphericVisualization.cs" />
     <Compile Include="CBufferResource.cs" />
-    <Compile Include="CommandsSequence.cs" />
+    <Compile Include="DrawTree\CommandsSequence.cs" />
     <Compile Include="HLSLProgram.cs" />
     <Compile Include="HLSLResources.cs" />
     <Compile Include="IDrawTreeAction.cs" />
@@ -83,8 +83,8 @@
     </Compile>
     <Compile Include="ResourcesManager.cs" />
     <Compile Include="Shaders\ShaderColor2D.cs" />
-    <Compile Include="DrawInfo.cs" />
-    <Compile Include="DrawTree.cs" />
+    <Compile Include="DrawTree\DrawInfo.cs" />
+    <Compile Include="DrawTree\DrawTree.cs" />
     <Compile Include="DxControl.cs" />
     <Compile Include="IArray.cs" />
     <Compile Include="IDxContext.cs" />
@@ -95,8 +95,8 @@
     <Compile Include="IShape.cs" />
     <Compile Include="Shapes\ITopology.cs" />
     <Compile Include="Normal3DArray.cs" />
-    <Compile Include="NTreeNode.cs" />
-    <Compile Include="NTreeNodeIterator.cs" />
+    <Compile Include="DrawTree\NTreeNode.cs" />
+    <Compile Include="DrawTree\NTreeNodeIterator.cs" />
     <Compile Include="Observable.cs" />
     <Compile Include="IObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
