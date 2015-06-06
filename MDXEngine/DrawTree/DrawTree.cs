@@ -21,6 +21,10 @@ namespace MDXEngine
         public T[] Vertices { get { return _vertices; } }
         public int[] Indices { get { return _indices; } }
 
+        /// <summary>
+        /// Get pointer to the root node
+        /// </summary>
+        /// <returns></returns>
         internal NTreeNodeIterator<DrawInfo<T>> BeginIterator()
         {
             return new NTreeNodeIterator<DrawInfo<T>>(_ntree);
@@ -122,6 +126,13 @@ namespace MDXEngine
             _vertices = new T[nVertices];
             _indices = new int[nIndices];
         }
+
+
+        public RootNode GetRootNode()
+        {
+            return _ntree.GetData().RootNode;
+        }
+
 
         public void Add(IShape<T> shape, CommandsSequence commands = null)
         {

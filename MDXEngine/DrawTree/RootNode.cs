@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MDXEngine {
-    internal class RootNode
+    public class RootNode
     {
-        public CommandsSequence Commands { get; private set; }
+        public CommandsSequence Commands { get; set; }
         public int OffI, OffV;
         public int SizeI, SizeV;
 

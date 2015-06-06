@@ -11,8 +11,12 @@ namespace MDXEngine
 
     public interface ICameraObserver
     {
+        /// <summary>
+        /// Event called everytime the camera changes
+        /// </summary>
+        /// <param name="camera"></param>
         void CameraChanged(Camera camera);
-        void CameraReleased();
+        //void CameraReleased();
     }
 
     public struct CameraShpericCoordinates

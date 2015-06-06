@@ -102,6 +102,13 @@ namespace MDXEngine
             return true;
         }
 
+        public CommandsSequence AddLoadCommand(string varName,IShaderResource resource)
+        {
+            if (!TryAddLoadCommand(varName, resource))
+                throw new Exception("Could not add command to the Sequence");
+            return this;
+        }
+
 
         public bool CanAddLoadCommand(string varName, IShaderResource resource)
         {
@@ -114,14 +121,7 @@ namespace MDXEngine
                 return true;
             }
         }
-        public void AddLoadCommand(string varName, IShaderResource resource)
-        {
-            if (!TryAddLoadCommand(varName, resource))
-            {
-                throw new Exception("Could not add command to the Sequence");
-            }
-            
-        }
+      
         #endregion
 
         public int Count

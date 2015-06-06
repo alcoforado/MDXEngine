@@ -30,7 +30,7 @@ namespace MDXEngine
         Buffer _constantBuffer;
         
         
-        public CBufferResource(HLSLProgram program,string varName)
+        public CBufferResource(HLSLProgram program)
         {
            var dx = program.DxContext;
            _constantBuffer = new Buffer(dx.Device, Utilities.SizeOf<T>(), ResourceUsage.Default, BindFlags.ConstantBuffer, CpuAccessFlags.None, ResourceOptionFlags.None, 0);
