@@ -197,7 +197,11 @@ namespace MDXEngine
                 FullSyncTree();
                 CopyToDxBuffers(dx);
             }
-
+            //Run Root Node commands
+            var rootNode=_ntree.GetData().RootNode;
+            if (rootNode.Commands!= null)
+                rootNode.Commands.Execute();
+          
             foreach (var child in _ntree.GetChilds())
             {
                 var info = child.GetData();

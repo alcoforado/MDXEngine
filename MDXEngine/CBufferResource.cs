@@ -56,17 +56,22 @@ namespace MDXEngine
         {
            
             var slot = program.ProgramResourceSlots[varName].Value;
+        
+
 
             if (_dataChanged)
             {
                 program.DxContext.DeviceContext.UpdateSubresource(ref _data, _constantBuffer);
                 _dataChanged = false;
             }
-            if (slot.ShaderStage == ShaderStage.PixelShader)
-                program.DxContext.DeviceContext.PixelShader.SetConstantBuffer(slot.SlotId, _constantBuffer);
-            else if (slot.ShaderStage == ShaderStage.VertexShader)
-                program.DxContext.DeviceContext.VertexShader.SetConstantBuffer(slot.SlotId, _constantBuffer);            
-            
+            if (slot.Resource != this)
+            {
+                if (slot.ShaderStage == ShaderStage.PixelShader)
+                    program.DxContext.DeviceContext.PixelShader.SetConstantBuffer(slot.SlotId, _constantBuffer);
+                else if (slot.ShaderStage == ShaderStage.VertexShader)
+                    program.DxContext.DeviceContext.VertexShader.SetConstantBuffer(slot.SlotId, _constantBuffer);
+                slot.Resource = this;
+            }
         
         }
     }
