@@ -36,16 +36,8 @@ namespace MDXEngine
         Vector3 _pos;
         Vector3 _up;
         Vector3 _focus;
-        
-        //spheric coordinates
-        double _r; 
-        Angle _alpha;
-        Angle _theta;
-        
 
-        //boolean to keep track wich coordinates need updates
-        bool _bNormalCoordinatesNeedUpdate;
-        bool _bSphericCoordinatesNeedUpdate;
+        bool _bUpdateWorldMatrix;
 
         Matrix proj; //The projection matrix
         
@@ -53,9 +45,10 @@ namespace MDXEngine
                 
         //Matrix view; //The final view Matrix
 
-        public Camera()
+        public Camera(int  viewportX,int viewportY)
         {
             _observers = new List<ICameraObserver>();
+            SetLens(viewportX,viewportY);
         }
 
         public void SetCamera(Vector3 pos, Vector3 up)
@@ -63,8 +56,6 @@ namespace MDXEngine
             _pos = pos;
             _up = up;
             _focus.Set(0);
-            _bSphericCoordinatesNeedUpdate = true;
-            _bNormalCoordinatesNeedUpdate = false;
             OnCameraChange();
         }
 
@@ -73,8 +64,6 @@ namespace MDXEngine
             _pos = pos; 
             _up = up;
             _focus = focus;
-            _bSphericCoordinatesNeedUpdate = true;
-            _bNormalCoordinatesNeedUpdate = false;
             OnCameraChange();
         }
 
@@ -86,10 +75,7 @@ namespace MDXEngine
             get { return _focus; } 
             
             set {
-                if (_bNormalCoordinatesNeedUpdate)
-                    UpdateCameraFromSphericCoordinates();
                 _focus = value;
-                _bSphericCoordinatesNeedUpdate = true;
                 OnCameraChange();
             }
         }
@@ -98,16 +84,11 @@ namespace MDXEngine
         {
             get
             {
-                if (_bNormalCoordinatesNeedUpdate)
-                    UpdateCameraFromSphericCoordinates();
                 return _pos;
             }
             private set
             {
-                if (_bNormalCoordinatesNeedUpdate)
-                    UpdateCameraFromSphericCoordinates();
                 _pos = value;
-                _bSphericCoordinatesNeedUpdate = true;
                 OnCameraChange();
             }
         }
@@ -115,84 +96,17 @@ namespace MDXEngine
         {
             get
             {
-                if (_bNormalCoordinatesNeedUpdate)
-                    UpdateCameraFromSphericCoordinates();
                 return _up;
             }
             private set
             {
-                if (_bNormalCoordinatesNeedUpdate)
-                    UpdateCameraFromSphericCoordinates();
                 _up = value;
-                _bSphericCoordinatesNeedUpdate = true;
                 OnCameraChange();
             }
         }
-        public double R
-        {
-            get
-            {
-                if (_bSphericCoordinatesNeedUpdate)
-                    UpdateSphericCoordinatesFromCamera();
-                return _r;
-
-            }
-            private set
-            {
-                if (_bSphericCoordinatesNeedUpdate)
-                    UpdateSphericCoordinatesFromCamera();
-                _r = value;
-                _bNormalCoordinatesNeedUpdate = true;
-                OnCameraChange();
-            }
-        }
-        public Angle Alpha
-        {
-            get
-            {
-                if (_bSphericCoordinatesNeedUpdate)
-                    UpdateSphericCoordinatesFromCamera();
-                return _alpha;
-            }
-            private set
-            {
-                if (_bSphericCoordinatesNeedUpdate)
-                    UpdateSphericCoordinatesFromCamera();
-                _alpha = value;
-                _bNormalCoordinatesNeedUpdate = true;
-                OnCameraChange();
-            }
-        }
-        public Angle Theta
-        {
-            get
-            {
-                if (_bSphericCoordinatesNeedUpdate)
-                    UpdateSphericCoordinatesFromCamera();
-                return _theta;
-            }
-            private set
-            {
-                if (_bSphericCoordinatesNeedUpdate)
-                    UpdateSphericCoordinatesFromCamera();
-                _theta = value;
-                _bNormalCoordinatesNeedUpdate = true;
-                OnCameraChange();
-            }
-        }
-        
+     
 #endregion      
 
-        public void SetCameraFromSphericCoordinates(double r, Angle alpha, Angle theta)
-        {
-
-            _alpha = alpha;
-            _theta = theta;
-            _r = r;
-            _bSphericCoordinatesNeedUpdate = false;
-            _bNormalCoordinatesNeedUpdate = true;
-            OnCameraChange();
-        }
 
         public void SetCamera(CameraShpericCoordinates s)
         {
@@ -224,64 +138,14 @@ namespace MDXEngine
         }
 
 
-        private void UpdateCameraFromSphericCoordinates()
-        {
-            
-            
-
-            _pos.X=(float)(_r * _theta.Cos * _alpha.Sin);
-            _pos.Y = (float)(_r *_theta.Sin* _alpha.Sin);
-            _pos.Z=(float)(_r * _alpha.Cos);
-            _pos+=_focus;
-
-            Angle alpha_90 = _alpha.Add90();
-
-            _up.X = (float)(_r * _theta.Cos * alpha_90.Sin);
-            _up.Y = (float)(_r * _theta.Sin * alpha_90.Sin);
-            _up.Z = (float)(_r * alpha_90.Cos);
-          
-            _bNormalCoordinatesNeedUpdate=false;
-            
-        }
+     
 
 
         private void UpdateSphericCoordinatesFromCamera()
         {
-            /*
-            double sin_alpha=Math.Sin(_alpha);
-            double cos_alpha=Math.Cos(_alpha);
-            double sin_theta=Math.Sin(_theta);
-            double cos_theta=Math.Cos(_theta);
-            double cos_alpha_90 = sin_alpha;
-            double sin_alpha_90 = -cos_alpha;
-
-            _pos.X= (float)(_r * cos_theta * sin_alpha);
-            _pos.Y= (float)(_r * sin_theta * sin_alpha);
-            _pos.Z= (float)(_r * cos_alpha);
-            _pos+=_focus;
-
-            _up.X = (float)(cos_theta * sin_alpha_90);
-            _up.Y = (float)(sin_theta * sin_alpha_90);
-            _up.Z = (float)(cos_alpha_90);
-
-            //DXApp.log.WriteLine("{0} {1}", _pos, _up);
-           
-            _bNormalCoordinatesNeedUpdate=false;
-            _bSphericCoordinatesNeedUpdate=false;
-            */
         }
 
-        /*
-
-        public void MoveSpheric(float dr,float d_theta, float d_alpha)
-        {
-            Alpha += d_alpha;
-            Theta += d_theta;
-            R += dr;
-            if (R < 0f)
-                R = 0f;
-        }
-        */
+       
         public void OrthonormalizeUp()
         {
             var v = new Vector3();
@@ -293,16 +157,12 @@ namespace MDXEngine
 
         public Matrix GetWorldViewMatrix()
         {
-            if (_bNormalCoordinatesNeedUpdate)
-                this.UpdateCameraFromSphericCoordinates();
             return Matrix.Multiply(Matrix.LookAtRH(_pos, _focus, _up),proj);
         }
 
         public Matrix GetWorldMatrix()
         {
-            if (_bNormalCoordinatesNeedUpdate)
-                this.UpdateCameraFromSphericCoordinates();
-            return Matrix.LookAtRH(_pos, _focus, _up);
+             return Matrix.LookAtRH(_pos, _focus, _up);
         }
 
         public void SetLens(int X,int Y)
@@ -316,6 +176,7 @@ namespace MDXEngine
 
         private void OnCameraChange()
         {
+            _bUpdateWorldMatrix = true;
             foreach(var obs in _observers)
             {
                 obs.CameraChanged(this);

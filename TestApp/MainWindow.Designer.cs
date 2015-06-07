@@ -36,7 +36,7 @@
             this.rGBTriangleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helloWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rGBTriangle3DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cubeColor3DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -89,7 +89,7 @@
             this.rGBTriangleToolStripMenuItem,
             this.loadTextureToolStripMenuItem,
             this.helloWorldToolStripMenuItem,
-            this.rGBTriangle3DToolStripMenuItem});
+            this.cubeColor3DToolStripMenuItem});
             this.testsToolStripMenuItem.Name = "testsToolStripMenuItem";
             this.testsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.testsToolStripMenuItem.Text = "Tests";
@@ -97,37 +97,37 @@
             // fractalCubeToolStripMenuItem
             // 
             this.fractalCubeToolStripMenuItem.Name = "fractalCubeToolStripMenuItem";
-            this.fractalCubeToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.fractalCubeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fractalCubeToolStripMenuItem.Text = "Fractal Cube";
             this.fractalCubeToolStripMenuItem.Click += new System.EventHandler(this.fractalCubeToolStripMenuItem_Click);
             // 
             // rGBTriangleToolStripMenuItem
             // 
             this.rGBTriangleToolStripMenuItem.Name = "rGBTriangleToolStripMenuItem";
-            this.rGBTriangleToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.rGBTriangleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rGBTriangleToolStripMenuItem.Text = "RGB Triangle";
             this.rGBTriangleToolStripMenuItem.Click += new System.EventHandler(this.rGBTriangleToolStripMenuItem_Click);
             // 
             // loadTextureToolStripMenuItem
             // 
             this.loadTextureToolStripMenuItem.Name = "loadTextureToolStripMenuItem";
-            this.loadTextureToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.loadTextureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadTextureToolStripMenuItem.Text = "LoadTexture";
             this.loadTextureToolStripMenuItem.Click += new System.EventHandler(this.loadTextureToolStripMenuItem_Click);
             // 
             // helloWorldToolStripMenuItem
             // 
             this.helloWorldToolStripMenuItem.Name = "helloWorldToolStripMenuItem";
-            this.helloWorldToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.helloWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.helloWorldToolStripMenuItem.Text = "Hello World";
             this.helloWorldToolStripMenuItem.Click += new System.EventHandler(this.helloWorldToolStripMenuItem_Click);
             // 
-            // rGBTriangle3DToolStripMenuItem
+            // cubeColor3DToolStripMenuItem
             // 
-            this.rGBTriangle3DToolStripMenuItem.Name = "rGBTriangle3DToolStripMenuItem";
-            this.rGBTriangle3DToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.rGBTriangle3DToolStripMenuItem.Text = "RGB Triangle 3D";
-            this.rGBTriangle3DToolStripMenuItem.Click += new System.EventHandler(this.rGBTriangle3DToolStripMenuItem_Click);
+            this.cubeColor3DToolStripMenuItem.Name = "cubeColor3DToolStripMenuItem";
+            this.cubeColor3DToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cubeColor3DToolStripMenuItem.Text = "Cube Color 3D";
+            this.cubeColor3DToolStripMenuItem.Click += new System.EventHandler(this.cubeColor3DToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -161,7 +161,7 @@
         private System.Windows.Forms.ToolStripMenuItem rGBTriangleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadTextureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helloWorldToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rGBTriangle3DToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cubeColor3DToolStripMenuItem;
 
     }
 }

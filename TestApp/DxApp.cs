@@ -8,6 +8,7 @@ using MDXEngine;
 using MDXEngine.Shapes;
 using SharpDX;
 using MDXEngine.Painters;
+using MDXEngine.Geometry;
 namespace TestApp
 {
     public class DxApp
@@ -20,11 +21,27 @@ namespace TestApp
         public DxApp(MainWindow main, Control display)
         {
             dx = new DxControl(display);
+            SetInitialCamera();
             _bResize = true;
             _main = main;
             _display = display;
             _main.Resize += (events, args) => _bResize = true;
             _main.SetDxApp(this);
+        }
+
+
+        public void SetInitialCamera()
+        {
+            dx.Camera.SetCamera(new CameraShpericCoordinates()
+            {
+                R = 4,
+                Focus = new Vector3(0, 0, 0),
+                Theta = new Angle(Angle.PI_4),
+                Alpha = new Angle(Angle.PI_4),
+                Up = new Vector3(0, 0, 1)
+           });
+            dx.Camera.OrthonormalizeUp();
+
         }
 
         public DxControl DxControl { get { return dx;} }

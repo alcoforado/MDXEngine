@@ -87,7 +87,7 @@ namespace MDXEngine
             InitializeDX();
             _resourceManager = new ResourcesManager();
             _shaders = new List<IShader>();
-            _camera = new Camera();
+            _camera = new Camera(control.ClientSize.Width,control.ClientSize.Height);
             _camera.AddObserver(this);
         }
 
@@ -136,6 +136,9 @@ namespace MDXEngine
             Utilities.Dispose(ref _renderView);
             Utilities.Dispose(ref _depthBuffer);
             Utilities.Dispose(ref _depthView);
+
+
+            Camera.SetLens(_renderControl.ClientSize.Width, _renderControl.ClientSize.Height);
 
             // Resize the backbuffer
             _swapChain.ResizeBuffers(_desc.BufferCount, _renderControl.ClientSize.Width, _renderControl.ClientSize.Height, Format.Unknown, SwapChainFlags.None);

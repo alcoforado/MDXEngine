@@ -21,7 +21,7 @@ namespace UnitTests
         public void CameraShouldCallObserverIfSetCameraIsCalled()
         {
             var observer = new Mock<ICameraObserver>();
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.AddObserver(observer.Object);
 
             cam.SetCamera(new Vector3(), new Vector3());
@@ -34,7 +34,7 @@ namespace UnitTests
         public void CameraShouldCallObserverIfSetCamera2IsCalled()
         {
             var observer = new Mock<ICameraObserver>();
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.AddObserver(observer.Object);
 
             cam.SetCamera(new Vector3(), new Vector3(), new Vector3());
@@ -47,7 +47,7 @@ namespace UnitTests
         public void CameraShouldCallObserverIfSetSetCamera2IsCalled()
         {
             var observer = new Mock<ICameraObserver>();
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.AddObserver(observer.Object);
 
             cam.SetCamera(new Vector3(), new Vector3(), new Vector3());
@@ -60,7 +60,7 @@ namespace UnitTests
         public void CameraShouldCallObserverIfFocusIsSet()
         {
             var observer = new Mock<ICameraObserver>();
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.AddObserver(observer.Object);
 
             cam.Focus = new Vector3();
@@ -74,7 +74,7 @@ namespace UnitTests
         public void CameraShouldCallObserverIfSetLensIsCalled()
         {
             var observer = new Mock<ICameraObserver>();
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.AddObserver(observer.Object);
 
             cam.SetLens(0, 0);
@@ -88,10 +88,10 @@ namespace UnitTests
         public void CameraShouldCallObserverIfSetCameraFromSphericCoordinatesIsCalled()
         {
             var observer = new Mock<ICameraObserver>();
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.AddObserver(observer.Object);
 
-            cam.SetCameraFromSphericCoordinates(0.0, new Angle(0.0), new Angle(0.0));
+            cam.SetCamera(new CameraShpericCoordinates());
 
             observer.Verify(x => x.CameraChanged(It.IsAny<Camera>()));
         }
@@ -101,10 +101,11 @@ namespace UnitTests
         public void CameraShouldNotCallObserverIfObserverIsAddedAndDeleted()
         {
             var observer = new Mock<ICameraObserver>();
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.AddObserver(observer.Object);
             cam.RemoveObserver(observer.Object);
-            cam.SetCameraFromSphericCoordinates(0.0, new Angle(0.0), new Angle(0.0));
+
+            cam.SetCamera(new CameraShpericCoordinates());
 
 
 
@@ -121,7 +122,7 @@ namespace UnitTests
             Vector3 up = new Vector3(1, 2, 3);
             Vector3 focus = new Vector3(4, 5, 6);
 
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.SetCamera(
                 new Vector3(2, 2, 2),
                 up,
@@ -145,7 +146,7 @@ namespace UnitTests
             Vector3 pos = new Vector3(1, 2, 5);
             Vector3 up = new Vector3(1, 2, 3);
             Vector3 focus = new Vector3(4, 5, 6);
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.SetCamera(
                 pos,
                 up,
@@ -161,7 +162,7 @@ namespace UnitTests
             Vector3 pos = new Vector3(4 + (float)Math.Sqrt(3), 6, 5);
             Vector3 up = new Vector3(1, 2, 3);
             Vector3 focus = new Vector3(4, 5, 6);
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.SetCamera(
                 pos,
                 up,
@@ -177,7 +178,7 @@ namespace UnitTests
             Vector3 pos = new Vector3(5, 7, 6 + (float)Math.Sqrt(5));
             Vector3 up = new Vector3(1, 2, 3);
             Vector3 focus = new Vector3(4, 5, 6);
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.SetCamera(
                 pos,
                 up,
@@ -198,7 +199,7 @@ namespace UnitTests
                 Up = new Vector3(2, 5, 87),
                 Focus = new Vector3(4, 5, 9)
             };
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.SetCamera(cd);
 
             (cam.Pos - new Vector3(5, 6, 9 + (float)Math.Sqrt(2))).Norm().Should().BeApproximately(0.0f, 1e-6f);
@@ -216,7 +217,7 @@ namespace UnitTests
                 Up = new Vector3(2, 5, 87),
                 Focus = new Vector3(4, 6, 19)
             };
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.SetCamera(cd);
 
             var cd2 = cam.GetCameraSphericCoordinates();
@@ -232,7 +233,7 @@ namespace UnitTests
         public void OrthogonizeUpShouldWork()
          {
 
-             var cam = new Camera();
+             var cam = new Camera(640,480);
              cam.SetCamera(new Vector3(1,3,4), new Vector3(0, 0, 1));
              cam.OrthonormalizeUp();
 
@@ -245,7 +246,7 @@ namespace UnitTests
         public void OrthogonizeUpShouldWork2()
         {
 
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.SetCamera(new Vector3(1, 3, 4), new Vector3(2, 7, 1));
             cam.OrthonormalizeUp();
 
@@ -258,7 +259,7 @@ namespace UnitTests
         public void OrthogonizeWithNonZeroFocusShouldWork()
         {
 
-            var cam = new Camera();
+            var cam = new Camera(640,480);
             cam.SetCamera(new Vector3(1, 3, 4), new Vector3(2, 7, 1),new Vector3(4,7,2));
             cam.OrthonormalizeUp();
 
