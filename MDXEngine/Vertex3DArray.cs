@@ -10,14 +10,14 @@ namespace MDXEngine
 {
     public class Vertex3DArray<T> : IArray<Vector3> where T : IPosition
     {
-        IArray<T> data;
+        IArray<T> _data;
 
         public Vertex3DArray(IArray<T> data)
         {
-            this.data = data;
+            this._data = data;
         }
 
-        public int Length{get {return data.Length;}}
+        public int Length{get {return _data.Length;}}
 
 
         public void CopyFrom(Vector3[] array)
@@ -35,11 +35,13 @@ namespace MDXEngine
         {
             get
             {
-                return data[index].Position;
+                return _data[index].Position;
             }
             set
             {
-                data[index].Position = value;
+                var elem = _data[index];
+                elem.Position = value;
+                _data[index] = elem;
             }
         }
     }

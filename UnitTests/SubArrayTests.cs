@@ -132,6 +132,42 @@ namespace UnitTests
 
         }
 
+        [TestMethod]
+        public void VerticeColorDataShouldSetPosition()
+        {
+            VerticeColor vc = new VerticeColor();
+
+            vc.Position = new Vector3(1, 2, 3);
+
+            vc.Position.X.Should().Be(1);
+            vc.Position.Y.Should().Be(2);
+            vc.Position.Z.Should().Be(3);
+
+        }
+
+        [TestMethod]
+        public void Vertex3DArrayShouldSetThePositionOfVerticeColor()
+        {
+            var vertices = new VerticeColor[]{
+                new VerticeColor(){Position=new Vector3(0f),Color=new Vector4(0f)},
+                new VerticeColor(){Position=new Vector3(1f),Color=new Vector4(0f)},
+                new VerticeColor(){Position=new Vector3(2f),Color=new Vector4(0f)},
+                new VerticeColor(){Position=new Vector3(3f),Color=new Vector4(0f)}
+
+            };
+            var subArray = new SubArray<VerticeColor>(vertices);
+            var vArray = new Vertex3DArray<VerticeColor>(subArray);
+
+            vArray[2] = new Vector3(1, 2, 3);
+
+            vertices[2].Position.X.Should().Be(1);
+            vertices[2].Position.Y.Should().Be(2);
+            vertices[2].Position.Z.Should().Be(3);
+
+        }
+
+
+
 
     }
 }
