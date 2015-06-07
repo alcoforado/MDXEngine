@@ -10,7 +10,7 @@ using Device = SharpDX.Direct3D11.Device;
 namespace MDXEngine
 {
     
-    public class DxControl : IDxContext
+    public class DxControl : IDxContext, ICameraObserver
     {
        private Device _device;
        private readonly Control _renderControl;
@@ -25,6 +25,10 @@ namespace MDXEngine
        private readonly List<IShader> _shaders;
        private HLSLProgram _hlslProgram;
        private readonly Camera _camera;
+
+
+     
+
         private void InitializeDX()
         {
             _desc = new SwapChainDescription
@@ -63,6 +67,9 @@ namespace MDXEngine
                 
             });
             _device.ImmediateContext.Rasterizer.State = _rasterizerState;
+
+         
+
             
         }
         
@@ -72,6 +79,7 @@ namespace MDXEngine
 
         public Camera Camera { get { return _camera; } }
 
+        public bool IsCameraChanged { get; private set; }
 
         public DxControl(Control control)
         {
@@ -80,6 +88,12 @@ namespace MDXEngine
             _resourceManager = new ResourcesManager();
             _shaders = new List<IShader>();
             _camera = new Camera();
+            _camera.AddObserver(this);
+        }
+
+        public void  CameraChanged(Camera Camera)
+        {
+            IsCameraChanged = true;
         }
 
         public void Reset()
@@ -171,6 +185,7 @@ namespace MDXEngine
             {
                 shd.Draw(this);
             }
+            IsCameraChanged = true;
             _swapChain.Present(0, PresentFlags.None);
         }
 

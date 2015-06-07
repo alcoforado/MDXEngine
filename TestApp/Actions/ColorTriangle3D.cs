@@ -12,9 +12,9 @@ namespace TestApp.Actions
         {
             _shaderColor = new ShaderColor3D(dx);
             var triangle = new Triangle3DI(
-                         new Vector3(-1f, -1f, 0f),
-                         new Vector3(1f, -1f, 0f),
-                         new Vector3(0f, 1f, 0f));
+                         new Vector3(0f, 0f, 0.5f),
+                         new Vector3(0.5f, 0f, 0.5f),
+                         new Vector3(0f, 0.5f, 0.5f));
 
             var colors = new CyclicColorizer(new Color[] { Color.Red, Color.Green, Color.Blue });
             _shaderColor.Add(triangle, colors);

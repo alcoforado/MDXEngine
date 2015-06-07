@@ -18,5 +18,6 @@ namespace MDXEngine
         HLSLProgram CurrentProgram { get; set; }
         ResourcesManager ResourcesManager { get; }
         Camera Camera { get; }
+        bool IsCameraChanged { get; }
     }
 }

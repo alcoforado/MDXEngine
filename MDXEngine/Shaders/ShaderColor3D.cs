@@ -29,14 +29,16 @@ namespace MDXEngine
                     });
             _drawTree = new DrawTree<VerticeColor>();
             _worldProj = new CBufferResource<Matrix>(_program);
-            _worldProj.Data = Matrix.Identity;
+            Matrix M = Matrix.Identity;
+            _worldProj.Data = M;
 
 
            
-
+            
 
             _drawTree.GetRootNode().Commands = new CommandsSequence(_program)
                 .AddLoadCommand("TViewChange", _worldProj);
+             
 
         }
         #region CameraObserver Interface
