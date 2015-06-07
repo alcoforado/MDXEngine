@@ -11,13 +11,12 @@ using MDXEngine;
 
 namespace MDXEngine
 {
-    public class ShaderColor3D : IShader, ICameraObserver
+    public class ShaderColor3D : IShader
     {
         IDxContext _dx;
         HLSLProgram _program;
         DrawTree<VerticeColor> _drawTree;
         CBufferResource<Matrix> _worldProj;
-        bool _bCameraChanged;
         public ShaderColor3D(IDxContext dxContext)
         {
             _dx = dxContext;
@@ -41,20 +40,17 @@ namespace MDXEngine
              
 
         }
-        #region CameraObserver Interface
-        public void CameraChanged(Camera cam)
-        {
-            _bCameraChanged = true;
-        }
-        
-        #endregion
-
+       
 
         public DrawTree<VerticeColor> Root { get { return _drawTree; } }
 
         public void Draw(IDxContext dx)
         {
             dx.CurrentProgram = _program;
+            if (dx.IsCameraChanged)
+            {
+                _worldProj.Data = dx.Camera.GetWorldViewMatrix();
+            }
             _drawTree.Draw(dx);
 
         }
