@@ -157,8 +157,9 @@ namespace TestApp
       
         private void cubeColor3DToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
             this.RemoveCurrentApp();
-            var app = new TestApp.Actions.ColorTriangle3D(_dx);
+            var app = new TestApp.Actions.CubeColor3D(_dx);
             this.SetCurrentApp(app);
         }
 

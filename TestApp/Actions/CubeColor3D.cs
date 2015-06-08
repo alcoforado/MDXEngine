@@ -4,11 +4,11 @@ using MDXEngine.Shapes;
 using SharpDX;
 namespace TestApp.Actions
 {
-    public class ColorTriangle3D : IApp
+    public class CubeColor3D : IApp
     {
         ShaderColor3D _shaderColor;
 
-        public ColorTriangle3D(DxControl dx)
+        public CubeColor3D(DxControl dx)
         {
             _shaderColor = new ShaderColor3D(dx);
             var triangle = new Triangle3DI(
