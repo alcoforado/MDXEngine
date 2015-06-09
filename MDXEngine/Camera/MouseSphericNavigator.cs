@@ -10,32 +10,35 @@ namespace MDXEngine
     {
         Camera _camera;
         CameraShpericCoordinates _sCoordinates;
-
+        System.Windows.Forms.Control _control;
         float _dr;
         public MouseSphericNavigator(Camera camera)
         {
              _camera = camera;
-             _dr = 1.0f;      
-
+             _dr = 1.0f;
+             _control = null;
         }
 
         private void OnMouseWheel(object Sender,System.Windows.Forms.MouseEventArgs e)
         {
-            _sCoordinates.R = Math.Round((float) e.Delta * _dr);
+            _sCoordinates.R -= Math.Round((float) e.Delta/120 * _dr);
             _camera.SetCamera(_sCoordinates);
+            _camera.OrthonormalizeUp();
         }
 
 
-        void AttachControl(System.Windows.Forms.Control control)
+        public void AttachControl(System.Windows.Forms.Control control)
         {
             _sCoordinates = _camera.GetCameraSphericCoordinates();
-
+            _sCoordinates.Up = new SharpDX.Vector3(0, 0, 1);
+            _control = control;
             control.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.OnMouseWheel);
         }
 
-        void DetachControl(System.Windows.Forms.Control control)
+        public void DetachControl()
         {
-            control.MouseWheel -= new System.Windows.Forms.MouseEventHandler(this.OnMouseWheel);
+            if (_control != null)
+                _control.MouseWheel -= new System.Windows.Forms.MouseEventHandler(this.OnMouseWheel);
         }
 
     }

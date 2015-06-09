@@ -81,6 +81,8 @@ namespace MDXEngine
 
         public bool IsCameraChanged { get; private set; }
 
+        public Control Control { get { return _renderControl; } }
+
         public DxControl(Control control)
         {
             _renderControl=control;

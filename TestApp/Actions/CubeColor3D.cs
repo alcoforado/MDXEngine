@@ -7,7 +7,7 @@ namespace TestApp.Actions
     public class CubeColor3D : IApp
     {
         ShaderColor3D _shaderColor;
-
+        MouseSphericNavigator _mouseHandler;
         public CubeColor3D(DxControl dx)
         {
             _shaderColor = new ShaderColor3D(dx);
@@ -22,10 +22,14 @@ namespace TestApp.Actions
 
             var colors = new CyclicColorizer(new Color[] { Color.Red, Color.Green, Color.Blue });
             _shaderColor.Add(cube, colors);
+
+            _mouseHandler = new MouseSphericNavigator(dx.Camera);
+            _mouseHandler.AttachControl(dx.Control);
         }
 
         public void Dispose()
         {
+            _mouseHandler.DetachControl();
         }
 
 
