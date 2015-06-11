@@ -111,6 +111,7 @@
     <Compile Include="Shapes\Shape2D.cs" />
     <Compile Include="Shapes\Sprite.cs" />
     <Compile Include="Shapes\Triangle3DI.cs" />
+    <Compile Include="Shapes\WireCube.cs" />
     <Compile Include="SharpDXExtensions\ColorExtension.cs" />
     <Compile Include="Textures\GDITextRendering.cs" />
     <Compile Include="Textures\GDITexture.cs" />
