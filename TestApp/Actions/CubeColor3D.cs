@@ -23,7 +23,7 @@ namespace TestApp.Actions
             var colors = new CyclicColorizer(new Color[] { Color.Red, Color.Green, Color.Blue });
             _shaderColor.Add(cube, colors);
 
-            _mouseHandler = new MouseSphericNavigator(dx.Camera);
+            _mouseHandler = new MouseSphericNavigator(dx.Camera,true);
             _mouseHandler.AttachControl(dx.Control);
         }
 
