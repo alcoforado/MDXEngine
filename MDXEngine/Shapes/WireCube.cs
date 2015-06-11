@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace MDXEngine.Shapes
 {
-    public class WireCube
+    public class WireCube : ITopology
     {
          public Vector3 _p0, _p1;
-        public int NIndices() { return 12; }
+        public int NIndices() { return 24; }
         public int NVertices() { return 8; }
 
         public Vector3 P0 { get { return _p0; } }

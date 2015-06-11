@@ -237,8 +237,21 @@ namespace MDXEngine
                                 }
                                 break;
                             }
+                        case TopologyType.LINES:
+                            {
+                                dx.DeviceContext.InputAssembler.PrimitiveTopology = PrimitiveTopology.LineList;
+                                if (shapeGroup.IsIndexed())
+                                {
+                                    dx.DeviceContext.DrawIndexed(shapeGroup.SizeI, shapeGroup.OffI, 0);
+                                }
+                                else
+                                {
+                                    dx.DeviceContext.Draw(shapeGroup.SizeV, shapeGroup.OffV);
+                                }
+                                break;
+                            }
                         default:
-                            throw new Exception("Draw Tree, Topology not supported yet");
+                            throw new Exception(String.Format("Draw Tree, Topology {0) not supported yet",shapeGroup.GetTopology().ToString()));
                     }
                 }
             }

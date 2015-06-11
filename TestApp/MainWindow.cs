@@ -164,7 +164,15 @@ namespace TestApp
         }
 
       
-       
+        private void wireCube3DToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            this.RemoveCurrentApp();
+            var app = new TestApp.Actions.WireCube3D(_dx);
+            this.SetCurrentApp(app);
+        }
+
+        
 
       
     }
