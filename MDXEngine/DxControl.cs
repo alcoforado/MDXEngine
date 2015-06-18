@@ -25,7 +25,11 @@ namespace MDXEngine
        private readonly List<IShader> _shaders;
        private HLSLProgram _hlslProgram;
        private readonly Camera _camera;
-
+       private bool _needRedraw;
+       private bool _needResize;
+      
+        
+       
 
      
 
@@ -91,6 +95,8 @@ namespace MDXEngine
             _shaders = new List<IShader>();
             _camera = new Camera(control.ClientSize.Width,control.ClientSize.Height);
             _camera.AddObserver(this);
+            control.Resize += (events, args) => _needResize = true;
+            control.Paint += (events, args) => _needRedraw = true;
         }
 
         public void  CameraChanged(Camera Camera)
@@ -134,6 +140,7 @@ namespace MDXEngine
 
         public void Resize()
         {
+
             Utilities.Dispose(ref _backBuffer);
             Utilities.Dispose(ref _renderView);
             Utilities.Dispose(ref _depthBuffer);
@@ -172,6 +179,7 @@ namespace MDXEngine
             // Setup targets and viewport for rendering
             _device.ImmediateContext.Rasterizer.SetViewport(new Viewport(0, 0, _renderControl.ClientSize.Width, _renderControl.ClientSize.Height, 0.0f, 1.0f));
             _device.ImmediateContext.OutputMerger.SetTargets(_depthView, _renderView);
+            
         }
         
 
@@ -185,13 +193,24 @@ namespace MDXEngine
 
         public void Display()
         {
-            Clear();
-            foreach (var shd in _shaders)
+            if (_needResize)
             {
-                shd.Draw(this);
+                this.Resize();
+                _needResize = false;
+                _needRedraw = true;
             }
-            IsCameraChanged = true;
+
+            if (_needRedraw || IsCameraChanged)
+            {
+                foreach (var shd in _shaders)
+                {
+                    shd.Draw(this);
+                }
+            }
+
             _swapChain.Present(0, PresentFlags.None);
+            IsCameraChanged = false;
+            _needRedraw = false;
         }
 
         public ResourcesManager ResourcesManager { get { return _resourceManager; } }

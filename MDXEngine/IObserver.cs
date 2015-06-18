@@ -10,4 +10,10 @@ namespace MDXEngine
     {
         void Changed(Type type);
     }
+
+    public interface IObserver
+    {
+        void Changed();
+    }
+
 }

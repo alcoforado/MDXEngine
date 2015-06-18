@@ -35,24 +35,7 @@ namespace MDXEngine
         public void Draw(IDxContext dx)
         {
             dx.CurrentProgram = _program;
-            /*
-           var sampler = new SamplerState(dx.Device, new SamplerStateDescription()
-            {
-                Filter = Filter.MinMagMipPoint,
-                AddressU = TextureAddressMode.Wrap,
-                AddressV = TextureAddressMode.Wrap,
-                AddressW = TextureAddressMode.Wrap,
-                BorderColor = Color.Black,
-                ComparisonFunction = Comparison.Never,
-                MaximumAnisotropy = 16,
-                MipLodBias = 0,
-                MinimumLod = 0,
-                MaximumLod = 16,
-            });
-            _dx.DeviceContext.PixelShader.SetSampler(0,sampler);
-            */
-              _root.Draw(dx);
-
+            _root.Draw(dx);
         }
 
         public void Dispose()

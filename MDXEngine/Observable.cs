@@ -10,9 +10,16 @@ namespace MDXEngine
     {
         void DetachObserver(MDXEngine.IObserver<Type> obs);
         void AttachObserver(MDXEngine.IObserver<Type> obs);
-
-
     }
+
+  public interface IObservable
+  {
+      void DetachObserver();
+      void AttachObserver();
+  }
+
+    
+
 
     public class Observable<Type> : MDXEngine.IObservable<Type>
     {

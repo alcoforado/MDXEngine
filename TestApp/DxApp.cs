@@ -86,7 +86,12 @@ namespace TestApp
         }
         public void EasyRun()
         {
-
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
+            Application.Idle += (Object sender, EventArgs e) =>
+            {
+                dx.Display();
+            };
         }
     }
 }
