@@ -67,11 +67,11 @@
     <Compile Include="HLSLProgram.cs" />
     <Compile Include="HLSLResources.cs" />
     <Compile Include="IDrawTreeAction.cs" />
+    <Compile Include="IObservable.cs" />
     <Compile Include="IShader.cs" />
     <Compile Include="IShaderResource.cs" />
     <Compile Include="ITEX.cs" />
     <Compile Include="Geometry\Angle.cs" />
-    <Compile Include="Mutable.cs" />
     <Compile Include="ShaderSlotsCollection.cs" />
     <Compile Include="Shapes\AnchorSprite.cs" />
     <Compile Include="Shapes\Shape3D.cs" />
