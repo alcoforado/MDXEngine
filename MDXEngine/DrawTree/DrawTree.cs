@@ -8,7 +8,7 @@ using Buffer = SharpDX.Direct3D11.Buffer;
 
 namespace MDXEngine
 {
-    public class DrawTree<T> : IDisposable where T : struct
+    public class DrawTree<T> : Observable, IDisposable where T : struct
     {
         private readonly NTreeNode<DrawInfo<T>> _ntree;
         private T[] _vertices;
