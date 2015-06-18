@@ -44,4 +44,39 @@ namespace MDXEngine
         }
      
     }
+
+
+    public class Observable : MDXEngine.IObservable
+    {
+        private List<MDXEngine.IObserver> _observers;
+
+        public void DetachObserver(MDXEngine.IObserver obs)
+        {
+            if (_observers == null)
+                return;
+            if (_observers.Contains(obs))
+            {
+                _observers.Remove(obs);
+            }
+        }
+
+        public void AttachObserver(MDXEngine.IObserver obs)
+        {
+            if (_observers == null)
+                _observers = new List<MDXEngine.IObserver>();
+
+            if (!_observers.Contains(obs))
+            {
+                _observers.Add(obs);
+            }
+        }
+
+        protected void OnChanged()
+        {
+            foreach (var obs in _observers)
+            {
+                obs.Changed();
+            }
+        }
+    }
 }

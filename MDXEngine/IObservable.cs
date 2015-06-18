@@ -14,8 +14,8 @@ namespace MDXEngine
 
     public interface IObservable
     {
-        void DetachObserver();
-        void AttachObserver();
+        void DetachObserver(MDXEngine.IObserver obs);
+        void AttachObserver(MDXEngine.IObserver obs);
     }
 
 }
