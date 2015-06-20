@@ -10,7 +10,7 @@ using SharpDX.Direct3D11;
 using MDXEngine.Shapes;
 namespace MDXEngine
 {
-    public class ShaderColor2D : IShader
+    public class ShaderColor2D : Observable, IShader 
     {
         IDxContext  _dx;
         HLSLProgram _program;

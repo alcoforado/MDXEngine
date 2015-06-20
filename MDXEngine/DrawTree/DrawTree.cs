@@ -165,6 +165,8 @@ namespace MDXEngine
             groupNode.AppendChild(shapeNode);
             _ntree.AppendChild(groupNode);
             shapeNode.ForAllParents(nd => nd.GetData().Changed = true);
+            
+            OnChanged(); //Notify Observers
         }
 
 

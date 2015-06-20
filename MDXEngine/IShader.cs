@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MDXEngine
 {
-    public interface IShader : IDisposable
+    public interface IShader : IDisposable, IObservable
     {
         void Draw(IDxContext dx);
     }
