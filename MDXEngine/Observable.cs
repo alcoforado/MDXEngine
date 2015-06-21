@@ -50,7 +50,7 @@ namespace MDXEngine
     {
         private List<MDXEngine.IObserver> _observers;
 
-        public void DetachObserver(MDXEngine.IObserver obs)
+        virtual public void DetachObserver(MDXEngine.IObserver obs)
         {
             if (_observers == null)
                 return;
@@ -60,7 +60,7 @@ namespace MDXEngine
             }
         }
 
-        public void AttachObserver(MDXEngine.IObserver obs)
+        virtual public void AttachObserver(MDXEngine.IObserver obs)
         {
             if (_observers == null)
                 _observers = new List<MDXEngine.IObserver>();

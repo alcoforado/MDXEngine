@@ -11,11 +11,11 @@ using MDXEngine;
 
 namespace MDXEngine
 {
-    public class ShaderColor3D : Observable, IShader
+    public class ShaderColor3D : ShaderBase<VerticeColor> 
     {
         IDxContext _dx;
         HLSLProgram _program;
-        DrawTree<VerticeColor> _drawTree;
+     
         CBufferResource<Matrix> _worldProj;
         public ShaderColor3D(IDxContext dxContext)
         {
@@ -26,7 +26,7 @@ namespace MDXEngine
                         new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
                         new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0)
                     });
-            _drawTree = new DrawTree<VerticeColor>();
+            
             _worldProj = new CBufferResource<Matrix>(_program);
             Matrix M = Matrix.Identity;
             _worldProj.Data = M;
@@ -35,35 +35,35 @@ namespace MDXEngine
            
             
 
-            _drawTree.GetRootNode().Commands = new CommandsSequence(_program)
+            Root.GetRootNode().Commands = new CommandsSequence(_program)
                 .AddLoadCommand("TViewChange", _worldProj);
              
 
         }
        
 
-        public DrawTree<VerticeColor> Root { get { return _drawTree; } }
+        public DrawTree<VerticeColor> Root { get { return Root; } }
 
-        public void Draw(IDxContext dx)
+        public override void Draw(IDxContext dx)
         {
             dx.CurrentProgram = _program;
             if (dx.IsCameraChanged)
             {
                 _worldProj.Data = dx.Camera.GetWorldViewMatrix();
             }
-            _drawTree.Draw(dx);
+            Root.Draw(dx);
 
         }
 
         public void Add(ITopology topology, IPainter<VerticeColor> painter)
         {
             var shape = new Shape3D<VerticeColor>(topology, painter);
-            _drawTree.Add(shape);
+            Root.Add(shape);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            Utilities.Dispose(ref _drawTree);
+            base.Dispose();
             Utilities.Dispose(ref _program);
         }
     }

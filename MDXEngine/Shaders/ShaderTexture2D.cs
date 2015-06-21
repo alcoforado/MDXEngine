@@ -11,7 +11,7 @@ using SharpDX.Direct3D11;
 
 namespace MDXEngine
 {
-    public class ShaderTexture2D : Observable, IShader
+    public class ShaderTexture2D : ShaderBase<VerticeColor>
     {
         IDxContext _dx;
         HLSLProgram _program;

@@ -10,11 +10,11 @@ using SharpDX.Direct3D11;
 using MDXEngine.Shapes;
 namespace MDXEngine
 {
-    public class ShaderColor2D : Observable, IShader 
+    public class ShaderColor2D : ShaderBase<VerticeColor> 
     {
         IDxContext  _dx;
         HLSLProgram _program;
-        DrawTree<VerticeColor> _root;
+       
 
 
         public ShaderColor2D(IDxContext dxContext)
@@ -28,29 +28,31 @@ namespace MDXEngine
                     });
 
 
-            _root = new DrawTree<VerticeColor>();
+            
 
         }
 
-        public DrawTree<VerticeColor> Root { get { return _root; } }
+     
 
-        public void Draw(IDxContext dx)
+        public override void Draw(IDxContext dx)
         {
             dx.CurrentProgram = _program;
-            _root.Draw(dx);
+            Root.Draw(dx);
             
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            Utilities.Dispose(ref _program);
         }
 
         public void Add(ITopology2D topology,IPainter<VerticeColor> painter  )
         {
             var shape = new Shape2D<VerticeColor>(topology,painter);
-            _root.Add(shape);
+            Root.Add(shape);
         }
         
-        public void Dispose()
-        {
-            Utilities.Dispose(ref _root); 
-            Utilities.Dispose(ref _program);
-        }
+        
     }
 }
