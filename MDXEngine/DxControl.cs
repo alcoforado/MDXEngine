@@ -10,7 +10,7 @@ using Device = SharpDX.Direct3D11.Device;
 namespace MDXEngine
 {
     
-    public class DxControl : IDxContext, ICameraObserver
+    public class DxControl :  ICameraObserver
     {
        private Device _device;
        private readonly Control _renderControl;
@@ -24,10 +24,12 @@ namespace MDXEngine
        private RasterizerState _rasterizerState;
        private readonly List<IShader> _shaders;
        private HLSLProgram _hlslProgram;
-       private readonly Camera _camera;
        private bool _needRedraw;
        private bool _needResize;
-      
+       private readonly DxContext _dx;
+
+       
+       public IDxContext GetDxContext() {  return _dx; }
         
        
 
@@ -76,6 +78,8 @@ namespace MDXEngine
             _device.ImmediateContext.Rasterizer.State = _rasterizerState;
 
 
+
+
             _needResize = true;
             _needRedraw = true;
             
@@ -85,27 +89,32 @@ namespace MDXEngine
         
         public Device Device {   get {return _device; } }
 
-        public Camera Camera { get { return _camera; } }
-
-        public bool IsCameraChanged { get; private set; }
 
         public Control Control { get { return _renderControl; } }
 
         public DxControl(Control control)
         {
+            
             _renderControl=control;
             InitializeDX();
             _resourceManager = new ResourcesManager();
             _shaders = new List<IShader>();
-            _camera = new Camera(control.ClientSize.Width,control.ClientSize.Height);
-            _camera.AddObserver(this);
+            
             control.Resize += (events, args) => this._needResize = true;
             control.Paint += (events, args) =>  this._needRedraw = true;
+
+            _dx = new DxContext();
+            _dx.Camera = new Camera(control.ClientSize.Width,control.ClientSize.Height);
+            _dx.Camera.AddObserver(this);
+            _dx.Device = _device;
+            _dx.ResourcesManager = _resourceManager;
+            _dx.IsCameraChanged = true;
+
         }
 
         public void  CameraChanged(Camera Camera)
         {
-            IsCameraChanged = true;
+            _dx.IsCameraChanged = true;
         }
 
         public void Reset()
@@ -162,7 +171,7 @@ namespace MDXEngine
             Utilities.Dispose(ref _depthView);
 
 
-            Camera.SetLens(_renderControl.ClientSize.Width, _renderControl.ClientSize.Height);
+            _dx.Camera.SetLens(_renderControl.ClientSize.Width, _renderControl.ClientSize.Height);
 
             // Resize the backbuffer
             _swapChain.ResizeBuffers(_desc.BufferCount, _renderControl.ClientSize.Width, _renderControl.ClientSize.Height, Format.Unknown, SwapChainFlags.None);
@@ -211,7 +220,7 @@ namespace MDXEngine
             Clear();
             foreach (var shd in _shaders)
             {
-                shd.Draw(this);
+                shd.Draw(this.GetDxContext());
             }
             _swapChain.Present(0, PresentFlags.None);
         }
@@ -225,10 +234,10 @@ namespace MDXEngine
                 _needRedraw = false;
                 _needResize = false;
             }
-            else if (_needRedraw || IsCameraChanged)
+            else if (_needRedraw || _dx.IsCameraChanged)
             {
                 this.Display();
-                IsCameraChanged = false;
+                _dx.IsCameraChanged = false;
                 _needRedraw = false;
             }
         }

@@ -20,7 +20,7 @@ namespace UnitTests
                 _control = new DxControl(new Form1());
 
             }
-            return _control;
+            return _control.GetDxContext();
         }
 
         public static HLSLProgram GetHLSLProgramWithTwoTextureResources()

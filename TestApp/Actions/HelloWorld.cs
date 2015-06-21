@@ -14,10 +14,11 @@ namespace TestApp.Actions
 {
     public class HelloWorld : IApp
     {
-        public HelloWorld(DxControl dx)
+        public HelloWorld(DxControl control)
         {
+            var dx = control.GetDxContext();
             var shaderTexture = new ShaderTexture2D(dx);
-            dx.AddShader(shaderTexture);
+            control.AddShader(shaderTexture);
 
             var texture = new GDITexture(dx, "Hello\nWorld", new TextWriteOptions()
             {

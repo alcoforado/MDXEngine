@@ -12,10 +12,11 @@ namespace TestApp.Actions
 {
     public class TextureDisplay : IApp
     {
-        public TextureDisplay(DxControl dx)
+        public TextureDisplay(DxControl control)
         {
+            var dx = control.GetDxContext();
             var shaderTexture = new ShaderTexture2D(dx);
-            dx.AddShader(shaderTexture);
+            control.AddShader(shaderTexture);
             var file = Utilities.TextureSelect();
             
             if (String.IsNullOrEmpty(file))

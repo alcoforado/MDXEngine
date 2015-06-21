@@ -13,10 +13,11 @@ namespace TestApp.Actions
     {
         ShaderColor2D _shaderColor2D;
         
-        public ColorTriangle(DxControl dx)
+        public ColorTriangle(DxControl control)
         {
+            var dx = control.GetDxContext();
             _shaderColor2D = new ShaderColor2D(dx);
-            dx.AddShader(_shaderColor2D);
+            control.AddShader(_shaderColor2D);
            var triangle = new Triangle2DI(
                         new Vector2(-1f, -1f),
                         new Vector2(1f, -1f),

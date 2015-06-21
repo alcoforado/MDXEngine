@@ -16,11 +16,11 @@ namespace TestApp
         bool _bResize;
         MainWindow _main;
         Control _display;
-        DxControl dx;
+        DxControl control;
         
         public DxApp(MainWindow main, Control display)
         {
-            dx = new DxControl(display);
+            control = new DxControl(display);
             SetInitialCamera();
             _bResize = true;
             _main = main;
@@ -32,7 +32,7 @@ namespace TestApp
 
         public void SetInitialCamera()
         {
-            dx.Camera.SetCamera(new CameraShpericCoordinates()
+            control.GetDxContext().Camera.SetCamera(new CameraShpericCoordinates()
             {
                 R = 4,
                 Focus = new Vector3(0, 0, 0),
@@ -40,11 +40,11 @@ namespace TestApp
                 Alpha = new Angle(Angle.PI_4),
                 Up = new Vector3(0, 0, 1)
            });
-            dx.Camera.OrthonormalizeUp();
+            control.GetDxContext().Camera.OrthonormalizeUp();
 
         }
 
-        public DxControl DxControl { get { return dx;} }
+        public DxControl DxControl { get { return control;} }
 
         public void PsychoRun()
         {
@@ -73,15 +73,15 @@ namespace TestApp
                 }
                 if (_bResize)
                 {
-                    dx.Resize();
+                    control.Resize();
                     _bResize = false;
                 }
 
-                dx.Display();
+                control.Display();
 
 
             }
-            dx.Dispose();
+            control.Dispose();
 
         }
         public void EasyRun()
@@ -90,7 +90,7 @@ namespace TestApp
             watch.Start();
             Application.Idle += (Object sender, EventArgs e) =>
             {
-                dx.LazyDisplay();
+                control.LazyDisplay();
             };
         }
     }

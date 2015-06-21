@@ -64,6 +64,7 @@
     <Compile Include="DrawTree\RootNode.cs" />
     <Compile Include="DrawTree\ShapeGroupNode.cs" />
     <Compile Include="DrawTree\ShapeNode.cs" />
+    <Compile Include="DxContext.cs" />
     <Compile Include="HLSLProgram.cs" />
     <Compile Include="HLSLResources.cs" />
     <Compile Include="IDrawTreeAction.cs" />
