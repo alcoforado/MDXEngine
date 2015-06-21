@@ -193,24 +193,13 @@ namespace MDXEngine
 
         public void Display()
         {
-            if (_needResize)
+            Clear();
+            foreach (var shd in _shaders)
             {
-                this.Resize();
-                _needResize = false;
-                _needRedraw = true;
+                shd.Draw(this);
             }
-
-            if (_needRedraw || IsCameraChanged)
-            {
-                foreach (var shd in _shaders)
-                {
-                    shd.Draw(this);
-                }
-            }
-
+            IsCameraChanged = true;
             _swapChain.Present(0, PresentFlags.None);
-            IsCameraChanged = false;
-            _needRedraw = false;
         }
 
         public ResourcesManager ResourcesManager { get { return _resourceManager; } }

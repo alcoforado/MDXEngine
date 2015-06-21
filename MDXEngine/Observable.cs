@@ -73,6 +73,8 @@ namespace MDXEngine
 
         protected void OnChanged()
         {
+            if (_observers == null)
+                return;
             foreach (var obs in _observers)
             {
                 obs.Changed();

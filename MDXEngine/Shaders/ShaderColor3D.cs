@@ -42,7 +42,7 @@ namespace MDXEngine
         }
        
 
-        public DrawTree<VerticeColor> Root { get { return Root; } }
+        
 
         public override void Draw(IDxContext dx)
         {

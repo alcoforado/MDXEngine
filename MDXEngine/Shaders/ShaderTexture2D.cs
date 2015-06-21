@@ -11,11 +11,11 @@ using SharpDX.Direct3D11;
 
 namespace MDXEngine
 {
-    public class ShaderTexture2D : ShaderBase<VerticeColor>
+    public class ShaderTexture2D : ShaderBase<VerticeTexture2D>
     {
         IDxContext _dx;
         HLSLProgram _program;
-        DrawTree<VerticeTexture2D> _root;
+        
 
         public ShaderTexture2D(IDxContext dxContext)
         {
@@ -28,19 +28,19 @@ namespace MDXEngine
                     });
 
 
-            _root = new DrawTree<VerticeTexture2D>();
+            
 
         }
 
-        public void Draw(IDxContext dx)
+        public override void Draw(IDxContext dx)
         {
             dx.CurrentProgram = _program;
-            _root.Draw(dx);
+            Root.Draw(dx);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            Utilities.Dispose(ref _root);
+            base.Dispose();
             Utilities.Dispose(ref _program);
         }
 
@@ -48,7 +48,7 @@ namespace MDXEngine
         {
             var command = new CommandsSequence(_program);
             command.AddLoadCommand("gTexture", texture);
-            _root.Add(shape,command);
+            Root.Add(shape,command);
         }
 
 
