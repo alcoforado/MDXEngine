@@ -158,6 +158,8 @@ namespace MDXEngine
             {
                 _shaders.Add(shader);
                 shader.ObservableDock.AttachObserver(new ShaderWatcher(this));
+                _needRedraw = true;
+                _dx.IsCameraChanged = true;
             }
         }
 
@@ -225,7 +227,7 @@ namespace MDXEngine
             _swapChain.Present(0, PresentFlags.None);
         }
 
-        public void LazyDisplay()
+        public bool LazyDisplay()
         {
             if (_needResize)
             {
@@ -233,13 +235,17 @@ namespace MDXEngine
                 this.Display();
                 _needRedraw = false;
                 _needResize = false;
+                _dx.IsCameraChanged = false;
+                return true; //process needed
             }
-            else if (_needRedraw || _dx.IsCameraChanged)
+            if (_needRedraw || _dx.IsCameraChanged)
             {
                 this.Display();
                 _dx.IsCameraChanged = false;
                 _needRedraw = false;
+                return true; //process needed
             }
+            return false; //No process needed
         }
 
 

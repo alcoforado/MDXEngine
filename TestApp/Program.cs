@@ -20,7 +20,8 @@ namespace TestApp
            // var hello = new HelloWorld();
             DxApp app = new DxApp(mainW,mainW.RenderControl());
             //mainW.SetDxApp(app);
-            app.PsychoRun();
+            //app.PsychoRun();
+            app.EasyRun();
            //var cl = new Test.TestII();
 
 

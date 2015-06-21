@@ -17,7 +17,7 @@ namespace TestApp
         MainWindow _main;
         Control _display;
         DxControl control;
-        
+
         public DxApp(MainWindow main, Control display)
         {
             control = new DxControl(display);
@@ -39,12 +39,12 @@ namespace TestApp
                 Theta = new Angle(Angle.PI_4),
                 Alpha = new Angle(Angle.PI_4),
                 Up = new Vector3(0, 0, 1)
-           });
+            });
             control.GetDxContext().Camera.OrthonormalizeUp();
 
         }
 
-        public DxControl DxControl { get { return control;} }
+        public DxControl DxControl { get { return control; } }
 
         public void PsychoRun()
         {
@@ -53,7 +53,7 @@ namespace TestApp
             watch.Start();
             long limit = 6000;
 
-           
+
             _main.Show();
             while (_main.Created)
             {
@@ -87,11 +87,21 @@ namespace TestApp
         public void EasyRun()
         {
             System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-            watch.Start();
+
+
             Application.Idle += (Object sender, EventArgs e) =>
             {
-                control.LazyDisplay();
+                watch.Restart();
+                bool drawed = control.LazyDisplay();
+                watch.Stop();
+                if (drawed)
+                {
+                    long ms = watch.ElapsedMilliseconds;
+                    _main.Text = (ms == 0) ? String.Format("FPS: Inf")
+                        : String.Format("FPS: {0}, Ms: {1}", Math.Round(1000.0 / ms),ms);
+                }
             };
+            Application.Run(_main);
         }
     }
 }
