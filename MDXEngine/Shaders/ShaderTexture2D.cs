@@ -20,7 +20,6 @@ namespace MDXEngine
         public ShaderTexture2D(IDxContext dxContext)
         {
             _dx = dxContext;
-            _dx.AddShader(this);
             _program = new HLSLProgram(_dx,HLSLResources.Texture2D_hlsl,  new[]
                     {
                         new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),

@@ -14,7 +14,7 @@ namespace TestApp.Actions
 {
     public class HelloWorld : IApp
     {
-        public HelloWorld(IDxContext dx)
+        public HelloWorld(DxControl dx)
         {
             var shaderTexture = new ShaderTexture2D(dx);
             dx.AddShader(shaderTexture);

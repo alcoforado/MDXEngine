@@ -11,6 +11,7 @@ namespace TestApp.Actions
         public CubeColor3D(DxControl dx)
         {
             _shaderColor = new ShaderColor3D(dx);
+            dx.AddShader(_shaderColor);
             var triangle = new Triangle3DI(
                          new Vector3(0f, 0f, 0.5f),
                          new Vector3(0.5f, 0f, 0.5f),

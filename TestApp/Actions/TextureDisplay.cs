@@ -12,7 +12,7 @@ namespace TestApp.Actions
 {
     public class TextureDisplay : IApp
     {
-        public TextureDisplay(IDxContext dx)
+        public TextureDisplay(DxControl dx)
         {
             var shaderTexture = new ShaderTexture2D(dx);
             dx.AddShader(shaderTexture);
