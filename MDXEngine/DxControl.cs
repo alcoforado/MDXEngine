@@ -31,7 +31,10 @@ namespace MDXEngine
         
        
 
-     
+       public void ScheduleForRedraw()
+       {
+           _needRedraw = true;
+       }
 
         private void InitializeDX()
         {
@@ -72,8 +75,9 @@ namespace MDXEngine
             });
             _device.ImmediateContext.Rasterizer.State = _rasterizerState;
 
-         
 
+            _needResize = true;
+            _needRedraw = true;
             
         }
         
@@ -95,8 +99,8 @@ namespace MDXEngine
             _shaders = new List<IShader>();
             _camera = new Camera(control.ClientSize.Width,control.ClientSize.Height);
             _camera.AddObserver(this);
-            control.Resize += (events, args) => _needResize = true;
-            control.Paint += (events, args) => _needRedraw = true;
+            control.Resize += (events, args) => this._needResize = true;
+            control.Paint += (events, args) =>  this._needRedraw = true;
         }
 
         public void  CameraChanged(Camera Camera)
@@ -129,11 +133,22 @@ namespace MDXEngine
 
         }
         
+
+        private class ShaderWatcher : IObserver
+        {
+            private DxControl _dc;
+            public ShaderWatcher(DxControl dc){_dc = dc;}
+            public void Changed() { _dc.ScheduleForRedraw(); }
+        }
+
+
         public void AddShader(IShader shader)
         {
+            //Only add if the shader does not exist
             if (_shaders.FirstOrDefault(x => x==shader) == null)
             {
                 _shaders.Add(shader);
+                shader.ObservableDock.AttachObserver(new ShaderWatcher(this));
             }
         }
 
@@ -198,9 +213,26 @@ namespace MDXEngine
             {
                 shd.Draw(this);
             }
-            IsCameraChanged = true;
             _swapChain.Present(0, PresentFlags.None);
         }
+
+        public void LazyDisplay()
+        {
+            if (_needResize)
+            {
+                this.Resize();
+                this.Display();
+                _needRedraw = false;
+                _needResize = false;
+            }
+            else if (_needRedraw || IsCameraChanged)
+            {
+                this.Display();
+                IsCameraChanged = false;
+                _needRedraw = false;
+            }
+        }
+
 
         public ResourcesManager ResourcesManager { get { return _resourceManager; } }
 

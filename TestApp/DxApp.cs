@@ -90,7 +90,7 @@ namespace TestApp
             watch.Start();
             Application.Idle += (Object sender, EventArgs e) =>
             {
-                dx.Display();
+                dx.LazyDisplay();
             };
         }
     }

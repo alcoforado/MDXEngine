@@ -41,7 +41,7 @@ namespace MDXEngine
             _drawTree.GetRootNode().Commands = new CommandsSequence(_program)
                 .AddLoadCommand("TViewChange", _worldProj);
              
-             ObservableDock = new ShaderObservableDock(_drawTree);
+             this.ObservableDock = new ShaderObservableDock(_drawTree);
         }
        
 
