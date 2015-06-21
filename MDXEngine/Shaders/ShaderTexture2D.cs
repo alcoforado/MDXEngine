@@ -11,12 +11,12 @@ using SharpDX.Direct3D11;
 
 namespace MDXEngine
 {
-    public class ShaderTexture2D : ShaderBase<VerticeTexture2D>
+    public class ShaderTexture2D : IShader
     {
         IDxContext _dx;
         HLSLProgram _program;
-        
-
+        DrawTree<VerticeTexture2D> _root;
+        public IObservable ObservableDock { get; private set; } //An IObservable used by observers to attach themselves
         public ShaderTexture2D(IDxContext dxContext)
         {
             _dx = dxContext;
@@ -28,19 +28,19 @@ namespace MDXEngine
                     });
 
 
-            
-
+            _root = new DrawTree<VerticeTexture2D>(); 
+            ObservableDock = new ShaderObservableDock(_root);
         }
 
-        public override void Draw(IDxContext dx)
+        public void Draw(IDxContext dx)
         {
             dx.CurrentProgram = _program;
-            Root.Draw(dx);
+            _root.Draw(dx);
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
-            base.Dispose();
+            Utilities.Dispose(ref _root);
             Utilities.Dispose(ref _program);
         }
 
@@ -48,7 +48,7 @@ namespace MDXEngine
         {
             var command = new CommandsSequence(_program);
             command.AddLoadCommand("gTexture", texture);
-            Root.Add(shape,command);
+            _root.Add(shape,command);
         }
 
 

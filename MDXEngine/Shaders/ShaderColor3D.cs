@@ -11,12 +11,15 @@ using MDXEngine;
 
 namespace MDXEngine
 {
-    public class ShaderColor3D : ShaderBase<VerticeColor> 
+    public class ShaderColor3D : IShader
     {
         IDxContext _dx;
         HLSLProgram _program;
-     
+        DrawTree<VerticeColor> _drawTree;
         CBufferResource<Matrix> _worldProj;
+        
+        public IObservable ObservableDock { get; private set; } //An IObservable used by observers to attach themselves
+
         public ShaderColor3D(IDxContext dxContext)
         {
             _dx = dxContext;
@@ -26,7 +29,7 @@ namespace MDXEngine
                         new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
                         new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0)
                     });
-            
+            _drawTree = new DrawTree<VerticeColor>();
             _worldProj = new CBufferResource<Matrix>(_program);
             Matrix M = Matrix.Identity;
             _worldProj.Data = M;
@@ -35,35 +38,35 @@ namespace MDXEngine
            
             
 
-            Root.GetRootNode().Commands = new CommandsSequence(_program)
+            _drawTree.GetRootNode().Commands = new CommandsSequence(_program)
                 .AddLoadCommand("TViewChange", _worldProj);
              
-
+             ObservableDock = new ShaderObservableDock(_drawTree);
         }
        
 
-        
+        public DrawTree<VerticeColor> Root { get { return _drawTree; } }
 
-        public override void Draw(IDxContext dx)
+        public void Draw(IDxContext dx)
         {
             dx.CurrentProgram = _program;
             if (dx.IsCameraChanged)
             {
                 _worldProj.Data = dx.Camera.GetWorldViewMatrix();
             }
-            Root.Draw(dx);
+            _drawTree.Draw(dx);
 
         }
 
         public void Add(ITopology topology, IPainter<VerticeColor> painter)
         {
             var shape = new Shape3D<VerticeColor>(topology, painter);
-            Root.Add(shape);
+            _drawTree.Add(shape);
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
-            base.Dispose();
+            Utilities.Dispose(ref _drawTree);
             Utilities.Dispose(ref _program);
         }
     }

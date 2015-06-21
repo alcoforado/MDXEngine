@@ -73,7 +73,7 @@
     <Compile Include="ITEX.cs" />
     <Compile Include="Geometry\Angle.cs" />
     <Compile Include="ShaderSlotsCollection.cs" />
-    <Compile Include="Shaders\ShaderBase.cs" />
+    <Compile Include="Shaders\ShaderObservableDock.cs" />
     <Compile Include="Shapes\AnchorSprite.cs" />
     <Compile Include="Shapes\Shape3D.cs" />
     <Compile Include="Shapes\ITopology2D.cs" />
