@@ -109,7 +109,7 @@ namespace MDXEngine
             _dx.Device = _device;
             _dx.ResourcesManager = _resourceManager;
             _dx.IsCameraChanged = true;
-
+            _dx.ScreenSize = _renderControl.ClientSize;
         }
 
         public void  CameraChanged(Camera Camera)

@@ -100,7 +100,8 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="MathUnitTest.cs" />
-    <Compile Include="UnitTestGDITextRendering.cs" />
+    <Compile Include="Textures\BinPackingUnitTests.cs" />
+    <Compile Include="Textures\UnitTestGDITextRendering.cs" />
     <Compile Include="HLSLProgramUnitTest.cs" />
     <Compile Include="SubArrayTests.cs" />
     <Compile Include="ColorGeneratorTest.cs" />

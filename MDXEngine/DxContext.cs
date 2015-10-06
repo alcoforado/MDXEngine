@@ -14,6 +14,7 @@ namespace MDXEngine
         public ResourcesManager ResourcesManager { get; set; }
         public Camera Camera { get; set; }
         public bool IsCameraChanged { get; set; }
+        public System.Drawing.Size ScreenSize { get; set; }
         public HLSLProgram CurrentProgram
         {
             get

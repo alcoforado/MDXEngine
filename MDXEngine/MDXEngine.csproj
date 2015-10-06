@@ -117,9 +117,12 @@
     <Compile Include="Shapes\Triangle3DI.cs" />
     <Compile Include="Shapes\WireCube.cs" />
     <Compile Include="SharpDXExtensions\ColorExtension.cs" />
+    <Compile Include="Textures\BinPack\BinPackAlghorithm.cs" />
+    <Compile Include="Textures\BinPack\BinPackNode.cs" />
     <Compile Include="Textures\GDITextRendering.cs" />
     <Compile Include="Textures\GDITexture.cs" />
     <Compile Include="Textures\Texture.cs" />
+    <Compile Include="Textures\BitmapAtlas.cs" />
     <Compile Include="Textures\TextureRegion.cs" />
     <Compile Include="Textures\TextWriteOptions.cs" />
     <Compile Include="Shapes\Triangle2DIndexed.cs" />

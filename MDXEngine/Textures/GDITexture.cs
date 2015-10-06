@@ -17,7 +17,7 @@ namespace MDXEngine.Textures
             int width = 2;
             int height = 2;
             var brush = new SolidBrush(options.color.ToSystemColor());
-            StringAlignment align;
+         /*   StringAlignment align;
             switch (options.text_align)
             {
                 case TextAlignment.Center:
@@ -29,7 +29,7 @@ namespace MDXEngine.Textures
                 case TextAlignment.Right:
                     align = StringAlignment.Near;
                     break;
-            }
+            }*/
             var font = new Font(options.font_type, options.font_size);
             SizeF sizef;
             using (var bitmap = new Bitmap(width, height, PixelFormat.Format32bppArgb))
@@ -162,7 +162,7 @@ namespace MDXEngine.Textures
                 using (var graphics = Graphics.FromImage(bitmap))
                 {
                     var brush = new SolidBrush(options.color.ToSystemColor());
-                    StringAlignment align;
+                  /*  StringAlignment align;
                     switch (options.text_align)
                     {
                         case TextAlignment.Center:
@@ -174,7 +174,7 @@ namespace MDXEngine.Textures
                         case TextAlignment.Right:
                             align = StringAlignment.Near;
                             break;
-                    }
+                    }*/
                     var font = new Font(options.font_type, options.font_size);
                     var size = graphics.MeasureString(text, font, new PointF(0.0f, 0.0f), StringFormat.GenericDefault);
                     var rect = new RectangleF(

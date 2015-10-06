@@ -18,5 +18,8 @@ namespace MDXEngine
         ResourcesManager ResourcesManager { get; }
         Camera Camera { get; }
         bool IsCameraChanged { get; }
+        System.Drawing.Size ScreenSize { get; }
     }
+
+
 }

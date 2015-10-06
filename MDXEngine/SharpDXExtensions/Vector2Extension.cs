@@ -12,5 +12,7 @@ namespace MDXEngine.SharpDXExtensions
         {
             return new Vector4(v.X, v.Y, Z, W);
         }
+
+
     }
 }

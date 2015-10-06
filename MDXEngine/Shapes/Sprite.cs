@@ -11,9 +11,9 @@ namespace MDXEngine.Shapes
     public class Sprite : IShape<VerticeTexture2D>
     {
 
-        private Vector2 _p;
-        private float _height, _width;
-        private TextureRegion _texture;
+        protected Vector2 _p;
+        protected float _height, _width;
+        protected TextureRegion _texture;
 
 
         public Sprite(Vector2 BL, float width, float height, TextureRegion texture)

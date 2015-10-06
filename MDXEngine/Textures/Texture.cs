@@ -9,12 +9,16 @@ using System.Drawing;
 using System.Drawing.Imaging;
 namespace MDXEngine.Textures
 {
+    /// <summary>
+    /// This class represents a 2D texture loaded on GPU.
+    /// Internally it contains a resource binded with its view.
+    /// </summary>
     public class Texture : IShaderResource
     {
         protected SharpDX.Direct3D11.Texture2D _resource;
         protected SharpDX.Direct3D11.ShaderResourceView _view;
         protected IDxContext _dx;
- 
+        
         protected Texture() { }
         protected void InitTexture(IDxContext dx,Texture2DDescription desc) 
         {
@@ -22,7 +26,6 @@ namespace MDXEngine.Textures
             _view = new ShaderResourceView(dx.Device, _resource);
             _dx = dx;
             _dx.ResourcesManager.Add(this);
-
         }
 
         public Texture(IDxContext dx, string fileName)
@@ -33,6 +36,8 @@ namespace MDXEngine.Textures
             _dx.ResourcesManager.Add(this);
         }
 
+        public int Width  { get {return _resource.Description.Width;}}
+        public int Height { get { return _resource.Description.Height; } }
      
 
 

@@ -8,16 +8,17 @@ using System.Threading.Tasks;
 
 namespace MDXEngine.Textures
 {
+    
     public class TextOptions
     {
-        int padding_bottom;
+    /*    int padding_bottom;
         int padding_right;
         int padding_top;
         int padding_left;
         int use_alpha_channel;
-        StringAlignment alignment;
+        StringAlignment alignment;*/
     };
-
+    
     public class GDITextRendering
     {
         Bitmap _bitmap;
