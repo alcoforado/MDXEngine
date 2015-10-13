@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using MDXEngine.DrawingExtensions;
 namespace MDXEngine.Textures.BinPack
 {
     public class BinPackNode 
@@ -24,29 +24,88 @@ namespace MDXEngine.Textures.BinPack
             return Childs.Count == 0;
         }
 
+        public bool IsFree()
+        {
+            return !this.IsFilled() && this.IsChildless();
+        }
 
         public BinPackNode(Rectangle rect, Bitmap bitmap=null)
         {
             this.Bitmap = bitmap;
             this.Region = rect;
             Childs = new List<BinPackNode>();
-            Debug.Assert(this.canFit(bitmap));
+            if (bitmap != null)
+                Debug.Assert(this.canFit(bitmap));
         }
 
-
+        public bool IsDecomposed()
+        {
+            return this.Childs.Count == 3;
+        }
 
         public bool canFit(Bitmap bitmap)
         {
-            return Region.Width >= bitmap.Width && Region.Height >= bitmap.Height;
+            return canFit(bitmap.Width,bitmap.Height);
         }
 
-        public void HorizontalDecompose(Bitmap bitmap)
+        public bool canFit(int width,int height)
         {
-            Debug.Assert(this.canFit(bitmap));
-
-            
-
+            return Region.Width >= width && Region.Height >= height;
         }
+
+
+        public List<Rectangle> GetVerticalDecomposeRegions(int width,int height)
+        {
+
+            Debug.Assert(this.canFit(width, height));
+
+            var rect1 = new Rectangle(this.Region.Location, new Size(width, height));
+            var rect2 = new Rectangle(this.Region.Location.X + width, this.Region.Location.Y, this.Region.Width - width, height);
+            var rect3 = new Rectangle(this.Region.Location.X, this.Region.Location.Y + height, this.Region.Width, this.Region.Height - height);
+            return new List<Rectangle>() { rect1, rect2, rect3 };
+        }
+        
+
+        public List<Rectangle> GetHorizontalDecomposeRegions(int width,int height)
+        {
+
+            Debug.Assert(this.canFit(width, height));
+
+            var rect1 = new Rectangle(this.Region.Location, new Size(width, height));
+            var rect2 = new Rectangle(this.Region.Location.X + width, this.Region.Location.Y, this.Region.Width - width, this.Region.Height);
+            var rect3 = new Rectangle(this.Region.Location.X, this.Region.Location.Y + height, width, this.Region.Height - height);
+            return new List<Rectangle>() { rect1, rect2, rect3 };
+        }
+
+        public void HorizontalDecompose(Bitmap bp)
+        {
+            Debug.Assert(IsChildless());
+            var regions = this.GetHorizontalDecomposeRegions(bp);
+            this.Childs.Add(new BinPackNode(regions[0], bp));
+            this.Childs.Add(new BinPackNode(regions[1]));
+            this.Childs.Add(new BinPackNode(regions[2]));
+        }
+
+        public void VerticalDecompose(Bitmap bp)
+        {
+            Debug.Assert(IsChildless());
+            var regions = this.GetVerticalDecomposeRegions(bp);
+            this.Childs.Add(new BinPackNode(regions[0], bp));
+            this.Childs.Add(new BinPackNode(regions[1]));
+            this.Childs.Add(new BinPackNode(regions[2]));
+        }
+
+
+        public List<Rectangle> GetVerticalDecomposeRegions(Bitmap bp)
+        {
+            return  this.GetVerticalDecomposeRegions(bp.Width, bp.Height);
+        }
+
+        public List<Rectangle> GetHorizontalDecomposeRegions(Bitmap bp)
+        {
+            return this.GetHorizontalDecomposeRegions(bp.Width, bp.Height);
+        }
+
         
    
     }

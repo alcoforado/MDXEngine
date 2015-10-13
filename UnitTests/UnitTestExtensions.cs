@@ -5,6 +5,7 @@ using MDXEngine.SharpDXExtensions;
 using SharpDX;
 using FluentAssertions;
 using System.Runtime.InteropServices;
+using MDXEngine.DrawingExtensions;
 namespace UnitTests
 {
     [TestClass]
@@ -40,6 +41,14 @@ namespace UnitTests
 
         }
 
+        [TestMethod]
+        public void Rectangle_Area_Should_Be_Correct()
+        {
+            var rect = new System.Drawing.Rectangle(20, 30, 10, 40);
+            rect.Right.Should().Be(30);
+            rect.Bottom.Should().Be(70);
+            rect.Area().Should().Be(400);
+        }
 
     }
 }

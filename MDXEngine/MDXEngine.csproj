@@ -60,6 +60,7 @@
     <Compile Include="Camera\MouseSphericNavigator.cs" />
     <Compile Include="Camera\SphericVisualization.cs" />
     <Compile Include="CBufferResource.cs" />
+    <Compile Include="DrawingExtensions\RectangleExtension.cs" />
     <Compile Include="DrawTree\CommandsSequence.cs" />
     <Compile Include="DrawTree\RootNode.cs" />
     <Compile Include="DrawTree\ShapeGroupNode.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Shapes\WireCube.cs" />
     <Compile Include="SharpDXExtensions\ColorExtension.cs" />
     <Compile Include="Textures\BinPack\BinPackAlghorithm.cs" />
+    <Compile Include="Textures\BinPack\BinPackAnalysis.cs" />
     <Compile Include="Textures\BinPack\BinPackNode.cs" />
     <Compile Include="Textures\GDITextRendering.cs" />
     <Compile Include="Textures\GDITexture.cs" />
