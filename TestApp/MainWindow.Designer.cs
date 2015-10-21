@@ -38,6 +38,7 @@
             this.helloWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cubeColor3DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wireCube3DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.binPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -91,7 +92,8 @@
             this.loadTextureToolStripMenuItem,
             this.helloWorldToolStripMenuItem,
             this.cubeColor3DToolStripMenuItem,
-            this.wireCube3DToolStripMenuItem});
+            this.wireCube3DToolStripMenuItem,
+            this.binPackToolStripMenuItem});
             this.testsToolStripMenuItem.Name = "testsToolStripMenuItem";
             this.testsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.testsToolStripMenuItem.Text = "Tests";
@@ -138,6 +140,13 @@
             this.wireCube3DToolStripMenuItem.Text = "Wire Cube 3D";
             this.wireCube3DToolStripMenuItem.Click += new System.EventHandler(this.wireCube3DToolStripMenuItem_Click);
             // 
+            // binPackToolStripMenuItem
+            // 
+            this.binPackToolStripMenuItem.Name = "binPackToolStripMenuItem";
+            this.binPackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.binPackToolStripMenuItem.Text = "Bin Pack";
+            this.binPackToolStripMenuItem.Click += new System.EventHandler(this.binPackToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -172,6 +181,7 @@
         private System.Windows.Forms.ToolStripMenuItem helloWorldToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cubeColor3DToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wireCube3DToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem binPackToolStripMenuItem;
 
     }
 }

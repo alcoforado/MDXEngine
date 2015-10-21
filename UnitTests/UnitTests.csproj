@@ -105,6 +105,7 @@
     <Compile Include="HLSLProgramUnitTest.cs" />
     <Compile Include="SubArrayTests.cs" />
     <Compile Include="ColorGeneratorTest.cs" />
+    <Compile Include="HScoreTests.cs" />
     <Compile Include="UnitTestExtensions.cs" />
     <Compile Include="UnitTestDrawTree.cs" />
     <Compile Include="UnitTestObservers.cs" />

@@ -172,6 +172,13 @@ namespace TestApp
             this.SetCurrentApp(app);
         }
 
+        private void binPackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.RemoveCurrentApp();
+            var app = new TestApp.Actions.BinPack(_dx);
+            this.SetCurrentApp(app);
+        }
+
         
 
       

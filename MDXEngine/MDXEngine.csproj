@@ -132,6 +132,7 @@
     <Compile Include="SharpDXExtensions\Vector3Extension.cs" />
     <Compile Include="SharpDXExtensions\Vector4Extensions.cs" />
     <Compile Include="SubArray.cs" />
+    <Compile Include="MMath\HScore.cs" />
     <Compile Include="Vertex2DArray.cs" />
     <Compile Include="Vertex3DArray.cs" />
     <Compile Include="VerticeData\VerticeColor.cs" />
