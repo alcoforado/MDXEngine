@@ -55,7 +55,7 @@ namespace MDXEngine
 
             Device.CreateWithSwapChain(
                 DriverType.Hardware,
-                DeviceCreationFlags.Debug,
+                DeviceCreationFlags.BgraSupport,
                 _desc,
                 out _device,
                 out _swapChain);

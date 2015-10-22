@@ -23,14 +23,18 @@ namespace TestApp
         
         internal DxApp _dxApp;
         private DxControl _dx;
-
+        private MWebBrowser _browserRight;
         public MainWindow()
         {
             InitializeComponent();
-            _boxWriter = new TextBoxStreamWriter(textBox1);
+           // _boxWriter = new TextBoxStreamWriter(textBox1);
             
             splitContainer1.Panel1.MouseLeave += (sender, e) => this.Focus();
             splitContainer1.Panel1.MouseEnter += (sender, e) => splitContainer1.Panel1.Focus();
+            _browserRight = new MWebBrowser();
+            splitContainer1.Panel2.Controls.Add(_browserRight);
+            splitContainer1.Panel2.Dock = DockStyle.Fill;
+                
             this.KeyPreview=true;
             _currentApp = null;
         }
