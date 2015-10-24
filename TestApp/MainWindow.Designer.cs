@@ -114,7 +114,6 @@
             this.binPackToolStripMenuItem.Name = "binPackToolStripMenuItem";
             this.binPackToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.binPackToolStripMenuItem.Text = "Bin Pack";
-            this.binPackToolStripMenuItem.Click += new System.EventHandler(this.binPackToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 

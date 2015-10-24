@@ -26,6 +26,17 @@ namespace TestApp
             Container.RegisterInstance<DxControl>(control);
             Container.RegisterType<IDxContext>(new InjectionFactory(c => this.DxControl.GetDxContext()));
 
+            //Register Controllers
+            foreach (Type t in this.GetType().Assembly.GetTypes())
+            {
+                if (t.IsInterface || t.IsAbstract)
+                    continue;
+                if (!t.IsInterface && (t is IController || t is IActionMenu ))
+                {
+                    Container.RegisterType(t);
+                }
+            }
+
 
 
         }
@@ -43,6 +54,8 @@ namespace TestApp
             _display = display;
             _main.Resize += (events, args) => _bResize = true;
             _main.SetDxApp(this);
+            
+            InitializeContainer();
         }
 
 

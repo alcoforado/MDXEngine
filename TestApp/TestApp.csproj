@@ -117,6 +117,7 @@
     <Compile Include="Actions\HelloWorld.cs" />
     <Compile Include="Actions\TextureDisplay.cs" />
     <Compile Include="Array2DDataView.cs" />
+    <Compile Include="ImplementationFactory.cs" />
     <Compile Include="Interfaces\IActionMenu.cs" />
     <Compile Include="DxApp.cs" />
     <Compile Include="Interfaces\IMainWindow.cs" />
