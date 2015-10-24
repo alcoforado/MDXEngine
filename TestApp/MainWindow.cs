@@ -31,12 +31,16 @@ namespace TestApp
             
             splitContainer1.Panel1.MouseLeave += (sender, e) => this.Focus();
             splitContainer1.Panel1.MouseEnter += (sender, e) => splitContainer1.Panel1.Focus();
-            _browserRight = new MWebBrowser();
-            splitContainer1.Panel2.Controls.Add(_browserRight);
-            splitContainer1.Panel2.Dock = DockStyle.Fill;
+            splitContainer1.Panel2Collapsed = true;
+            //_browserRight = new MWebBrowser();
+            //splitContainer1.Panel2.Controls.Add(_browserRight);
+            //splitContainer1.Panel2.Dock = DockStyle.Fill;
                 
             this.KeyPreview=true;
             _currentApp = null;
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = Properties.Settings.Default.FormPosition;
+            this.Size =     Properties.Settings.Default.FormSize;
         }
 
 
@@ -136,6 +140,8 @@ namespace TestApp
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
+             Properties.Settings.Default.FormPosition = this.Location;
+             Properties.Settings.Default.FormSize = this.Size;
             Properties.Settings.Default.Save();
         }
 
@@ -179,7 +185,7 @@ namespace TestApp
         private void binPackToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.RemoveCurrentApp();
-            var app = new TestApp.Actions.BinPack(_dx);
+            var app = new TestApp.Actions.BinPack(_dx,this);
             this.SetCurrentApp(app);
         }
 

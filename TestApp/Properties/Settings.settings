@@ -5,5 +5,17 @@
     <Setting Name="TextureFile" Type="System.String" Scope="User">
       <Value Profile="(Default)">.\</Value>
     </Setting>
+    <Setting Name="FormPosition" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="FormSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">800, 600</Value>
+    </Setting>
+    <Setting Name="SecWindowPosition" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">800, 0</Value>
+    </Setting>
+    <Setting Name="SecWindowSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">800, 600</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
