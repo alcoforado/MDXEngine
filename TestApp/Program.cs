@@ -16,9 +16,8 @@ namespace TestApp
         [STAThread]
         static void Main()
         {
-            MainWindow mainW = new MainWindow();
            // var hello = new HelloWorld();
-            DxApp app = new DxApp(mainW,mainW.RenderControl());
+            DxApp app = new DxApp();
             //mainW.SetDxApp(app);
             //app.PsychoRun();
             app.EasyRun();

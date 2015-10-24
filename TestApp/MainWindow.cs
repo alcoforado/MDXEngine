@@ -20,11 +20,14 @@ namespace TestApp
     {
         TextBoxStreamWriter _boxWriter;
         private IActionMenu _currentApp;
-        
+        private IFactory<IActionMenu> _menuActionFactory;
+
         internal DxApp _dxApp;
         private DxControl _dx;
         private MWebBrowser _browserRight;
-        public MainWindow()
+       
+        
+        public MainWindow(IFactory<IActionMenu> menuActionFactory)
         {
             InitializeComponent();
            // _boxWriter = new TextBoxStreamWriter(textBox1);
@@ -41,6 +44,10 @@ namespace TestApp
             this.StartPosition = FormStartPosition.Manual;
             this.Location = Properties.Settings.Default.FormPosition;
             this.Size =     Properties.Settings.Default.FormSize;
+
+            _menuActionFactory = menuActionFactory;
+            this.SetMenuActions();
+
         }
 
 
@@ -52,7 +59,7 @@ namespace TestApp
         public void SetDxApp(DxApp app) { _dxApp = app; _dx = _dxApp.DxControl; }
         
 
-        private void RemoveCurrentApp()
+        internal void RemoveCurrentApp()
         {
             if (_currentApp != null)
                 _currentApp.Dispose();
@@ -61,7 +68,7 @@ namespace TestApp
             _dx.Display();
         }
 
-        private void SetCurrentApp(IActionMenu app)
+         internal void SetCurrentApp(IActionMenu app)
         {
             if (_currentApp != null)
                 throw new Exception("Before Assign a new IApp make sure you remove the old one by calling MainWindow.RemoveCurrentApp");
@@ -78,30 +85,46 @@ namespace TestApp
         public TextWriter getTextBoxWriter() { return _boxWriter; }
 
         public Control RenderControl() { return splitContainer1.Panel1; }
-        /*
-        public void setDXApp(DXApp dxApp)
+       
+
+        private void OnMainWindowMenuItemClick(object sender, EventArgs e)
         {
-            _dxApp=dxApp;
-            //Make the link of dxApp with the events of the GUI.
-            this.viewWireframeMenuItem.Click += (sender, e) =>
+            var menu = sender as ToolStripMenuItem;
+            this.RemoveCurrentApp();
+            var action = this._menuActionFactory.Resolve(menu.Text);
+            this.SetCurrentApp(action);
+        }
+
+
+        private void SetMenuActions()
+        {
+
+            Action<ToolStripMenuItem> proc = null;
+            proc = (ToolStripMenuItem menuItem) =>
             {
-                if (this.viewWireframeMenuItem.Text == "Wireframe Off")
+                if (menuItem == null)
+                    return;
+                if (menuItem.DropDownItems.Count == 0)
                 {
-                    _dxApp.setWireframe(true);
-                    this.viewWireframeMenuItem.Text = "Wireframe On";
+                    menuItem.Click += OnMainWindowMenuItemClick;
                 }
                 else
                 {
-                    _dxApp.setWireframe(false);
-                    this.viewWireframeMenuItem.Text = "Wireframe Off";
+                    foreach (var child in menuItem.DropDownItems)
+                    {
+
+                        proc(child as ToolStripMenuItem);
+                    }
                 }
-
             };
-
-
+            foreach (var menu in this.GetMenus().Items)
+            {
+                proc((ToolStripMenuItem)menu);
+            }
 
         }
-        */
+
+
 
         private void viewToolStripMenuItem_Click(object sender, EventArgs e)
         {

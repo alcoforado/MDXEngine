@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TestApp
 {
-    public interface IActionMenu : IDisposable
+    public interface IFactory<T>
     {
-       
+        T Resolve(string menuText);
     }
 }

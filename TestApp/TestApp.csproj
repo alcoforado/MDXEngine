@@ -103,7 +103,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\BinPack.cs" />
+    <Compile Include="Actions\BinPackAction.cs" />
     <Compile Include="Actions\CubeColor3D.cs" />
     <Compile Include="Actions\ColorTriangle.cs" />
     <Compile Include="Actions\CubeFractal.cs" />
@@ -121,6 +121,7 @@
     <Compile Include="Interfaces\IActionMenu.cs" />
     <Compile Include="DxApp.cs" />
     <Compile Include="Interfaces\IMainWindow.cs" />
+    <Compile Include="Interfaces\IMenuActionFactory.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

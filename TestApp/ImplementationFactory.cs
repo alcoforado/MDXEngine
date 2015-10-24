@@ -12,7 +12,9 @@ namespace TestApp
     /// passed as type parameter to create
     /// </summary>
     
-    public class ImplementationFactory<T>  
+
+
+    public class ImplementationFactory<T>  : IFactory<T>
     {
         Dictionary<string, Type> _typeMapping;
         private IUnityContainer _container;
@@ -25,7 +27,7 @@ namespace TestApp
         /// </summary>
         /// <param name="container"></param>
         /// <param name="map"> A function that given a string, it returns the possible type names associated with it</param>
-        public ImplementationFactory(IUnityContainer container,TypeMap map)
+        public ImplementationFactory(IUnityContainer container,TypeMap idToTypeMap)
         {
             if (!typeof(T).IsInterface)
             {
@@ -34,16 +36,16 @@ namespace TestApp
 
             _container = container;
             _typeMapping = new Dictionary<string, Type>();
-
+            _mapping = idToTypeMap;
             //Register Controllers
             foreach (Type t in this.GetType().Assembly.GetTypes())
             {
                 if (t.IsInterface || t.IsAbstract)
                     continue;
-                if (t is T)
+                if (typeof(T).IsAssignableFrom(t))
                 {
                     container.RegisterType(typeof(T),t);
-                    _typeMapping.Add(t.Name, t);
+                    _typeMapping.Add(t.Name.ToLower(), t);
                 }
                 
             }
@@ -56,9 +58,9 @@ namespace TestApp
             var possibleTypes = _mapping(name);
             foreach (var typeName in possibleTypes)
             {
-                if (_typeMapping.ContainsKey(typeName))
+                if (_typeMapping.ContainsKey(typeName.ToLower()))
                 {
-                    return (T) _container.Resolve(_typeMapping[typeName]);
+                    return (T) _container.Resolve(_typeMapping[typeName.ToLower()]);
                 }
             }
 
