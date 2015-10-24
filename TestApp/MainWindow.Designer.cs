@@ -70,49 +70,43 @@
             // fractalCubeToolStripMenuItem
             // 
             this.fractalCubeToolStripMenuItem.Name = "fractalCubeToolStripMenuItem";
-            this.fractalCubeToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.fractalCubeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fractalCubeToolStripMenuItem.Text = "Fractal Cube";
-            this.fractalCubeToolStripMenuItem.Click += new System.EventHandler(this.fractalCubeToolStripMenuItem_Click);
             // 
             // rGBTriangleToolStripMenuItem
             // 
             this.rGBTriangleToolStripMenuItem.Name = "rGBTriangleToolStripMenuItem";
-            this.rGBTriangleToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.rGBTriangleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rGBTriangleToolStripMenuItem.Text = "RGB Triangle";
-            this.rGBTriangleToolStripMenuItem.Click += new System.EventHandler(this.rGBTriangleToolStripMenuItem_Click);
             // 
             // loadTextureToolStripMenuItem
             // 
             this.loadTextureToolStripMenuItem.Name = "loadTextureToolStripMenuItem";
-            this.loadTextureToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.loadTextureToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadTextureToolStripMenuItem.Text = "LoadTexture";
-            this.loadTextureToolStripMenuItem.Click += new System.EventHandler(this.loadTextureToolStripMenuItem_Click);
             // 
             // helloWorldToolStripMenuItem
             // 
             this.helloWorldToolStripMenuItem.Name = "helloWorldToolStripMenuItem";
-            this.helloWorldToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.helloWorldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.helloWorldToolStripMenuItem.Text = "Hello World";
-            this.helloWorldToolStripMenuItem.Click += new System.EventHandler(this.helloWorldToolStripMenuItem_Click);
             // 
             // cubeColor3DToolStripMenuItem
             // 
             this.cubeColor3DToolStripMenuItem.Name = "cubeColor3DToolStripMenuItem";
-            this.cubeColor3DToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.cubeColor3DToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cubeColor3DToolStripMenuItem.Text = "Cube Color 3D";
-            this.cubeColor3DToolStripMenuItem.Click += new System.EventHandler(this.cubeColor3DToolStripMenuItem_Click);
             // 
             // wireCube3DToolStripMenuItem
             // 
             this.wireCube3DToolStripMenuItem.Name = "wireCube3DToolStripMenuItem";
-            this.wireCube3DToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.wireCube3DToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.wireCube3DToolStripMenuItem.Text = "Wire Cube 3D";
-            this.wireCube3DToolStripMenuItem.Click += new System.EventHandler(this.wireCube3DToolStripMenuItem_Click);
             // 
             // binPackToolStripMenuItem
             // 
             this.binPackToolStripMenuItem.Name = "binPackToolStripMenuItem";
-            this.binPackToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.binPackToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.binPackToolStripMenuItem.Text = "Bin Pack";
             // 
             // splitContainer1
