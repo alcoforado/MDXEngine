@@ -10,7 +10,7 @@ using MDXEngine;
 
 namespace TestApp.Actions
 {
-    public class TextureDisplay : IApp
+    public class TextureDisplay : IActionMenu
     {
         public TextureDisplay(DxControl control)
         {

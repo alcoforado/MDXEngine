@@ -5,7 +5,7 @@ using SharpDX;
 
 namespace TestApp.Actions
 {
-    public class WireCube3D : IApp
+    public class WireCube3D : IActionMenu
     {
         ShaderColor3D _shaderColor;
         MouseSphericNavigator _mouseHandler;

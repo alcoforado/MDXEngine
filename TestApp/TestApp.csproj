@@ -117,8 +117,9 @@
     <Compile Include="Actions\HelloWorld.cs" />
     <Compile Include="Actions\TextureDisplay.cs" />
     <Compile Include="Array2DDataView.cs" />
-    <Compile Include="IApp.cs" />
+    <Compile Include="Interfaces\IActionMenu.cs" />
     <Compile Include="DxApp.cs" />
+    <Compile Include="Interfaces\IMainWindow.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

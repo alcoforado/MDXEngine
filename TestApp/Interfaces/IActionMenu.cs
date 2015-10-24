@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestApp
 {
-    internal interface IApp : IDisposable
+    internal interface IActionMenu : IDisposable
     {
        
     }

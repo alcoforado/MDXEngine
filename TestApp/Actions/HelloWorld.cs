@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace TestApp.Actions
 {
-    public class HelloWorld : IApp
+    public class HelloWorld : IActionMenu
     {
         public HelloWorld(DxControl control)
         {

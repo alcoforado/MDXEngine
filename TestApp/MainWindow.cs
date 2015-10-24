@@ -16,10 +16,10 @@ namespace TestApp
 
 
 
-    public partial class MainWindow : Form
+    public partial class MainWindow : Form, TestApp.IMainWindow
     {
         TextBoxStreamWriter _boxWriter;
-        private IApp _currentApp;
+        private IActionMenu _currentApp;
         
         internal DxApp _dxApp;
         private DxControl _dx;
@@ -44,6 +44,11 @@ namespace TestApp
         }
 
 
+        public MenuStrip GetMenus()
+        {
+            return this.menuStrip1;
+        }
+
         public void SetDxApp(DxApp app) { _dxApp = app; _dx = _dxApp.DxControl; }
         
 
@@ -56,7 +61,7 @@ namespace TestApp
             _dx.Display();
         }
 
-        private void SetCurrentApp(IApp app)
+        private void SetCurrentApp(IActionMenu app)
         {
             if (_currentApp != null)
                 throw new Exception("Before Assign a new IApp make sure you remove the old one by calling MainWindow.RemoveCurrentApp");
