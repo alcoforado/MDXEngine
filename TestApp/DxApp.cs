@@ -9,6 +9,7 @@ using MDXEngine.Shapes;
 using SharpDX;
 using MDXEngine.Painters;
 using MDXEngine.Geometry;
+using Microsoft.Practices.Unity;
 namespace TestApp
 {
     public class DxApp
@@ -17,6 +18,21 @@ namespace TestApp
         MainWindow _main;
         Control _display;
         DxControl control;
+
+        
+        private void InitializeContainer()
+        {
+            Container = new UnityContainer();
+            Container.RegisterInstance<DxControl>(control);
+            Container.RegisterType<IDxContext>(new InjectionFactory(c => this.DxControl.GetDxContext()));
+
+
+
+        }
+        
+        
+        public IUnityContainer Container { get; set; }
+
 
         public DxApp(MainWindow main, Control display)
         {

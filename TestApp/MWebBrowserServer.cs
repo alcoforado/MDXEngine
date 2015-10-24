@@ -10,8 +10,10 @@ using System.Threading.Tasks;
 using System.Runtime.Serialization.Json;
 using System.Reflection;
 using System.Web.Script.Serialization;
+using Microsoft.Practices.Unity;
 namespace TestApp
 {
+
     public struct Response
     {
         public int MessageID { get; set; }
@@ -84,6 +86,12 @@ namespace TestApp
     {
         void RunScript(string functionName, params object[] parameters);
     }
+    public interface IController
+    {
+
+
+    }
+
 
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     [ComVisible(true)]
@@ -92,8 +100,10 @@ namespace TestApp
         Dictionary<string, RouterElement> Router = new Dictionary<string, RouterElement>();
         IBrowserInterface _ibrowser;
         Object _ibrowserLock = new Object();
-        public MWebBrowserServer(IBrowserInterface ibrowser)
+        IUnityContainer _container;
+        public MWebBrowserServer(IBrowserInterface ibrowser,IUnityContainer container)
         {
+            _container = container;
             _ibrowser = ibrowser;
         }
 
@@ -107,6 +117,18 @@ namespace TestApp
             });
         }
 
+
+        public void RegisterAllControllers(IUnityContainer container)
+        {
+            foreach (Type t in this.GetType().Assembly.GetTypes())
+            {
+                if (t is IController)
+                {
+                    _container.RegisterType(t);
+                }
+            }
+           
+        }
 
         private string Json(Object result)
         {
