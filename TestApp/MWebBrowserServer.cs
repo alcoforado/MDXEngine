@@ -26,7 +26,6 @@ namespace TestApp
     public class RouterElement
     {
         public IHandler Handler { get; set; }
-        public string Call { get; set; }
     }
 
     public interface IHandler
@@ -53,8 +52,12 @@ namespace TestApp
     public class ControllerHandler : IHandler
     {
         private Object _controller;
+        private string _controllerId;
+        private Type _controllerType;
         private MethodInfo _method;
-
+        private IFactory<IController> _factory;
+        //If this constructor is used then we will have one instance of the  controller
+        //we execute. The controller will have its state persisted between requests.
         public ControllerHandler(Object controller, MethodInfo method)
         {
             _controller = controller;
@@ -62,16 +65,32 @@ namespace TestApp
 
         }
 
+        //If this constructor is used the controller will be created every time
+        //we execute. (It is like Asp.NET). Stateless controllers tend to be better code.
+        public ControllerHandler(IFactory<IController> factory, string controllerId, MethodInfo method)
+        {
+            _controllerId = controllerId;
+            _method = method;
+            _factory = factory;
+
+        }
+
         public Object Execute(string data)
         {
+            var targetController = _controller;
+            if (_controller == null)
+            {
+                targetController = _factory.Resolve(_controllerId);
+            }
+
             if (_method.GetParameters().Count() == 0)
             {
-                return _method.Invoke(_controller, new Object[] { });
+                return _method.Invoke(targetController, new Object[] { });
             }
             else if (_method.GetParameters().Count() == 1)
             {
                 var param = new JavaScriptSerializer().Deserialize(data, _method.GetParameters()[0].ParameterType);
-                return _method.Invoke(_controller, new Object[] { param });
+                return _method.Invoke(targetController, new Object[] { param });
             }
             else
             {
@@ -93,6 +112,8 @@ namespace TestApp
     }
 
 
+
+
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     [ComVisible(true)]
     public class MWebBrowserServer
@@ -100,35 +121,47 @@ namespace TestApp
         Dictionary<string, RouterElement> Router = new Dictionary<string, RouterElement>();
         IBrowserInterface _ibrowser;
         Object _ibrowserLock = new Object();
-        IUnityContainer _container;
+        ImplementationFactory<IController> _factory;
         public MWebBrowserServer(IBrowserInterface ibrowser,IUnityContainer container)
         {
-            _container = container;
-            _ibrowser = ibrowser;
-        }
-
-
-        public void Register(IHandler handler, String Call)
-        {
-            Router.Add(Call, new RouterElement()
-            {
-                Handler = handler,
-                Call = Call
+            _factory = new ImplementationFactory<IController>(container,(Type t) => {
+                var result = new List<String>() { t.Name.ToLower(), t.Name.ToLower().Replace("controller","")};
+                return result.Distinct().ToList();
             });
+            _ibrowser = ibrowser;
+            Register(_factory);
+
         }
 
 
-        public void RegisterAllControllers(IUnityContainer container)
+
+
+
+        private void Register(ImplementationFactory<IController> container)
         {
-            foreach (Type t in this.GetType().Assembly.GetTypes())
+            var types = container.GetAllTypes();
+            foreach (var type in types)
             {
-                if (t is IController)
+                var typeNames = container.GetTypeMapping(type);
+                foreach (var method in type.GetMethods())
                 {
-                    _container.RegisterType(t);
+                    if (method.GetParameters().Count() == 0 || method.GetParameters().Count() == 1)
+                    {
+                        foreach(var typeName in typeNames)
+                        {
+                        var el = new RouterElement() {
+                            Handler= new ControllerHandler(container, typeName, method),
+                        };
+                        string call = String.Format("/{0}/{1}",typeName,method.Name.ToLower());
+                         Router.Add(call,el);
+
+                        }
+                    }
                 }
             }
-           
         }
+
+
 
         private string Json(Object result)
         {
@@ -136,9 +169,9 @@ namespace TestApp
         }
 
 
-        public string JavascriptRequest(string call, string data)
+        public string JavascriptRequest(string urlPath, string data)
         {
-            Object model;
+            var call = urlPath.ToLower();
             if (!Router.ContainsKey(call))
             {
                 var result = Json(new Response()
@@ -173,8 +206,9 @@ namespace TestApp
 
         }
 
-        public bool JavascriptRequestAsync(string call, string request_id, string data)
+        public bool JavascriptRequestAsync(string urlPath, string request_id, string data)
         {
+            var call = urlPath.ToLower();
             Object model;
             if (!Router.ContainsKey(call))
             {

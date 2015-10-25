@@ -3,18 +3,25 @@
 /// <reference path="./defines/custom.d.ts" />
 /// <reference path="./linearalgebra.ts" />
 /// <reference path="./svg_plots.ts" />
-
+/// <reference path="./wpf.ts" />
 
 
 import plots = require("svg_plots");
 import la = require("linearalgebra");
 import angular = require("angular");
 import shapes2D = require("shapes2d");
-
+import Interop = require('wpf');
 
 
  class Data {
-        constructor(public NumElements: number, public WidthRange: la.Interval,public HeightRange: la.Interval, public numberOfRuns=1,public rotate:boolean=false, public areaUsageValues:Array<number>=[])
+     constructor(public NumElements: number
+         , public minWidth: number
+         , public maxWidth: number
+         , public minHeight: number
+         , public maxHeight: number
+         , public numberOfRuns = 1
+         , public rotate: boolean = false
+         , public areaUsageValues: Array<number> = [])
         {
             
         }
@@ -29,8 +36,8 @@ import shapes2D = require("shapes2d");
    class Ctrl {
 
 
-        constructor(private $scope: IScope) {
-            $scope.Data = new Data(50, new la.Interval(10, 100), new la.Interval(10, 100));
+        constructor(private $wpf: Interop.Wpf,private $scope: IScope) {
+            $scope.Data = new Data(50, 10, 100, 10, 100);
         }
 
         plotEfficiencyGraph(y:Array<number>) {
@@ -67,6 +74,9 @@ import shapes2D = require("shapes2d");
             var i = 0;
             var that = this;
             var data = this.$scope.Data;
+
+            this.$wpf.postSync("/binpack/randomrun", this.$scope.Data);
+            return;
             if (data.numberOfRuns <= 1) {
                 this.RunOnce();
             }
@@ -109,7 +119,7 @@ import shapes2D = require("shapes2d");
 
     var app = angular.module('app', []);
     app.controller('Ctrl', Ctrl);
-
+    app.service('$wpf', Interop.Wpf);
     var $html = angular.element(document.getElementsByTagName('html')[0]);
     angular.element().ready(function () {
         // bootstrap the app manually

@@ -20,7 +20,7 @@ namespace TestApp.Controllers
             using (var g = Graphics.FromImage(result))
             {
                 g.FillRectangle(new SolidBrush(color),new Rectangle(0,0,result.Width,result.Height));
-
+                g.DrawRectangle(new Pen(new SolidBrush(Color.White)), new Rectangle(0, 0, result.Width-1, result.Height-1));
 
             }
             return result;
@@ -31,7 +31,7 @@ namespace TestApp.Controllers
 
         public void RandomRun(BinPackRandomRun model)
         {
-            var bitmap = CreateRandomBitmap(model.WidthRange, model.HeightRange);
+            var bitmap = CreateRandomBitmap(new Interval(model.minWidth,model.maxWidth), new Interval(model.minHeight,model.maxHeight));
             bitmap.Save("./randomBit.png");
 
         }

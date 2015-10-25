@@ -1,5 +1,5 @@
 ﻿
-module Interop {
+
     export interface RequestData {
         data: any;
         error: (message: Array<string>) => void;
@@ -42,10 +42,10 @@ module Interop {
             var external: any = window.external;
             var message: WpfMessage;
             if (this.IsWpfServerActive()) {
-                var id:string=Interop.WpfAjaxManager.Instance.registerRequest(request.call, request.error, request.success);
+                var id:string=WpfAjaxManager.Instance.registerRequest(request.call, request.error, request.success);
                 var result: boolean = external.JavascriptRequestAsync(request.call, id,value);
                 if (!result) {
-                    Interop.WpfAjaxManager.Instance.cancelRequest(id);
+                    WpfAjaxManager.Instance.cancelRequest(id);
                     console.log("WpfServer entry " + request.call + " not found");
                 }
             }
@@ -168,7 +168,7 @@ module Interop {
         }
     }
 
-    export class MoqWpf extends Interop.Wpf {
+    export class MoqWpf extends Wpf {
         public static Fixtures: any = [];
         public static Delay: number = 1500;
         public postSync(call: string, data: any = null): any {
@@ -182,39 +182,39 @@ module Interop {
                     return MoqWpf.Fixtures[call];
             }
         }
-        public post(request: Interop.RequestData) {
+        public post(request: RequestData) {
             if (typeof (MoqWpf.Fixtures[request.call]) == "undefined") {
                 console.log("Route " + request.call + " Not Found");
                 throw "Route " + request.call + " Not Found";
             }
             else {
-                var id: string = Interop.WpfAjaxManager.Instance.registerRequest(request.call, request.error, request.success);
+                var id: string = WpfAjaxManager.Instance.registerRequest(request.call, request.error, request.success);
 
                 if (typeof (MoqWpf.Fixtures[request.call]) == "function") {
 
                     setTimeout(function () {
                         try {
                             var result = MoqWpf.Fixtures[request.call](request.data);
-                            var msg: Interop.WpfMessage = {
+                            var msg: WpfMessage = {
                                 Call: request.call, Code: 201, Data: result, ErrorMessages: null
                             }
-                            Interop.WpfAjaxManager.Instance.finishRequest(request.call, id, JSON.stringify(msg))
+                            WpfAjaxManager.Instance.finishRequest(request.call, id, JSON.stringify(msg))
                         }
                         catch (e) {
-                            var msg: Interop.WpfMessage = {
+                            var msg: WpfMessage = {
                                 Call: request.call, Code: 503, Data: null, ErrorMessages: [e]
                             }
-                            Interop.WpfAjaxManager.Instance.finishRequest(request.call, id, JSON.stringify(msg));
+                            WpfAjaxManager.Instance.finishRequest(request.call, id, JSON.stringify(msg));
 
                         }
                     }, MoqWpf.Delay);
                 }
                 else {
                     setTimeout(function () {
-                        var msg: Interop.WpfMessage = {
+                        var msg: WpfMessage = {
                             Call: request.call, Code: 201, Data: MoqWpf.Fixtures[request.call], ErrorMessages: null
                         }
-                        Interop.WpfAjaxManager.Instance.finishRequest(request.call, id, JSON.stringify(msg));
+                        WpfAjaxManager.Instance.finishRequest(request.call, id, JSON.stringify(msg));
                     }, 5000);
                 }
             }
@@ -226,8 +226,8 @@ module Interop {
 
 
 
-}
+
 
 function WpfFinishRequest(call: string, requestId: string, data: string) {
-    Interop.WpfAjaxManager.Instance.finishRequest(call, requestId, data);
+    WpfAjaxManager.Instance.finishRequest(call, requestId, data);
 }

@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 
 namespace TestApp.Models
 {
+    
+
     public class BinPackRandomRun
     {
         public int NumElements { get; set; }
-        public Interval WidthRange { get; set; }
-        public Interval HeightRange { get; set; }
+        public int minWidth { get; set; }
+        public int maxWidth { get; set; }
+        public int minHeight { get; set; }
+        public int maxHeight { get; set; }
     }
 }

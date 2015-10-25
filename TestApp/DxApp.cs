@@ -50,11 +50,11 @@ namespace TestApp
             Container = new UnityContainer();
             
             //Create Main Window
-            var menuActionFactory =  new ImplementationFactory<IActionMenu>(Container, path =>
+            var menuActionFactory =  new ImplementationFactory<IActionMenu>(Container, (Type t) =>
             {
-                var str = path.Trim();
-                var baseName = string.Join("", str.Split(' '));
-                return new List<string>() { baseName, baseName + "Action", baseName + "MenuAction" };
+                var baseName = t.Name;
+                var result = new List<string>() { baseName, baseName.Replace("Action", ""),baseName.Replace("MenuAction","") };
+                return result.Distinct().ToList();
             });
 
             _main = new MainWindow(menuActionFactory);

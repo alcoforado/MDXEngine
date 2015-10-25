@@ -9,5 +9,6 @@ namespace TestApp
     public interface IFactory<T>
     {
         T Resolve(string menuText);
+       
     }
 }

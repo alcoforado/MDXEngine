@@ -91,7 +91,7 @@ namespace TestApp
         {
             var menu = sender as ToolStripMenuItem;
             this.RemoveCurrentApp();
-            var action = this._menuActionFactory.Resolve(menu.Text);
+            var action = this._menuActionFactory.Resolve(String.Join("",menu.Text.Split(' ')));
             this.SetCurrentApp(action);
         }
 

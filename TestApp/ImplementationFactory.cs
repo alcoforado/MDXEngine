@@ -19,7 +19,7 @@ namespace TestApp
         Dictionary<string, Type> _typeMapping;
         private IUnityContainer _container;
 
-        public delegate List<string> TypeMap(string t);
+        public delegate List<string> TypeMap(Type t);
         TypeMap _mapping;
         
         /// <summary>
@@ -44,27 +44,49 @@ namespace TestApp
                     continue;
                 if (typeof(T).IsAssignableFrom(t))
                 {
-                    container.RegisterType(typeof(T),t);
-                    _typeMapping.Add(t.Name.ToLower(), t);
+                    container.RegisterType(typeof(T),t);  
+                    var possibleNames = _mapping(t);
+                    foreach(var name in possibleNames)
+                    {
+                        _typeMapping.Add(name, t);
+                    }
                 }
                 
             }
+         }
 
+        public List<Type> GetAllTypes()
+        {
+            var result = new List<Type>();
+            foreach (var entry in _typeMapping)
+            {
+                result.Add(entry.Value);
+            }
+            return result.Distinct().ToList();
         }
+
+        public List<string> GetTypeMapping(Type t)
+        {
+
+            if (!_typeMapping.ContainsKey(_mapping(t)[0]))
+                throw new Exception("Type is not in the factory");
+            return _mapping(t);
+        }
+        
+     
+
 
 
         public T Resolve(string name)
         {
-            var possibleTypes = _mapping(name);
-            foreach (var typeName in possibleTypes)
-            {
-                if (_typeMapping.ContainsKey(typeName.ToLower()))
+           
+                if (_typeMapping.ContainsKey(name))
                 {
-                    return (T) _container.Resolve(_typeMapping[typeName.ToLower()]);
+                    return (T) _container.Resolve(_typeMapping[name]);
                 }
-            }
+            
 
-            throw new Exception(String.Format("Could not resolve type for id {0}\nCandidates are {1}", name, string.Join(",", possibleTypes.ToArray())));
+            throw new Exception(String.Format("Could not resolve type for id {0}", name));
         }
 
 
