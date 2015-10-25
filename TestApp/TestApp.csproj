@@ -129,6 +129,7 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\BinPackRandomRun.cs" />
     <Compile Include="MWebBrowser.cs">
       <SubType>Component</SubType>
     </Compile>

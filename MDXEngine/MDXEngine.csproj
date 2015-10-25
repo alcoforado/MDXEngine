@@ -86,6 +86,7 @@
     <Compile Include="IShaderResource.cs" />
     <Compile Include="ITEX.cs" />
     <Compile Include="Geometry\Angle.cs" />
+    <Compile Include="MMath\Interval.cs" />
     <Compile Include="ShaderSlotsCollection.cs" />
     <Compile Include="Shaders\ShaderObservableDock.cs" />
     <Compile Include="Shapes\AnchorSprite.cs" />
