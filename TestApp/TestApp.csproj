@@ -108,6 +108,7 @@
     <Compile Include="Actions\ColorTriangle.cs" />
     <Compile Include="Actions\CubeFractal.cs" />
     <Compile Include="Actions\WireCube3D.cs" />
+    <Compile Include="Controllers\BinPackController.cs" />
     <Compile Include="Dialogs\CubeFractalDialog.cs">
       <SubType>Form</SubType>
     </Compile>
