@@ -53,7 +53,6 @@ namespace TestApp
     {
         private Object _controller;
         private string _controllerId;
-        private Type _controllerType;
         private MethodInfo _method;
         private IFactory<IController> _factory;
         //If this constructor is used then we will have one instance of the  controller
@@ -209,7 +208,6 @@ namespace TestApp
         public bool JavascriptRequestAsync(string urlPath, string request_id, string data)
         {
             var call = urlPath.ToLower();
-            Object model;
             if (!Router.ContainsKey(call))
             {
                 return false;

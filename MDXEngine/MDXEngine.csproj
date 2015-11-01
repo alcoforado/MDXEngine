@@ -81,6 +81,7 @@
     <Compile Include="HLSLProgram.cs" />
     <Compile Include="HLSLResources.cs" />
     <Compile Include="IDrawTreeAction.cs" />
+    <Compile Include="IDxViewControl.cs" />
     <Compile Include="IObservable.cs" />
     <Compile Include="IShader.cs" />
     <Compile Include="IShaderResource.cs" />

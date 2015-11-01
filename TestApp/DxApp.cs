@@ -17,7 +17,6 @@ namespace TestApp
         bool _bResize;
         MainWindow _main;
         DxControl _control;
-        ImplementationFactory<IActionMenu> _menuActionsFactory;
         public IUnityContainer Container { get; set; }
 
 
@@ -29,6 +28,7 @@ namespace TestApp
             Container.RegisterType<IDxContext>(new InjectionFactory(c => this.DxControl.GetDxContext()));
             Container.RegisterType<IUnityContainer, UnityContainer>();
             Container.RegisterType<IFactory<IController>, ImplementationFactory<IController>>();
+            Container.RegisterType<IDxViewControl, DxControl>();
             Container.RegisterType<MWebBrowser>();
             Container.RegisterType<SecWindow>();
         }

@@ -19,7 +19,7 @@ namespace MDXEngine.Textures.BinPack
 
 
 
-        private BinPackAnalysis findBestNodeToInsert(BinPackNode node, int width, int height,List<Bitmap> lst,int iStart)
+        private BinPackAnalysis findBestNodeToInsert(BinPackNode node, int width, int height, List<Bitmap> lst, int iStart)
         {
             if (node.canFit(width, height))
             {
@@ -46,9 +46,9 @@ namespace MDXEngine.Textures.BinPack
                     }
                     else
                     {
-                        analysis.Vertical  = new DecompositionAnalysis(node, Decomposition.Vertical, width, height, lst, iStart);
+                        analysis.Vertical = new DecompositionAnalysis(node, Decomposition.Vertical, width, height, lst, iStart);
                         analysis.Horizontal = new DecompositionAnalysis(node, Decomposition.Horizontal, width, height, lst, iStart);
-                    
+
                         if (analysis.Vertical.Score >= analysis.Horizontal.Score)
                         {
                             analysis.SuggestedDecompositionType = Decomposition.Vertical;
@@ -57,16 +57,16 @@ namespace MDXEngine.Textures.BinPack
                         {
                             analysis.SuggestedDecompositionType = Decomposition.Horizontal;
                         }
-                        
+
                     }
                     return analysis;
-                         
+
                 }
                 else
                 {
                     Debug.Assert(node.IsDecomposed());
-                    var analysis1 = findBestNodeToInsert(node.Childs[1], width, height,lst,iStart);
-                    var analysis2 = findBestNodeToInsert(node.Childs[2], width, height,lst,iStart);
+                    var analysis1 = findBestNodeToInsert(node.Childs[1], width, height, lst, iStart);
+                    var analysis2 = findBestNodeToInsert(node.Childs[2], width, height, lst, iStart);
                     return getBestAnalysis(analysis1, analysis2);
                 }
             }
@@ -84,7 +84,7 @@ namespace MDXEngine.Textures.BinPack
             return node.Region.Right == MAX_SIZE;
         }
 
-        
+
         private HScore getAnalysisScore(BinPackAnalysis analysis)
         {
             var result = new HScore();
@@ -97,11 +97,11 @@ namespace MDXEngine.Textures.BinPack
             }
             else
             {
-                result.AppendScore(2).AppendScore(Math.Max(analysis.Horizontal.Score,analysis.Vertical.Score));
+                result.AppendScore(2).AppendScore(Math.Max(analysis.Horizontal.Score, analysis.Vertical.Score));
             }
             return result;
         }
-        
+
         private BinPackAnalysis getBestAnalysis(BinPackAnalysis analysis1, BinPackAnalysis analysis2)
         {
             if (analysis1 == null)
@@ -114,34 +114,136 @@ namespace MDXEngine.Textures.BinPack
         }
 
 
+        public int UsedArea()
+        {
+            int area = 0;
+            Action<BinPackNode> f = null;
+            f = (BinPackNode node) =>
+                {
+                    if (node.IsFilled())
+                        area += node.Region.Area();
+                    else if (!node.IsChildless())
+                    {
+                        foreach(var child in node.Childs)
+                        {
+                            f(child);
+                        }
+                    }
+                };
+            f(_root);
+            return area;
+        }
+
+        public double Efficiency()
+        {
+            return ((double) this.UsedArea())/(this.UsedDims.Height*this.UsedDims.Width);
+        }
+
         public BinPackAlghorithm(List<Bitmap> lst)
         {
             _root = new BinPackNode(new Rectangle(0, 0, MAX_SIZE, MAX_SIZE));
             UsedDims = new Size(0, 0);
 
-            for(int i=0;i<lst.Count;i++)
+            for (int i = 0; i < lst.Count; i++)
             {
                 var bitmap = lst[i];
-                var analysis = this.findBestNodeToInsert(_root, bitmap.Width,bitmap.Height,lst,i+1);
+                var analysis = this.findBestNodeToInsert(_root, bitmap.Width, bitmap.Height, lst, i + 1);
                 var node = analysis.node;
 
                 if (analysis.SuggestedDecompositionType == Decomposition.Horizontal)
                 {
+                    UsedDims = analysis.used_dims;
                     node.HorizontalDecompose(bitmap);
                 }
                 else if (analysis.SuggestedDecompositionType == Decomposition.Vertical)
                 {
+                    UsedDims = analysis.used_dims;
                     node.VerticalDecompose(bitmap);
-                } 
+                }
             }
+
+
 
         }
 
-      
+        /// <summary>
+        /// Used for debugging mainly
+        /// </summary>
+        /// <returns></returns>
+        public Bitmap CreateBitmapWithWireframe()
+        {
+            var result = new Bitmap(this.UsedDims.Width, this.UsedDims.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var g = Graphics.FromImage(result);
 
-      
 
-        
+            Action<BinPackNode, Graphics> aux = null;
+            aux = (BinPackNode node, Graphics resultBitmap) =>
+            {
+                if (node == null)
+                    return;
+                if (node.IsFilled())
+                {
+                    System.Diagnostics.Debug.Assert(node.IsChildless());
+                    resultBitmap.DrawImage(node.Bitmap, node.Region.Location);
+                    resultBitmap.DrawRectangle(new Pen(new SolidBrush(Color.White)), new Rectangle(node.Region.Location, new Size(node.Region.Size.Width-1,node.Region.Size.Height-1)));
+                }
+                else
+                {
+                    var width = Math.Min(node.Region.Width, UsedDims.Width-node.Region.Location.X);
+                    var height = Math.Min(node.Region.Height, UsedDims.Height-node.Region.Location.Y);
+
+                    var rect = new Rectangle(node.Region.Location,new Size(width-1,height-1));
+                    if (rect.Size.Width >= 2 && rect.Size.Height >= 2)
+                        resultBitmap.DrawRectangle(new Pen(new SolidBrush(Color.White)), rect);
+                }
+                
+                if (!node.IsChildless())
+                {
+                    foreach (var child in node.Childs)
+                        aux(child, resultBitmap);
+                }
+            };
+
+            aux(_root, g);
+            return result;
+
+
+        }
+
+
+        public Bitmap CreateBitmap()
+        {
+            var result = new Bitmap(this.UsedDims.Width, this.UsedDims.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var g = Graphics.FromImage(result);
+
+
+            Action<BinPackNode, Graphics> aux = null;
+            aux = (BinPackNode node, Graphics resultBitmap) =>
+            {
+                if (node == null)
+                    return;
+                if (node.IsFilled())
+                {
+                    System.Diagnostics.Debug.Assert(node.IsChildless());
+                    resultBitmap.DrawImage(node.Bitmap, node.Region.Location);
+                }
+                else if (!node.IsChildless())
+                {
+                    foreach (var child in node.Childs)
+                        aux(child, resultBitmap);
+                }
+            };
+
+            aux(_root, g);
+            return result;
+
+
+        }
+
+
+
+
+
 
     }
 }

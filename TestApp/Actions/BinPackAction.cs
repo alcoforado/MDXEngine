@@ -17,7 +17,7 @@ namespace TestApp.Actions
         {
            
             form.Browser.SourceURL = "/content/html/bin_packing.html";
-            form.PositionOnRight(mainWindow,400);
+            form.PositionOnRight(mainWindow,900);
             form.Show();
         }
 

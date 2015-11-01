@@ -4,6 +4,7 @@ using FluentAssertions;
 using MDXEngine.Textures.BinPack;
 using System.Drawing;
 using MDXEngine.DrawingExtensions;
+using System.Collections.Generic;
 namespace UnitTests.Textures
 {
     [TestClass]
@@ -186,6 +187,46 @@ namespace UnitTests.Textures
 
             result[2].Width.Should().Be(20);
             result[2].Height.Should().Be(50);
+        }
+
+        private Bitmap CreateBitmap(int width,int height, Color color)
+        {
+            var bit = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var g = Graphics.FromImage(bit);
+            g.FillRectangle(new SolidBrush(color), new Rectangle(0, 0, width, height));
+            return bit;
+        }
+
+        [TestMethod]
+        public void BinPackWithOneNodeShouldHaveDimensionsOfTheNode()
+        {
+            var lst = new List<Bitmap>();
+            lst.Add(CreateBitmap(200,500,Color.Red));
+
+            var binPack = new BinPackAlghorithm(lst);
+
+            var result = binPack.CreateBitmap();
+            result.Width.Should().Be(200);
+            result.Height.Should().Be(500);
+
+            result.Save("t1.png");
+        }
+
+        [TestMethod]
+        public void BinPackWith4NodesShouldReturnCorrectUsedAreas()
+        {
+            var lst = new List<Bitmap>();
+            lst.Add(CreateBitmap(200, 500, Color.Red));
+            lst.Add(CreateBitmap(400, 400, Color.Blue));
+            lst.Add(CreateBitmap(400, 400, Color.Yellow));
+           // lst.Add(CreateBitmap(100, 50, Color.Green));
+            var binPack = new BinPackAlghorithm(lst);
+
+            var result = binPack.CreateBitmapWithWireframe();
+           // binPack.UsedArea().Should().Be(200*500+2*400*400 + 100*50);
+           // result.Height.Should().Be(500);
+
+            result.Save("t2.png");
         }
         
     }

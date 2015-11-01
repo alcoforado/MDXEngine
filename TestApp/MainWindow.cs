@@ -18,13 +18,12 @@ namespace TestApp
 
     public partial class MainWindow : Form, TestApp.IMainWindow
     {
-        TextBoxStreamWriter _boxWriter;
+        //TextBoxStreamWriter _boxWriter;
         private IActionMenu _currentApp;
         private IFactory<IActionMenu> _menuActionFactory;
 
         internal DxApp _dxApp;
         private DxControl _dx;
-        private MWebBrowser _browserRight;
        
         
         public MainWindow(IFactory<IActionMenu> menuActionFactory)
@@ -82,7 +81,7 @@ namespace TestApp
 
         }
 
-        public TextWriter getTextBoxWriter() { return _boxWriter; }
+        //public TextWriter getTextBoxWriter() { return _boxWriter; }
 
         public Control RenderControl() { return splitContainer1.Panel1; }
        

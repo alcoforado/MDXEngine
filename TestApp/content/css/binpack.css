@@ -2,7 +2,7 @@ html,body {
     height: 100%;
     color: #2997A9;
     font-size: 18px;
-    width: 300px;
+    width: 847px;
     margin: -1px;
     padding: 0;
     margin-top: 20px;
@@ -96,7 +96,9 @@ animation-duration: 0.5s;
     background-color:white;
     width: 545px;
     height: 369px;
-    vertical-align:bottom;
+    vertical-align:
+
+
 }
 .centralize
 {
@@ -182,4 +184,10 @@ animation-duration: 0.5s;
 
 .bin-pack-node {
     position:absolute;
+}
+
+.svgplot-empty-graph
+{
+    background: white url("../images/radar.svg") no-repeat center;
+
 }

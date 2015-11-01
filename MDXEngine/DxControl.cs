@@ -6,11 +6,13 @@ using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using Device = SharpDX.Direct3D11.Device;
+using Microsoft.Practices.Unity;
+using System;
 
 namespace MDXEngine
 {
     
-    public class DxControl :  ICameraObserver
+    public class DxControl :  ICameraObserver, IDxViewControl
     {
        private Device _device;
        private readonly Control _renderControl;
@@ -27,10 +29,93 @@ namespace MDXEngine
        private bool _needRedraw;
        private bool _needResize;
        private readonly DxContext _dx;
+       private IUnityContainer _container;
 
-       
+
+       private void InitializeContainer()
+       {
+           _container = new UnityContainer();
+           foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
+           {
+               foreach (Type t in a.GetTypes())
+
+                   if (typeof(IShader).IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface)
+                   {
+                       _container.RegisterType(t);
+                   }
+           }
+
+           _container.RegisterInstance<IDxContext>(_dx);
+       }
+
+       private void InitializeDX()
+       {
+           _desc = new SwapChainDescription
+           {
+               BufferCount = 1,
+               ModeDescription =
+                   new ModeDescription(_renderControl.ClientSize.Width, _renderControl.ClientSize.Height,
+                                       new Rational(60, 1), Format.B8G8R8A8_UNorm),
+               IsWindowed = true,
+               OutputHandle = _renderControl.Handle,
+               SampleDescription = new SampleDescription(1, 0),
+               SwapEffect = SwapEffect.Discard,
+               Usage = Usage.RenderTargetOutput
+           };
+
+           Device.CreateWithSwapChain(
+               DriverType.Hardware,
+               DeviceCreationFlags.BgraSupport,
+               _desc,
+               out _device,
+               out _swapChain);
+
+           //Ignore all windows events
+           var factory = _swapChain.GetParent<Factory>();
+           factory.MakeWindowAssociation(_renderControl.Handle, WindowAssociationFlags.IgnoreAll);
+
+           //Set right hand convention
+           _rasterizerState = new RasterizerState(_device, new RasterizerStateDescription
+           {
+               CullMode = CullMode.None,
+               FillMode = FillMode.Solid,
+               IsAntialiasedLineEnabled = true,
+               IsFrontCounterClockwise = true,
+               IsMultisampleEnabled = false,
+               IsScissorEnabled = false
+
+           });
+           _device.ImmediateContext.Rasterizer.State = _rasterizerState;
+
+
+
+
+           _needResize = true;
+           _needRedraw = true;
+
+       }
+
+        private class ShaderWatcher : IObserver
+        {
+            private DxControl _dc;
+            public ShaderWatcher(DxControl dc){_dc = dc;}
+            public void Changed() { _dc.ScheduleForRedraw(); }
+        }
+
        public IDxContext GetDxContext() {  return _dx; }
         
+        public T ResolveShader<T>() where T: IShader
+       {
+            foreach(var shader in _shaders)
+            {
+                if (shader.GetType() == typeof(T))
+                {
+                    return shader;
+                }
+            }
+            return this.CreateShader<T>();
+
+       }
        
 
        public void ScheduleForRedraw()
@@ -38,52 +123,7 @@ namespace MDXEngine
            _needRedraw = true;
        }
 
-        private void InitializeDX()
-        {
-            _desc = new SwapChainDescription
-            {
-                BufferCount = 1,
-                ModeDescription =
-                    new ModeDescription(_renderControl.ClientSize.Width, _renderControl.ClientSize.Height,
-                                        new Rational(60, 1), Format.B8G8R8A8_UNorm),
-                IsWindowed = true,
-                OutputHandle = _renderControl.Handle,
-                SampleDescription = new SampleDescription(1, 0),
-                SwapEffect = SwapEffect.Discard,
-                Usage = Usage.RenderTargetOutput
-            };
-
-            Device.CreateWithSwapChain(
-                DriverType.Hardware,
-                DeviceCreationFlags.BgraSupport,
-                _desc,
-                out _device,
-                out _swapChain);
-
-            //Ignore all windows events
-            var factory = _swapChain.GetParent<Factory>();
-            factory.MakeWindowAssociation(_renderControl.Handle, WindowAssociationFlags.IgnoreAll);
-
-            //Set right hand convention
-            _rasterizerState = new RasterizerState(_device, new RasterizerStateDescription
-            {
-                CullMode=CullMode.None,
-                FillMode=FillMode.Solid,
-                IsAntialiasedLineEnabled=true,
-                IsFrontCounterClockwise=true,
-                IsMultisampleEnabled=false,
-                IsScissorEnabled=false
-                
-            });
-            _device.ImmediateContext.Rasterizer.State = _rasterizerState;
-
-
-
-
-            _needResize = true;
-            _needRedraw = true;
-            
-        }
+      
         
         public DeviceContext DeviceContext { get { return _device.ImmediateContext; } }
         
@@ -110,6 +150,8 @@ namespace MDXEngine
             _dx.ResourcesManager = _resourceManager;
             _dx.IsCameraChanged = true;
             _dx.ScreenSize = _renderControl.ClientSize;
+
+            InitializeContainer();
         }
 
         public void  CameraChanged(Camera Camera)
@@ -142,12 +184,11 @@ namespace MDXEngine
 
         }
         
-
-        private class ShaderWatcher : IObserver
+        public T CreateShader<T>() where T: IShader
         {
-            private DxControl _dc;
-            public ShaderWatcher(DxControl dc){_dc = dc;}
-            public void Changed() { _dc.ScheduleForRedraw(); }
+           var shader = _container.Resolve<T>();
+           this.AddShader(shader);
+           return shader;
         }
 
 
