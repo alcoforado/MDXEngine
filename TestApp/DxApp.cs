@@ -26,11 +26,12 @@ namespace TestApp
             Container.RegisterInstance<DxControl>(_control);
             Container.RegisterInstance<MainWindow>(_main);
             Container.RegisterType<IDxContext>(new InjectionFactory(c => this.DxControl.GetDxContext()));
-            Container.RegisterType<IUnityContainer, UnityContainer>();
+            Container.RegisterInstance<IUnityContainer>(this.Container);
             Container.RegisterType<IFactory<IController>, ImplementationFactory<IController>>();
             Container.RegisterType<IDxViewControl, DxControl>();
             Container.RegisterType<MWebBrowser>();
             Container.RegisterType<SecWindow>();
+            Container.RegisterType<IAppStateProvider,MainWindow>();
         }
         
 
@@ -50,10 +51,10 @@ namespace TestApp
             Container = new UnityContainer();
             
             //Create Main Window
-            var menuActionFactory =  new ImplementationFactory<IActionMenu>(Container, (Type t) =>
+            var menuActionFactory =  new ImplementationFactory<IAppState>(Container, (Type t) =>
             {
-                var baseName = t.Name;
-                var result = new List<string>() { baseName, baseName.Replace("Action", ""),baseName.Replace("MenuAction","") };
+                var baseName = t.Name.Replace("Action","").Replace("MenuAction","").Replace("AppState","");
+                var result = new List<string>() { baseName, baseName+"Action",baseName + "MenuAction",baseName + "AppState" };
                 return result.Distinct().ToList();
             });
 

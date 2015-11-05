@@ -16,17 +16,17 @@ namespace TestApp
 
 
 
-    public partial class MainWindow : Form, TestApp.IMainWindow
+    public partial class MainWindow : Form, TestApp.IMainWindow, IAppStateProvider
     {
         //TextBoxStreamWriter _boxWriter;
-        private IActionMenu _currentApp;
-        private IFactory<IActionMenu> _menuActionFactory;
+        private IAppState _currentApp;
+        private IFactory<IAppState> _menuActionFactory;
 
         internal DxApp _dxApp;
         private DxControl _dx;
        
         
-        public MainWindow(IFactory<IActionMenu> menuActionFactory)
+        public MainWindow(IFactory<IAppState> menuActionFactory)
         {
             InitializeComponent();
            // _boxWriter = new TextBoxStreamWriter(textBox1);
@@ -48,7 +48,15 @@ namespace TestApp
             this.SetMenuActions();
 
         }
-
+        public T GetAppState<T> () where T:class,IAppState
+        {
+            var state = _currentApp as T;
+            if (state != null)
+                return state;
+            else
+               throw new Exception(String.Format("Application State {0} is not the current App State",typeof(T).Name));
+        
+        }
 
         public MenuStrip GetMenus()
         {
@@ -67,7 +75,7 @@ namespace TestApp
             _dx.Display();
         }
 
-         internal void SetCurrentApp(IActionMenu app)
+         internal void SetCurrentApp(IAppState app)
         {
             if (_currentApp != null)
                 throw new Exception("Before Assign a new IApp make sure you remove the old one by calling MainWindow.RemoveCurrentApp");

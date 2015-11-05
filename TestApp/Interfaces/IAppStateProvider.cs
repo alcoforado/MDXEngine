@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TestApp
 {
-    public interface IAppState : IDisposable
+    public interface IAppStateProvider
     {
-       
+        T GetAppState<T>() where T : class,IAppState;
     }
 }

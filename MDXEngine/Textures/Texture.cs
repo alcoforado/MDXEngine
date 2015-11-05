@@ -36,6 +36,31 @@ namespace MDXEngine.Textures
             _dx.ResourcesManager.Add(this);
         }
 
+        public Texture(IDxContext dx,Bitmap bp)
+        {
+            if (bp.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new Exception("Only Bitmap with PixelFormat Format32bppArgb is compatible for now");
+            _resource= new Texture2D(dx.Device,new Texture2DDescription()
+                        {
+                            BindFlags = BindFlags.ShaderResource,
+                            Width = bp.Width,
+                            Height = bp.Height,
+                            Usage = ResourceUsage.Default,
+                            Format = SharpDX.DXGI.Format.B8G8R8A8_UNorm_SRgb,
+                            ArraySize = 1,
+                            OptionFlags = ResourceOptionFlags.None,
+                            MipLevels = 1,
+                            CpuAccessFlags = CpuAccessFlags.None,
+                            SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0)
+                        });
+            _view = new ShaderResourceView(dx.Device, _resource);
+            _dx = dx;
+            _dx.ResourcesManager.Add(this);
+            this.CopyFromBitmap(bp);
+        }
+
+
+
         public int Width  { get {return _resource.Description.Width;}}
         public int Height { get { return _resource.Description.Height; } }
      
@@ -45,6 +70,45 @@ namespace MDXEngine.Textures
         {
             _resource.Dispose();
             _view.Dispose();
+            
+        }
+
+        public void CopyFromBitmap(Bitmap bitmap)
+        {
+            if (bitmap.PixelFormat == PixelFormat.Format32bppArgb)
+            {
+
+                var height = Math.Min(_resource.Description.Height, bitmap.Height);
+                var width = Math.Min(_resource.Description.Width, bitmap.Width);
+                int pixelSize = 4;
+                var bitmapData = bitmap.LockBits(
+                new System.Drawing.Rectangle(0, 0, width, height),
+                ImageLockMode.ReadOnly,
+                bitmap.PixelFormat);
+
+                Nullable<ResourceRegion> region = new ResourceRegion
+                {
+                    Left = 0,
+                    Top = 0,
+                    Right = width,
+                    Bottom = height,
+                    Front = 0,
+                    Back = 1
+                };
+
+
+                _dx.DeviceContext.UpdateSubresource(
+                    (Resource)_resource,
+                    0,
+                    region,
+                    bitmapData.Scan0,
+                    bitmapData.Stride,
+                    height * width * pixelSize);
+
+                bitmap.UnlockBits(bitmapData);
+            }
+            else
+                throw new Exception("Only Bitmap with PixelFormat Format32bppArgb is compatible for now");
 
         }
 

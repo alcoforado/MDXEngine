@@ -10,15 +10,21 @@ using TestApp.Models;
 using MDXEngine.SharpDXExtensions;
 using MDXEngine;
 using MDXEngine.Textures.BinPack;
+using TestApp.Actions;
+using MDXEngine.Textures;
+using MDXEngine.Shapes;
+using SharpDX;
+
 namespace TestApp.Controllers
 {
     public class BinPackController : IController
     {
         IDxViewControl _dx;
-
-        public BinPackController(IDxViewControl dx)
+        IAppStateProvider _appStateProvider;
+        public BinPackController(IDxViewControl dx,IAppStateProvider appState)
         {
             _dx = dx;
+            _appStateProvider = appState;
         }
 
         private Bitmap CreateRandomBitmap(Interval Width, Interval Height)
@@ -27,8 +33,8 @@ namespace TestApp.Controllers
             var color = ColorExtension.RandomColor().ToSystemColor();
             using (var g = Graphics.FromImage(result))
             {
-                g.FillRectangle(new SolidBrush(color), new Rectangle(0, 0, result.Width, result.Height));
-                g.DrawRectangle(new Pen(new SolidBrush(Color.White)), new Rectangle(0, 0, result.Width - 1, result.Height - 1));
+                g.FillRectangle(new SolidBrush(color), new System.Drawing.Rectangle(0, 0, result.Width, result.Height));
+                g.DrawRectangle(new Pen(new SolidBrush(System.Drawing.Color.White)), new System.Drawing.Rectangle(0, 0, result.Width - 1, result.Height - 1));
 
             }
             return result;
@@ -56,17 +62,25 @@ namespace TestApp.Controllers
                 new Interval(model.minHeight, model.maxHeight),
                 model.NumElements);
             var binPack = new BinPackAlghorithm(list);
+            var state = _appStateProvider.GetAppState<BinPackAppState>();
+            
+            if (state.Text != null )
+            {
+                state.Text.Dispose();
+                state.Text = null;
+            }
 
-           
-            var shader = _dx.ResolveShader<ShaderTexture2D>(); 
-            shader.
-
-            var texture = new Texture(dx, file);
-
-            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new TextureRegion(texture));
-
-            shaderTexture.Add(shape, texture);
-
+            var bp = binPack.CreateBitmapWithWireframe();
+            bp.Save("Test.png");
+            state.Text = new Texture(_dx.GetDxContext(),bp);
+            var shader = _dx.ResolveShader<ShaderTexture2D>();
+            shader.RemoveAll();
+            
+            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new TextureRegion(state.Text));
+            shader.Add(shape, state.Text);
+            
+            
+            return binPack.Efficiency();
 
         }
 

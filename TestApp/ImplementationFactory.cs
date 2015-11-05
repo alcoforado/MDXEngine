@@ -89,6 +89,9 @@ namespace TestApp
             throw new Exception(String.Format("Could not resolve type for id {0}", name));
         }
 
-
+        public Type GetType(string typeName)
+        {
+            return _typeMapping[typeName];
+        }
     }
 }

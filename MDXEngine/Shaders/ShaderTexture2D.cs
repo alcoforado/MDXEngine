@@ -50,6 +50,10 @@ namespace MDXEngine
             _root.Add(shape,command);
         }
 
+        public void RemoveAll()
+        {
+            _root.RemoveAll();
+        }
 
     }
 }

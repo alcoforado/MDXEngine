@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MDXEngine;
 namespace TestApp.Actions.CubeFractal
 {
-    public class CubeFractal : IActionMenu
+    public class CubeFractal : IAppState
     {
         private DxControl _dx;
         

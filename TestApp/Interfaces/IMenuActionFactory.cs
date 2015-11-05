@@ -8,7 +8,8 @@ namespace TestApp
 {
     public interface IFactory<T>
     {
-        T Resolve(string menuText);
+        T Resolve(string typeName);
+        Type GetType(string typeName);
        
     }
 }

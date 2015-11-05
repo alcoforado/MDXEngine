@@ -103,7 +103,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\BinPackAction.cs" />
+    <Compile Include="Actions\BinPackAppState.cs" />
     <Compile Include="Actions\CubeColor3D.cs" />
     <Compile Include="Actions\ColorTriangle.cs" />
     <Compile Include="Actions\CubeFractal.cs" />
@@ -118,9 +118,13 @@
     <Compile Include="Actions\HelloWorld.cs" />
     <Compile Include="Actions\TextureDisplay.cs" />
     <Compile Include="Array2DDataView.cs" />
+    <Compile Include="Interfaces\IAppStateProvider.cs" />
+    <Compile Include="Interfaces\IAjaxServer.cs" />
     <Compile Include="ImplementationFactory.cs" />
     <Compile Include="Interfaces\IActionMenu.cs" />
     <Compile Include="DxApp.cs" />
+    <Compile Include="Interfaces\IController.cs" />
+    <Compile Include="Interfaces\IControllerSingleton.cs" />
     <Compile Include="Interfaces\IMainWindow.cs" />
     <Compile Include="Interfaces\IMenuActionFactory.cs" />
     <Compile Include="MainWindow.cs">

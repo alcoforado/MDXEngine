@@ -139,10 +139,13 @@ namespace MDXEngine.Textures.BinPack
             return ((double) this.UsedArea())/(this.UsedDims.Height*this.UsedDims.Width);
         }
 
-        public BinPackAlghorithm(List<Bitmap> lst)
+        public BinPackAlghorithm(List<Bitmap> lstBp)
         {
             _root = new BinPackNode(new Rectangle(0, 0, MAX_SIZE, MAX_SIZE));
             UsedDims = new Size(0, 0);
+            var lst = (from element in lstBp
+                      orderby element.Height descending
+                      select element).ToList();
 
             for (int i = 0; i < lst.Count; i++)
             {

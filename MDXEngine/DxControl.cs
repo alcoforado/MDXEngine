@@ -110,13 +110,18 @@ namespace MDXEngine
             {
                 if (shader.GetType() == typeof(T))
                 {
-                    return shader;
+                    return (T) shader;
                 }
             }
-            return this.CreateShader<T>();
-
+           return this.CreateShader<T>();
        }
-       
+
+        public T CreateShader<T>() where T : IShader
+        {
+            var shader = _container.Resolve<T>();
+            this.AddShader(shader);
+            return shader;
+        }
 
        public void ScheduleForRedraw()
        {
@@ -184,12 +189,7 @@ namespace MDXEngine
 
         }
         
-        public T CreateShader<T>() where T: IShader
-        {
-           var shader = _container.Resolve<T>();
-           this.AddShader(shader);
-           return shader;
-        }
+     
 
 
         public void AddShader(IShader shader)

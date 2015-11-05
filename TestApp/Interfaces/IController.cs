@@ -5,9 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TestApp
-{
-    public interface IAppState : IDisposable
+{    public interface IController
     {
-       
+
     }
 }

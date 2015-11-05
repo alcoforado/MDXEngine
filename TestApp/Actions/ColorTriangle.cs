@@ -9,7 +9,7 @@ using MDXEngine.Painters;
 using MDXEngine.Shapes;
 namespace TestApp.Actions
 {
-    public class ColorTriangle : IActionMenu
+    public class ColorTriangle : IAppState
     {
         ShaderColor2D _shaderColor2D;
         

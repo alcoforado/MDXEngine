@@ -75,10 +75,10 @@ import Interop = require('wpf');
             var that = this;
             var data = this.$scope.Data;
 
-            this.$wpf.postSync("/binpack/randomrun", this.$scope.Data);
-            return;
+            
+          
             if (data.numberOfRuns <= 1) {
-                this.RunOnce();
+                that.RunOnce();
             }
             else {
                 var interval = setInterval(function () {
@@ -94,6 +94,8 @@ import Interop = require('wpf');
 
 
         RunOnce() {
+            var d: number = this.$wpf.postSync("/binpack/randomrun", this.$scope.Data);
+            this.$scope.Data.areaUsageValues.push(d*100);
             this.plotEfficiencyGraph(this.$scope.Data.areaUsageValues);
             
             }

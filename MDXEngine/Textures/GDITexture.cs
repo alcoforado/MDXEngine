@@ -115,44 +115,7 @@ namespace MDXEngine.Textures
         }
 
 
-        public void CopyFromBitmap(Bitmap bitmap)
-        {
-            if (bitmap.PixelFormat == PixelFormat.Format32bppArgb)
-            {
-
-                var height = Math.Min(_resource.Description.Height, bitmap.Height);
-                var width = Math.Min(_resource.Description.Width, bitmap.Width);
-                int pixelSize = 4;
-                var bitmapData = bitmap.LockBits(
-                new System.Drawing.Rectangle(0, 0, width, height),
-                ImageLockMode.ReadOnly,
-                bitmap.PixelFormat);
-
-                Nullable<ResourceRegion> region = new ResourceRegion
-                {
-                    Left = 0,
-                    Top = 0,
-                    Right = width,
-                    Bottom = height,
-                    Front = 0,
-                    Back = 1
-                };
-
-
-                _dx.DeviceContext.UpdateSubresource(
-                    (Resource)_resource,
-                    0,
-                    region,
-                    bitmapData.Scan0,
-                    bitmapData.Stride,
-                    height * width * pixelSize);
-
-                bitmap.UnlockBits(bitmapData);
-            }
-            else
-                throw new Exception("Only Bitmap with PixelFormat Format32bppArgb is compatible for now");
-
-        }
+       
 
 
         public void RenderText(String text, TextWriteOptions options)

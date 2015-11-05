@@ -11,6 +11,7 @@ using System.Runtime.Serialization.Json;
 using System.Reflection;
 using System.Web.Script.Serialization;
 using Microsoft.Practices.Unity;
+using TestApp.Interfaces;
 namespace TestApp
 {
 
@@ -51,35 +52,42 @@ namespace TestApp
 
     public class ControllerHandler : IHandler
     {
-        private Object _controller;
+        private Object _controllerCashed;
         private string _controllerId;
         private MethodInfo _method;
         private IFactory<IController> _factory;
-        //If this constructor is used then we will have one instance of the  controller
-        //we execute. The controller will have its state persisted between requests.
-        public ControllerHandler(Object controller, MethodInfo method)
-        {
-            _controller = controller;
-            _method = method;
-
-        }
+        
 
         //If this constructor is used the controller will be created every time
         //we execute. (It is like Asp.NET). Stateless controllers tend to be better code.
         public ControllerHandler(IFactory<IController> factory, string controllerId, MethodInfo method)
         {
+            _controllerCashed = null;
             _controllerId = controllerId;
             _method = method;
             _factory = factory;
-
         }
 
         public Object Execute(string data)
         {
-            var targetController = _controller;
-            if (_controller == null)
+            if (_method.Name == "Dispose" && _method.GetParameters().Count() == 0 && _controllerCashed is IControllerSingleton)
+            {
+                if (_controllerCashed != null)
+                {
+                    ((IControllerSingleton)_controllerCashed).Dispose();
+                    _controllerCashed = null;
+                }
+                return null;
+            }                  
+             
+            var targetController = _controllerCashed;
+            if (_controllerCashed == null)
             {
                 targetController = _factory.Resolve(_controllerId);
+                if (targetController is IControllerSingleton)
+                {
+                    _controllerCashed = targetController;
+                }
             }
 
             if (_method.GetParameters().Count() == 0)
@@ -104,18 +112,13 @@ namespace TestApp
     {
         void RunScript(string functionName, params object[] parameters);
     }
-    public interface IController
-    {
-
-
-    }
-
+   
 
 
 
     [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     [ComVisible(true)]
-    public class MWebBrowserServer
+    public class MWebBrowserServer : TestApp.IAjaxServer 
     {
         Dictionary<string, RouterElement> Router = new Dictionary<string, RouterElement>();
         IBrowserInterface _ibrowser;

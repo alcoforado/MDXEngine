@@ -10,7 +10,7 @@ namespace MDXEngine
 {
     public class DrawTree<T> : Observable, IDisposable where T : struct
     {
-        private readonly NTreeNode<DrawInfo<T>> _ntree;
+        private NTreeNode<DrawInfo<T>> _ntree;
         private T[] _vertices;
         private int[] _indices;
         Buffer _vI;
@@ -165,8 +165,15 @@ namespace MDXEngine
             groupNode.AppendChild(shapeNode);
             _ntree.AppendChild(groupNode);
             shapeNode.ForAllParents(nd => nd.GetData().Changed = true);
+            this.OnChanged();
         }
 
+        public void RemoveAll()
+        {
+            _ntree = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new RootNode()));
+
+        }
+            
 
         public void FullSyncTree()
         {

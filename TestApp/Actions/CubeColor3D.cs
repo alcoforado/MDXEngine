@@ -4,7 +4,7 @@ using MDXEngine.Shapes;
 using SharpDX;
 namespace TestApp.Actions
 {
-    public class CubeColor3D : IActionMenu
+    public class CubeColor3D : IAppState
     {
         ShaderColor3D _shaderColor;
         MouseSphericNavigator _mouseHandler;
