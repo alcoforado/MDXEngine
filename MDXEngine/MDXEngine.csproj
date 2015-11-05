@@ -89,6 +89,10 @@
     <Compile Include="Geometry\Angle.cs" />
     <Compile Include="MMath\Interval.cs" />
     <Compile Include="ShaderSlotsCollection.cs" />
+    <Compile Include="Shaders\Lights\DirectionalLight.cs" />
+    <Compile Include="Shaders\Lights\Material.cs" />
+    <Compile Include="Shaders\Lights\PointLight.cs" />
+    <Compile Include="Shaders\ShaderLight3D.cs" />
     <Compile Include="Shaders\ShaderObservableDock.cs" />
     <Compile Include="Shapes\AnchorSprite.cs" />
     <Compile Include="Shapes\Shape3D.cs" />
@@ -149,8 +153,8 @@
     <Compile Include="MMath\HScore.cs" />
     <Compile Include="Vertex2DArray.cs" />
     <Compile Include="Vertex3DArray.cs" />
-    <Compile Include="VerticeData\VerticeColor.cs" />
-    <Compile Include="VerticeData\VerticeTexture2D.cs" />
+    <Compile Include="Shaders\VerticeData\VerticeColor.cs" />
+    <Compile Include="Shaders\VerticeData\VerticeTexture2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -166,6 +170,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="hlsl\Texture2D.hlsl" />
+    <Content Include="hlsl\Light3D.hlsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

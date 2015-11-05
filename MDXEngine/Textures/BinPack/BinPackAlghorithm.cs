@@ -34,6 +34,7 @@ namespace MDXEngine.Textures.BinPack
                         NodeHasMaximumRight = NodeHasMaximumRight(node),
                         NodeHasMaximumBottom = NodeHasMaximumBottom(node)
                     };
+                    /*
                     if (analysis.NodeHasMaximumBottom)
                     {
                         analysis.SuggestedDecompositionType = Decomposition.Vertical;
@@ -45,6 +46,7 @@ namespace MDXEngine.Textures.BinPack
                         analysis.Horizontal = new DecompositionAnalysis(node, Decomposition.Horizontal, width, height, lst, iStart);
                     }
                     else
+                     */
                     {
                         analysis.Vertical = new DecompositionAnalysis(node, Decomposition.Vertical, width, height, lst, iStart);
                         analysis.Horizontal = new DecompositionAnalysis(node, Decomposition.Horizontal, width, height, lst, iStart);
@@ -89,7 +91,7 @@ namespace MDXEngine.Textures.BinPack
         {
             var result = new HScore();
 
-            if (analysis.NodeHasMaximumBottom || analysis.NodeHasMaximumRight)
+            if (analysis.HorizontalExpansion || analysis.VerticalExpansion) 
             {
                 result
                     .AppendScore(1)
@@ -97,7 +99,8 @@ namespace MDXEngine.Textures.BinPack
             }
             else
             {
-                result.AppendScore(2).AppendScore(Math.Max(analysis.Horizontal.Score, analysis.Vertical.Score));
+
+                result.AppendScore(3).AppendScore(analysis.SuggestedDecompositionType == Decomposition.Horizontal ? analysis.Horizontal.Score : analysis.Vertical.Score);
             }
             return result;
         }
@@ -164,9 +167,6 @@ namespace MDXEngine.Textures.BinPack
                     node.VerticalDecompose(bitmap);
                 }
             }
-
-
-
         }
 
         /// <summary>
