@@ -71,7 +71,7 @@ namespace MDXEngine
             }
         }
 
-        protected void OnChanged()
+        public void OnChanged()
         {
             if (_observers == null)
                 return;

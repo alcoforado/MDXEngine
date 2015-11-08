@@ -24,17 +24,21 @@ namespace MDXEngine
             set { 
                 _data = value;
                 _dataChanged = true;
+                (this.ObservableDock as ObservableDock).OnChanged();
             } 
         }
         
         Buffer _constantBuffer;
+
+        public IObservable ObservableDock { get; set; }
         
-        
-        public CBufferResource(HLSLProgram program)
+        public CBufferResource(IDxContext context)
         {
-           var dx = program.DxContext;
+            var dx = context;
            _constantBuffer = new Buffer(dx.Device, Utilities.SizeOf<T>(), ResourceUsage.Default, BindFlags.ConstantBuffer, CpuAccessFlags.None, ResourceOptionFlags.None, 0);
            _dataChanged = false;
+           ObservableDock = new ObservableDock();
+           
         }
         public bool IsDisposed()
         {

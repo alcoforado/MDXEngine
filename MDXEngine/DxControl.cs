@@ -95,11 +95,11 @@ namespace MDXEngine
 
        }
 
-        private class ShaderWatcher : IObserver
+        private class ShaderWatcher : Observer 
         {
             private DxControl _dc;
             public ShaderWatcher(DxControl dc){_dc = dc;}
-            public void Changed() { _dc.ScheduleForRedraw(); }
+            public override void Changed() { _dc.ScheduleForRedraw(); }
         }
 
        public IDxContext GetDxContext() {  return _dx; }

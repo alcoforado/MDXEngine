@@ -19,7 +19,10 @@ namespace MDXEngine.Textures
         protected SharpDX.Direct3D11.ShaderResourceView _view;
         protected IDxContext _dx;
         
-        protected Texture() { }
+        protected Texture() 
+        {
+            this.ObservableDock = new ObservableDock();
+        }
         protected void InitTexture(IDxContext dx,Texture2DDescription desc) 
         {
             _resource = new Texture2D(dx.Device, desc);
@@ -28,16 +31,22 @@ namespace MDXEngine.Textures
             _dx.ResourcesManager.Add(this);
         }
 
+        public IObservable ObservableDock { get; set; }
+
+
         public Texture(IDxContext dx, string fileName)
         {
             _resource = Texture2D.FromFile<Texture2D>(dx.Device, fileName, ImageLoadInformation.Default);
             _view = new ShaderResourceView(dx.Device, _resource);
             _dx = dx;
             _dx.ResourcesManager.Add(this);
+            this.ObservableDock = new ObservableDock();
+
         }
 
         public Texture(IDxContext dx,Bitmap bp)
         {
+            this.ObservableDock = new ObservableDock();
             if (bp.PixelFormat != PixelFormat.Format32bppArgb)
                 throw new Exception("Only Bitmap with PixelFormat Format32bppArgb is compatible for now");
             _resource= new Texture2D(dx.Device,new Texture2DDescription()
@@ -57,6 +66,7 @@ namespace MDXEngine.Textures
             _dx = dx;
             _dx.ResourcesManager.Add(this);
             this.CopyFromBitmap(bp);
+           
         }
 
 
@@ -106,6 +116,8 @@ namespace MDXEngine.Textures
                     height * width * pixelSize);
 
                 bitmap.UnlockBits(bitmapData);
+                ((ObservableDock) this.ObservableDock).OnChanged();
+
             }
             else
                 throw new Exception("Only Bitmap with PixelFormat Format32bppArgb is compatible for now");

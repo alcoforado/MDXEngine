@@ -69,7 +69,6 @@ namespace MDXEngine
                return _shapeNode; 
             } 
         }
-
          public RootNode RootNode 
         { 
             get 
@@ -79,6 +78,30 @@ namespace MDXEngine
                return _rootNode; 
             } 
         }
+
+        public CommandsSequence GetCommandSequence()
+         {
+            if (HasCommandSequence())
+            {
+                if (IsRootNode())
+                {
+                    return RootNode.Commands;
+                }
+                if (IsShapeGroupNode())
+                {
+                    return ShapeGroupNode.Commands;
+                }
+            }
+            return null;
+
+         }
+
+        public bool  HasCommandSequence()
+         {
+             return (IsShapeGroupNode() && ShapeGroupNode.Commands.Count >= 1) ||
+                 (IsRootNode() && RootNode.Commands.Count >= 1); 
+         }
+
 
         public bool IsShapeGroupNode() { return _shapeGroupNode != null; }
         public bool IsShapeNode() { return _shapeNode != null; }

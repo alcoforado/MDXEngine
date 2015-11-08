@@ -5,6 +5,7 @@ using SharpDX.Direct3D;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using Buffer = SharpDX.Direct3D11.Buffer;
+using System.Collections.Generic;
 
 namespace MDXEngine
 {
@@ -21,6 +22,18 @@ namespace MDXEngine
         public T[] Vertices { get { return _vertices; } }
         public int[] Indices { get { return _indices; } }
 
+        #region private methods
+       
+
+        private void FlagNodeChange(NTreeNode<DrawInfo<T>> node)
+        {
+            node.GetData().Changed = true;
+            node.ForAllParents(nd => nd.GetData().Changed = true);
+        }
+
+
+       
+
         /// <summary>
         /// Get pointer to the root node
         /// </summary>
@@ -30,7 +43,6 @@ namespace MDXEngine
             return new NTreeNodeIterator<DrawInfo<T>>(_ntree);
 
         }
-
         internal void ComputeSizes()
         {
             int offI = 0;
@@ -93,13 +105,6 @@ namespace MDXEngine
 
 
         }
-
-        public void Dispose()
-        {
-            Utilities.Dispose(ref _vI);
-            Utilities.Dispose(ref _vV);
-        }
-
         internal void CopyToDxBuffers(IDxContext context)
         {
             Utilities.Dispose(ref _vI);
@@ -116,7 +121,66 @@ namespace MDXEngine
                 context.DeviceContext.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(_vV, Utilities.SizeOf<T>(), 0));
             }
         }
+        #endregion
 
+        #region Resources Observers Functionality
+
+
+        private Dictionary<CommandsSequence, List<IObserver>> _resourcesObservers;
+        
+        private class ResourceObserver : Observer
+        {
+            NTreeNode<DrawInfo<T>> _node;
+            DrawTree<T> _tree;
+            
+            public ResourceObserver(DrawTree<T> tree, NTreeNode<DrawInfo<T>> node)
+            {
+                _node = node;
+                _tree = tree;
+            }
+            public override void Changed()
+            {
+                _node.GetData().Changed = true;
+                _node.ForAllParents(nd => nd.GetData().Changed = true);
+                _tree.OnChanged();
+            }
+           
+        }
+        
+        internal void AddObserversToResourcesInCommands(NTreeNode<DrawInfo<T>> node)
+        {
+            var cmds = node.GetData().GetCommandSequence();
+            if (cmds == null)
+                return;
+            var lst = cmds.GetAllResources();
+
+            foreach (var rsc in lst)
+            {
+                var obs = new ResourceObserver(this, node);
+                rsc.ObservableDock.AttachObserver(obs);
+                if (_resourcesObservers[cmds] == null)
+                {
+                    _resourcesObservers[cmds] = new List<IObserver>();
+                }
+                _resourcesObservers[cmds].Add(obs);
+            }
+        }
+
+        internal void RemoveAllObservers()
+        {
+            foreach (var lst in _resourcesObservers)
+                foreach (var ob in lst.Value)
+                    ob.Detach();
+            _resourcesObservers = new Dictionary<CommandsSequence, List<IObserver>>();
+        }
+
+#endregion
+        
+        public void Dispose()
+        {
+            Utilities.Dispose(ref _vI);
+            Utilities.Dispose(ref _vV);
+        }
 
 
         public DrawTree(int nVertices = 0, int nIndices = 0)
@@ -125,14 +189,18 @@ namespace MDXEngine
             _ntree = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new RootNode()));
             _vertices = new T[nVertices];
             _indices = new int[nIndices];
+            _resourcesObservers = new Dictionary<CommandsSequence, List<IObserver>>();
         }
-
 
         public RootNode GetRootNode()
         {
             return _ntree.GetData().RootNode;
         }
 
+        public void SetRootCommandsSequence(CommandsSequence commands = null)
+        {
+            _ntree.GetData().RootNode.Commands = commands;
+        }
 
         public void Add(IShape<T> shape, CommandsSequence commands = null)
         {
@@ -159,7 +227,7 @@ namespace MDXEngine
                 }
             }
             //If we reach here, there is no group to add this shape.
-            //Create one]
+            //Create one
             var shapeNode = new NTreeNode<DrawInfo<T>>( new DrawInfo<T>( new ShapeNode<T>(shape)));
             var groupNode = new NTreeNode<DrawInfo<T>>( new DrawInfo<T>( new ShapeGroupNode<T>(shape, commands)));
             groupNode.AppendChild(shapeNode);
@@ -170,11 +238,12 @@ namespace MDXEngine
 
         public void RemoveAll()
         {
+            //Remove all observers
             _ntree = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new RootNode()));
+            RemoveAllObservers();
 
         }
-            
-
+ 
         public void FullSyncTree()
         {
 

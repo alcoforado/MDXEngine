@@ -25,6 +25,15 @@ namespace MDXEngine
             _loadCommands = new Dictionary<string, ResourceLoadCommand>();
         }
 
+        public  List<IShaderResource> GetAllResources()
+        {
+            var result = new List<IShaderResource>();
+            foreach (var elem in _loadCommands)
+            {
+                result.Add(elem.Value.Resource);
+            }
+            return result;
+        }
 
         public void Execute()
         {
@@ -102,7 +111,7 @@ namespace MDXEngine
             return true;
         }
 
-        public CommandsSequence AddLoadCommand(string varName,IShaderResource resource)
+        public CommandsSequence LoadResource(string varName,IShaderResource resource)
         {
             if (!TryAddLoadCommand(varName, resource))
                 throw new Exception("Could not add command to the Sequence");

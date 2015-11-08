@@ -29,7 +29,7 @@ namespace UnitTests
 
             command.TryAddLoadCommand("texture1", texture).Should().BeTrue();
             command.TryAddLoadCommand("texture1", texture).Should().BeTrue();
-            command.AddLoadCommand("texture1", texture);
+            command.LoadResource("texture1", texture);
         }
 
         [TestMethod]
@@ -41,7 +41,7 @@ namespace UnitTests
            
             command.TryAddLoadCommand("texture1", texture1).Should().BeTrue();
             command.TryAddLoadCommand("texture1", texture2).Should().BeFalse();
-            command.Invoking(x=>x.AddLoadCommand("texture1", texture2)).ShouldThrow<Exception>();
+            command.Invoking(x=>x.LoadResource("texture1", texture2)).ShouldThrow<Exception>();
         }
 
 

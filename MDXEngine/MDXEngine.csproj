@@ -88,6 +88,7 @@
     <Compile Include="ITEX.cs" />
     <Compile Include="Geometry\Angle.cs" />
     <Compile Include="MMath\Interval.cs" />
+    <Compile Include="ObservableDock.cs" />
     <Compile Include="ShaderSlotsCollection.cs" />
     <Compile Include="Shaders\Lights\DirectionalLight.cs" />
     <Compile Include="Shaders\Lights\Material.cs" />

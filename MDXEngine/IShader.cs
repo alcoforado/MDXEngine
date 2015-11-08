@@ -10,5 +10,6 @@ namespace MDXEngine
     {
         void Draw(IDxContext dx);
         IObservable ObservableDock { get; } //An IObservable used by observers to attach themselves
+    
     }
 }

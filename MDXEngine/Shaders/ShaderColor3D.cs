@@ -29,7 +29,7 @@ namespace MDXEngine
                         new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0)
                     });
             _drawTree = new DrawTree<VerticeColor>();
-            _worldProj = new CBufferResource<Matrix>(_program);
+            _worldProj = new CBufferResource<Matrix>(_dx);
             Matrix M = Matrix.Identity;
             _worldProj.Data = M;
 
@@ -38,7 +38,7 @@ namespace MDXEngine
             
 
             _drawTree.GetRootNode().Commands = new CommandsSequence(_program)
-                .AddLoadCommand("TViewChange", _worldProj);
+                .LoadResource("TViewChange", _worldProj);
              
              this.ObservableDock = new ShaderObservableDock(_drawTree);
         }

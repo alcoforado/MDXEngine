@@ -11,23 +11,23 @@
 struct VS_IN
 {
 	float4 pos : POSITION;
-	float4 col : COLOR;
+	float4 normal : NORMAL;
 };
 
 struct PS_IN
 {
 	float4 pos : SV_POSITION;
-	float4 col : COLOR;
+	float4 normal: NORMAL;
 };
 
 
 struct DirectionalLight
 {
-	float4 Ambient;
-	float4 Diffuse;
-	float4 Specular;
-	float3 Direction;
-	float Padding;
+	public float4 Ambient;
+	public float4 Diffuse;
+	public float4 Specular;
+	public float3 Direction;
+	public float Padding;
 };
 
 struct  Material
@@ -39,30 +39,86 @@ struct  Material
 };
 
 
-cbuffer cbPerFrame
+cbuffer OneTime
 {
-	DirectionalLight light;
-	
+	DirectionalLight dlight;
 };
 
+cbuffer ManyPerFrame
+{
+	Material mat;
+};
 
 cbuffer TViewChange : register(b2)
 {
 	float4x4 worldViewProj;
+	float4 eyePos;
+	
 };
+
+
+void ComputeDirectionalLight(
+	Material mat,
+	DirectionalLight L,
+	float3 normal, //Normalized surface normal
+	float3 toEye,  //Normalized vector pointing from the surface to the camera eye
+	out float4 ambient,
+	out float4 diffuse,
+	out float4 spec)
+{
+	ambient = float4(0, 0, 0, 0);
+	diffuse = float4(0, 0, 0, 0);
+	spec = float4(0, 0, 0, 0);
+
+	//Ambient Term
+	ambient = mat.Ambient*L.Ambient;
+
+	//lightVector is opposite to the L.Direction
+	float3 lightVector = -L.Direction;
+
+	//diffuse Factor
+	float diffuseFactor = dot(lightVec, normal);
+
+
+	if (diffuseFactor > 0.0f)
+	{
+		float3 v = reflect(L.Direction, normal);
+		float specFactor = pow(max(dot(v, toEye), 0.0f), mat.Specular.W);
+		diffuse = diffuseFactor*mat.Diffuse*L.Diffuse;
+		spec = specFactor*mat.Specular*L.Specular;
+	}
+}
+
+
+
 
 PS_IN VS(VS_IN input)
 {
 	PS_IN output = (PS_IN)0;
 
 	output.pos = mul(worldViewProj, input.pos);
-	output.col = input.col;
+	output.normal = input.normal;
 
 	return output;
 }
 
 float4 PS(PS_IN input) : SV_Target
 {
-	return input.col;
+	//normal interpolation can unormalize normal.
+	//Normalize it now
+	input.normal = normalize(input.normal);
+	float3 toEyeW = normalize(eyePos - input.pos);
+
+	ambient = float4(0, 0, 0, 0);
+	diffuse = float4(0, 0, 0, 0);
+	spec = float4(0, 0, 0, 0);
+
+	float4 A, D, S;
+
+	ComputeDirectionalLight(mat, dlight, input.normal, toEyeW, , A, D, S);
+		
+	float4 litColor = A + D + S;
+	return litColor;
+
 }
 

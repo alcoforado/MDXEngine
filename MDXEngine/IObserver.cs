@@ -13,7 +13,19 @@ namespace MDXEngine
 
     public interface IObserver
     {
+        IObservable Observable { get; set; }
         void Changed();
+        void Detach();
+    }
+
+    public abstract class Observer : IObserver 
+    {
+        public abstract void Changed();
+        public IObservable Observable { get; set; }
+        public void Detach()
+        {
+            Observable.DetachObserver(this);
+        }
     }
 
 }

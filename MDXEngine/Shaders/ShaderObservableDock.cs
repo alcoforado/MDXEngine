@@ -19,7 +19,7 @@ namespace MDXEngine
     public class ShaderObservableDock: IObservable
     {
         IObservable _drawTree;
-
+       
         public ShaderObservableDock(IObservable drawTree)
         {
             _drawTree = drawTree;
@@ -27,7 +27,6 @@ namespace MDXEngine
 
         public  void AttachObserver(MDXEngine.IObserver obs)
         {
-            
             _drawTree.AttachObserver(obs);
         }
         
@@ -36,6 +35,7 @@ namespace MDXEngine
             _drawTree.DetachObserver(obs);
         }
 
+      
        
     }
 }
