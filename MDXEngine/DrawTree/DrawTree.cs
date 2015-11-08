@@ -123,7 +123,7 @@ namespace MDXEngine
         }
         #endregion
 
-        #region Resources Observers Functionality
+ #region Resources Observers Functionality
 
 
         private Dictionary<CommandsSequence, List<IObserver>> _resourcesObservers;
@@ -147,21 +147,25 @@ namespace MDXEngine
            
         }
         
-        internal void AddObserversToResourcesInCommands(NTreeNode<DrawInfo<T>> node)
+        internal void AddObserversToResourcesInNode(NTreeNode<DrawInfo<T>> node)
         {
             var cmds = node.GetData().GetCommandSequence();
             if (cmds == null)
                 return;
             var lst = cmds.GetAllResources();
+            //Delete all observers of the cmds
+            if (_resourcesObservers.ContainsKey(cmds))
+            {
+                _resourcesObservers[cmds].ForEach(x => x.Detach());
+                _resourcesObservers[cmds] = new List<IObserver>();
+            }
+            else
+                _resourcesObservers[cmds] = new List<IObserver>();
 
             foreach (var rsc in lst)
             {
                 var obs = new ResourceObserver(this, node);
                 rsc.ObservableDock.AttachObserver(obs);
-                if (_resourcesObservers[cmds] == null)
-                {
-                    _resourcesObservers[cmds] = new List<IObserver>();
-                }
                 _resourcesObservers[cmds].Add(obs);
             }
         }
@@ -200,6 +204,7 @@ namespace MDXEngine
         public void SetRootCommandsSequence(CommandsSequence commands = null)
         {
             _ntree.GetData().RootNode.Commands = commands;
+            this.AddObserversToResourcesInNode(_ntree);
         }
 
         public void Add(IShape<T> shape, CommandsSequence commands = null)
@@ -215,7 +220,10 @@ namespace MDXEngine
                     if (commands == null || shapeGroup.Commands.CanMerge(commands))
                     {
                         if (commands != null)
+                        {
                             shapeGroup.Commands.TryMerge(commands);
+                            AddObserversToResourcesInNode(node);
+                        }
 
                         //Add the shape in the shape group tree
                         var newNode = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new ShapeNode<T>(shape)));
@@ -232,6 +240,7 @@ namespace MDXEngine
             var groupNode = new NTreeNode<DrawInfo<T>>( new DrawInfo<T>( new ShapeGroupNode<T>(shape, commands)));
             groupNode.AppendChild(shapeNode);
             _ntree.AppendChild(groupNode);
+            AddObserversToResourcesInNode(groupNode);
             shapeNode.ForAllParents(nd => nd.GetData().Changed = true);
             this.OnChanged();
         }

@@ -33,12 +33,8 @@ namespace MDXEngine
             Matrix M = Matrix.Identity;
             _worldProj.Data = M;
 
-
-           
-            
-
-            _drawTree.GetRootNode().Commands = new CommandsSequence(_program)
-                .LoadResource("TViewChange", _worldProj);
+            _drawTree.SetRootCommandsSequence(new CommandsSequence(_program)
+                .LoadResource("TViewChange", _worldProj));
              
              this.ObservableDock = new ShaderObservableDock(_drawTree);
         }
@@ -53,7 +49,7 @@ namespace MDXEngine
             {
                 _worldProj.Data = dx.Camera.GetWorldViewMatrix();
             }
-            _drawTree.Draw(dx);
+            _drawTree.OnChanged(); // Draw(dx);
 
         }
 
@@ -68,5 +64,6 @@ namespace MDXEngine
             Utilities.Dispose(ref _drawTree);
             Utilities.Dispose(ref _program);
         }
+    
     }
 }

@@ -98,8 +98,8 @@ namespace MDXEngine
 
         public bool  HasCommandSequence()
          {
-             return (IsShapeGroupNode() && ShapeGroupNode.Commands.Count >= 1) ||
-                 (IsRootNode() && RootNode.Commands.Count >= 1); 
+             return (IsShapeGroupNode() && ShapeGroupNode.Commands != null && ShapeGroupNode.Commands.Count >= 1) ||
+                 (IsRootNode() && RootNode.Commands != null && RootNode.Commands.Count >= 1); 
          }
 
 
