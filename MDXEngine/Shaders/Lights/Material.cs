@@ -5,8 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MDXEngine.Shaders.Lights
-{
+namespace MDXEngine.Shaders {
     public struct  Material
     {
         Vector4 Ambient;

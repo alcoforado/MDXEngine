@@ -49,8 +49,7 @@ namespace MDXEngine
             {
                 _worldProj.Data = dx.Camera.GetWorldViewMatrix();
             }
-            _drawTree.OnChanged(); // Draw(dx);
-
+            _drawTree.Draw(dx);
         }
 
         public void Add(ITopology topology, IPainter<VerticeColor> painter)

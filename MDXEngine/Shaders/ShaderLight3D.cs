@@ -22,9 +22,10 @@ namespace MDXEngine.Shaders
         
         IDxContext _dx;
         HLSLProgram _program;
-        DrawTree<VerticeColor> _drawTree;
+        DrawTree<VerticeNormal> _drawTree;
         CBufferResource<TViewChange> _worldProj;
         CBufferResource<DirectionalLight> _lights;
+        CBufferResource<Material> _material;
         public IObservable ObservableDock { get; private set; } //An IObservable used by observers to attach themselves
 
         public ShaderLight3D(IDxContext dxContext)
@@ -35,18 +36,16 @@ namespace MDXEngine.Shaders
                         new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
                         new InputElement("NORMAL", 0, Format.R32G32B32A32_Float, 16, 0)
                     });
-            _drawTree = new DrawTree<VerticeColor>();
+            _drawTree = new DrawTree<VerticeNormal>();
             _worldProj = new CBufferResource<TViewChange>(_dx);
             _lights = new CBufferResource<DirectionalLight>(_dx);
-            
-            _worldProj.Data = new TViewChange {
+            _material = new CBufferResource<Material>(_dx); 
+           
+            _worldProj.Data = new TViewChange
+{
              projM=Matrix.Identity,
              eyePos=new Vector4(0)
             };
-
-
-
-
 
             _drawTree.GetRootNode().Commands = new CommandsSequence(_program)
                 .LoadResource("TViewChange", _worldProj)
@@ -59,11 +58,9 @@ namespace MDXEngine.Shaders
         public void SetDirectionalLight(DirectionalLight light)
         {
             _lights.Data = light;
-            
-
         }
 
-        public DrawTree<VerticeColor> Root { get { return _drawTree; } }
+        public DrawTree<VerticeNormal> Root { get { return _drawTree; } }
 
         public void Draw(IDxContext dx)
         {
@@ -77,13 +74,14 @@ namespace MDXEngine.Shaders
                 };
             }
             _drawTree.Draw(dx);
-
         }
 
-        public void Add(ITopology topology, IPainter<VerticeColor> painter)
+        public void Add(ITopology topology, Material mat)
         {
-            var shape = new Shape3D<VerticeColor>(topology, painter);
-            _drawTree.Add(shape);
+            /*
+            var shape = new Shape3D<VerticeNormal>(topology, painter);
+             */
+           // _drawTree.Add(shape);
         }
 
         public void Dispose()

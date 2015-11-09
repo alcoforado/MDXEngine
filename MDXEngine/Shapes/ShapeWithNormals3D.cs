@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace MDXEngine.Shapes
 {
-    public class Shape3D<T> : IShape<T> where T : IPosition
+    public class ShapeWithNormals3D<T> : IShape<T> where T : IPosition, INormal
     {
         ITopology _topology;
         IPainter<T> _renderer;
-        
-        
-       
-        
-        public Shape3D(ITopology topology, IPainter<T> renderer)
+
+
+
+
+        public ShapeWithNormals3D(ITopology topology, IPainter<T> renderer)
         {
             _topology = topology;
             _renderer = renderer;
@@ -32,5 +32,4 @@ namespace MDXEngine.Shapes
 
 
     }
-
 }
