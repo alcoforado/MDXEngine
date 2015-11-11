@@ -98,6 +98,7 @@
     <Compile Include="Shaders\ShaderObservableDock.cs" />
     <Compile Include="Shaders\VerticeData\VerticeNormal.cs" />
     <Compile Include="Shapes\AnchorSprite.cs" />
+    <Compile Include="Shapes\ITopologyNormalProvider.cs" />
     <Compile Include="Shapes\Shape3D.cs" />
     <Compile Include="Shapes\ITopology2D.cs" />
     <Compile Include="MayNotExist.cs" />
@@ -185,7 +186,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\SharpDX.2.6.3\build\SharpDX.targets" Condition="Exists('..\packages\SharpDX.2.6.3\build\SharpDX.targets')" />
   <PropertyGroup>

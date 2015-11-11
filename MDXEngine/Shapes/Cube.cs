@@ -17,10 +17,11 @@ namespace MDXEngine.Shapes
         public Vector3 P1 { get { return _p1; } }
 
 
-        public Cube(Vector3 p0, Vector3 p1)
+        public Cube(Vector3 barycenter, Vector3 dims)
         {
-            _p0 = p0;
-            _p1 = p1;
+            
+            _p0 = barycenter-0.5f*dims;
+            _p1 = barycenter+0.5f* dims; 
         }
 
 
@@ -41,29 +42,29 @@ namespace MDXEngine.Shapes
             vV[7] = new Vector3(_p1[0], _p0[1], _p1[2]);
 
             int i = 0;
-            //front Face
+            //bottom Face
             vI[i++] = 0; vI[i++] = 1; vI[i++] = 2;
             vI[i++] = 0; vI[i++] = 2; vI[i++] = 3;
 
-            //back Face
-            vI[i++] = 4; vI[i++] = 6; vI[i++] = 5;
-            vI[i++] = 4; vI[i++] = 7; vI[i++] = 6;
+            //topface Face
+            vI[i++] = 5; vI[i++] = 4; vI[i++] = 7;
+            vI[i++] = 5; vI[i++] = 7; vI[i++] = 6;
 
             //Left Face
-            vI[i++] = 4; vI[i++] = 5; vI[i++] = 1;
-            vI[i++] = 4; vI[i++] = 1; vI[i++] = 0;
+            vI[i++] = 0; vI[i++] = 4; vI[i++] = 5;
+            vI[i++] = 0; vI[i++] = 5; vI[i++] = 1;
 
             //Right Face
-            vI[i++] = 3; vI[i++] = 2; vI[i++] = 6;
-            vI[i++] = 3; vI[i++] = 6; vI[i++] = 7;
+            vI[i++] = 2; vI[i++] = 7; vI[i++] = 3;
+            vI[i++] = 2; vI[i++] = 6; vI[i++] = 7;
 
-            //top Face
-            vI[i++] = 1; vI[i++] = 5; vI[i++] = 6;
-            vI[i++] = 1; vI[i++] = 6; vI[i++] = 2;
+            //back Face
+            vI[i++] = 2; vI[i++] = 5; vI[i++] = 6;
+            vI[i++] = 2; vI[i++] = 1; vI[i++] = 5;
 
-            //bottom Face
-            vI[i++] = 4; vI[i++] = 0; vI[i++] = 3;
-            vI[i++] = 4; vI[i++] = 3; vI[i++] = 7;
+            //front Face
+            vI[i++] = 0; vI[i++] = 3; vI[i++] = 7;
+            vI[i++] = 0; vI[i++] = 7; vI[i++] = 4;
 
         }
 
