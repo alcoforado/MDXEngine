@@ -107,6 +107,7 @@
     <Compile Include="Actions\CubeColor3D.cs" />
     <Compile Include="Actions\ColorTriangle.cs" />
     <Compile Include="Actions\CubeFractal.cs" />
+    <Compile Include="Actions\LightColor3DAppState.cs" />
     <Compile Include="Actions\WireCube3D.cs" />
     <Compile Include="Controllers\BinPackController.cs" />
     <Compile Include="Dialogs\CubeFractalDialog.cs">
@@ -206,25 +207,30 @@
       <Name>MDXEngine</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="content\typescript\shared\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="content\css\binpack.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="content\css\bootstrap.css" />
+    <Content Include="content\css\lightcolor3d.css" />
     <Content Include="content\html\bin_packing.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="content\html\CubeFractal\CubeFractal.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="content\html\lightcolor3d.html" />
     <Content Include="content\images\radar.svg" />
     <Content Include="content\javascript\angular.js" />
     <Content Include="content\javascript\d3.js" />
-    <Content Include="content\javascript\ember.js" />
     <Content Include="content\javascript\handlebars.js" />
     <Content Include="content\javascript\jquery-2.1.3.js" />
     <Content Include="content\javascript\require.js" />
     <Content Include="content\javascript\require_config.js" />
+    <Content Include="content\javascript\ui-bootstrap.js" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="content\typescript\bin_packing.ts" />
@@ -238,7 +244,9 @@
     <TypeScriptCompile Include="content\typescript\defines\jquery.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\mustache.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\require.d.ts" />
+    <TypeScriptCompile Include="content\typescript\defines\ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\underscore.d.ts" />
+    <TypeScriptCompile Include="content\typescript\lightcolor3d.ts" />
     <TypeScriptCompile Include="content\typescript\linearalgebra.ts" />
     <TypeScriptCompile Include="content\typescript\shapes2d.ts" />
     <TypeScriptCompile Include="content\typescript\svg_plots.ts" />
@@ -257,11 +265,7 @@
   <Target Name="BeforeBuild">
   </Target>
   <ItemGroup>
-    <JavascriptFiles Include="content\javascript\angular.js" />
     <JavascriptFiles Include="content\javascript\ember.js" />
-    <JavascriptFiles Include="content\javascript\handlebars.js" />
-    <JavascriptFiles Include="content\javascript\jquery-2.1.3.js" />
-    <JavascriptFiles Include="content\javascript\require_config.js" />
     <JavascriptFiles Include="content\typescript\CubeFractal\cubefractal.js" />
   </ItemGroup>
   <Target Name="CopyContent" AfterTargets="AfterBuild">

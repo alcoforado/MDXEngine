@@ -10,21 +10,21 @@ using System.Windows.Forms;
 
 namespace TestApp.Actions
 {
-    public class BinPackAppState : IAppState
+    public class LightColor3DAppState : IAppState
     {
 
         public SecWindow _form;
-        public Texture Text { get; set;  }
+        public Texture Text { get; set; }
 
-        public BinPackAppState(IUnityContainer container, IDxViewControl control, MainWindow mainWindow, SecWindow form)
+        public LightColor3DAppState(IUnityContainer container, IDxViewControl control, MainWindow mainWindow, SecWindow form)
         {
             var dx = control.GetDxContext();
-            
-                     
 
 
-            form.Browser.SourceURL = "/content/html/bin_packing.html";
-            form.PositionOnRight(mainWindow,900);
+
+
+            form.Browser.SourceURL = "/content/html/light3d.html";
+            form.PositionOnRight(mainWindow, 900);
             form.Show();
             _form = form;
 
