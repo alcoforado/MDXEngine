@@ -19,7 +19,7 @@ namespace MDXEngine
 
         public int NIndices() {return _topology.NIndices();}
         public int NVertices() { return _topology.NVertices(); }
-        public void Write(IArray<T> vV,IArray<int> vI)
+        public void Write(SubArray<T> vV, IArray<int> vI)
         {
             var vVPos = new Vertex3DArray<T>(vV);
             _topology.Write(vVPos, vI);

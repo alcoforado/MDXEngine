@@ -9,7 +9,7 @@ namespace MDXEngine
     public enum TopologyType { POINTS, LINES, TRIANGLES}
     public interface IShape<T> 
     {
-        void Write(IArray<T> vV,IArray<int> vI);
+        void Write(SubArray<T> vV,IArray<int> vI);
         int  NVertices();
         int  NIndices();
         TopologyType GetTopology();

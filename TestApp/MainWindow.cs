@@ -217,6 +217,11 @@ namespace TestApp
             this.SetCurrentApp(app);
         }
 
+        private void rGBTriangleToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
       
 
       

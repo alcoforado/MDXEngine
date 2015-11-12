@@ -10,39 +10,85 @@ namespace MDXEngine
 {
     public class Vertex3DArray<T> : IArray<Vector3> where T : IPosition
     {
-        IArray<T> _data;
-
-        public Vertex3DArray(IArray<T> data)
-        {
-            this._data = data;
-        }
-
-        public int Length{get {return _data.Length;}}
-
-
-        public void CopyFrom(Vector3[] array)
-        {
-            Debug.Assert(array.Length == this.Length);
-            var len = this.Length;
-            for (int i = 0; i < len; i++)
+       public int start;
+            T[] data;
+            public int size;
+            
+            public Vertex3DArray(T[] data, int start, int size)
             {
-                this[i] = array[i];
+                this.start = start;
+                this.size = size;
+                this.data = data;
             }
-        }
+
+            public Vertex3DArray(T[] data)
+            {
+                this.start = 0;
+                this.size = data.Length;
+                this.data = data;
+            }
+
+            public Vertex3DArray(SubArray<T> sub,int start,int size)
+            {
+                this.start = sub.start + start;
+                this.size = size;
+                this.data = sub.GetData();
+            }
+
+            public Vertex3DArray(SubArray<T> sub)
+            {
+                this.start = sub.start;
+                this.size = sub.size;
+                this.data = sub.GetData();
+            }
 
 
-        public Vector3 this[int index]
-        {
-            get
+
+            public int Length 
             {
-                return _data[index].Position;
+
+                get { return size; } 
+            
             }
-            set
+
+
+            public void CopyFrom(Vector3[] array)
             {
-                var elem = _data[index];
-                elem.Position = value;
-                _data[index] = elem;
+                Debug.Assert(array.Length == this.Length);
+                for (int i=0;i<this.Length;i++)
+                {
+                    this.data[i+start].Position = array[i];
+                }
             }
+
+
+            public void reinit(T[] lst,int start,int size)
+            {
+                Debug.Assert(start + size < lst.Count());
+                this.size = size;
+                this.start = start;
+                this.data = lst;
+            }
+            
+
+
+            public Vector3 this[int index]
+            {
+                get { 
+                    Debug.Assert(index < size,"Index Out Of Range");
+                    Debug.Assert(start+size <= data.Length,"Array Changed");
+                    return data[index + start].Position; 
+                }
+                set {
+                    Debug.Assert(index < size, "Index Out Of Range");
+                    Debug.Assert(start + size <= data.Length, "Array Changed");
+                    data[index+start].Position=value;
+                }
+            }
+
+        
+        
+      
         }
     }
-}
+

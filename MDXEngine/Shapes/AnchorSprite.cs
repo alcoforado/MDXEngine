@@ -38,7 +38,7 @@ namespace MDXEngine.Shapes
             _p += _d;
         }
 
-        public void Write(IArray<VerticeTexture2D> vV, IArray<int> vI)
+        public void Write(SubArray<VerticeTexture2D> vV, IArray<int> vI)
         {
             float width  = (float)_width;
             float height = (float)_height;

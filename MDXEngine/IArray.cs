@@ -11,5 +11,6 @@ namespace MDXEngine
         T this[int index] { get; set; }
         int Length { get; }
         void CopyFrom(T[] array);
+
     }
 }

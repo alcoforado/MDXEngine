@@ -26,7 +26,7 @@ namespace MDXEngine.Shapes
         public int NVertices() { return _topology.NVertices(); }
         public int NIndices() { return _topology.NIndices(); }
         public TopologyType GetTopology() { return _topology.GetTopologyType(); }
-        public void Write(IArray<T> vV, IArray<int> vI)
+        public void Write(SubArray<T> vV, IArray<int> vI)
         {
             var v = new SubArray<Vector3>(new Vector3[NVertices()]);
             var n = new SubArray<Vector3>(new Vector3[NVertices()]);
@@ -39,8 +39,7 @@ namespace MDXEngine.Shapes
             {
                 _topologyNormalProvider.WriteNormalsAtVertices(n);
             }
-
-            
+           
             _renderer.Write(vV, vI, _topology.GetTopologyType());
 
         }

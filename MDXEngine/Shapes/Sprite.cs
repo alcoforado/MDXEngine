@@ -25,7 +25,7 @@ namespace MDXEngine.Shapes
         }
         
         
-        public void Write(IArray<VerticeTexture2D> vV, IArray<int> vI)
+        public void Write(SubArray<VerticeTexture2D> vV, IArray<int> vI)
         {
             vV[0] = new VerticeTexture2D()
             {

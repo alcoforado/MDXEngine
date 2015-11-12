@@ -20,7 +20,7 @@ namespace MDXEngine.Shapes
         public int NVertices(){return _topology.NVertices();}
         public int NIndices() { return _topology.NIndices(); }
         public TopologyType GetTopology() {return _topology.GetTopologyType();}
-        public void Write(IArray<T> vV, IArray<int> vI)
+        public void Write(SubArray<T> vV, IArray<int> vI)
         {
             var vV1 = new Vertex2DArray<T>(vV);
             _topology.Write(vV1, vI);

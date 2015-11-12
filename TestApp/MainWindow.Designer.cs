@@ -77,7 +77,8 @@
             // 
             this.rGBTriangleToolStripMenuItem.Name = "rGBTriangleToolStripMenuItem";
             this.rGBTriangleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.rGBTriangleToolStripMenuItem.Text = "RGB Triangle";
+            this.rGBTriangleToolStripMenuItem.Text = "Color Triangle";
+            this.rGBTriangleToolStripMenuItem.Click += new System.EventHandler(this.rGBTriangleToolStripMenuItem_Click_1);
             // 
             // loadTextureToolStripMenuItem
             // 

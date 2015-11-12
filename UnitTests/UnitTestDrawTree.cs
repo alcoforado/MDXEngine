@@ -272,8 +272,8 @@ namespace UnitTests
         [TestMethod]
         public void DrawTree_FullSyncTreeOfJustOneIndexedShapeShouldPassIndicesAndVerticesArraysOfCorrectSize()
         {
-            this.mShapeI5V3.Setup(x => x.Write(It.IsAny<IArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()))
-                .Callback( (IArray<ColorVerticeData> v, IArray<int> i) =>
+            this.mShapeI5V3.Setup(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()))
+                .Callback((SubArray<ColorVerticeData> v, IArray<int> i) =>
                 {
                     i.Length.Should().Be(5);
                     v.Length.Should().Be(3);
@@ -282,14 +282,14 @@ namespace UnitTests
             var tree = new DrawTree<ColorVerticeData>();
             tree.Add(mShapeI5V3.Object);
             tree.FullSyncTree();
-            mShapeI5V3.Verify(x => x.Write(It.IsAny<IArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()));
+            mShapeI5V3.Verify(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<SubArray<int>>()));
         }
 
         [TestMethod]
         public void DrawTree_FullSyncTreeOfJustOneIndexedShapeShouldCopyShapeIndices()
         {
-            this.mShapeI5V3.Setup(x => x.Write(It.IsAny<IArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()))
-                .Callback((IArray<ColorVerticeData> v, IArray<int> i) =>
+            this.mShapeI5V3.Setup(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()))
+                .Callback((SubArray<ColorVerticeData> v, IArray<int> i) =>
                 {
                     i[0]=0;
                     i[1]=1;
@@ -302,14 +302,14 @@ namespace UnitTests
             tree.Add(mShapeI5V3.Object);
             tree.FullSyncTree();
             tree.Indices.Should().Equal(new int[]{0,1,2,3,4},(int left,int right) => left==right);
-            mShapeI5V3.Verify(x => x.Write(It.IsAny<IArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()));
+            mShapeI5V3.Verify(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()));
         }
 
         [TestMethod]
         public void DrawTree_FullSyncTreeOfJustOneIndexedShapeShouldCopyShapeVertices()
         {
-            this.mShapeI5V3.Setup(x => x.Write(It.IsAny<IArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()))
-                .Callback((IArray<ColorVerticeData> v, IArray<int> i) =>
+            this.mShapeI5V3.Setup(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()))
+                .Callback((SubArray<ColorVerticeData> v, IArray<int> i) =>
                 {
                     ColorVerticeData aux = new ColorVerticeData();
                     
@@ -334,7 +334,7 @@ namespace UnitTests
             };
 
             tree.Vertices.Should().Equal(result, (left,right) => left.Position == right.Position);
-            mShapeI5V3.Verify(x => x.Write(It.IsAny<IArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()));
+            mShapeI5V3.Verify(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()));
         }
 
 

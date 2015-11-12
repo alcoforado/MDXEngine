@@ -14,6 +14,9 @@ namespace MDXEngine
             T[] data;
             public int size;
             
+
+            internal T[] GetData(){return data;}
+
             public SubArray(T[] data, int start, int size)
             {
                 this.start = start;
