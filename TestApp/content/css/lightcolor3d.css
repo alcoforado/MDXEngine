@@ -9,6 +9,16 @@ html,body {
     background: #3C3C3C;
 }
 
+input {
+    background: #3E3E3E;
+    border-color: #565555;
+}
+
+.view-panel
+{
+    padding-left: 10px;
+    display:block;
+}
 
 .text-container h1 {
     text-align: center;
@@ -58,6 +68,7 @@ html,body {
 
 .span-label {
     display:inline-block;
+    width: 66px;
     text-align:left;
 }
 
@@ -72,21 +83,241 @@ html,body {
 {
     color: white;
     display:inline-block;
-    width: 220px;
-    background: #0C0C58;
-    border-color: rgb(79, 83, 160);
+    width: 353px;
+    background: #2E2E35;
+    border-color: rgb(2, 5, 58);
     border: 6px solid #7F7F84;
     animation-name: fadein;
-    font-size: 13px;
+    font-size: 15px;
     animation-duration: 1s;
     transition: transform 0.1s
 
-}
-.main-form:hover {
-     transform: scale(1.1) translate(10px,0);
-     transition:transform 0.1s;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
+
 
 .efficiency-graph-container
 {
@@ -94,8 +325,6 @@ html,body {
     background-color:white;
     width: 545px;
     height: 369px;
-    vertical-align:
-
 
 }
 .centralize

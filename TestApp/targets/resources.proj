@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <TemplateFiles Include="$(MSBuildProjectDirectory)\..\content\html\templates\*.*" />
+  </ItemGroup>
+  <Target Name="Build" Inputs="@(TemplateFiles)" Outputs="$(MSBuildProjectDirectory)\..\content\typescript\templates.ts">
+    <Message Text="Building html templates as resources in template.ts" />
+    <Message Text="Command is $(MSBuildProjectDirectory)\..\..\ResourceBuilder\bin\Debug  --classname=templates -sourceDir=$(MSBuildProjectDirectory)\..\content\html\templates  WorkingDirectory=$(MSBuildProjectDirectory)\..\content\typescript"/>
+    <Exec Command="$(MSBuildProjectDirectory)\..\..\ResourceBuilder\bin\Debug\ResourceBuilder.exe --classname=templates  --language=typescript -sourceDir=$(MSBuildProjectDirectory)\..\content\html\templates"  WorkingDirectory="$(MSBuildProjectDirectory)\..\content\typescript"/>
+  </Target>
+</Project>

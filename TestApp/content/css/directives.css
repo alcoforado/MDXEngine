@@ -1,0 +1,62 @@
+﻿.vector-picker {
+    width: 100px;
+    height:  100px;
+    border-radius: 50px;
+    background: url("../images/clock_pointer.svg") no-repeat center center;
+    background-size: 100%;
+    border: 3px solid white;
+    margin-bottom: 10px;
+    
+}
+
+.norm-pane {
+    margin: 10px 0px 10px 0px;
+    text-align: center;
+
+}
+
+.norm-pane span {
+    margin-right: 10px;
+}
+
+.norm-pane input[type=number] {
+    width:100px;
+}
+
+
+.circle-background {
+    width: 100px;
+    height:  100px;
+    position:absolute;
+    background: url("../images/xy_axis.svg") no-repeat center center;
+    position:absolute;
+    background-size: 100%;
+  
+}
+
+.circle-background-xyz {
+    width: 100px;
+    height:  100px;
+    position:absolute;
+    background: url("../images/xyz_axis.svg") no-repeat center center;
+    position:absolute;
+    background-size: 100%;
+}
+
+.screen-container {
+    background-color: rgba(0,0,0,0);
+    z-index: 100;
+    margin-bottom: 10px;
+}
+
+.left-pane {
+    display:inline-block;
+    width: 49%;
+    position: relative;
+}
+
+.right-pane {
+    display:inline-block;
+    width: 49%;
+    position: relative;
+}

@@ -349,6 +349,7 @@ declare module angular {
          */
         directive(name: string, inlineAnnotatedFunction: any[]): IModule;
         directive(object: Object): IModule;
+        directive(name: string, dir: IDirective);
         /**
          * Register a service factory, which will be called to return the service instance. This is short for registering a service where its provider consists of only a $get property, which is the given service factory function. You should use $provide.factory(getFn) if you do not need to configure your service in a provider.
          *

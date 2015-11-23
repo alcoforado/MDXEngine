@@ -8,6 +8,7 @@
 
 import la = require("linearalgebra");
 import angular = require("angular");
+import directives = require("directives");
 import Interop = require('wpf');
 import ui_bootstrap = require('ui-bootstrap');
 var d = typeof ui_bootstrap;
@@ -35,9 +36,16 @@ class Ctrl {
         $scope.Data = new Data(50, 10, 100, 10, 100);
     }
 }
+class Test {
+    constructor() { }
+}
+
+
+
 var app = angular.module('app', ['ui.bootstrap']);
 app.controller('Ctrl', Ctrl);
 app.service('$wpf', Interop.Wpf);
+directives.RegisterDirectives(app);
 var $html = angular.element(document.getElementsByTagName('html')[0]);
 angular.element().ready(function () {
     angular.bootstrap(document, ['app']);

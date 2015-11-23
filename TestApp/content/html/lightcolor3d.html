@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="../css/bootstrap.css">
    
     <link rel="stylesheet" href="../css/lightcolor3d.css">
+    <link rel="stylesheet" href="../css/directives.css">
 
     <!--<script src="javascript/effects.js"></script>-->
     <script data-main="../javascript/require_config" src="../javascript/require.js"></script>
@@ -37,20 +38,105 @@
     <br />
     <br />
 
+    <div class="view-panel">
+        <uib-tabset>
+            <uib-tab ng-repeat="tab in tabs" heading="hello" active="tab.active" disable="tab.disabled">
+            </uib-tab>
+            <uib-tab>
+                <uib-tab-heading>
+                    Lights
+                </uib-tab-heading>
+                
 
-    <uib-tabset>
-        <uib-tab heading="Static title">Static content</uib-tab>
-        <uib-tab ng-repeat="tab in tabs" heading="hello" active="tab.active" disable="tab.disabled">
-            Caramba
-        </uib-tab>
-        <uib-tab >
-            <uib-tab-heading>
-                <i class="glyphicon glyphicon-bell"></i> Alert!
-            </uib-tab-heading>
-            I've got an HTML heading, and a select callback. Pretty cool!
-        </uib-tab>
-    </uib-tabset>
 
+
+                <form class="main-form round-panel">
+                    <div class="title center-text">
+                        <h1>Direction Light</h1>
+                    </div>
+                    <div class="form-row">
+                        <span class="span-label">Direction:</span> <input ng-model="Data.NumElements" type="number" min="0" max="99999" value="" />
+                    </div>
+                    <div class="form-row">
+                        <span class="span-label">Color:
+                        </span> 
+                        <input  type="color"  />
+                    </div>
+                   
+                    <vector-picker></vector-picker>
+                    <div class="group-form">
+                        <div>Width</div>
+                        <div>   <span>Min </span><input type="number" value="" ng-model="Data.minWidth" /> <span> Max </span><input ng-model="Data.maxWidth" type="number" value="" /></div>
+                    </div>
+                    <div class="group-form">
+                        <div>Height</div>
+                        <div>   <span>Min </span><input type="number" value="" ng-model="Data.minHeight" /> <span> Max </span><input ng-model="Data.maxHeight" type="number" value="" /></div>
+                    </div>
+
+                    <div class="center-text" ng-click="controller.Run()">
+                        <div class="round-button">
+                            Run Simulation
+                        </div>
+                    </div>
+
+                    <div class="center-text" ng-show="Data.rectList.length != 0" ng-click="controller.RunAgain()">
+                        <div class="round-button">
+                            Run Again
+                        </div>
+                    </div>
+
+
+                </form>
+                
+            </uib-tab>
+            <uib-tab heading="Camera">
+
+                <form class="main-form round-panel">
+                    <div class="title center-text">
+                        <h1>Rectangles Random Generation</h1>
+                    </div>
+                    <div class="form-row">
+                        <span class="span-label">Number of Elements:</span> <input ng-model="Data.NumElements" type="number" min="0" max="99999" value="" />
+                    </div>
+                    <div class="form-row">
+                        <span class="span-label">Number of Runs:</span> <input ng-model="Data.numberOfRuns" type="number" min="1" max="99999" value="" />
+                    </div>
+                    <div class="form-row">
+                        <span class="span-label">Rotate Rectangles:</span> <input ng-model="Data.rotate" type="checkbox" />
+                    </div>
+
+
+                    <div class="group-form">
+                        <div>Width</div>
+                        <div>   <span>Min </span><input type="number" value="" ng-model="Data.minWidth" /> <span> Max </span><input ng-model="Data.maxWidth" type="number" value="" /></div>
+                    </div>
+                    <div class="group-form">
+                        <div>Height</div>
+                        <div>   <span>Min </span><input type="number" value="" ng-model="Data.minHeight" /> <span> Max </span><input ng-model="Data.maxHeight" type="number" value="" /></div>
+                    </div>
+
+                    <div class="center-text" ng-click="controller.Run()">
+                        <div class="round-button">
+                            Run Simulation
+                        </div>
+                    </div>
+
+                    <div class="center-text" ng-show="Data.rectList.length != 0" ng-click="controller.RunAgain()">
+                        <div class="roun
+                        <div class="round-button">
+                            -b
+                            Run Again
+                        </div>
+                    </div>
+
+
+                </form>
+
+
+            </uib-tab>
+
+        </uib-tabset>
+    </div>
     <!--<form class="main-form round-panel">
         <div class="title center-text">
             <h1>Rectangles Random Generation</h1>

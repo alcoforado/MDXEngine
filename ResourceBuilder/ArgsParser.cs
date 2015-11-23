@@ -13,6 +13,7 @@ namespace ResourceBuilder
         public string ClassName { get; set; }
         public string DirSource { get; set; }
         public string Namespace { get; set; }
+        public string Language { get; set; }
         public bool DisplayHelp { get; set; }
         public string ErrorMessage { get; private set; }
         private OptionSet _optionSet { get; set; }
@@ -25,20 +26,21 @@ namespace ResourceBuilder
             .Add("h", "Display Help Message", option => DisplayHelp = true)
             .Add("namespace=", "Namespace of the resource class to be created", option => Namespace = option)
             .Add("classname=", "Name of the resource class", option => ClassName = option)
-            .Add("sourceDir=", "Name of the directory containing the files to be stringified and added to the resource class, only files in that directory will be added, it is non recursive", option => DirSource = option);
-
+            .Add("sourceDir=", "Name of the directory containing the files to be stringified and added to the resource class, only files in that directory will be added, it is non recursive", option => DirSource = option)
+            .Add("language=","language you want to generate code. Possible values are  C# and Typescript",Option=> Language = Option);
             var writer = new StringWriter();
             _optionSet.WriteOptionDescriptions(writer);
             HelpMessage = @"
 Usage is
-ResourceBuilder --namespace=[NameSpace] --classname=[ClassName] --sourceDir=[dir]
+ResourceBuilder --namespace=[NameSpace] --classname=[ClassName] --sourceDir=[dir] --language=[typescript,c#]
 
 " + writer.ToString();
 
             try
             {
+                Language = "c#";
                 _optionSet.Parse(args);
-                
+               
                 if (ClassName == null)
                 {
                     ErrorMessage = "Error: ClassName parameter was not supplied" + "\n" + HelpMessage;
@@ -52,7 +54,10 @@ ResourceBuilder --namespace=[NameSpace] --classname=[ClassName] --sourceDir=[dir
                 {
                     ErrorMessage = "Directory does not exist" + "\n" + HelpMessage;
                 }
-
+                if (Language != "c#" && Language !="typescript")
+                {
+                    ErrorMessage = "Only Languages supported for now are c# and typescript";
+                }
 
                 if (Namespace == null)
                     Namespace = "";

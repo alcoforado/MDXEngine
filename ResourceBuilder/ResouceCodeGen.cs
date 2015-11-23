@@ -46,6 +46,47 @@ namespace {0}
 
 
         }
+
+
+
+        public void GenerateTypescript(string ClassName,string DirSource,TextWriter writer)
+        {
+            var dir = new DirectoryInfo(DirSource);
+            if (!dir.Exists)
+                throw new Exception("Directory does not exist");
+
+
+            /*Write the header
+            writer.WriteLine(String.Format(@"
+export class {0}
+{{
+",  ClassName));
+            */
+
+            //for all files in DirSource directory
+            foreach (var file in dir.GetFiles())
+            {
+                string memberName = file.Name.Split('.')[0];
+
+                var fs = file.OpenText();
+                string text = fs.ReadToEnd();
+                text = text.Replace("'", "\\'");
+                text = text.Replace("\r\n", "\n");
+                text = text.Replace("\n", "\\\n");
+
+                text = "export var "  + memberName + ":string ='\\\n" + text + "';\n";
+                writer.WriteLine(text);
+            }
+
+//            //Close braces
+//            writer.WriteLine(@"
+//    }
+//");
+
+
+
+
+        }
     }
 }
     

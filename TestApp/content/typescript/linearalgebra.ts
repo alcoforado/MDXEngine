@@ -19,6 +19,8 @@
         return this[1];
     }
 
+
+
     toPrecision(p: number): Vec2 {
         var a = [1.0, 1.0];
         return new Vec2([parseFloat(this[0].toPrecision(p)), parseFloat(this[1].toPrecision(p))]);
@@ -55,8 +57,10 @@
         return this;
 
     }
-    
-   
+
+    hyp(): number {
+       return  Math.sqrt(this[0] * this[0] + this[1] * this[1]);
+    }
 
     add(x: Vec2): Vec2 {
         var result = new Vec2();
@@ -70,6 +74,19 @@
         result[0] = this[0] - x[0];
         result[1] = this[1] - x[1];
         return result;
+    }
+
+    angleRad(): number {
+        var angle = Math.acos(this[0] / this.hyp());
+        if (this[1] < 0.0) {
+            angle = 2 * Math.PI - angle;
+        }
+        return angle;
+    }
+
+    angleDeg(): number {
+        var rad = this.angleRad();
+        return rad * 180.0 / Math.PI;
     }
 
    

@@ -1,0 +1,24 @@
+export var vectorpicker:string ='\
+\
+<div class="screen-container">\
+\
+    <div class="left-pane">\
+        <div class="circle-background"/>\
+        <div id="xy" class="vector-picker"/>\
+        <span>Angle: </span><input  ng-model="RotXY" type="number" min="0" max="99999" value="" />\
+    </div>\
+\
+    <div class="right-pane">\
+        <div class="circle-background-xyz" />\
+        <div id="xyz" class="vector-picker">\
+        </div>\
+        <span>Angle: </span><input  ng-model="RotXYZ" type="number" min="0" max="99999" value="1" />\
+    </div>\
+    <br />\
+    <div class="norm-pane">\
+        <span>Norm: </span><input ng-model="RotXYZ" type="number" size="10" min="0" max="99999" value="1" />\
+    </div>\
+</div>';
+
+
+

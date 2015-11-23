@@ -4033,7 +4033,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: relative;
   display: block;
   padding: 10px 15px;
-  color: #8C8C8C;
+  color: #797979;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -4066,11 +4066,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   max-width: none;
 }
 .nav-tabs {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 5px solid #636060;
 }
 .nav-tabs > li {
   float: left;
   margin-bottom: -1px;
+  position: relative;
+  top: 5px;
+  border-bottom: 5px solid #636060;
 }
 .nav-tabs > li > a {
   margin-right: 2px;
@@ -4078,14 +4081,23 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
  
 }
 .nav-tabs > li > a:hover {
-  
+  color: #999999
 }
+
+.nav-tabs > li.active {
+    border-bottom: 5px solid white;
+    background: url("../images/triangle.svg") no-repeat center bottom;
+    background-size: 10px;
+    transition : border 500ms linear,background-color 500ms linear;
+    
+
+}
+
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: white;
+  color:  white;
   cursor: default;
- 
 }
 .nav-tabs.nav-justified {
   width: 100%;
@@ -4175,6 +4187,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .nav-justified > li > a {
     margin-bottom: 0;
   }
+}
+
+.tab-content {
+    padding-top: 10px;
 }
 .nav-tabs-justified {
   border-bottom: 0;
