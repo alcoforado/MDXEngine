@@ -1,24 +1,33 @@
 export var vectorpicker:string ='\
 \
-<div class="screen-container">\
+<div class="vector-input-container">\
+    <input class="vector-input" type="text" ng-model="vector0" />\
+    <input class="vector-input" type="text" ng-model="vector1" />\
+    <input class="vector-input" type="text" ng-model="vector2" />\
+    <div class="dialog-button" ng-click="displayDialog()"></div>\
 \
-    <div class="left-pane">\
-        <div class="circle-background"/>\
-        <div id="xy" class="vector-picker"/>\
-        <span>Angle: </span><input  ng-model="RotXY" type="number" min="0" max="99999" value="" />\
-    </div>\
-\
-    <div class="right-pane">\
-        <div class="circle-background-xyz" />\
-        <div id="xyz" class="vector-picker">\
+    <div class="screen-container" ng-show="showDialog">\
+        <div class="left-pane">\
+            <div class="circle-background" />\
+            <div id="xy" class="vector-picker" />\
+            <span>Angle: </span><input ng-model="RotXY" type="number" min="0" max="99999" value="" />\
         </div>\
-        <span>Angle: </span><input  ng-model="RotXYZ" type="number" min="0" max="99999" value="1" />\
+\
+        <div class="right-pane">\
+            <div class="circle-background-xyz" />\
+            <div id="xyz" class="vector-picker">\
+            </div>\
+            <span>Angle: </span><input ng-model="RotXYZ" type="number" min="0" max="99999" value="1" />\
+        </div>\
+        <br />\
+        <div class="norm-pane">\
+            <span>Norm: </span><input ng-model="norm" type="number" size="10" min="0" max="99999" value="1" />\
+        </div>\
+        <div class="float-right">\
+            <div class="button-flat" ng-click="hideDialog()">Ok</div>\
+        </div>\
     </div>\
-    <br />\
-    <div class="norm-pane">\
-        <span>Norm: </span><input ng-model="RotXYZ" type="number" size="10" min="0" max="99999" value="1" />\
-    </div>\
-</div>';
-
+</div>\
+';
 
 

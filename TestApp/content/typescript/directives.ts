@@ -13,6 +13,14 @@ interface IVectorPickerScope extends ng.IScope {
     RotXYZ: number;
     CssRotXYZ: number;
     CssRotXY: number;
+    norm: number;
+    vector0: number;
+    vector1: number;
+    vector2: number;
+    showDialog: boolean;
+    displayDialog(ev: any);
+    hideDialog(ev:any);
+
 }
 
 export class VectorPicker implements angular.IDirective
@@ -24,6 +32,17 @@ export class VectorPicker implements angular.IDirective
 
     scope: any;
 
+
+    updateInput(scope: IVectorPickerScope) {
+        scope.vector2 = Math.cos(scope.RotXYZ) * scope.norm;
+        scope.vector1 = Math.sin(scope.RotXYZ) * scope.norm * Math.sin(scope.RotXY);
+        scope.vector0 = Math.sin(scope.RotXYZ) * scope.norm * Math.cos(scope.RotXY);
+    }
+/*
+    updateDialog(scope: IVectorPickerScope) {
+        var xy = 
+    }
+    */
     //scope: any;
     constructor()
     {
@@ -31,7 +50,6 @@ export class VectorPicker implements angular.IDirective
         this.template = templates.vectorpicker;
         this.scope = true;
         
-       
         this.link = (scope: IVectorPickerScope, element: ng.IAugmentedJQuery, attributes: ng.IAttributes) =>
        {
            var dim = 100;
@@ -45,7 +63,15 @@ export class VectorPicker implements angular.IDirective
            scope.RotXYZ = 0;
            scope.CssRotXYZ = 0;
            scope.CssRotXY = 0;
+           scope.norm = 1;
+           scope.showDialog = false;
 
+           scope.displayDialog = (ev:any) => {
+               scope.showDialog = true;
+           }
+           scope.hideDialog = (ev: any) => {
+               scope.showDialog = false;
+           }
 
            scope.$watch('RotXY',(newValue:number,oldValue:number,scope:IVectorPickerScope) => {
                var rotxy = scope.RotXY;
@@ -59,7 +85,20 @@ export class VectorPicker implements angular.IDirective
                xyz.css('transform', "rotate(" + scope.CssRotXYZ + "deg)");
            });
 
+           var re = new RegExp("<\\d+.(?=\\d{1,3}),\\d+.(?=\\d{1,3}),\\d+.(?=\\d{1,3})>");
 
+           element[0].addEventListener("mousewheel", function (ev: any) {
+               if (ev.wheelDelta > 0) {
+                   scope.norm *= 1.1;
+                   scope.$apply();
+               }
+               else if (ev.wheelDelta < 0) {
+                   scope.norm *= 0.9;
+                   scope.$apply();
+               }
+               ev.preventDefault();
+                
+           });
            xy.on('mousedown',(event: JQueryEventObject) => {
                var v = new la.Vec2([event.offsetX, event.offsetY]);
                var o = new la.Vec2([dim / 2.0, dim / 2.0]);

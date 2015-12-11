@@ -36,7 +36,6 @@
 
     clone(): Vec2 {
         return new Vec2([this[0], this[1]]);
-
     }
 
     fdec(v:Vec2): Vec2 {
@@ -188,6 +187,17 @@ export class Vec3 {
         result[2] = this[2] - x[2];
         return result;
     }
+
+    //return <r,theta,alpha>, theta is the angle between xy, alpha, between z and the projection of the vector in the xy plane.
+    //All angles are in radians e = 90 - theta
+    toSpheric(): Vec3 {
+        var result = new Vec3();
+        var xy = Math.sqrt(this[0]*this[0] + this[1]*this[1])
+        result[0] = this.norm();
+        result[1] = this[1] > 0 ? Math.acos(this[0] / xy) : (Math.PI - (Math.acos(this[0] / xy)));
+        result[2] = Math.acos(this[2]/result[0])
+    }
+
 }
 
 
@@ -577,9 +587,6 @@ export class Segment2D {
 
         var vM = this.midpoint();
         return new Segment2D(vM.add(vS), vM.sub(vS));
-
-
-
     }
 
 }

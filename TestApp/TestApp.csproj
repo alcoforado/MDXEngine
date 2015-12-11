@@ -232,6 +232,7 @@
     <Content Include="content\images\direction_selector.svg">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="content\images\menu-icon.svg" />
     <Content Include="content\images\radar.svg" />
     <Content Include="content\images\xyz_axis.svg" />
     <Content Include="content\images\xy_axis.svg" />
