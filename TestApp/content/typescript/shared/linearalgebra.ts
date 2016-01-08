@@ -1,4 +1,20 @@
-﻿export class Vec2 {
+﻿
+
+export class Angle {
+    
+    static toRad(deg: number):number {
+        return deg % 360 * Math.PI / 180.0;
+    }
+
+    static toDeg(rad: number): number {
+        return (rad / Math.PI * 180) % 360;
+    }
+
+
+
+}
+
+export class Vec2 {
     0: number;
     1: number;
 
@@ -19,7 +35,7 @@
         return this[1];
     }
 
-
+    
 
     toPrecision(p: number): Vec2 {
         var a = [1.0, 1.0];
@@ -188,15 +204,25 @@ export class Vec3 {
         return result;
     }
 
-    //return <r,theta,alpha>, theta is the angle between xy, alpha, between z and the projection of the vector in the xy plane.
-    //All angles are in radians e = 90 - theta
+    //return <r,theta,alpha>, theta is the angle between x and y, alpha, between z and the projection of the vector in the xy plane.
+    //All angles are in radians e
     toSpheric(): Vec3 {
         var result = new Vec3();
         var xy = Math.sqrt(this[0]*this[0] + this[1]*this[1])
         result[0] = this.norm();
         result[1] = this[1] > 0 ? Math.acos(this[0] / xy) : (Math.PI - (Math.acos(this[0] / xy)));
-        result[2] = Math.acos(this[2]/result[0])
+        result[2] = Math.acos(this[2] / result[0]);
+        return result;
     }
+
+    fromSphericToCartesian(): Vec3 {
+        var result = new Vec3();
+        result[0] = this[0] * Math.cos(this[1]) * Math.sin(this[2]);
+        result[1] = this[0] * Math.sin(this[1]) * Math.sin(this[2]);
+        result[2] = this[0] * Math.cos(this[2]);
+        return result;
+    }
+
 
 }
 

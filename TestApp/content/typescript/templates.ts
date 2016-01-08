@@ -1,9 +1,9 @@
 export var vectorpicker:string ='\
 \
 <div class="vector-input-container">\
-    <input class="vector-input" type="text" ng-model="vector0" />\
-    <input class="vector-input" type="text" ng-model="vector1" />\
-    <input class="vector-input" type="text" ng-model="vector2" />\
+    <input class="vector-input" type="number" ng-model="vector.X" />\
+    <input class="vector-input" type="number" ng-model="vector.Y" />\
+    <input class="vector-input" type="number" ng-model="vector.Z" />\
     <div class="dialog-button" ng-click="displayDialog()"></div>\
 \
     <div class="screen-container" ng-show="showDialog">\

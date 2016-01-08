@@ -6,7 +6,9 @@
         call: string;
         success: (result: any) => void;
 
-    }
+}
+
+
     export interface RequestWaitForEach<T> {
         data: (elem:T,index:number) => any;
         error: (message: Array<string>,elem:T,index:number) => void;

@@ -1,41 +1,40 @@
 ﻿/// <reference path="./defines/jquery.d.ts" />
 /// <reference path="./defines/angular.d.ts" />
 /// <reference path="./defines/custom.d.ts" />
-/// <reference path="./linearalgebra.ts" />
-/// <reference path="./svg_plots.ts" />
-/// <reference path="./wpf.ts" />
+/// <reference path="./shared/linearalgebra.ts" />
+/// <reference path="./shared/svg_plots.ts" />
+/// <reference path="./shared/wpf.ts" />
 /// <reference path="./defines/ui-bootstrap.d.ts"/>
+/// <reference path="./shared/models.ts"/>
 
-import la = require("linearalgebra");
+
+import la = require("./shared/linearalgebra");
 import angular = require("angular");
-import directives = require("directives");
-import Interop = require('wpf');
+import directives = require("./shared/directives");
+import Interop = require('./shared/wpf');
 import ui_bootstrap = require('ui-bootstrap');
+import dx = require('./shared/models');
 var d = typeof ui_bootstrap;
-class Data {
-    constructor(public NumElements: number
-        , public minWidth: number
-        , public maxWidth: number
-        , public minHeight: number
-        , public maxHeight: number
-        , public numberOfRuns = 1
-        , public rotate: boolean = false
-        , public areaUsageValues: Array<number> = []) {
 
-    }
-}
+
+
 
 interface IScope extends ng.IScope {
-    Data: Data;
+    dirLight: dx.DirectionalLightData
 
-    Run: any;
 }
 
 class Ctrl {
     constructor(private $wpf: Interop.Wpf, private $scope: IScope) {
-        $scope.Data = new Data(50, 10, 100, 10, 100);
+        $scope.dirLight = new dx.DirectionalLightData(
+            new dx.DXVector4(0, 0, 0, 0),
+            new dx.DXVector4(0, 0, 0, 0),
+            new dx.DXVector3(0, 0, 0),
+            0,
+            new dx.DXVector3(1, 1, 1));
     }
 }
+
 class Test {
     constructor() { }
 }

@@ -14,6 +14,10 @@ input {
     border-color: #565555;
 }
 
+input[type="color"] {
+    width: 52px;
+}
+
 .view-panel
 {
     padding-left: 10px;
@@ -29,6 +33,7 @@ input {
     margin: 0 auto;
     
 }
+
 
 .title-panel {
  padding: 1px;
@@ -47,6 +52,29 @@ input {
     transition:transform 0.1s;
    
 }
+.form-icon img
+{
+    width:62px;
+    position:relative;
+    top: 11px;
+    left: -20px;
+}
+.form-title {
+    height: 62px;
+    line-height: 62px;
+    font-size: 26px;
+}
+
+.form-title img{
+   width: 35px;
+   display:inline-block;
+}
+
+.form-title h1{
+   width:50px;
+   display:inline-block;
+}
+
 
 
 .form-row {
@@ -68,9 +96,19 @@ input {
 
 .span-label {
     display:inline-block;
-    width: 66px;
+    width: 69px;
     text-align:left;
 }
+
+
+
+.span-col2
+{
+    width:47%;
+    text-align:left;
+    display:inline-block;
+}
+
 
 .round-panel 
 {
@@ -90,232 +128,8 @@ input {
     animation-name: fadein;
     font-size: 15px;
     animation-duration: 1s;
-    transition: transform 0.1s
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    transition: transform 0.1s;
+    padding: 0px 27px 27px 27px;
 }
 
 
@@ -376,17 +190,19 @@ input {
     display:inline-block;
     text-align:center;
     border-radius:10px;
-    border: 1px solid;
+    border: 2px solid #8A8A8A;
     padding: 5px;
-    background: rgb(23, 60, 24);
+    background: #6D6969;
     color: white;
     cursor: default;
-    box-shadow: 2px 2px 0px rgb(57, 110, 173);
+    box-shadow: 4px 4px 0px rgb(0, 0, 0);
+    min-width: 80px;
 }
 
 .round-button:hover
 {
-    background: #50B90E;
+    /* background: #4A4A4A; */
+    border-color: #FBFBFB;
 }
 
 .round-button:active

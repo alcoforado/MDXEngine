@@ -1,16 +1,16 @@
 ﻿/// <reference path="./defines/jquery.d.ts" />
 /// <reference path="./defines/angular.d.ts" />
 /// <reference path="./defines/custom.d.ts" />
-/// <reference path="./linearalgebra.ts" />
-/// <reference path="./svg_plots.ts" />
-/// <reference path="./wpf.ts" />
+/// <reference path="./shared/linearalgebra.ts" />
+/// <reference path="./shared/svg_plots.ts" />
+/// <reference path="./shared/wpf.ts" />
 
 
-import plots = require("svg_plots");
-import la = require("linearalgebra");
+import plots = require("./shared/svg_plots");
+import la = require("./shared/linearalgebra");
 import angular = require("angular");
-import shapes2D = require("shapes2d");
-import Interop = require('wpf');
+import shapes2D = require("./shared/shapes2d");
+import Interop = require('./shared/wpf');
 
 
  class Data {

@@ -22,7 +22,7 @@
 
 
     <link rel="stylesheet" href="../css/bootstrap.css">
-   
+
     <link rel="stylesheet" href="../css/lightcolor3d.css">
     <link rel="stylesheet" href="../css/directives.css">
 
@@ -33,7 +33,7 @@
 </head>
 <body ng-controller="Ctrl as controller">
     <div class="title-panel">
-        Bin Pack Test
+        CAD System
     </div>
     <br />
     <br />
@@ -46,48 +46,59 @@
                 <uib-tab-heading>
                     Lights
                 </uib-tab-heading>
-                
-
-
 
                 <form class="main-form round-panel">
-                    <div class="title center-text">
-                        <h1>Direction Light</h1>
+                    <div class="form-icon">
+                        <img src="../images/directional_light.svg" />
+                    </div>
+                    
+                    <div class="form-title center-text">
+                          Directional Light
+                    </div>
+
+                    <div class="form-row">
+                        <span class="span-label">
+                            Direction:
+                        </span>
+                        <vector-picker vector="dirLight.Direction"/>
+                    </div>
+
+                    <div class="form-row">
+                        <span class="span-col2">
+                            <span class="span-label">Ambient:</span><dx-color-picker ng-model="dirLight.Ambient" />
+                        </span>
+                        <span class="span-col2">
+                            <span class="span-label">Diffuse:</span><dx-color-picker ng-model="dirLight.Diffuse" />
+                        </span>
                     </div>
                     <div class="form-row">
-                        <span class="span-label">Direction:</span> <input ng-model="Data.NumElements" type="number" min="0" max="99999" value="" />
+                        <span class="span-col2">
+                            <span class="span-label">Specullar:</span><dx-color-picker ng-model="dirLight.Specular" />
+                          
+                        </span>
+                        <span class="span-col2">
+                            <span class="span-label">Power:</span><input type="number" value="1" min="1"/>
+                        </span>
                     </div>
-                    <div class="form-row">
-                        <span class="span-label">Color:
-                        </span> 
-                        <input  type="color"  />
-                    </div>
-                   
-                    <vector-picker></vector-picker>
-                    <div class="group-form">
-                        <div>Width</div>
-                        <div>   <span>Min </span><input type="number" value="" ng-model="Data.minWidth" /> <span> Max </span><input ng-model="Data.maxWidth" type="number" value="" /></div>
-                    </div>
-                    <div class="group-form">
-                        <div>Height</div>
-                        <div>   <span>Min </span><input type="number" value="" ng-model="Data.minHeight" /> <span> Max </span><input ng-model="Data.maxHeight" type="number" value="" /></div>
-                    </div>
+
+
+
+
+
+
+
 
                     <div class="center-text" ng-click="controller.Run()">
                         <div class="round-button">
-                            Run Simulation
+                            Ok
                         </div>
                     </div>
 
-                    <div class="center-text" ng-show="Data.rectList.length != 0" ng-click="controller.RunAgain()">
-                        <div class="round-button">
-                            Run Again
-                        </div>
-                    </div>
+
 
 
                 </form>
-                
+
             </uib-tab>
             <uib-tab heading="Camera">
 
@@ -123,7 +134,7 @@
 
                     <div class="center-text" ng-show="Data.rectList.length != 0" ng-click="controller.RunAgain()">
                         <div class="roun
-                        <div class="round-button">
+                        <div class=" round-button">
                             -b
                             Run Again
                         </div>
@@ -150,9 +161,7 @@
         <div class="form-row">
             <span class="span-label">Rotate Rectangles:</span> <input ng-model="Data.rotate" type="checkbox" />
         </div>-->
-
-
-        <!--<div class="group-form">
+    <!--<div class="group-form">
             <div>Width</div>
             <div>   <span>Min </span><input type="number" value="" ng-model="Data.minWidth" /> <span> Max </span><input ng-model="Data.maxWidth" type="number" value="" /></div>
         </div>
@@ -177,7 +186,6 @@
     </form>
 
     <div class="efficiency-graph-container svgplot-empty-graph"></div>-->
-
     <!--<div ng-repeat="model in Data.rectList" class="rectangle" style="width:{{model.width}}px;height:{{model.height}}px;background-color: rgb({{model.color[0]}},{{model.color[1]}},{{model.color[2]}})">
     </div>
 

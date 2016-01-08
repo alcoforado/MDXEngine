@@ -1,3 +1,7 @@
+.vector-input-container {
+    display:inline-block;
+}
+
 .vector-picker {
     width: 100px;
     height:  100px;

@@ -7,6 +7,8 @@ var precision = function (x: number, p: number):number {
 }
 
 
+
+
 export class Vector2 {
     x: number;
     y: number;
