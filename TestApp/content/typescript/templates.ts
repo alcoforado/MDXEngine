@@ -28,6 +28,8 @@ export var vectorpicker:string ='\
         </div>\
     </div>\
 </div>\
+\
+\
 ';
 
 

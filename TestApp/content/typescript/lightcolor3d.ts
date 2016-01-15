@@ -1,4 +1,4 @@
-﻿/// <reference path="./defines/jquery.d.ts" />
+/// <reference path="./defines/jquery.d.ts" />
 /// <reference path="./defines/angular.d.ts" />
 /// <reference path="./defines/custom.d.ts" />
 /// <reference path="./shared/linearalgebra.ts" />
@@ -25,6 +25,9 @@ interface IScope extends ng.IScope {
 }
 
 class Ctrl {
+
+
+
     constructor(private $wpf: Interop.Wpf, private $scope: IScope) {
         $scope.dirLight = new dx.DirectionalLightData(
             new dx.DXVector4(0, 0, 0, 0),
@@ -33,6 +36,12 @@ class Ctrl {
             0,
             new dx.DXVector3(1, 1, 1));
     }
+
+    set_lights() {
+        //this.$scope
+        this.$wpf.postSync("CadController/SetLights", this.$scope.dirLight);
+    }
+
 }
 
 class Test {
@@ -43,9 +52,16 @@ class Test {
 
 var app = angular.module('app', ['ui.bootstrap']);
 app.controller('Ctrl', Ctrl);
-app.service('$wpf', Interop.Wpf);
+
+if (typeof ((<any> window.external).JavascriptRequest) != "undefined")
+    app.service('$wpf', Interop.Wpf);
+else
+    app.service('$wpf', Interop.MoqWpf);
+
 directives.RegisterDirectives(app);
 var $html = angular.element(document.getElementsByTagName('html')[0]);
 angular.element().ready(function () {
     angular.bootstrap(document, ['app']);
 });
+
+

@@ -113,6 +113,8 @@
     <Compile Include="Actions\LightColor3DAppState.cs" />
     <Compile Include="Actions\WireCube3D.cs" />
     <Compile Include="Controllers\BinPackController.cs" />
+    <Compile Include="Controllers\CADController.cs" />
+    <Compile Include="Models\Lights.cs" />
     <Compile Include="Dialogs\CubeFractalDialog.cs">
       <SubType>Form</SubType>
     </Compile>

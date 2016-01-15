@@ -220,6 +220,7 @@ export class DxColorPicker implements angular.IDirective {
     template: string = '<input type="color" ng-model="cl" />';
     restrict: string = 'E';
     require: string = 'ngModel';
+    scope: any = { cl: "@" };
     constructor() {
     }
 

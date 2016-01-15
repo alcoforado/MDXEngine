@@ -38,6 +38,7 @@
             this.wireCube3DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.binPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lightColor3DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.SuspendLayout();
@@ -62,7 +63,8 @@
             this.helloWorldToolStripMenuItem,
             this.cubeColor3DToolStripMenuItem,
             this.wireCube3DToolStripMenuItem,
-            this.binPackToolStripMenuItem});
+            this.binPackToolStripMenuItem,
+            this.lightColor3DToolStripMenuItem});
             this.testsToolStripMenuItem.Name = "testsToolStripMenuItem";
             this.testsToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.testsToolStripMenuItem.Text = "Tests";
@@ -123,6 +125,12 @@
             this.splitContainer1.SplitterDistance = 335;
             this.splitContainer1.TabIndex = 0;
             // 
+            // lightColor3DToolStripMenuItem
+            // 
+            this.lightColor3DToolStripMenuItem.Name = "lightColor3DToolStripMenuItem";
+            this.lightColor3DToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lightColor3DToolStripMenuItem.Text = "Light Color 3D";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -155,6 +163,7 @@
         private System.Windows.Forms.ToolStripMenuItem wireCube3DToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem binPackToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ToolStripMenuItem lightColor3DToolStripMenuItem;
 
     }
 }

@@ -37,7 +37,7 @@
     </div>
     <br />
     <br />
-
+    
     <div class="view-panel">
         <uib-tabset>
             <uib-tab ng-repeat="tab in tabs" heading="hello" active="tab.active" disable="tab.disabled">
@@ -47,14 +47,19 @@
                     Lights
                 </uib-tab-heading>
 
+
+
                 <form class="main-form round-panel">
-                    <div class="form-icon">
+                                       
+                        <div class="form-icon">
                         <img src="../images/directional_light.svg" />
                     </div>
                     
                     <div class="form-title center-text">
                           Directional Light
                     </div>
+
+                    <input id="hkjklsl" type="color" />
 
                     <div class="form-row">
                         <span class="span-label">
@@ -88,7 +93,7 @@
 
 
 
-                    <div class="center-text" ng-click="controller.Run()">
+                    <div class="center-text" ng-click="controller.set_lights()">
                         <div class="round-button">
                             Ok
                         </div>

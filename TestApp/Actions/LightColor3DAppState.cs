@@ -23,7 +23,7 @@ namespace TestApp.Actions
 
 
 
-            form.Browser.SourceURL = "/content/html/light3d.html";
+            form.Browser.SourceURL = "/content/html/lightcolor3d.html";
             form.PositionOnRight(mainWindow, 900);
             form.Show();
             _form = form;
