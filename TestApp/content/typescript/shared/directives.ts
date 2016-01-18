@@ -2,12 +2,15 @@
 /// <reference path="../defines/jquery.d.ts" />
 /// <reference path="../templates.ts" />
 /// <reference path="../shared/models.ts" />
-/// 
+/// <reference path="../defines/spectrum.d.ts"/>
+
+
 import templates = require("templates");
 import angular = require("angular");
 import la = require("linearalgebra");
 import $ = require("jquery");
 import dx = require("../shared/models");
+
 
 interface IVectorPickerScope extends ng.IScope {
     RotXY: number;
@@ -217,7 +220,7 @@ export class VectorPicker implements angular.IDirective
 
 
 export class DxColorPicker implements angular.IDirective {
-    template: string = '<input type="color" ng-model="cl" />';
+    template: string = '<input type="text" ng-model="cl" />';
     restrict: string = 'E';
     require: string = 'ngModel';
     scope: any = { cl: "@" };
