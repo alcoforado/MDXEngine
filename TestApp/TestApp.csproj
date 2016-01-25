@@ -114,6 +114,7 @@
     <Compile Include="Actions\WireCube3D.cs" />
     <Compile Include="Controllers\BinPackController.cs" />
     <Compile Include="Controllers\CADController.cs" />
+    <Compile Include="Controllers\PersistenceController.cs" />
     <Compile Include="Models\Lights.cs" />
     <Compile Include="Dialogs\CubeFractalDialog.cs">
       <SubType>Form</SubType>
@@ -220,6 +221,7 @@
     <Content Include="content\css\bootstrap.css" />
     <Content Include="content\css\directives.css" />
     <Content Include="content\css\lightcolor3d.css" />
+    <Content Include="content\css\spectrum.css" />
     <Content Include="content\html\bin_packing.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -17,5 +17,8 @@
     <Setting Name="SecWindowSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">800, 600</Value>
     </Setting>
+    <Setting Name="Setting" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

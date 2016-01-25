@@ -3,6 +3,7 @@
 /// <reference path="../templates.ts" />
 /// <reference path="../shared/models.ts" />
 /// <reference path="../defines/spectrum.d.ts"/>
+/// <reference path="../defines/spectrum.d.ts" />
 
 
 import templates = require("templates");
@@ -10,6 +11,8 @@ import angular = require("angular");
 import la = require("linearalgebra");
 import $ = require("jquery");
 import dx = require("../shared/models");
+import spectrum = require('spectrum');
+var e = typeof spectrum;
 
 
 interface IVectorPickerScope extends ng.IScope {
@@ -220,9 +223,10 @@ export class VectorPicker implements angular.IDirective
 
 
 export class DxColorPicker implements angular.IDirective {
-    template: string = '<input type="text" ng-model="cl" />';
+    template(): string { return '<input id="DxColorPicker{0}" type="text" ng-model="cl" />'.replace("{0}",(DxColorPicker.idCount++).toString()) }
     restrict: string = 'E';
     require: string = 'ngModel';
+    static idCount: number;
     scope: any = { cl: "@" };
     constructor() {
     }
@@ -239,6 +243,8 @@ export class DxColorPicker implements angular.IDirective {
         controller: angular.INgModelController,
         transclude: angular.ITranscludeFunction)
     {
+        (<any> instanceElement.find("input")).spectrum();
+
         controller.$render = () => {
             scope.cl = controller.$viewValue.cl;
         }
