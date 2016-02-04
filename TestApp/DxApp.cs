@@ -10,6 +10,7 @@ using SharpDX;
 using MDXEngine.Painters;
 using MDXEngine.Geometry;
 using Microsoft.Practices.Unity;
+using TestApp.Services;
 namespace TestApp
 {
     public class DxApp
@@ -32,6 +33,9 @@ namespace TestApp
             Container.RegisterType<MWebBrowser>();
             Container.RegisterType<SecWindow>();
             Container.RegisterType<IAppStateProvider,MainWindow>();
+
+            //Register Services
+            Container.RegisterType<ISettingsService, SettingsService>();
         }
         
 

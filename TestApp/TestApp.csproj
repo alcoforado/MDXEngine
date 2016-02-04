@@ -115,6 +115,8 @@
     <Compile Include="Controllers\BinPackController.cs" />
     <Compile Include="Controllers\CADController.cs" />
     <Compile Include="Controllers\PersistenceController.cs" />
+    <Compile Include="Services\ISettingsService.cs" />
+    <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Models\Lights.cs" />
     <Compile Include="Dialogs\CubeFractalDialog.cs">
       <SubType>Form</SubType>
@@ -267,6 +269,7 @@
     <TypeScriptCompile Include="content\typescript\lightcolor3d.ts" />
     <TypeScriptCompile Include="content\typescript\shared\linearalgebra.ts" />
     <TypeScriptCompile Include="content\typescript\shared\models.ts" />
+    <TypeScriptCompile Include="content\typescript\shared\services.ts" />
     <TypeScriptCompile Include="content\typescript\shared\shapes2d.ts" />
     <TypeScriptCompile Include="content\typescript\shared\svg_plots.ts" />
     <TypeScriptCompile Include="content\typescript\templates.ts" />
