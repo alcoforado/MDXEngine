@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using MDXEngine;
+using TestApp.Services;
 namespace TestApp
 {
 
@@ -178,6 +179,7 @@ namespace TestApp
              Properties.Settings.Default.FormPosition = this.Location;
              Properties.Settings.Default.FormSize = this.Size;
             Properties.Settings.Default.Save();
+            SettingsService.PersistSettings();
         }
 
         private void loadTextureToolStripMenuItem_Click(object sender, EventArgs e)

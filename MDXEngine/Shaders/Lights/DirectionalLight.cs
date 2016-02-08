@@ -10,11 +10,11 @@ namespace MDXEngine.Shaders
     [StructLayout(LayoutKind.Sequential,Pack=1)]
     public struct DirectionalLight
     {
-        Vector4 Ambient;
-        Vector4 Diffuse;
-        Vector3 Specular;
-        float SpecPower;
-        Vector3 Direction;
-        float Padding;
+       public Vector4 Ambient;
+       public Vector4 Diffuse;
+       public Vector3 Specular;
+       public float SpecPower;
+       public Vector3 Direction;
+       public float Padding;
     }
 }

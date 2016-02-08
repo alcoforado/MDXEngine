@@ -1,4 +1,5 @@
 ﻿using MDXEngine;
+using MDXEngine.Shaders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,10 @@ namespace TestApp.Controllers
      
 
 
-        public void SetLights(Lights model)
+        public void SetLights(DirectionalLight model)
         {
            // _appStateProvider.GetAppState<>
-            
+            return; 
 
         }
         

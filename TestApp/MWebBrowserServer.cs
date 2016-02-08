@@ -124,6 +124,7 @@ namespace TestApp
         IBrowserInterface _ibrowser;
         Object _ibrowserLock = new Object();
         ImplementationFactory<IController> _factory;
+        
         public MWebBrowserServer(IBrowserInterface ibrowser,IUnityContainer container)
         {
             _factory = new ImplementationFactory<IController>(container,(Type t) => {
@@ -173,7 +174,9 @@ namespace TestApp
 
         public string JavascriptRequest(string urlPath, string data)
         {
-            var call = urlPath.ToLower();
+            var call = urlPath.Trim().ToLower();
+            if (!call.StartsWith("/"))
+                call = "/" + call;
             if (!Router.ContainsKey(call))
             {
                 var result = Json(new Response()

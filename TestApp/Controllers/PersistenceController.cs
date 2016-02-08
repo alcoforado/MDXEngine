@@ -7,6 +7,9 @@ using TestApp.Services;
 
 namespace TestApp.Controllers
 {
+   
+
+
     public class PersistenceController : IController
     {
         ISettingsService _settings;
@@ -15,22 +18,37 @@ namespace TestApp.Controllers
             _settings = settings;
         }
 
-       
 
-        void Save(string nameId, string data)
+        public class SaveRequest
         {
-            _settings.Save(nameId, data);
+            public string key;
+            public string json;
+
+        }
+
+
+        public class LoadRequest
+        {
+            public string key;
+            public string defaultValue;
+        }
+
+
+
+        public void Save(SaveRequest request)
+        {
+            _settings.Save(request.key, request.json);
         }
         
-        string Load(string nameId)
+        public string Load(LoadRequest request)
         {
-            return _settings.Load(nameId);
+            if (request.defaultValue != null)
+                return _settings.Load(request.key);
+            else
+                return _settings.Load(request.key, request.defaultValue);
         }
         
-        string Load(string nameId, string defaultValue)
-        {
-            return _settings.Load(nameId, defaultValue);
-        }
+       
 
 
     }

@@ -26,17 +26,19 @@ export class Settings {
         }
     }
 
-    public Save(object: any) {
-        this.$wpf.postSync("Persistence/Save", { json: JSON.stringify(object) });
+    public Save(key:string, object: any) {
+        this.$wpf.postSync("persistence/save", { key: key, json: JSON.stringify(object) });
     }
 
     public Load(key:string): any {
-        var value = this.$wpf.postSync("Persistence/Load", { key: key });
+        var json = <string> this.$wpf.postSync("persistence/load", { key: key });
+        var value = JSON.parse(json);
         return value;
     }
 
     public SetObject(key: string, object: any) {
-        var value = this.$wpf.postSync("Persistence/Load", { key: key });
+        var json = <string> this.$wpf.postSync("persistence/load", { key: key });
+        var value = JSON.parse(json);
         this.DeepCopy(value, object);
         return object;
     }

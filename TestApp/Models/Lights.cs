@@ -8,10 +8,10 @@ namespace TestApp.Controllers
 {
     public class Lights
     {
-        Vector4 Ambient{get; set;}
-        Vector4 Diffuse{get; set;}
-        Vector3 Specular{get; set;}
-        float SpecPower{get; set;}
-        Vector3 Direction{get; set;}
+        public Vector4 Ambient{get; set;}
+        public Vector4 Diffuse{get; set;}
+        public Vector3 Specular{get; set;}
+        public float SpecPower{get; set;}
+        public Vector3 Direction{get; set;}
     }
 }

@@ -1,4 +1,4 @@
-﻿/// <reference path="./defines/d3.d.ts" />
+﻿/// <reference path="../defines/d3.d.ts" />
 //12310c68207279
 import d3 = require("d3")
 export interface PlotOptionsBase {

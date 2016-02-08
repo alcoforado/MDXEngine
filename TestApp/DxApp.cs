@@ -28,7 +28,6 @@ namespace TestApp
             Container.RegisterInstance<MainWindow>(_main);
             Container.RegisterType<IDxContext>(new InjectionFactory(c => this.DxControl.GetDxContext()));
             Container.RegisterInstance<IUnityContainer>(this.Container);
-            Container.RegisterType<IFactory<IController>, ImplementationFactory<IController>>();
             Container.RegisterType<IDxViewControl, DxControl>();
             Container.RegisterType<MWebBrowser>();
             Container.RegisterType<SecWindow>();

@@ -79,34 +79,19 @@
                     <div class="form-row">
                         <span class="span-col2">
                             <span class="span-label">Specullar:</span><dx-color-picker ng-model="dirLight.Specular" />
-                          
                         </span>
                         <span class="span-col2">
-                            <span class="span-label">Power:</span><input type="number" value="1" min="1"/>
+                            <span class="span-label">Power:</span><input type="number" value="1" min="1" ng-model="dirLight.SpecPower"/>
                         </span>
                     </div>
-
-
-
-
-
-
-
-
                     <div class="center-text" ng-click="controller.set_lights()">
                         <div class="round-button">
                             Ok
                         </div>
                     </div>
-
-
-
-
                 </form>
-
             </uib-tab>
             <uib-tab heading="Camera">
-
                 <form class="main-form round-panel">
                     <div class="title center-text">
                         <h1>Rectangles Random Generation</h1>
@@ -120,8 +105,6 @@
                     <div class="form-row">
                         <span class="span-label">Rotate Rectangles:</span> <input ng-model="Data.rotate" type="checkbox" />
                     </div>
-
-
                     <div class="group-form">
                         <div>Width</div>
                         <div>   <span>Min </span><input type="number" value="" ng-model="Data.minWidth" /> <span> Max </span><input ng-model="Data.maxWidth" type="number" value="" /></div>
@@ -130,13 +113,11 @@
                         <div>Height</div>
                         <div>   <span>Min </span><input type="number" value="" ng-model="Data.minHeight" /> <span> Max </span><input ng-model="Data.maxHeight" type="number" value="" /></div>
                     </div>
-
                     <div class="center-text" ng-click="controller.Run()">
                         <div class="round-button">
                             Run Simulation
                         </div>
                     </div>
-
                     <div class="center-text" ng-show="Data.rectList.length != 0" ng-click="controller.RunAgain()">
                         <div class="roun
                         <div class=" round-button">

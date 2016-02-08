@@ -142,7 +142,7 @@ export class VectorPicker implements angular.IDirective
            });
 
        
-
+           VectorPicker.updateControl(scope);
 
            scope.$watch('RotXYZ',(newValue: number, oldValue: number, scope: IVectorPickerScope) => {
                var rotxyz = scope.RotXYZ;
@@ -215,10 +215,8 @@ export class VectorPicker implements angular.IDirective
       
                
 
-               //alert("P: "+ event.offsetX +"," + event.offsetY + "X: ");
            }
        }
-       // this.scope = true;
 }
 
 
@@ -232,9 +230,19 @@ export class DxColorPicker implements angular.IDirective {
     }
 
     static componentToHex(c: number): string {
-        var hex = c.toString(16);
+        var hex = (c*255).toString(16);
         return hex.length == 1 ? "0" + hex : hex;
     }
+
+    static toColorString(color:dx.DXVector3):string
+    {
+        return "#" +
+            DxColorPicker.componentToHex(color.X) +
+            DxColorPicker.componentToHex(color.Y) +
+            DxColorPicker.componentToHex(color.Z);
+
+    }
+
 
     link(
         scope: any,
@@ -243,10 +251,15 @@ export class DxColorPicker implements angular.IDirective {
         controller: angular.INgModelController,
         transclude: angular.ITranscludeFunction)
     {
-        (<any> instanceElement.find("input")).spectrum();
+        (<any> instanceElement.find("input")).spectrum(
+            {
+                preferredFormat: "hex",
+            }
+            );
 
         controller.$render = () => {
             scope.cl = controller.$viewValue.cl;
+            (<any> instanceElement.find("input")).spectrum("set", scope.cl);
         }
 
         controller.$parsers.push((viewValue: any) => {
@@ -261,11 +274,9 @@ export class DxColorPicker implements angular.IDirective {
 
 
 
+        var that = this;
         controller.$formatters.push((modelValue: any) => {
-            var hex: string = "#" +
-                DxColorPicker.componentToHex(modelValue.X) +
-                DxColorPicker.componentToHex(modelValue.Y) +
-                DxColorPicker.componentToHex(modelValue.Z)
+            var hex: string = DxColorPicker.toColorString(<dx.DXVector3> modelValue);
             return {
                 cl: hex
             };
