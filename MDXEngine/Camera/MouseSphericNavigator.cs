@@ -106,6 +106,8 @@ namespace MDXEngine
         }
 
 
+      
+
         public void AttachControl(System.Windows.Forms.Control control)
         {
             _sCoordinates = _camera.GetCameraSphericCoordinates();

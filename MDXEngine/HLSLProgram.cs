@@ -33,7 +33,7 @@ namespace MDXEngine
             var pixelShaderByteCode = ShaderBytecode.Compile(program, "PS", "ps_4_0");
             _pixelShader = new PixelShader(device, pixelShaderByteCode);
 
-
+             
             // Layout from VertexShader input signature
             var signature = ShaderSignature.GetInputSignature(vertexShaderByteCode);
             _layout = new InputLayout(device, signature, elems);

@@ -23,11 +23,11 @@ struct PS_IN
 
 struct DirectionalLight
 {
-	public float4 Ambient;
-	public float4 Diffuse;
-	public float4 Specular;
-	public float3 Direction;
-	public float Padding;
+	float4 Ambient;
+	float4 Diffuse;
+	float4 Specular;
+	float3 Direction;
+	float Padding;
 };
 
 struct  Material
@@ -77,13 +77,13 @@ void ComputeDirectionalLight(
 	float3 lightVector = -L.Direction;
 
 	//diffuse Factor
-	float diffuseFactor = dot(lightVec, normal);
+	float diffuseFactor = dot(lightVector, normal);
 
 
 	if (diffuseFactor > 0.0f)
 	{
 		float3 v = reflect(L.Direction, normal);
-		float specFactor = pow(max(dot(v, toEye), 0.0f), mat.Specular.W);
+		float specFactor = pow(max(dot(v, toEye), 0.0f), mat.Specular.w);
 		diffuse = diffuseFactor*mat.Diffuse*L.Diffuse;
 		spec = specFactor*mat.Specular*L.Specular;
 	}
@@ -109,13 +109,12 @@ float4 PS(PS_IN input) : SV_Target
 	input.normal = normalize(input.normal);
 	float3 toEyeW = normalize(eyePos - input.pos);
 
-	ambient = float4(0, 0, 0, 0);
-	diffuse = float4(0, 0, 0, 0);
-	spec = float4(0, 0, 0, 0);
 
-	float4 A, D, S;
+	float4 A;
+	float4 D;
+	float4 S;
 
-	ComputeDirectionalLight(mat, dlight, input.normal, toEyeW, , A, D, S);
+	ComputeDirectionalLight(mat, dlight, input.normal, toEyeW,  A, D, S);
 		
 	float4 litColor = A + D + S;
 	return litColor;

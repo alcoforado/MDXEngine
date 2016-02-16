@@ -172,7 +172,6 @@ namespace MDXEngine
             _device.ImmediateContext.Rasterizer.State = _rasterizerState;
         }
 
-
         public HLSLProgram CurrentProgram
         {
             get
@@ -188,9 +187,6 @@ namespace MDXEngine
             }
 
         }
-        
-     
-
 
         public void AddShader(IShader shader)
         {

@@ -31,7 +31,7 @@ namespace MDXEngine.Shaders
         public ShaderLight3D(IDxContext dxContext)
         {
             _dx = dxContext;
-            _program = new HLSLProgram(_dx, HLSLResources.Color3D_hlsl, new[]
+            _program = new HLSLProgram(_dx, HLSLResources.Light3D_hlsl, new[]
                     {
                         new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
                         new InputElement("NORMAL", 0, Format.R32G32B32A32_Float, 16, 0)

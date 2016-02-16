@@ -21,9 +21,12 @@ namespace MDXEngine
                 {
                     if (_slots.ContainsKey(desc.Name))
                     {
-                        throw new Exception(String.Format("Variable Name {0} already exists",desc.Name));
+                        //Just for consistency make sure that the bind point of what is already in the Dictionary
+                        //and the new resource are the same
+                        System.Diagnostics.Debug.Assert(desc.BindPoint == _slots[desc.Name].SlotId);
                     }
-                    _slots[desc.Name] = new ResourceSlot(desc.BindPoint, desc.Name, desc.Type,stage);
+                    else
+                        _slots[desc.Name] = new ResourceSlot(desc.BindPoint, desc.Name, desc.Type,stage);
                 }
             }
 

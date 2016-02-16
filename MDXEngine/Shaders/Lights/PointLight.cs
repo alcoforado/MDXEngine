@@ -9,14 +9,14 @@ namespace MDXEngine.Shaders.Lights
 {
     public struct PointLight
     {
-        Vector4 Ambient;
-        Vector4 Diffuse;
-        Vector4 Specular;
-        Vector3 Direction;
-        float Range;
-
-        Vector3 Atenuation;
-        float Pad;
+       public  Vector4 Ambient;
+       public  Vector4 Diffuse;
+       public  Vector4 Specular;
+       public  Vector3 Direction;
+       public  float Range;
+       
+       public  Vector3 Atenuation;
+       public  float Pad;
 
 
 
