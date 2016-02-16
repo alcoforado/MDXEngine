@@ -134,12 +134,12 @@
     <Compile Include="Shaders\ShaderTexture2D.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="ShapeMarshalling.cs" />
-    <Compile Include="Shapes\Cube.cs" />
+    <Compile Include="Shapes\Topologies\Cube.cs" />
     <Compile Include="Shapes\Shape2D.cs" />
     <Compile Include="Shapes\ShapeWithNormals3D.cs" />
     <Compile Include="Shapes\Sprite.cs" />
-    <Compile Include="Shapes\Triangle3DI.cs" />
-    <Compile Include="Shapes\WireCube.cs" />
+    <Compile Include="Shapes\Topologies\Triangle3DI.cs" />
+    <Compile Include="Shapes\Topologies\WireCube.cs" />
     <Compile Include="SharpDXExtensions\ColorExtension.cs" />
     <Compile Include="Textures\BinPack\BinPackAlghorithm.cs" />
     <Compile Include="Textures\BinPack\BinPackAnalysis.cs" />
@@ -150,7 +150,7 @@
     <Compile Include="Textures\BitmapAtlas.cs" />
     <Compile Include="Textures\TextureRegion.cs" />
     <Compile Include="Textures\TextWriteOptions.cs" />
-    <Compile Include="Shapes\Triangle2DIndexed.cs" />
+    <Compile Include="Shapes\Topologies\Triangle2DIndexed.cs" />
     <Compile Include="SharpDXExtensions\Vector2Extension.cs" />
     <Compile Include="SharpDXExtensions\Vector3Extension.cs" />
     <Compile Include="SharpDXExtensions\Vector4Extensions.cs" />
