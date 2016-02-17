@@ -118,12 +118,6 @@
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Models\Lights.cs" />
-    <Compile Include="Dialogs\CubeFractalDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\CubeFractalDialog.Designer.cs">
-      <DependentUpon>CubeFractalDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Actions\HelloWorld.cs" />
     <Compile Include="Actions\TextureDisplay.cs" />
     <Compile Include="Array2DDataView.cs" />
