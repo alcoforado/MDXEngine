@@ -15,8 +15,7 @@ namespace TestApp.Actions.CubeFractal
         public CubeFractal(DxControl dx)
         {
             _dx = dx;
-            var dialog = new CubeFractalDialog();
-            dialog.Show();
+          
         }
 
     }

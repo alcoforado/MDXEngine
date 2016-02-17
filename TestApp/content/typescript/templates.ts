@@ -32,4 +32,3 @@ export var vectorpicker:string ='\
 \
 ';
 
-
