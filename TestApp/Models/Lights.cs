@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TestApp.Controllers
+namespace TestApp.Models
 {
     public class Lights
     {
@@ -13,5 +13,11 @@ namespace TestApp.Controllers
         public Vector3 Specular{get; set;}
         public float SpecPower{get; set;}
         public Vector3 Direction{get; set;}
+        public List<int> test { get; set; }
+
+        public Lights()
+        {
+            test = new List<int> { 1, 2, 3, 4 };
+        }
     }
 }

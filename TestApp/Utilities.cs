@@ -9,7 +9,7 @@ using MDXEngine.Textures;
 
 namespace TestApp
 {
-    public class Utilities
+    public class Utils
     {
 
         static public string TextureSelect()

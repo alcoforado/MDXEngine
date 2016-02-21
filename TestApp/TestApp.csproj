@@ -151,6 +151,8 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Utilities\JSonMethodCaller.cs" />
+    <Compile Include="Utilities\ShapesManager.cs" />
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>

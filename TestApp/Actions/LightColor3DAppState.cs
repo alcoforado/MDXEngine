@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
+using TestApp.Utilities;
 
 namespace TestApp.Actions
 {
@@ -36,6 +38,7 @@ namespace TestApp.Actions
             _form = form;
             _mouseHandler = new MouseSphericNavigator(dx.Camera, true);
             _mouseHandler.AttachControl(control.Control);
+            var obj = new TestApp.Models.Lights();
 
         }
 

@@ -17,7 +17,7 @@ namespace TestApp.Actions
             var dx = control.GetDxContext();
             var shaderTexture = new ShaderTexture2D(dx);
             control.AddShader(shaderTexture);
-            var file = Utilities.TextureSelect();
+            var file = Utils.TextureSelect();
             
             if (String.IsNullOrEmpty(file))
                 return;
