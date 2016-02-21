@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Web.Script.Serialization;
 using Microsoft.Practices.Unity;
 using TestApp.Interfaces;
+using TestApp.Utilities;
 namespace TestApp
 {
 
@@ -101,9 +102,7 @@ namespace TestApp
             }
             else
             {
-                Object dataObj = new JavaScriptSerializer().DeserializeObject(data);
-                var parameters = new List<Object>();
-                throw new Exception("Not supported yet");
+                return JSonMethodCaller.CallMethod(targetController, json);
             }
         }
 
