@@ -102,7 +102,7 @@ namespace TestApp
             }
             else
             {
-                return JSonMethodCaller.CallMethod(targetController, json);
+                return JSonMethodCaller.CallMethod(targetController,_method, data);
             }
         }
 
@@ -147,8 +147,7 @@ namespace TestApp
                 var typeNames = container.GetTypeMapping(type);
                 foreach (var method in type.GetMethods())
                 {
-                    if (method.GetParameters().Count() == 0 || method.GetParameters().Count() == 1)
-                    {
+                   
                         foreach(var typeName in typeNames)
                         {
                         var el = new RouterElement() {
@@ -158,7 +157,7 @@ namespace TestApp
                          Router.Add(call,el);
 
                         }
-                    }
+                    
                 }
             }
         }
