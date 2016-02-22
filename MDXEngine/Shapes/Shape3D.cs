@@ -20,6 +20,14 @@ namespace MDXEngine.Shapes
             _renderer = renderer;
         }
 
+        public Shape3D(ITopology topology)
+        {
+            _topology = topology;
+            _renderer = null;
+        }
+
+
+
         public int NVertices() { return _topology.NVertices(); }
         public int NIndices() { return _topology.NIndices(); }
         public TopologyType GetTopology() { return _topology.GetTopologyType(); }
@@ -27,7 +35,8 @@ namespace MDXEngine.Shapes
         {
             var vV1 = new Vertex3DArray<T>(vV);
             _topology.Write(vV1, vI);
-            _renderer.Write(vV, vI, _topology.GetTopologyType());
+            if (_renderer != null)
+                _renderer.Write(vV, vI, _topology.GetTopologyType());
         }
 
 
