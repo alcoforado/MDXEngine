@@ -78,11 +78,14 @@ namespace MDXEngine.Shaders
 
         public void Add(ITopology topology, Material mat)
         {
-            /*
-            var shape = new Shape3D<VerticeNormal>(topology, painter);
-             */
+            
+           // var shape = new Shape3D<VerticeNormal>(topology, painter);
+            
            // _drawTree.Add(shape);
         }
+
+        
+
 
         public void Dispose()
         {

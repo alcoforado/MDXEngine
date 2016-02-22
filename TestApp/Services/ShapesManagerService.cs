@@ -30,24 +30,21 @@ namespace TestApp.Utilities
             return this;
         }
 
-        /*
-       public ShapesManager RegisterRender<PainterType,ShaderType>(string name) where T: IPainter<U>
+        
+       public ShapesManager RegisterRender<RenderType,ShaderType>(string name) where ShaderType: IShader
         {
             var info = new RenderTypeInfo
             {
-                RenderType = typeof(T),
-                ShaderType = typeof(U)
+                RenderType = typeof(RenderType),
+                ShaderType = typeof(ShaderType)
             };
             _renderTypeMapping[name] = info;
            return this;
 
         }
 
-        public ShapesManager RegisterShader<T>(IShader shader)
-       {
-
-       }
-        */
+     
+        
 
     }
 }

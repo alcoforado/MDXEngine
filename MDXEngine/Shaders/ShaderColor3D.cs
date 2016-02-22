@@ -11,7 +11,7 @@ using MDXEngine;
 
 namespace MDXEngine
 {
-    public class ShaderColor3D : IShader 
+    public class ShaderColor3D : IShader
     {
         IDxContext _dx;
         HLSLProgram _program;

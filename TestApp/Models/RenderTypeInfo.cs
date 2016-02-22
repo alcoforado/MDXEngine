@@ -9,7 +9,7 @@ namespace TestApp.Models
     public class RenderTypeInfo
     {
         public Type RenderType { get; set; }
-        public Type VerticeDataType { get; set; }
+        public Type ShaderType { get; set; }
 
     }
 }

@@ -94,6 +94,7 @@
     <Compile Include="Interfaces\IShader.cs" />
     <Compile Include="Interfaces\IShaderResource.cs" />
     <Compile Include="Interfaces\IShape.cs" />
+    <Compile Include="Interfaces\IShapeCollection.cs" />
     <Compile Include="ITEX.cs" />
     <Compile Include="Geometry\Angle.cs" />
     <Compile Include="MMath\Interval.cs" />
