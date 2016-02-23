@@ -40,6 +40,9 @@ namespace MDXEngine
             child._parent = this;
         }
 
+
+
+
         public Data GetData()
         {
             return _data;
@@ -100,6 +103,35 @@ namespace MDXEngine
                 }
                 visitor(this);
             }
+        }
+
+
+        public NTreeNode<Data> FindNodeWhere(Func<NTreeNode<Data>,bool> search)
+        {
+            if (this.IsChildless())
+            {
+                return search(this) ? this : null;
+            }
+            else
+            {
+                foreach (var ch in _childs)
+                {
+                    var result = ch.FindNodeWhere(search);
+                    if (result != null)
+                        return result;
+                }
+                return search(this) ? this : null;
+            }
+        }
+
+        public void RemoveItselfAndAllSubNodes()
+        {
+            if (this.IsRoot())
+                return;
+            var parent = this._parent;
+            this._parent = null;
+
+            parent._childs.Remove(this);
         }
 
 

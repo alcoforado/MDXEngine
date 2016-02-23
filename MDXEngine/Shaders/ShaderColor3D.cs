@@ -8,10 +8,11 @@ using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using MDXEngine;
+using MDXEngine.Interfaces;
 
 namespace MDXEngine
 {
-    public class ShaderColor3D : IShader
+    public class ShaderColor3D : IShader, IShapeCollection<VerticeColor>
     {
         IDxContext _dx;
         HLSLProgram _program;
@@ -57,6 +58,19 @@ namespace MDXEngine
             var shape = new Shape3D<VerticeColor>(topology, painter);
             _drawTree.Add(shape);
         }
+
+
+        public void Add(IShape<VerticeColor> shape)
+        {
+            _drawTree.Add(shape);
+        }
+
+        public void Remove(IShape<VerticeColor> shape)
+        {
+          //  _drawTree.Remove(shape);
+        }
+
+
 
         public void Dispose()
         {
