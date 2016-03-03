@@ -9,10 +9,11 @@ using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using MDXEngine;
 using MDXEngine.SharpDXExtensions;
+using MDXEngine.Interfaces;
 
 namespace MDXEngine.Shaders
 {
-    public class ShaderLight3D : IShader
+    public class ShaderLight3D : IShader, IShapeCollection<VerticeNormal>
     {
         private struct TViewChange {
             public Matrix projM;
@@ -79,12 +80,21 @@ namespace MDXEngine.Shaders
         public void Add(ITopology topology, Material mat)
         {
             
-           // var shape = new Shape3D<VerticeNormal>(topology, painter);
+        //    var shape = new Shape3D<VerticeNormal>(topology, painter);
             
-           // _drawTree.Add(shape);
+         //   _drawTree.Add(shape);
         }
 
-        
+
+        public void Add(IShape<VerticeNormal> shape)
+        {
+            _drawTree.Add(shape);
+        }
+
+        public void Remove(IShape<VerticeNormal> shape)
+        {
+            _drawTree.Remove(shape);
+        }
 
 
         public void Dispose()

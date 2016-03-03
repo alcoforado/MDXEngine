@@ -67,7 +67,7 @@ namespace MDXEngine
 
         public void Remove(IShape<VerticeColor> shape)
         {
-          //  _drawTree.Remove(shape);
+            _drawTree.Remove(shape);
         }
 
 
