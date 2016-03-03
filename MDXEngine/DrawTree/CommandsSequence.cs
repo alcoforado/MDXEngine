@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using MDXEngine.Textures;
+using MDXEngine.DrawTree;
 
 namespace MDXEngine
 {
- internal class ResourceLoadCommand
-    {
-       public  string SlotName { get; set; }
-       
-       public IShaderResource Resource { get; set; }
-    }
-
+    
 
     public class CommandsSequence
     {

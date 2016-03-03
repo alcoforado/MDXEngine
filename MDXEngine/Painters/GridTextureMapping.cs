@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
+using MDXEngine.DrawTree;
 
 namespace MDXEngine.Painters
 {
@@ -36,7 +37,7 @@ namespace MDXEngine.Painters
         }
 
 
-
+        public List<ResourceLoadCommand> GetLoadResourcesCommands() { return null; }
 
     }
 }

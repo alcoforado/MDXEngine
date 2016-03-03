@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MDXEngine.SharpDXExtensions;
 using SharpDX;
+using MDXEngine.DrawTree;
 namespace MDXEngine.Painters
 {
     public class CyclicColorizer : IPainter<VerticeColor>
@@ -34,6 +35,7 @@ namespace MDXEngine.Painters
             }
         }
 
+        public List<ResourceLoadCommand> GetLoadResourcesCommands() { return null; }
 
     }
 }

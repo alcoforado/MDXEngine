@@ -74,6 +74,7 @@
     <Compile Include="CBufferResource.cs" />
     <Compile Include="DrawingExtensions\RectangleExtension.cs" />
     <Compile Include="DrawTree\CommandsSequence.cs" />
+    <Compile Include="DrawTree\ResourceLoadCommand.cs" />
     <Compile Include="DrawTree\RootNode.cs" />
     <Compile Include="DrawTree\ShapeGroupNode.cs" />
     <Compile Include="DrawTree\ShapeNode.cs" />
