@@ -28,7 +28,7 @@ namespace MDXEngine
         private void FlagNodeChange(NTreeNode<DrawInfo<T>> node)
         {
             node.GetData().Changed = true;
-            node.ForAllParents(nd => nd.GetData().Changed = true);
+            node.ForItselfAndAllParents(nd => nd.GetData().Changed = true);
         }
 
 
@@ -141,7 +141,7 @@ namespace MDXEngine
             public override void Changed()
             {
                 _node.GetData().Changed = true;
-                _node.ForAllParents(nd => nd.GetData().Changed = true);
+                _node.ForItselfAndAllParents(nd => nd.GetData().Changed = true);
                 _tree.OnChanged();
             }
            
@@ -207,6 +207,29 @@ namespace MDXEngine
             this.AddObserversToResourcesInNode(_ntree);
         }
 
+
+        public void Remove(IShape<T> shape)
+        {
+            var nodeToDelete = _ntree.FindNodeWhere((node) => node.GetData().IsShapeNode() && node.GetData().ShapeNode == shape);
+            if (nodeToDelete == null) //node does not exist nothing to do
+                return;
+            var parent = nodeToDelete.GetParent();
+            nodeToDelete.CutSubTree();
+
+            //Now make sure you remove all possible empty  
+            //GroupNodes from the tree
+            parent.ForItselfAndAllParents(
+                (node) =>
+                {
+                    if (node.GetData().IsShapeGroupNode())
+                    {
+                        if (node.IsChildless())
+                            node.CutSubTree();
+                    }
+                });
+        }
+
+
         public void Add(IShape<T> shape, CommandsSequence commands = null)
         {
 
@@ -228,7 +251,7 @@ namespace MDXEngine
                         //Add the shape in the shape group tree
                         var newNode = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new ShapeNode<T>(shape)));
                         node.AppendChild(newNode);
-                        newNode.ForAllParents(nd => nd.GetData().Changed = true);
+                        newNode.ForItselfAndAllParents(nd => nd.GetData().Changed = true);
                         return;
                     }
 
@@ -241,7 +264,7 @@ namespace MDXEngine
             groupNode.AppendChild(shapeNode);
             _ntree.AppendChild(groupNode);
             AddObserversToResourcesInNode(groupNode);
-            shapeNode.ForAllParents(nd => nd.GetData().Changed = true);
+            shapeNode.ForItselfAndAllParents(nd => nd.GetData().Changed = true);
             this.OnChanged();
         }
 

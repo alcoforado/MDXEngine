@@ -76,16 +76,18 @@ namespace MDXEngine
 
         }
 
-        public void ForAllParents(Action<NTreeNode<Data>> action)
+        public void ForItselfAndAllParents(Action<NTreeNode<Data>> action)
         {
-            NTreeNode<Data> ptr;
-            ptr = this;
-            
-            while (ptr._parent != null)
+           
+            var ptr = this;
+            var next = this._parent;
+            while (next != null)
             {
-                ptr = ptr._parent;
                 action(ptr);
+                ptr = next;
+                next = ptr._parent;
             }
+            action(ptr);
         }
 
         public void ForAllInOrder(Action<NTreeNode<Data>> visitor)
@@ -124,7 +126,7 @@ namespace MDXEngine
             }
         }
 
-        public void RemoveItselfAndAllSubNodes()
+        public void CutSubTree()
         {
             if (this.IsRoot())
                 return;

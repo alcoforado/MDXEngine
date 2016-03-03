@@ -110,7 +110,7 @@ namespace UnitTests
             var lst = new List<int>();
             var tree1 = SetTree1();
             var node = tree1.GetChilds()[1].GetChild(0);
-            node.ForAllParents(nd => lst.Add(nd.GetData()));
+            node.ForItselfAndAllParents(nd => lst.Add(nd.GetData()));
 
             //check
             lst.Count.Should().Be(2);
