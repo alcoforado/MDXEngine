@@ -230,8 +230,14 @@ namespace MDXEngine
         }
 
 
-        public void Add(IShape<T> shape, CommandsSequence commands = null)
+        
+
+        public void Add(IShape<T> shape, CommandsSequence commands=null)
         {
+            if (commands == null)
+                commands = new CommandsSequence();
+
+
 
             foreach (var node in _ntree.GetChilds())
             {
