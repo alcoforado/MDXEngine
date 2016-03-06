@@ -7,6 +7,7 @@ using MDXEngine.Textures;
 using SharpDX;
 using System.Drawing;
 using MDXEngine.SharpDXExtensions;
+using MDXEngine.DrawTree;
 namespace MDXEngine.Shapes
 {
     public class AnchorSprite : IShape<VerticeTexture2D>, ICameraObserver 
@@ -66,6 +67,14 @@ namespace MDXEngine.Shapes
             vI.CopyFrom(new int[] { 0, 1, 3, 1, 2, 3 });
 
         }
+
+        public List<ResourceLoadCommand> GetResourcesLoadCommands()
+        {
+            return new List<ResourceLoadCommand>();
+        }
+         
+
+
 
         public int NVertices()
         {

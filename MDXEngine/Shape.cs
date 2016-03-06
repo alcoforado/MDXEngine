@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MDXEngine.DrawTree;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,5 +27,11 @@ namespace MDXEngine
             _renderer.Write(vV,vI,_topology.GetTopologyType());
         }
         public TopologyType GetTopology() { return _topology.GetTopologyType(); }
+
+        public List<ResourceLoadCommand> GetResourcesLoadCommands()
+        {
+            return this._renderer.GetLoadResourcesCommands();
+        }
+         
     }
 }

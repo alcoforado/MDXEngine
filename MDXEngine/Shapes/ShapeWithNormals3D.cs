@@ -1,4 +1,5 @@
-﻿using SharpDX;
+﻿using MDXEngine.DrawTree;
+using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,13 @@ namespace MDXEngine.Shapes
             _renderer.Write(vV, vI, _topology.GetTopologyType());
 
         }
+        
+        public List<ResourceLoadCommand> GetResourcesLoadCommands()
+        {
 
+            return this._renderer.GetLoadResourcesCommands();
+        }
+         
 
     }
 }

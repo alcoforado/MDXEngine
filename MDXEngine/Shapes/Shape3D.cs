@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MDXEngine.DrawTree;
+using MDXEngine.Painters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +25,7 @@ namespace MDXEngine.Shapes
         public Shape3D(ITopology topology)
         {
             _topology = topology;
-            _renderer = null;
+            _renderer = new EmptyPainter<T>();
         }
 
 
@@ -35,10 +37,15 @@ namespace MDXEngine.Shapes
         {
             var vV1 = new Vertex3DArray<T>(vV);
             _topology.Write(vV1, vI);
-            if (_renderer != null)
-                _renderer.Write(vV, vI, _topology.GetTopologyType());
+           _renderer.Write(vV, vI, _topology.GetTopologyType());
         }
 
+        public List<ResourceLoadCommand> GetResourcesLoadCommands()
+        {
+         
+                return this._renderer.GetLoadResourcesCommands();
+        }
+         
 
     }
 

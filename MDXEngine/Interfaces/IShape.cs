@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MDXEngine.DrawTree;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace MDXEngine
         int  NVertices();
         int  NIndices();
         TopologyType GetTopology();
+        List<ResourceLoadCommand> GetResourcesLoadCommands();
     }
 }

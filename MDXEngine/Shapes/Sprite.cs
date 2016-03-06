@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MDXEngine.Textures;
 using SharpDX;
+using MDXEngine.DrawTree;
 
 namespace MDXEngine.Shapes
 {
@@ -64,5 +65,12 @@ namespace MDXEngine.Shapes
             return TopologyType.TRIANGLES;
 
         }
+
+        public List<ResourceLoadCommand> GetResourcesLoadCommands()
+        {
+
+            return new List<ResourceLoadCommand>();
+        }
+         
     }
 }
