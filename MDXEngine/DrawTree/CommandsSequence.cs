@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using MDXEngine.Textures;
 using MDXEngine.DrawTree;
+using MDXEngine.Interfaces;
 
 namespace MDXEngine
 {
@@ -12,13 +13,22 @@ namespace MDXEngine
     public class CommandsSequence
     {
         private readonly Dictionary<string, ResourceLoadCommand> _loadCommands;
-        private readonly HLSLProgram _program;
+        private readonly IShaderProgram _program;
 
-        public CommandsSequence(HLSLProgram program)
+        public CommandsSequence(IShaderProgram program)
         {
             _program = program;
             _loadCommands = new Dictionary<string, ResourceLoadCommand>();
         }
+
+        public CommandsSequence(IShaderProgram program,List<ResourceLoadCommand> commands)
+        {
+            _program = program;
+            _loadCommands = new Dictionary<string, ResourceLoadCommand>();
+            Add(commands);
+        }
+
+
 
         public  List<IShaderResource> GetAllResources()
         {
@@ -35,7 +45,7 @@ namespace MDXEngine
             foreach (var pair in _loadCommands)
             {
                 var elem = pair.Value;
-                elem.Resource.Load(_program, elem.SlotName);
+                _program.Load(elem.Resource,elem.SlotName);
             }
         }
 
@@ -106,13 +116,22 @@ namespace MDXEngine
             return true;
         }
 
-        public CommandsSequence LoadResource(string varName,IShaderResource resource)
+        public CommandsSequence Add(ResourceLoadCommand elem)
         {
-            if (!TryAddLoadCommand(varName, resource))
+            if (!TryAddLoadCommand(elem.SlotName, elem.Resource))
                 throw new Exception("Could not add command to the Sequence");
             return this;
         }
 
+        public CommandsSequence Add(List<ResourceLoadCommand> elems)
+        {
+            foreach (var elem in elems)
+                Add(elem); 
+            return this;
+        }
+
+
+        
 
         public bool CanAddLoadCommand(string varName, IShaderResource resource)
         {

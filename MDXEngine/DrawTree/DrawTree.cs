@@ -6,6 +6,8 @@ using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using Buffer = SharpDX.Direct3D11.Buffer;
 using System.Collections.Generic;
+using MDXEngine.Interfaces;
+using MDXEngine.DrawTree;
 
 namespace MDXEngine
 {
@@ -14,6 +16,7 @@ namespace MDXEngine
         private NTreeNode<DrawInfo<T>> _ntree;
         private T[] _vertices;
         private int[] _indices;
+        private IShaderProgram _program;
         Buffer _vI;
         Buffer _vV;
 
@@ -180,6 +183,10 @@ namespace MDXEngine
 
 #endregion
         
+
+
+
+
         public void Dispose()
         {
             Utilities.Dispose(ref _vI);
@@ -187,13 +194,14 @@ namespace MDXEngine
         }
 
 
-        public DrawTree(int nVertices = 0, int nIndices = 0)
+        public DrawTree(IShaderProgram program,int nVertices = 0, int nIndices = 0)
         {
 
             _ntree = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new RootNode()));
             _vertices = new T[nVertices];
             _indices = new int[nIndices];
             _resourcesObservers = new Dictionary<CommandsSequence, List<IObserver>>();
+            _program = program;
         }
 
         public RootNode GetRootNode()
@@ -201,9 +209,9 @@ namespace MDXEngine
             return _ntree.GetData().RootNode;
         }
 
-        public void SetRootCommandsSequence(CommandsSequence commands = null)
+        public void SetRootCommandsSequence(List<ResourceLoadCommand> commands)
         {
-            _ntree.GetData().RootNode.Commands = commands;
+            _ntree.GetData().RootNode.Commands = new  CommandsSequence(_program,commands);
             this.AddObserversToResourcesInNode(_ntree);
         }
 
@@ -232,11 +240,21 @@ namespace MDXEngine
 
         
 
-        public void Add(IShape<T> shape, CommandsSequence commands=null)
+        public void Add(IShape<T> shape, List<ResourceLoadCommand> extraCommands=null)
         {
-            if (commands == null)
-                commands = new CommandsSequence();
+            var shapeCommands = shape.GetResourcesLoadCommands();
 
+            if (shapeCommands == null)
+                shapeCommands = new List<ResourceLoadCommand>();
+
+            if (extraCommands!=null)
+            {
+                shapeCommands.AddRange(extraCommands);
+            }
+                
+
+            var commands = shapeCommands.Any() ? new CommandsSequence(_program,shapeCommands) : null;
+            
 
 
             foreach (var node in _ntree.GetChilds())

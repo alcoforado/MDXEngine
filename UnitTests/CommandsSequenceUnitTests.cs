@@ -4,7 +4,7 @@ using MDXEngine;
 using MDXEngine.Textures;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-
+using MDXEngine.DrawTree;
 
 namespace UnitTests
 {
@@ -29,7 +29,9 @@ namespace UnitTests
 
             command.TryAddLoadCommand("texture1", texture).Should().BeTrue();
             command.TryAddLoadCommand("texture1", texture).Should().BeTrue();
-            command.LoadResource("texture1", texture);
+            command.Add(new MDXEngine.DrawTree.ResourceLoadCommand {
+               SlotName= "texture1",
+               Resource =  texture });
         }
 
         [TestMethod]
@@ -41,7 +43,11 @@ namespace UnitTests
            
             command.TryAddLoadCommand("texture1", texture1).Should().BeTrue();
             command.TryAddLoadCommand("texture1", texture2).Should().BeFalse();
-            command.Invoking(x=>x.LoadResource("texture1", texture2)).ShouldThrow<Exception>();
+            command.Invoking(x=> x.Add(new ResourceLoadCommand
+            {
+                SlotName = "texture1",
+                Resource = texture2
+            })).ShouldThrow<Exception>();
         }
 
 

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using MDXEngine.Textures;
 using SharpDX.D3DCompiler;
 using SharpDX.Direct3D11;
-
+using MDXEngine.Interfaces;
 namespace MDXEngine
 {
 
 
-    public class HLSLProgram : IDisposable
+    public class HLSLProgram : IShaderProgram,IDisposable
     {
         readonly VertexShader _vertexShader;
         readonly PixelShader _pixelShader;
@@ -19,7 +19,8 @@ namespace MDXEngine
         internal VertexShader VertexShader { get { return _vertexShader; } }
         internal PixelShader PixelShader { get { return _pixelShader; } }
         internal InputLayout InputLayout { get { return _layout; } }
-        internal ShaderSlotsCollection ProgramResourceSlots { get { return _slots; } }
+
+        public ShaderSlotsCollection ProgramResourceSlots { get { return _slots; } }
         
         public InputLayout GetLayout() { return _layout; }
 
@@ -65,7 +66,10 @@ namespace MDXEngine
             _layout.Dispose();
         }
 
-
+        public void Load(IShaderResource resource, string name)
+        {
+            resource.Load(this, name);
+        }
 
         public IDxContext DxContext { get { return _dx; } }
     

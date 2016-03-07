@@ -11,6 +11,15 @@ namespace MDXEngine.DrawTree
         public string SlotName { get; set; }
 
         public IShaderResource Resource { get; set; }
+
+
+        public ResourceLoadCommand(string slotName, IShaderResource resource)
+        {
+            this.SlotName = slotName;
+            this.Resource = resource;
+        }
+
+        public ResourceLoadCommand() { }
     }
 
     

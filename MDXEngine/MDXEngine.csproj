@@ -86,6 +86,7 @@
     <Compile Include="Interfaces\IDrawTreeAction.cs" />
     <Compile Include="Interfaces\IDxContext.cs" />
     <Compile Include="Interfaces\IDxViewControl.cs" />
+    <Compile Include="Interfaces\IHLSLProgramcs.cs" />
     <Compile Include="Interfaces\INormal.cs" />
     <Compile Include="Interfaces\IObservable.cs" />
     <Compile Include="Interfaces\IObserver.cs" />

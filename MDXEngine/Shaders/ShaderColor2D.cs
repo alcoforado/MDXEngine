@@ -29,7 +29,7 @@ namespace MDXEngine
                     });
 
 
-            _root = new DrawTree<VerticeColor>();
+            _root = new DrawTree<VerticeColor>(_program);
 
             ObservableDock = new ShaderObservableDock(_root);
 

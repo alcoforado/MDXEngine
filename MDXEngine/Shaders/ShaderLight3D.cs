@@ -10,6 +10,7 @@ using SharpDX.DXGI;
 using MDXEngine;
 using MDXEngine.SharpDXExtensions;
 using MDXEngine.Interfaces;
+using MDXEngine.DrawTree;
 
 namespace MDXEngine.Shaders
 {
@@ -37,7 +38,7 @@ namespace MDXEngine.Shaders
                         new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
                         new InputElement("NORMAL", 0, Format.R32G32B32A32_Float, 16, 0)
                     });
-            _drawTree = new DrawTree<VerticeNormal>();
+            _drawTree = new DrawTree<VerticeNormal>(_program);
             _worldProj = new CBufferResource<TViewChange>(_dx);
             _lights = new CBufferResource<DirectionalLight>(_dx);
             _material = new CBufferResource<Material>(_dx); 
@@ -48,9 +49,21 @@ namespace MDXEngine.Shaders
              eyePos=new Vector4(0)
             };
 
-            _drawTree.GetRootNode().Commands = new CommandsSequence(_program)
-                .LoadResource("TViewChange", _worldProj)
-                .LoadResource("OneTime", _lights);
+            _drawTree.GetRootNode().Commands = new CommandsSequence(_program, new List<ResourceLoadCommand>
+            {
+                new ResourceLoadCommand
+                {
+                    Resource=_worldProj,
+                    SlotName="TViewChange"
+                },
+                new ResourceLoadCommand
+                {
+                    Resource=_lights,
+                    SlotName="OneTime"
+                }
+            });
+
+
              
              this.ObservableDock = new ShaderObservableDock(_drawTree);
         }

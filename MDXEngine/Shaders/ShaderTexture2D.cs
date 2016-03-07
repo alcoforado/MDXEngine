@@ -8,6 +8,7 @@ using SharpDX.D3DCompiler;
 using SharpDX;
 using SharpDX.DXGI;
 using SharpDX.Direct3D11;
+using MDXEngine.DrawTree;
 
 namespace MDXEngine
 {
@@ -27,7 +28,7 @@ namespace MDXEngine
                     });
 
 
-            _root = new DrawTree<VerticeTexture2D>(); 
+            _root = new DrawTree<VerticeTexture2D>(_program); 
             ObservableDock = new ShaderObservableDock(_root);
         }
 
@@ -45,9 +46,7 @@ namespace MDXEngine
 
         public void Add(IShape<VerticeTexture2D> shape, Texture texture)
         {
-            var command = new CommandsSequence(_program);
-            command.LoadResource("gTexture", texture);
-            _root.Add(shape,command);
+            _root.Add(shape,new List<ResourceLoadCommand> { new ResourceLoadCommand("gTexture", texture)});
         }
 
         public void RemoveAll()

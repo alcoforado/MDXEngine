@@ -60,7 +60,7 @@ namespace MDXEngine
 
     public class ResourceSlot
     {
-        public IShaderResource Resource { get; set; }
+        public IShaderResource LoadedResource { get; set; }
         public int SlotId { get; set; }
         public string Name { get; set; }
         public ShaderInputType ResourceType { get; set; }
@@ -80,7 +80,7 @@ namespace MDXEngine
 
         internal bool HasResource()
         {
-            return this.Resource != null;
+            return this.LoadedResource != null;
         }
     }
 

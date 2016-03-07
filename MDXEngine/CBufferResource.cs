@@ -68,13 +68,13 @@ namespace MDXEngine
                 program.DxContext.DeviceContext.UpdateSubresource(ref _data, _constantBuffer);
                 _dataChanged = false;
             }
-            if (slot.Resource != this)
+            if (slot.LoadedResource != this)
             {
                 if (slot.ShaderStage == ShaderStage.PixelShader)
                     program.DxContext.DeviceContext.PixelShader.SetConstantBuffer(slot.SlotId, _constantBuffer);
                 else if (slot.ShaderStage == ShaderStage.VertexShader)
                     program.DxContext.DeviceContext.VertexShader.SetConstantBuffer(slot.SlotId, _constantBuffer);
-                slot.Resource = this;
+                slot.LoadedResource = this;
             }
         
         }
