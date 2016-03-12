@@ -135,6 +135,14 @@ namespace MDXEngine.Textures
             return _resource.IsDisposed && _view.IsDisposed;
         }
 
+
+        public void SetResourceData(object data)
+        {
+            var bp = (Bitmap) data;
+            this.CopyFromBitmap(bp);
+
+        }
+
         /// <summary>
         /// Effective load the resource into the program shader using IDxContext
         /// Remember that you can access IDxContext throuth the HLSLProgram.DxContext property

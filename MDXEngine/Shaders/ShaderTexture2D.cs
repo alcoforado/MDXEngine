@@ -46,7 +46,7 @@ namespace MDXEngine
 
         public void Add(IShape<VerticeTexture2D> shape, Texture texture)
         {
-            _root.Add(shape,new List<ResourceLoadCommand> { new ResourceLoadCommand("gTexture", texture)});
+            _root.Add(shape,new List<SlotData> { new SlotData("gTexture", texture)});
         }
 
         public void RemoveAll()

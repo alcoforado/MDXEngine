@@ -16,18 +16,20 @@ namespace MDXEngine.Shaders
 {
     public class ShaderLight3D : IShader, IShapeCollection<VerticeNormal>
     {
-        private struct TViewChange {
+        private struct TViewChange
+        {
             public Matrix projM;
             public Vector4 eyePos;
         }
-        
-        
+
+
         IDxContext _dx;
         HLSLProgram _program;
         DrawTree<VerticeNormal> _drawTree;
         CBufferResource<TViewChange> _worldProj;
         CBufferResource<DirectionalLight> _lights;
         CBufferResource<Material> _material;
+        
         public IObservable ObservableDock { get; private set; } //An IObservable used by observers to attach themselves
 
         public ShaderLight3D(IDxContext dxContext)
@@ -41,33 +43,32 @@ namespace MDXEngine.Shaders
             _drawTree = new DrawTree<VerticeNormal>(_program);
             _worldProj = new CBufferResource<TViewChange>(_dx);
             _lights = new CBufferResource<DirectionalLight>(_dx);
-            _material = new CBufferResource<Material>(_dx); 
-           
+            _material = new CBufferResource<Material>(_dx);
+
             _worldProj.Data = new TViewChange
-{
-             projM=Matrix.Identity,
-             eyePos=new Vector4(0)
+            {
+                projM = Matrix.Identity,
+                eyePos = new Vector4(0)
             };
 
-            _drawTree.GetRootNode().Commands = new CommandsSequence(_program, new List<ResourceLoadCommand>
+            _drawTree.GetRootNode().Commands = new CommandsSequence(_program, new List<SlotData>
             {
-                new ResourceLoadCommand
+                new SlotData
                 {
-                    Resource=_worldProj,
+                    Data=_worldProj,
                     SlotName="TViewChange"
                 },
-                new ResourceLoadCommand
+                new SlotData
                 {
-                    Resource=_lights,
+                    Data=_lights,
                     SlotName="OneTime"
                 }
             });
 
-
-             
-             this.ObservableDock = new ShaderObservableDock(_drawTree);
+            //Exposed the tree as observable.
+            this.ObservableDock = new ShaderObservableDock(_drawTree);
         }
-       
+
 
         public void SetDirectionalLight(DirectionalLight light)
         {
@@ -92,10 +93,10 @@ namespace MDXEngine.Shaders
 
         public void Add(ITopology topology, Material mat)
         {
-            
-        //    var shape = new Shape3D<VerticeNormal>(topology, painter);
-            
-         //   _drawTree.Add(shape);
+
+            //    var shape = new Shape3D<VerticeNormal>(topology, painter);
+
+            //   _drawTree.Add(shape);
         }
 
 

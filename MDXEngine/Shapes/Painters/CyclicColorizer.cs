@@ -35,7 +35,7 @@ namespace MDXEngine.Painters
             }
         }
 
-        public List<ResourceLoadCommand> GetLoadResourcesCommands() { return null; }
+        public List<SlotData> GetLoadResourcesCommands() { return null; }
 
     }
 }

@@ -29,9 +29,9 @@ namespace UnitTests
 
             command.TryAddLoadCommand("texture1", texture).Should().BeTrue();
             command.TryAddLoadCommand("texture1", texture).Should().BeTrue();
-            command.Add(new MDXEngine.DrawTree.ResourceLoadCommand {
+            command.Add(new SlotData {
                SlotName= "texture1",
-               Resource =  texture });
+               Data =  texture });
         }
 
         [TestMethod]
@@ -43,10 +43,10 @@ namespace UnitTests
            
             command.TryAddLoadCommand("texture1", texture1).Should().BeTrue();
             command.TryAddLoadCommand("texture1", texture2).Should().BeFalse();
-            command.Invoking(x=> x.Add(new ResourceLoadCommand
+            command.Invoking(x=> x.Add(new SlotData
             {
                 SlotName = "texture1",
-                Resource = texture2
+                Data = texture2
             })).ShouldThrow<Exception>();
         }
 

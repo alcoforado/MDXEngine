@@ -6,20 +6,24 @@ using System.Threading.Tasks;
 
 namespace MDXEngine.DrawTree
 {
-    public class ResourceLoadCommand
+    public class SlotData
     {
         public string SlotName { get; set; }
 
-        public IShaderResource Resource { get; set; }
+        public object Data
+        { get; set; }
 
 
-        public ResourceLoadCommand(string slotName, IShaderResource resource)
+        public SlotData(string slotName, IShaderResource resource)
         {
             this.SlotName = slotName;
-            this.Resource = resource;
+            this.Data = resource;
         }
 
-        public ResourceLoadCommand() { }
+        public SlotData() 
+        { 
+            
+        }
     }
 
     

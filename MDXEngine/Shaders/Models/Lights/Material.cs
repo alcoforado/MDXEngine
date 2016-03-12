@@ -13,5 +13,7 @@ namespace MDXEngine.Shaders
         public Vector4 Diffuse;
         public Vector4 Specular; //w=SpecPower
         public Vector4 Reflect;
+
+      
     }
 }

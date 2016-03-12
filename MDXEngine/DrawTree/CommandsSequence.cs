@@ -12,19 +12,19 @@ namespace MDXEngine
 
     public class CommandsSequence
     {
-        private readonly Dictionary<string, ResourceLoadCommand> _loadCommands;
+        private readonly Dictionary<string, SlotData> _loadCommands;
         private readonly IShaderProgram _program;
 
         public CommandsSequence(IShaderProgram program)
         {
             _program = program;
-            _loadCommands = new Dictionary<string, ResourceLoadCommand>();
+            _loadCommands = new Dictionary<string, SlotData>();
         }
 
-        public CommandsSequence(IShaderProgram program,List<ResourceLoadCommand> commands)
+        public CommandsSequence(IShaderProgram program,List<SlotData> commands)
         {
             _program = program;
-            _loadCommands = new Dictionary<string, ResourceLoadCommand>();
+            _loadCommands = new Dictionary<string, SlotData>();
             Add(commands);
         }
 
@@ -35,7 +35,7 @@ namespace MDXEngine
             var result = new List<IShaderResource>();
             foreach (var elem in _loadCommands)
             {
-                result.Add(elem.Value.Resource);
+                result.Add(elem.Value.Data);
             }
             return result;
         }
@@ -45,7 +45,7 @@ namespace MDXEngine
             foreach (var pair in _loadCommands)
             {
                 var elem = pair.Value;
-                _program.Load(elem.Resource,elem.SlotName);
+                _program.Load(elem.Data,elem.SlotName);
             }
         }
 
@@ -61,7 +61,7 @@ namespace MDXEngine
         /// <returns></returns>
         public bool CanMerge(CommandsSequence commands)
         {
-            return _program == commands._program && commands._loadCommands.All(elem => this.CanAddLoadCommand(elem.Value.SlotName, elem.Value.Resource));
+            return _program == commands._program && commands._loadCommands.All(elem => this.CanAddLoadCommand(elem.Value.SlotName, elem.Value.Data));
         }
 
         /// <summary>
@@ -77,11 +77,11 @@ namespace MDXEngine
                 foreach (var elem in commands._loadCommands)
                 {
                     if (_loadCommands.ContainsKey(elem.Key))
-                        Debug.Assert(_loadCommands[elem.Key].Resource == elem.Value.Resource);
+                        Debug.Assert(_loadCommands[elem.Key].Data == elem.Value.Data);
                     else
-                        _loadCommands[elem.Value.SlotName] = new ResourceLoadCommand()
+                        _loadCommands[elem.Value.SlotName] = new SlotData()
                         {
-                            Resource = elem.Value.Resource,
+                            Data = elem.Value.Data,
                             SlotName = elem.Value.SlotName
                         };
                 }
@@ -106,24 +106,24 @@ namespace MDXEngine
 
             if (_loadCommands.ContainsKey(slot.Name))
             {
-                return _loadCommands[slot.Name].Resource == resource;
+                return _loadCommands[slot.Name].Data == resource;
             }
-            _loadCommands[slot.Name] = new ResourceLoadCommand()
+            _loadCommands[slot.Name] = new SlotData()
             {
                 SlotName = slot.Name,
-                Resource = resource
+                Data = resource
             };
             return true;
         }
 
-        public CommandsSequence Add(ResourceLoadCommand elem)
+        public CommandsSequence Add(SlotData elem)
         {
-            if (!TryAddLoadCommand(elem.SlotName, elem.Resource))
+            if (!TryAddLoadCommand(elem.SlotName, elem.Data))
                 throw new Exception("Could not add command to the Sequence");
             return this;
         }
 
-        public CommandsSequence Add(List<ResourceLoadCommand> elems)
+        public CommandsSequence Add(List<SlotData> elems)
         {
             foreach (var elem in elems)
                 Add(elem); 
@@ -137,7 +137,7 @@ namespace MDXEngine
         {
             if (_loadCommands.ContainsKey(varName))
             {
-                return _loadCommands[varName].Resource == resource;
+                return _loadCommands[varName].Data == resource;
             }
             else
             {

@@ -9,7 +9,8 @@ using Buffer = SharpDX.Direct3D11.Buffer;
 namespace MDXEngine
 {
     /// <summary>
-    /// A Constant Buffer resource.
+    /// A Constant Buffer resource. This is a wrapper for a constant buffer and represents an allocation
+    /// of a type structure in gpu memory.
     /// It is use is simple, the user gives the data of type T to be copied to the constant buffer  and the resource and the variable name.
     /// When the shader is draw the shader will check if the buffer changed and need to be loaded again in memory
     /// </summary>
@@ -38,7 +39,7 @@ namespace MDXEngine
            _constantBuffer = new Buffer(dx.Device, Utilities.SizeOf<T>(), ResourceUsage.Default, BindFlags.ConstantBuffer, CpuAccessFlags.None, ResourceOptionFlags.None, 0);
            _dataChanged = false;
            ObservableDock = new ObservableDock();
-           
+          
         }
         public bool IsDisposed()
         {
@@ -51,17 +52,17 @@ namespace MDXEngine
         
         }
 
-        public void UpdateBuffer()
-        {
-        }
-
-
+         public void SetResourceData(object data)
+         {
+             Data = (T) data;
+         }
+        
+        
+      
         public void Load(HLSLProgram program, String varName) 
         {
            
             var slot = program.ProgramResourceSlots[varName].Value;
-        
-
 
             if (_dataChanged)
             {

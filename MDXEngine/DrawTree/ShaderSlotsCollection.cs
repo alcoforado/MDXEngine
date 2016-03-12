@@ -9,7 +9,7 @@ namespace MDXEngine
 {
     public class ShaderSlotsCollection
     {
-        private readonly Dictionary<String,ResourceSlot> _slots;
+        private readonly Dictionary<String,SlotDescription> _slots;
 
         public void AddResourceSlots(ShaderReflection  shader,ShaderStage stage)
         {
@@ -26,7 +26,7 @@ namespace MDXEngine
                         System.Diagnostics.Debug.Assert(desc.BindPoint == _slots[desc.Name].SlotId);
                     }
                     else
-                        _slots[desc.Name] = new ResourceSlot(desc.BindPoint, desc.Name, desc.Type,stage);
+                        _slots[desc.Name] = new SlotDescription(desc.BindPoint, desc.Name, desc.Type,stage);
                 }
             }
 
@@ -35,17 +35,17 @@ namespace MDXEngine
 
         public ShaderSlotsCollection()
         {
-            _slots = new Dictionary<String,ResourceSlot>();
+            _slots = new Dictionary<String,SlotDescription>();
         }
 
-        public MayNotExist<ResourceSlot> this[string varName] 
+        public MayNotExist<SlotDescription> this[string varName] 
         { 
             get 
             { 
                 if (_slots.ContainsKey(varName))
-                  return new MayNotExist<ResourceSlot>(_slots[varName]); 
+                  return new MayNotExist<SlotDescription>(_slots[varName]); 
                 else 
-                    return new MayNotExist<ResourceSlot>(); 
+                    return new MayNotExist<SlotDescription>(); 
             } 
         }
 
@@ -58,14 +58,14 @@ namespace MDXEngine
 
     public enum ShaderStage {PixelShader,VertexShader,GeometryShader};
 
-    public class ResourceSlot
+    public class SlotDescription
     {
         public IShaderResource LoadedResource { get; set; }
         public int SlotId { get; set; }
         public string Name { get; set; }
         public ShaderInputType ResourceType { get; set; }
         public ShaderStage ShaderStage { get; set; }
-        public ResourceSlot(int slot, string name, ShaderInputType resourceType,ShaderStage stage)
+        public SlotDescription(int slot, string name, ShaderInputType resourceType,ShaderStage stage)
         {
             this.SlotId = slot;
             this.Name = name;

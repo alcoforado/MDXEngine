@@ -24,6 +24,6 @@ namespace MDXEngine
        /// just return null or empty list;
        /// </summary>
        /// <returns></returns>
-        List<ResourceLoadCommand> GetLoadResourcesCommands();
+        List<SlotData> GetLoadResourcesCommands();
     }
 }

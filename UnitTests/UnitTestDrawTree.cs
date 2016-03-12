@@ -8,6 +8,7 @@ using MDXEngine;
 using FluentAssertions;
 using SharpDX;
 using Moq;
+using MDXEngine.Interfaces;
 namespace UnitTests
 {
     [TestClass]
@@ -25,7 +26,8 @@ namespace UnitTests
         Mock<IShape<ColorVerticeData>> mShapeIV4;
         Mock<IShape<ColorVerticeData>> mShapeV4;
         Mock<IShape<ColorVerticeData>> mPointsV4;
-
+        Mock<IShaderProgram> _programMock;
+        IShaderProgram _program;
 
         [TestInitialize]
         public void setMoqs()
@@ -62,9 +64,9 @@ namespace UnitTests
             mPointsV4.Setup(x => x.NIndices()).Returns(0);
             mPointsV4.Setup(x => x.NVertices()).Returns(4);
             mPointsV4.Setup(x => x.GetTopology()).Returns(TopologyType.POINTS);
-            
 
-
+            _programMock = new Mock<IShaderProgram>();
+            _program = _programMock.Object;
 
         }
 
@@ -72,7 +74,7 @@ namespace UnitTests
         public void DrawTree_TwoShapesWithEqualTypeShouldBeAddedToTheSameGroup()
         {
             //Set
-            var tree = new DrawTree<ColorVerticeData>();
+            var tree = new DrawTree<ColorVerticeData>(_program);
             tree.Add(mShapeIV10.Object);
             tree.Add(mShapeIV4.Object);
             
@@ -95,7 +97,7 @@ namespace UnitTests
         [TestMethod]
         public void DrawTree_ShapesWithDifferentTypeShouldBeAddedToDifferentGroups()
         {
-            var tree = new DrawTree<ColorVerticeData>();
+            var tree = new DrawTree<ColorVerticeData>(_program);
             tree.Add(mShapeIV10.Object);
             tree.Add(mShapeIV4.Object);
             tree.Add(mShapeV4.Object);
@@ -135,7 +137,7 @@ namespace UnitTests
         [TestMethod]
         public void DrawTree_ComputeSizesOfOneShape()
         {
-            var tree = new DrawTree<ColorVerticeData>();
+            var tree = new DrawTree<ColorVerticeData>(_program);
             tree.Add(mShapeI10V4.Object);
 
             tree.ComputeSizes();
@@ -166,7 +168,7 @@ namespace UnitTests
         [TestMethod]
         public void DrawTree_ComputeSizesOfO2ShapesSameType()
         {
-            var tree = new DrawTree<ColorVerticeData>();
+            var tree = new DrawTree<ColorVerticeData>(_program);
             tree.Add(mShapeI10V4.Object);
             tree.Add(mShapeI5V3.Object);
 
@@ -208,7 +210,7 @@ namespace UnitTests
         [TestMethod]
         public void DrawTree_ComputeSizesOfO3ShapesSameTypePlusOneDifferentShape()
         {
-            var tree = new DrawTree<ColorVerticeData>();
+            var tree = new DrawTree<ColorVerticeData>(_program);
             tree.Add(mShapeI10V4.Object);
             tree.Add(mShapeI5V3.Object);
             tree.Add(mShapeIV10.Object);
@@ -278,8 +280,8 @@ namespace UnitTests
                     i.Length.Should().Be(5);
                     v.Length.Should().Be(3);
                 });
-            
-            var tree = new DrawTree<ColorVerticeData>();
+
+            var tree = new DrawTree<ColorVerticeData>(_program);
             tree.Add(mShapeI5V3.Object);
             tree.FullSyncTree();
             mShapeI5V3.Verify(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<SubArray<int>>()));
@@ -298,7 +300,7 @@ namespace UnitTests
                     i[4]=4;
                 });
 
-            var tree = new DrawTree<ColorVerticeData>();
+            var tree = new DrawTree<ColorVerticeData>(_program);
             tree.Add(mShapeI5V3.Object);
             tree.FullSyncTree();
             tree.Indices.Should().Equal(new int[]{0,1,2,3,4},(int left,int right) => left==right);
@@ -323,7 +325,7 @@ namespace UnitTests
                     v[2] = aux;
 
                 });
-            var tree = new DrawTree<ColorVerticeData>();
+            var tree = new DrawTree<ColorVerticeData>(_program);
             tree.Add(mShapeI5V3.Object);
             tree.FullSyncTree();
             

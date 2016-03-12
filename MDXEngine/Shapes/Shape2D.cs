@@ -28,7 +28,7 @@ namespace MDXEngine.Shapes
             _renderer.Write(vV,vI,_topology.GetTopologyType());
         }
 
-        public List<ResourceLoadCommand> GetResourcesLoadCommands()
+        public List<SlotData> GetResourcesLoadCommands()
         {
             return this._renderer.GetLoadResourcesCommands();
         }

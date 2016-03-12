@@ -17,6 +17,7 @@ namespace MDXEngine
         private T[] _vertices;
         private int[] _indices;
         private IShaderProgram _program;
+        private IDxContext _context;
         Buffer _vI;
         Buffer _vV;
 
@@ -209,7 +210,7 @@ namespace MDXEngine
             return _ntree.GetData().RootNode;
         }
 
-        public void SetRootCommandsSequence(List<ResourceLoadCommand> commands)
+        public void SetRootCommandsSequence(List<SlotData> commands)
         {
             _ntree.GetData().RootNode.Commands = new  CommandsSequence(_program,commands);
             this.AddObserversToResourcesInNode(_ntree);
@@ -240,12 +241,12 @@ namespace MDXEngine
 
         
 
-        public void Add(IShape<T> shape, List<ResourceLoadCommand> extraCommands=null)
+        public void Add(IShape<T> shape, List<SlotData> extraCommands=null)
         {
             var shapeCommands = shape.GetResourcesLoadCommands();
 
             if (shapeCommands == null)
-                shapeCommands = new List<ResourceLoadCommand>();
+                shapeCommands = new List<SlotData>();
 
             if (extraCommands!=null)
             {

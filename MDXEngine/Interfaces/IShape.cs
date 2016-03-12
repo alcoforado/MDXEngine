@@ -14,6 +14,6 @@ namespace MDXEngine
         int  NVertices();
         int  NIndices();
         TopologyType GetTopology();
-        List<ResourceLoadCommand> GetResourcesLoadCommands();
+        List<SlotData> GetResourcesLoadCommands();
     }
 }

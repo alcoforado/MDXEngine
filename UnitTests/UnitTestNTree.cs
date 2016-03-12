@@ -113,9 +113,10 @@ namespace UnitTests
             node.ForItselfAndAllParents(nd => lst.Add(nd.GetData()));
 
             //check
-            lst.Count.Should().Be(2);
-            lst[0].Should().Be(3);
-            lst[1].Should().Be(1);
+            lst.Should().HaveCount(3);
+            lst[0].Should().Be(5);
+            lst[1].Should().Be(3);
+            lst[2].Should().Be(1);
         }
 
         [TestMethod]

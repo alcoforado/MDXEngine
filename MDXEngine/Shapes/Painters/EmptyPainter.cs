@@ -19,9 +19,9 @@ namespace MDXEngine.Painters
         /// Resturns an empty list of resources config
         /// </summary>
         /// <returns></returns>
-        public List<ResourceLoadCommand> GetLoadResourcesCommands()
+        public List<SlotData> GetLoadResourcesCommands()
         {
-            return new List<ResourceLoadCommand>();
+            return new List<SlotData>();
         }
     }
 }
