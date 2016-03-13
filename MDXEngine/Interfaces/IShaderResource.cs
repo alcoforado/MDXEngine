@@ -10,10 +10,13 @@ namespace MDXEngine
     {
 
         //given an hlslprogram and a variable name, loads itself in the program.
-        void Load(HLSLProgram program, String varName);
+        void Bind(String varName);
+
+
+      
         
         //copy data to resource
-        void SetResourceData(object data);
+        void Load(object data);
 
         //flag to indicate if the resource is disposed
         bool IsDisposed();
@@ -21,6 +24,8 @@ namespace MDXEngine
         //A doc to register observers into the shader resources to be notified everytime the resurce 
         //changes.
         IObservable ObservableDock { get; }
+
+      
 
     }
 }

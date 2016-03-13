@@ -20,7 +20,7 @@ namespace MDXEngine
         void Write(IArray<T> vV, IArray<int> vI, TopologyType topologyType);
         
        /// <summary>
-       /// Get the Load Resources commands. If the painter don't define any ShaderResources to be loaded,
+       /// Get the Bind Resources commands. If the painter don't define any ShaderResources to be loaded,
        /// just return null or empty list;
        /// </summary>
        /// <returns></returns>

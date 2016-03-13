@@ -52,14 +52,14 @@ namespace MDXEngine
         
         }
 
-         public void SetResourceData(object data)
+         public void Load(object data)
          {
              Data = (T) data;
          }
         
         
       
-        public void Load(HLSLProgram program, String varName) 
+        public void Bind(HLSLProgram program, String varName) 
         {
            
             var slot = program.ProgramResourceSlots[varName].Value;

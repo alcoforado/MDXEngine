@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MDXEngine.DrawTree
+namespace MDXEngine.Interfaces
 {
-    public class SlotResourceProvider
+    public interface ISlotData
     {
-        public SlotResourceProvider()
-
     }
 }

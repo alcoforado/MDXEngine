@@ -49,7 +49,10 @@ namespace MDXEngine
             } 
         }
 
-
+        public List<SlotDescription> ToList()
+        {
+            _slots.ToList().Select(x => x.Value).ToList();
+        }
 
 
 

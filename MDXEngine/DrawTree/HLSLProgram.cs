@@ -68,7 +68,7 @@ namespace MDXEngine
 
         public void Load(IShaderResource resource, string name)
         {
-            resource.Load(this, name);
+            resource.Bind(this, name);
         }
 
         public IDxContext DxContext { get { return _dx; } }

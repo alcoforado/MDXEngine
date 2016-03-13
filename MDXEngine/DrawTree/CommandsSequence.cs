@@ -12,32 +12,27 @@ namespace MDXEngine
 
     public class CommandsSequence
     {
-        private readonly Dictionary<string, SlotData> _loadCommands;
+        private readonly Dictionary<string, SlotDataInternal> _loadCommands;
         private readonly IShaderProgram _program;
 
         public CommandsSequence(IShaderProgram program)
         {
             _program = program;
-            _loadCommands = new Dictionary<string, SlotData>();
+            _loadCommands = new Dictionary<string, SlotDataInternal>();
         }
 
-        public CommandsSequence(IShaderProgram program,List<SlotData> commands)
+        public CommandsSequence(IShaderProgram program,List<SlotDataInternal> commands)
         {
             _program = program;
-            _loadCommands = new Dictionary<string, SlotData>();
+            _loadCommands = new Dictionary<string, SlotDataInternal>();
             Add(commands);
         }
 
 
 
-        public  List<IShaderResource> GetAllResources()
+        public  List<SlotData> GetAllResources()
         {
-            var result = new List<IShaderResource>();
-            foreach (var elem in _loadCommands)
-            {
-                result.Add(elem.Value.Data);
-            }
-            return result;
+            return _loadCommands.Select(elem => (SlotData) elem.Value).ToList();
         }
 
         public void Execute()
@@ -79,7 +74,7 @@ namespace MDXEngine
                     if (_loadCommands.ContainsKey(elem.Key))
                         Debug.Assert(_loadCommands[elem.Key].Data == elem.Value.Data);
                     else
-                        _loadCommands[elem.Value.SlotName] = new SlotData()
+                        _loadCommands[elem.Value.SlotName] = new SlotDataInternal()
                         {
                             Data = elem.Value.Data,
                             SlotName = elem.Value.SlotName
@@ -108,7 +103,7 @@ namespace MDXEngine
             {
                 return _loadCommands[slot.Name].Data == resource;
             }
-            _loadCommands[slot.Name] = new SlotData()
+            _loadCommands[slot.Name] = new SlotDataInternal()
             {
                 SlotName = slot.Name,
                 Data = resource
@@ -116,14 +111,14 @@ namespace MDXEngine
             return true;
         }
 
-        public CommandsSequence Add(SlotData elem)
+        public CommandsSequence Add(SlotDataInternal elem)
         {
             if (!TryAddLoadCommand(elem.SlotName, elem.Data))
                 throw new Exception("Could not add command to the Sequence");
             return this;
         }
 
-        public CommandsSequence Add(List<SlotData> elems)
+        public CommandsSequence Add(List<SlotDataInternal> elems)
         {
             foreach (var elem in elems)
                 Add(elem); 

@@ -136,7 +136,7 @@ namespace MDXEngine.Textures
         }
 
 
-        public void SetResourceData(object data)
+        public void Load(object data)
         {
             var bp = (Bitmap) data;
             this.CopyFromBitmap(bp);
@@ -149,7 +149,7 @@ namespace MDXEngine.Textures
         /// </summary>
         /// <param name="program"></param>
         /// <param name="shaderVariableName"></param>
-        public void Load(HLSLProgram program, String shaderVariableName)
+        public void Bind(HLSLProgram program, String shaderVariableName)
         {
             if (!program.IsCurrent())
                 throw new Exception("HLSLProgram is not the current loaded program");
