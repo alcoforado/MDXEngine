@@ -68,8 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IShaderResourceFactory.cs" />
     <Compile Include="Interfaces\ISlotData.cs" />
-    <Compile Include="ShaderResources\ShaderResourcesFactory.cs" />
+    <Compile Include="ShaderResources\ShaderResourceFactory.cs" />
     <Compile Include="UI\Camera\Camera.cs" />
     <Compile Include="UI\Camera\MouseSphericNavigator.cs" />
     <Compile Include="UI\Camera\SphericVisualization.cs" />

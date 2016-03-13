@@ -51,7 +51,7 @@ namespace MDXEngine
 
         public List<SlotDescription> ToList()
         {
-            _slots.ToList().Select(x => x.Value).ToList();
+           return  _slots.ToList().Select(x => x.Value).ToList();
         }
 
 
@@ -67,13 +67,17 @@ namespace MDXEngine
         public int SlotId { get; set; }
         public string Name { get; set; }
         public ShaderInputType ResourceType { get; set; }
+        public Type DataType { get; set; }
         public ShaderStage ShaderStage { get; set; }
+        
+        
         public SlotDescription(int slot, string name, ShaderInputType resourceType,ShaderStage stage)
         {
             this.SlotId = slot;
             this.Name = name;
             this.ResourceType = resourceType;
             this.ShaderStage = stage;
+            DataType = null;
         }
 
         internal bool IsTexture()

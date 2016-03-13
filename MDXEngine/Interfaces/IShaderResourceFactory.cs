@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace MDXEngine.Interfaces
 {
-    public interface HLSLProg
+    public interface IShaderResourceFactory
     {
-        ShaderSlotsCollection ProgramResourceSlots { get; }
-
-        void Load(IShaderResource resource, string name);
-
-
-
+        IShaderResource CreateForSlot(string slotName);
     }
 }

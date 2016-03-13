@@ -8,7 +8,7 @@ namespace MDXEngine
 {
 
 
-    public class HLSLProgram : IShaderProgram,IDisposable
+    public class HLSLProgram : HLSLProg,IDisposable
     {
         readonly VertexShader _vertexShader;
         readonly PixelShader _pixelShader;

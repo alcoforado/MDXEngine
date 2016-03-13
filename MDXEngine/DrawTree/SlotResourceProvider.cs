@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using MDXEngine.ShaderResources;
 
 namespace MDXEngine.DrawTree
 {
@@ -20,6 +21,7 @@ namespace MDXEngine.DrawTree
     {
         private readonly HLSLProgram _hlsl;
         private readonly Dictionary<string,SlotPool> _pools;
+        private readonly IShaderResourceFactory _shaderResourceFactory;
 
         private class LoadCommand : ILoadCommand
         {
@@ -45,7 +47,7 @@ namespace MDXEngine.DrawTree
                 //changed by the client. 
                 if (alloc != null && alloc.Resource != null)
                 {
-                       System.Diagnostics.Debug.Assert(this.AllocationInfo.Data == this.SlotData);
+                       System.Diagnostics.Debug.Assert(this.AllocationInfo.SlotData == this.SlotData);
                         if (pool.CurrentBindedBuffer != alloc)
                         {
                             alloc.Resource.Bind(SlotData.SlotName); //bind
@@ -63,10 +65,11 @@ namespace MDXEngine.DrawTree
         }
 
 
-        public SlotResourceProvider(HLSLProgram hlsl)
+        public SlotResourceProvider(IShaderResourceFactory resourceFactory,HLSLProgram hlsl)
         {
             _hlsl = hlsl;
-            _pools = _hlsl.ProgramResourceSlots.ToList().ToDictionary(x => x.Name, x => new SlotPool(x));
+
+            _pools = _hlsl.ProgramResourceSlots.ToList().ToDictionary(x => x.Name, x => new SlotPool(resourceFactory,x));
         }
 
 
@@ -87,29 +90,61 @@ namespace MDXEngine.DrawTree
     /// means "unlimited"
     internal  class SlotPool
     {
+        private readonly IShaderResourceFactory _shaderResourceFactory;
         private SlotDescription Slot;
 
         public int NextBufferAvailableIndex { get; set; } /*The Buffer (Resource) currently binded to the slot*/
         public SlotAllocation CurrentBindedBuffer { get; set; } /*The Buffer (Resource) currently binded to the slot*/
 
 
-        public HashSet<SlotAllocation> PoolIndex;
         
-        public List<SlotAllocation> Pool;  
+        public LinkedList<SlotAllocation> Pool;  
         
         public uint PoolSize { get; set; }
+
+
+        public bool CanExpand()
+        {
+            return Pool.Count < PoolSize;
+        }
 
         private void SetPoolSize(uint size)
         {
             if (size == 0)
-                throw new InvalidOperationException("PoolIndex size must be a value greater than 0");
+                throw new InvalidOperationException("Pool size must be a value greater than 0");
 
-            if (size > PoolSize)
+            if (size >= PoolSize)
             {
                 PoolSize = size;
             }
             else
             {
+                if (CurrentBindedBuffer!= null)
+                    Pool.Remove(CurrentBindedBuffer);
+                if (Pool.Count > size -1)
+                {
+                    
+                    var newPool = new LinkedList<SlotAllocation>();
+                    
+                    foreach (var elem in Pool)
+                    {
+                        newPool.
+                    }
+
+                }
+                
+                
+
+
+                if (Pool[i] != CurrentBindedBuffer) //make sure this is not the only  one resource assigned to the shader slot
+                {
+                    Pool[i].Resource.Dispose();
+                    Pool[i].Resource = null;
+                    Pool.RemoveAt(i);
+                    i = 0;
+                }
+
+
                 int i=0;
                 while (Pool.Count > size)
                 {
@@ -124,7 +159,6 @@ namespace MDXEngine.DrawTree
                         i++; //try next
                 }
                 PoolSize = size;
-                PoolIndex = new HashSet<SlotAllocation>(Pool); //reconstruct the PoolIndex set
             }
 
         }
@@ -143,12 +177,14 @@ namespace MDXEngine.DrawTree
         /// </summary>
         /// <param name="slot"></param>
         /// <param name="poolSize">Max number of buffers (cached elements). A value 0 indicates no limit</param>
-        public SlotPool(SlotDescription slot, uint  poolSize = UInt32.MaxValue)
+        public SlotPool(IShaderResourceFactory shaderResourceFactory,SlotDescription slot, uint  poolSize = UInt32.MaxValue)
         {
+            _shaderResourceFactory = shaderResourceFactory;
             this.Slot = slot;
             PoolSize = poolSize;
             PoolIndex = new HashSet<SlotAllocation>();
             NextBufferAvailableIndex = 0;
+            CurrentBindedBuffer = null;
         }
 
 
@@ -159,31 +195,61 @@ namespace MDXEngine.DrawTree
             //We also have to check if the AllocationInfo has a buffer (Resource) associated with it
             //if not then the AllocationInfo is invalid because it does not belong to any pool anymore. Probably because the pool size
             //changed by the client. 
-            if (alloc != null && alloc.Resource != null && alloc.Data == slotData)
+            if (alloc != null && alloc.Resource != null && alloc.SlotData == slotData)
             {
                 if (CurrentBindedBuffer != alloc) //if alloc is not already binded to the slot bind it
                 {
                     alloc.Resource.Bind(slotData.SlotName);
                 }
-                //move the allocation (buffer) to the far end of the pool since it is the most recent used buffer
-                //now
-                Pool.Remove(alloc);
-                Pool.Add(alloc);
+
+
+                //technacally we should move the allocation (buffer) to the far end of the pool since it is the most recent used buffer
+                //now. But this is relevant  only in the situation the pool cannot create anymore allocations, so we have to chose the 
+                //least used one.
+                if (!this.CanExpand())
+                {
+                    Pool.Remove(alloc);
+                    Pool.Add(alloc);
+                }
+                return alloc;
             }
-            else //You need to select or create a new buffer.
+            else //need to select or create a new buffer.
             {
                 //Can create a new buffer for the slot data?
-                if (Pool.Count < PoolSize)
+                if (this.CanExpand())
                 {
-                    Pool.Add(new SlotAllocation
+                    var newAlloc = new SlotAllocation
                     {
-                        Data = slotData,
-                        Resource = 
+                        SlotData = slotData,
+                        Resource = _shaderResourceFactory.CreateForSlot(slotData.SlotName)
+                    };
 
-                    });
+                    
+                    //Load and Bind
+                    newAlloc.Resource.Load(newAlloc.SlotData.Data);
+                    newAlloc.Resource.Bind(newAlloc.SlotData.SlotName);
+
+                    //Add at the end of the pool (this is the most recent used allocation)
+                    Pool.Add(newAlloc);
+                    return newAlloc;
                 }
+                else //max number of allocations reached. Reuse one allocation
+                {
+                    //chose the olders allocation (head in the pool)
+                    var oldAlloc = Pool.First();
+                    
+                    //Load and Bind with the alloc
+                    oldAlloc.SlotData = slotData;
+                    oldAlloc.Resource.Load(slotData.Data);
+                    oldAlloc.Resource.Bind(slotData.SlotName);
 
+                    //Send the oldAlloc to the last element of the pool
+                    //It is the most recent used now
+                    Pool.Remove(oldAlloc);
+                    Pool.Add(oldAlloc);
 
+                    return oldAlloc;
+                }
             }
 
 
@@ -195,7 +261,7 @@ namespace MDXEngine.DrawTree
 
     internal class SlotAllocation 
     {
-        public SlotData Data   { get; internal set; }
+        public SlotData SlotData   { get; internal set; }
         public IShaderResource Resource { get; internal set; }
        
     }

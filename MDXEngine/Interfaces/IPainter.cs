@@ -14,7 +14,7 @@ namespace MDXEngine
     /// slots used by the shader. It is intimaly related to a shader. A developer cannot create a painter without
     /// be ablo to understand the shader alghorithm. Generally every shader comes with their own set of painters.
     /// </summary>
-    /// <typeparam name="T"> The Vertice Data type</typeparam>
+    /// <typeparam name="T"> The Vertice SlotData type</typeparam>
     public interface IPainter<T>
     {
         void Write(IArray<T> vV, IArray<int> vI, TopologyType topologyType);

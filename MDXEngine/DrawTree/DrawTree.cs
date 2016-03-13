@@ -16,7 +16,7 @@ namespace MDXEngine
         private NTreeNode<DrawInfo<T>> _ntree;
         private T[] _vertices;
         private int[] _indices;
-        private IShaderProgram _program;
+        private HLSLProg _program;
         private IDxContext _context;
         Buffer _vI;
         Buffer _vV;
@@ -195,7 +195,7 @@ namespace MDXEngine
         }
 
 
-        public DrawTree(IShaderProgram program,int nVertices = 0, int nIndices = 0)
+        public DrawTree(HLSLProg program,int nVertices = 0, int nIndices = 0)
         {
 
             _ntree = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new RootNode()));

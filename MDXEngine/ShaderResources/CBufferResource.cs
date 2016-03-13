@@ -17,27 +17,18 @@ namespace MDXEngine
     /// <typeparam name="T"></typeparam>
     public class CBufferResource<T> : IShaderResource where T: struct 
     {
-        T _data;
-        bool _dataChanged;
-        public T Data { 
-            get { return _data; } 
-            
-            set { 
-                _data = value;
-                _dataChanged = true;
-                (this.ObservableDock as ObservableDock).OnChanged();
-            } 
-        }
+        private readonly HLSLProgram _program;
+      
         
-        Buffer _constantBuffer;
+        private readonly Buffer _constantBuffer;
 
         public IObservable ObservableDock { get; set; }
         
-        public CBufferResource(IDxContext context)
+        public CBufferResource(HLSLProgram program)
         {
-            var dx = context;
+            _program = program;
+            var dx = program.DxContext;
            _constantBuffer = new Buffer(dx.Device, Utilities.SizeOf<T>(), ResourceUsage.Default, BindFlags.ConstantBuffer, CpuAccessFlags.None, ResourceOptionFlags.None, 0);
-           _dataChanged = false;
            ObservableDock = new ObservableDock();
           
         }
@@ -54,27 +45,24 @@ namespace MDXEngine
 
          public void Load(object data)
          {
-             Data = (T) data;
+             var dt = (T) data;
+             _program.DxContext.DeviceContext.UpdateSubresource(ref dt, _constantBuffer);
          }
         
         
       
-        public void Bind(HLSLProgram program, String varName) 
+        public void Bind( String varName) 
         {
            
-            var slot = program.ProgramResourceSlots[varName].Value;
+            var slot = _program.ProgramResourceSlots[varName].Value;
 
-            if (_dataChanged)
-            {
-                program.DxContext.DeviceContext.UpdateSubresource(ref _data, _constantBuffer);
-                _dataChanged = false;
-            }
+     
             if (slot.LoadedResource != this)
             {
                 if (slot.ShaderStage == ShaderStage.PixelShader)
-                    program.DxContext.DeviceContext.PixelShader.SetConstantBuffer(slot.SlotId, _constantBuffer);
+                    _program.DxContext.DeviceContext.PixelShader.SetConstantBuffer(slot.SlotId, _constantBuffer);
                 else if (slot.ShaderStage == ShaderStage.VertexShader)
-                    program.DxContext.DeviceContext.VertexShader.SetConstantBuffer(slot.SlotId, _constantBuffer);
+                    _program.DxContext.DeviceContext.VertexShader.SetConstantBuffer(slot.SlotId, _constantBuffer);
                 slot.LoadedResource = this;
             }
         
