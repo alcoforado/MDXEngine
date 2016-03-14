@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MDXEngine.Interfaces;
 using SharpDX;
 using SharpDX.Direct3D11;
 using Buffer = SharpDX.Direct3D11.Buffer;
@@ -17,14 +18,14 @@ namespace MDXEngine
     /// <typeparam name="T"></typeparam>
     public class CBufferResource<T> : IShaderResource where T: struct 
     {
-        private readonly HLSLProgram _program;
+        private readonly IShaderProgram  _program;
       
         
         private readonly Buffer _constantBuffer;
 
         public IObservable ObservableDock { get; set; }
-        
-        public CBufferResource(HLSLProgram program)
+
+        public CBufferResource(IShaderProgram program)
         {
             _program = program;
             var dx = program.DxContext;

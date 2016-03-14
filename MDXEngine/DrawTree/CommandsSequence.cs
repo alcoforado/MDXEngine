@@ -13,15 +13,15 @@ namespace MDXEngine
     public class CommandsSequence
     {
         private readonly Dictionary<string, SlotDataInternal> _loadCommands;
-        private readonly HLSLProg _program;
+        private readonly IShaderProgram _program;
 
-        public CommandsSequence(HLSLProg program)
+        public CommandsSequence(IShaderProgram program)
         {
             _program = program;
             _loadCommands = new Dictionary<string, SlotDataInternal>();
         }
 
-        public CommandsSequence(HLSLProg program,List<SlotDataInternal> commands)
+        public CommandsSequence(IShaderProgram program,List<SlotDataInternal> commands)
         {
             _program = program;
             _loadCommands = new Dictionary<string, SlotDataInternal>();

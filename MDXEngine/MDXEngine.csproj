@@ -68,6 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawTree\SlotAllocation\LoadCommand.cs" />
+    <Compile Include="DrawTree\SlotAllocation\SlotAllocation.cs" />
+    <Compile Include="DrawTree\SlotAllocation\SlotPool.cs" />
     <Compile Include="Interfaces\IShaderResourceFactory.cs" />
     <Compile Include="Interfaces\ISlotData.cs" />
     <Compile Include="ShaderResources\ShaderResourceFactory.cs" />
@@ -75,7 +78,7 @@
     <Compile Include="UI\Camera\MouseSphericNavigator.cs" />
     <Compile Include="UI\Camera\SphericVisualization.cs" />
     <Compile Include="DrawTree\ShaderSlotsCollection.cs" />
-    <Compile Include="DrawTree\SlotResourceProvider.cs" />
+    <Compile Include="DrawTree\SlotAllocation\SlotResourceProvider.cs" />
     <Compile Include="Interfaces\IShaderResourceData.cs" />
     <Compile Include="ShaderResources\CBufferResource.cs" />
     <Compile Include="Extensions\Drawing\RectangleExtension.cs" />
@@ -92,7 +95,7 @@
     <Compile Include="Interfaces\IDrawTreeAction.cs" />
     <Compile Include="Interfaces\IDxContext.cs" />
     <Compile Include="Interfaces\IDxViewControl.cs" />
-    <Compile Include="Interfaces\IHLSLProgramcs.cs" />
+    <Compile Include="Interfaces\IShaderProgram.cs" />
     <Compile Include="Interfaces\INormal.cs" />
     <Compile Include="Interfaces\IObservable.cs" />
     <Compile Include="Interfaces\IObserver.cs" />
