@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MDXEngine.Interfaces;
 
 namespace MDXEngine
 {
@@ -14,16 +15,16 @@ namespace MDXEngine
     /// slots used by the shader. It is intimaly related to a shader. A developer cannot create a painter without
     /// be ablo to understand the shader alghorithm. Generally every shader comes with their own set of painters.
     /// </summary>
-    /// <typeparam name="T"> The Vertice SlotData type</typeparam>
+    /// <typeparam name="T"> The Vertice SlotRequest type</typeparam>
     public interface IPainter<T>
     {
-        void Write(IArray<T> vV, IArray<int> vI, TopologyType topologyType);
+        void Draw(IDrawContext<T> context);
         
        /// <summary>
        /// Get the Bind Resources commands. If the painter don't define any ShaderResources to be loaded,
        /// just return null or empty list;
        /// </summary>
        /// <returns></returns>
-        List<SlotData> GetLoadResourcesCommands();
+        List<SlotRequest> GetLoadResourcesCommands();
     }
 }

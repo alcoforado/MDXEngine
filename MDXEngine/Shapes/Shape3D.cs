@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MDXEngine.Interfaces;
 
 namespace MDXEngine.Shapes
 {
@@ -33,14 +34,16 @@ namespace MDXEngine.Shapes
         public int NVertices() { return _topology.NVertices(); }
         public int NIndices() { return _topology.NIndices(); }
         public TopologyType GetTopology() { return _topology.GetTopologyType(); }
-        public void Write(SubArray<T> vV, IArray<int> vI)
+        public void Draw(IDrawContext<T> context)
         {
+            var vV = context.Vertices;
+            var vI = context.Indices;
             var vV1 = new Vertex3DArray<T>(vV);
             _topology.Write(vV1, vI);
-           _renderer.Write(vV, vI, _topology.GetTopologyType());
+           _renderer.Draw(context);
         }
 
-        public List<SlotData> GetResourcesLoadCommands()
+        public List<SlotRequest> GetResourcesLoadCommands()
         {
          
                 return this._renderer.GetLoadResourcesCommands();

@@ -12,7 +12,7 @@ namespace MDXEngine.Interfaces
 
         void Load(IShaderResource resource, string name);
 
-        IDxContext DxContext { get;  set; }
+        IDxContext DxContext { get;  }
 
 
     }

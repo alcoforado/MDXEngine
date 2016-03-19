@@ -6,7 +6,11 @@ using SharpDX.Direct3D11;
 using MDXEngine.Interfaces;
 namespace MDXEngine
 {
-
+    public class SlotInfo
+    {
+        public Type SlotType { get; set; }
+        public string SlotName { get; set; }
+    }
 
     public class HLSLProgram : IShaderProgram,IDisposable
     {
@@ -24,7 +28,7 @@ namespace MDXEngine
         
         public InputLayout GetLayout() { return _layout; }
 
-        public HLSLProgram(IDxContext dx, String program, InputElement[] elems)
+        public HLSLProgram(IDxContext dx, String program, InputElement[] elems,List<SlotInfo>  slotsInfo=null)
         {
             var device = dx.Device;
             var vertexShaderByteCode = ShaderBytecode.Compile(program, "VS", "vs_4_0");
@@ -48,7 +52,13 @@ namespace MDXEngine
             _slots = new ShaderSlotsCollection();
             _slots.AddResourceSlots(pixelReflection, ShaderStage.PixelShader);
             _slots.AddResourceSlots(vertexReflection, ShaderStage.VertexShader);
-           
+            
+            //Adding extra slot information given by the shader
+            if (slotsInfo == null)
+                _slots.AddSlotInfoFromShaders(slotsInfo);
+
+
+
 
             _dx = dx;
             vertexShaderByteCode.Dispose();

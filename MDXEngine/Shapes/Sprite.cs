@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MDXEngine.Textures;
 using SharpDX;
 using MDXEngine.DrawTree;
+using MDXEngine.Interfaces;
 
 namespace MDXEngine.Shapes
 {
@@ -25,8 +26,10 @@ namespace MDXEngine.Shapes
             _texture = texture;
         }
         
-        public void Write(SubArray<VerticeTexture2D> vV, IArray<int> vI)
+        public void Draw(IDrawContext<VerticeTexture2D> context)
         {
+            var vV = context.Vertices;
+            var vI = context.Indices;
             vV[0] = new VerticeTexture2D()
             {
                 Position2D = new Vector2(_p.X, _p.Y),
@@ -65,10 +68,10 @@ namespace MDXEngine.Shapes
 
         }
 
-        public List<SlotData> GetResourcesLoadCommands()
+        public List<SlotRequest> GetResourcesLoadCommands()
         {
 
-            return new List<SlotData>();
+            return new List<SlotRequest>();
         }
          
     }

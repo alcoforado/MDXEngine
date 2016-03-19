@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SharpDX;
 using MDXEngine.DrawTree;
+using MDXEngine.Interfaces;
 
 namespace MDXEngine.Painters
 {
@@ -24,9 +25,9 @@ namespace MDXEngine.Painters
         }
 
 
-        public void Write(IArray<T> vV, IArray<int> vI, TopologyType topologyType)
+        public void Draw(IDrawContext<T> context)
         { 
-            if (topologyType == TopologyType.TRIANGLES)
+            if (context.TopologyType == TopologyType.TRIANGLES)
             {
                 Vector2 p0 =   new Vector2(0f,0f);
                 Vector2 Up =   new Vector2(0f,-_dy);
@@ -37,7 +38,7 @@ namespace MDXEngine.Painters
         }
 
 
-        public List<SlotData> GetLoadResourcesCommands() { return null; }
+        public List<SlotRequest> GetLoadResourcesCommands() { return null; }
 
     }
 }

@@ -51,14 +51,14 @@ namespace MDXEngine.Shaders
                 eyePos = new Vector4(0)
             };
 
-            _drawTree.GetRootNode().Commands = new CommandsSequence(_program, new List<SlotData>
+            _drawTree.GetRootNode().Commands = new CommandsSequence(_program, new List<SlotRequest>
             {
-                new SlotData
+                new SlotRequest
                 {
                     Data=_worldProj,
                     SlotName="TViewChange"
                 },
-                new SlotData
+                new SlotRequest
                 {
                     Data=_lights,
                     SlotName="OneTime"

@@ -1,4 +1,5 @@
 ﻿using MDXEngine.DrawTree;
+using MDXEngine.Interfaces;
 using MDXEngine.Shaders;
 using System;
 using System.Collections.Generic;
@@ -19,16 +20,16 @@ namespace MDXEngine.Painters.ShaderLight3D
         }
 
         
-        public void Write(IArray<VerticeNormal> vV, IArray<int> vI, TopologyType topologyType)
+        public void Draw(IDrawContext<VerticeNormal> context)
         {
             return;
         }
 
-        public List<SlotData> GetLoadResourcesCommands()
+        public List<SlotRequest> GetLoadResourcesCommands()
         {
-            return new List<SlotData>
+            return new List<SlotRequest>
             {
-                new SlotData {
+                new SlotRequest {
                    Data=Material,
                    SlotName="Material"
                 }

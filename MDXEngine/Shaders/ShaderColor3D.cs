@@ -35,8 +35,8 @@ namespace MDXEngine
             Matrix M = Matrix.Identity;
             _worldProj.Data = M;
 
-            _drawTree.SetRootCommandsSequence(new List<SlotData> {new SlotData {
-                Data = _worldProj,
+            _drawTree.SetRootCommandsSequence(new List<SlotRequest> {new SlotRequest {
+                Data = _worldProj,o
                 SlotName ="TViewChange"
             } }); 
             

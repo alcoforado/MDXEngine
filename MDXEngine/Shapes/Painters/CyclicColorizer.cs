@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using MDXEngine.SharpDXExtensions;
 using SharpDX;
 using MDXEngine.DrawTree;
+using MDXEngine.Interfaces;
+
 namespace MDXEngine.Painters
 {
     public class CyclicColorizer : IPainter<VerticeColor>
@@ -22,8 +24,9 @@ namespace MDXEngine.Painters
             _colors = new Color[]{color};
         }
 
-        public void Write(IArray<VerticeColor> vV,IArray<int> vI, TopologyType topologyType)
+        public void Draw(IDrawContext<VerticeColor> context)
         {
+            var vV = context.Vertices;
             int k=0;
             for (int i=0;i<vV.Length;i++)
             {
@@ -35,7 +38,7 @@ namespace MDXEngine.Painters
             }
         }
 
-        public List<SlotData> GetLoadResourcesCommands() { return null; }
+        public List<SlotRequest> GetLoadResourcesCommands() { return null; }
 
     }
 }

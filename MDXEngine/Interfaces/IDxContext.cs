@@ -15,7 +15,6 @@ namespace MDXEngine
         Device Device { get;  }
         DeviceContext DeviceContext { get; }
         HLSLProgram CurrentProgram { get; set; }
-        ResourcesManager ResourcesManager { get; }
         Camera Camera { get; }
         bool IsCameraChanged { get; }
         System.Drawing.Size ScreenSize { get; }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using MDXEngine.Textures;
 using MDXEngine.DrawTree;
 using MDXEngine.Interfaces;
 
@@ -12,35 +11,34 @@ namespace MDXEngine
 
     public class CommandsSequence
     {
-        private readonly Dictionary<string, SlotDataInternal> _loadCommands;
+        private readonly Dictionary<string, ILoadCommand> _loadCommands;
         private readonly IShaderProgram _program;
-
-        public CommandsSequence(IShaderProgram program)
+        private readonly ISlotResourceProvider _slotResourceProvider;
+        public CommandsSequence(IShaderProgram program,ISlotResourceProvider slotResourceProvider)
         {
             _program = program;
-            _loadCommands = new Dictionary<string, SlotDataInternal>();
+            _loadCommands = new Dictionary<string, ILoadCommand>();
+            _slotResourceProvider = slotResourceProvider;
         }
 
-        public CommandsSequence(IShaderProgram program,List<SlotDataInternal> commands)
+        public CommandsSequence(IShaderProgram program,List<SlotRequest> lstSlotData)
         {
             _program = program;
-            _loadCommands = new Dictionary<string, SlotDataInternal>();
-            Add(commands);
+            _loadCommands = new Dictionary<string, ILoadCommand>();
+
+            var lstLoadCommand = lstSlotData.Select(x=>_slotResourceProvider.CreateLoadCommand(x)).ToList();
+            Add(lstLoadCommand);
         }
 
 
 
-        public  List<SlotData> GetAllResources()
-        {
-            return _loadCommands.Select(elem => (SlotData) elem.Value).ToList();
-        }
 
         public void Execute()
         {
             foreach (var pair in _loadCommands)
             {
-                var elem = pair.Value;
-                _program.Load(elem.Data,elem.SlotName);
+                var command = pair.Value;
+                command.Load();
             }
         }
 
@@ -74,11 +72,7 @@ namespace MDXEngine
                     if (_loadCommands.ContainsKey(elem.Key))
                         Debug.Assert(_loadCommands[elem.Key].Data == elem.Value.Data);
                     else
-                        _loadCommands[elem.Value.SlotName] = new SlotDataInternal()
-                        {
-                            Data = elem.Value.Data,
-                            SlotName = elem.Value.SlotName
-                        };
+                        _loadCommands[elem.Key] = elem.Value;
                 }
                 return true;
             }
@@ -90,35 +84,31 @@ namespace MDXEngine
 
         #region Add one command to the command sequence
 
-        public bool TryAddLoadCommand(string varName,IShaderResource resource)
+        public bool TryAddLoadCommand(ILoadCommand command)
         {
-           var result = _program.ProgramResourceSlots[varName];
+           var result = _program.ProgramResourceSlots[command.SlotName];
 #if DEBUG
              if (!result.Exists)
-                throw new Exception(String.Format("Variable {0} is not defined in program",varName));
+                 throw new Exception(String.Format("Variable {0} is not defined in program", command.SlotName));
 #endif
            var slot = result.Value;
 
             if (_loadCommands.ContainsKey(slot.Name))
             {
-                return _loadCommands[slot.Name].Data == resource;
+                return _loadCommands[slot.Name].Data == command.Data;
             }
-            _loadCommands[slot.Name] = new SlotDataInternal()
-            {
-                SlotName = slot.Name,
-                Data = resource
-            };
+            _loadCommands[slot.Name] = command; 
             return true;
         }
 
-        public CommandsSequence Add(SlotDataInternal elem)
+        public CommandsSequence Add(ILoadCommand elem)
         {
-            if (!TryAddLoadCommand(elem.SlotName, elem.Data))
+            if (!TryAddLoadCommand(elem))
                 throw new Exception("Could not add command to the Sequence");
             return this;
         }
 
-        public CommandsSequence Add(List<SlotDataInternal> elems)
+        public CommandsSequence Add(List<ILoadCommand> elems)
         {
             foreach (var elem in elems)
                 Add(elem); 
@@ -128,11 +118,11 @@ namespace MDXEngine
 
         
 
-        public bool CanAddLoadCommand(string varName, IShaderResource resource)
+        public bool CanAddLoadCommand(string varName, object data)
         {
             if (_loadCommands.ContainsKey(varName))
             {
-                return _loadCommands[varName].Data == resource;
+                return _loadCommands[varName].Data == data;
             }
             else
             {

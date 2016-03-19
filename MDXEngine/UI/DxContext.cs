@@ -11,7 +11,6 @@ namespace MDXEngine
         private HLSLProgram _hlslProgram;
         public Device Device { get; set; }
         public DeviceContext DeviceContext { get { return Device.ImmediateContext; } }
-        public ResourcesManager ResourcesManager { get; set; }
         public Camera Camera { get; set; }
         public bool IsCameraChanged { get; set; }
         public System.Drawing.Size ScreenSize { get; set; }

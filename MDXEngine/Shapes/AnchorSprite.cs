@@ -8,6 +8,8 @@ using SharpDX;
 using System.Drawing;
 using MDXEngine.SharpDXExtensions;
 using MDXEngine.DrawTree;
+using MDXEngine.Interfaces;
+
 namespace MDXEngine.Shapes
 {
     public class AnchorSprite : IShape<VerticeTexture2D>, ICameraObserver 
@@ -39,10 +41,12 @@ namespace MDXEngine.Shapes
             _p += _d;
         }
 
-        public void Write(SubArray<VerticeTexture2D> vV, IArray<int> vI)
+        public void Draw(IDrawContext<VerticeTexture2D> context)
         {
-            float width  = (float)_width;
-            float height = (float)_height;
+            var vV = context.Vertices;
+            var vI = context.Indices;
+            var width  = (float)_width;
+            var height = (float)_height;
             vV[0] = new VerticeTexture2D()
             {
                 Position2D = new Vector2(_p.X, _p.Y),
@@ -68,9 +72,9 @@ namespace MDXEngine.Shapes
 
         }
 
-        public List<SlotData> GetResourcesLoadCommands()
+        public List<SlotRequest> GetResourcesLoadCommands()
         {
-            return new List<SlotData>();
+            return new List<SlotRequest>();
         }
          
 

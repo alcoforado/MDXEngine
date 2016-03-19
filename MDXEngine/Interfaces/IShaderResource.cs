@@ -1,4 +1,5 @@
 ﻿using System;
+using MDXEngine.Interfaces;
 using SharpDX.Direct3D11;
 
 namespace MDXEngine
@@ -10,7 +11,7 @@ namespace MDXEngine
     {
 
         //given an hlslprogram and a variable name, loads itself in the program.
-        void Bind(String varName);
+        void Bind(IShaderProgram program,String varName);
 
 
       

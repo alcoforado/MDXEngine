@@ -55,7 +55,20 @@ namespace MDXEngine
         }
 
 
-
+        public  void AddSlotInfoFromShaders(List<SlotInfo> slotsInfo)
+        {
+            foreach (var slotInfo in slotsInfo)
+            {
+                if (_slots.ContainsKey(slotInfo.SlotName))
+                {
+                    _slots[slotInfo.SlotName].DataType = slotInfo.SlotType;
+                }
+                else
+                {
+                    throw new Exception(String.Format("Error cannot find slot names {0}",slotInfo.SlotName));
+                }
+            }
+        }
     }
 
 
@@ -63,7 +76,6 @@ namespace MDXEngine
 
     public class SlotDescription
     {
-        public IShaderResource LoadedResource { get; set; }
         public int SlotId { get; set; }
         public string Name { get; set; }
         public ShaderInputType ResourceType { get; set; }
@@ -85,10 +97,7 @@ namespace MDXEngine
             return ResourceType == ShaderInputType.Texture;
         }
 
-        internal bool HasResource()
-        {
-            return this.LoadedResource != null;
-        }
+     
     }
 
 

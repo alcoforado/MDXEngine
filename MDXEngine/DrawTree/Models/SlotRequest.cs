@@ -7,7 +7,7 @@ using MDXEngine.Interfaces;
 
 namespace MDXEngine.DrawTree
 {
-    public class SlotData : ISlotData
+    public class SlotRequest : ISlotRequest
     {
         public string SlotName { get; set; }
 
@@ -15,13 +15,13 @@ namespace MDXEngine.DrawTree
         { get; set; }
 
 
-        public SlotData(string slotName, IShaderResource resource)
+        public SlotRequest(string slotName, IShaderResource resource)
         {
             this.SlotName = slotName;
             this.Data = resource;
         }
 
-        public SlotData() 
+        public SlotRequest() 
         { 
             
         }

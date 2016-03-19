@@ -7,6 +7,8 @@ using SharpDX;
 using SharpDX.Direct3D11;
 using System.Drawing;
 using System.Drawing.Imaging;
+using MDXEngine.Interfaces;
+
 namespace MDXEngine.Textures
 {
     /// <summary>
@@ -18,38 +20,52 @@ namespace MDXEngine.Textures
         protected SharpDX.Direct3D11.Texture2D _resource;
         protected SharpDX.Direct3D11.ShaderResourceView _view;
         protected IDxContext _dx;
-        
         protected Texture() 
         {
             this.ObservableDock = new ObservableDock();
         }
+       
+        
         protected void InitTexture(IDxContext dx,Texture2DDescription desc) 
         {
             _resource = new Texture2D(dx.Device, desc);
             _view = new ShaderResourceView(dx.Device, _resource);
-            _dx = dx;
-            _dx.ResourcesManager.Add(this);
+           _dx = dx;
         }
+        
+
+
 
         public IObservable ObservableDock { get; set; }
 
 
-        public Texture(IDxContext dx, string fileName)
+
+        public Texture(IDxContext dx)
         {
-            _resource = Texture2D.FromFile<Texture2D>(dx.Device, fileName, ImageLoadInformation.Default);
-            _view = new ShaderResourceView(dx.Device, _resource);
+          
             _dx = dx;
-            _dx.ResourcesManager.Add(this);
+        }
+
+
+        public void LoadFromFile(string fileName)
+        {
+            this.Dispose();
+            _resource = Texture2D.FromFile<Texture2D>(_dx.Device, fileName, ImageLoadInformation.Default);
+            _view = new ShaderResourceView(_dx.Device, _resource);
             this.ObservableDock = new ObservableDock();
 
         }
 
-        public Texture(IDxContext dx,Bitmap bp)
+       
+
+
+         public void LoadFromBitmap(Bitmap bp)
         {
-            this.ObservableDock = new ObservableDock();
+            this.Dispose();
+             this.ObservableDock = new ObservableDock();
             if (bp.PixelFormat != PixelFormat.Format32bppArgb)
                 throw new Exception("Only Bitmap with PixelFormat Format32bppArgb is compatible for now");
-            _resource= new Texture2D(dx.Device,new Texture2DDescription()
+            _resource= new Texture2D(_dx.Device,new Texture2DDescription()
                         {
                             BindFlags = BindFlags.ShaderResource,
                             Width = bp.Width,
@@ -62,9 +78,8 @@ namespace MDXEngine.Textures
                             CpuAccessFlags = CpuAccessFlags.None,
                             SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0)
                         });
-            _view = new ShaderResourceView(dx.Device, _resource);
-            _dx = dx;
-            _dx.ResourcesManager.Add(this);
+            _view = new ShaderResourceView(_dx.Device, _resource);
+           
             this.CopyFromBitmap(bp);
            
         }
@@ -78,8 +93,16 @@ namespace MDXEngine.Textures
 
         public void Dispose()
         {
-            _resource.Dispose();
-            _view.Dispose();
+            if (_resource != null)
+            {
+                _resource.Dispose();
+                _resource = null;
+            }
+            if (_view != null)
+            {
+                _view.Dispose();
+                _view = null;
+            }
             
         }
 
@@ -136,23 +159,32 @@ namespace MDXEngine.Textures
         }
 
 
+      
+    
         public void Load(object data)
         {
-            var bp = (Bitmap) data;
-            this.CopyFromBitmap(bp);
-
+            Bitmap bp = data as Bitmap;
+            if (bp != null )
+            {
+                LoadFromBitmap(bp);
+                return;
+            }
+            string fileName = data as string;
+            if (fileName != null)
+            {
+                LoadFromFile(fileName);
+            }
+            throw new Exception(String.Format("Cannot build a texture from type {0}",data.GetType().FullName));
         }
 
         /// <summary>
         /// Effective load the resource into the program shader using IDxContext
         /// Remember that you can access IDxContext throuth the HLSLProgram.DxContext property
         /// </summary>
-        /// <param name="program"></param>
         /// <param name="shaderVariableName"></param>
-        public void Bind(HLSLProgram program, String shaderVariableName)
+        public void Bind(IShaderProgram program, string shaderVariableName)
         {
-            if (!program.IsCurrent())
-                throw new Exception("HLSLProgram is not the current loaded program");
+            
             var slotRef = program.ProgramResourceSlots[shaderVariableName];
             
             

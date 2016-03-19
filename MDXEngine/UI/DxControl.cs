@@ -16,7 +16,6 @@ namespace MDXEngine
     {
        private Device _device;
        private readonly Control _renderControl;
-       private readonly ResourcesManager _resourceManager;
        private SwapChain _swapChain;
        private Texture2D _backBuffer;
        private RenderTargetView _renderView;
@@ -142,7 +141,6 @@ namespace MDXEngine
             
             _renderControl=control;
             InitializeDX();
-            _resourceManager = new ResourcesManager();
             _shaders = new List<IShader>();
             
             control.Resize += (events, args) => this._needResize = true;
@@ -152,7 +150,6 @@ namespace MDXEngine
             _dx.Camera = new Camera(control.ClientSize.Width,control.ClientSize.Height);
             _dx.Camera.AddObserver(this);
             _dx.Device = _device;
-            _dx.ResourcesManager = _resourceManager;
             _dx.IsCameraChanged = true;
             _dx.ScreenSize = _renderControl.ClientSize;
 
@@ -286,14 +283,14 @@ namespace MDXEngine
         }
 
 
-        public ResourcesManager ResourcesManager { get { return _resourceManager; } }
+   
 
         public void Dispose()
         {
             foreach (var shd in _shaders)
                 shd.Dispose();
 
-            _resourceManager.DisposeAllResources();
+         
            
 
             Utilities.Dispose(ref _backBuffer);

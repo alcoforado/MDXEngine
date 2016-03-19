@@ -68,11 +68,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawTree\Models\DrawContext.cs" />
+    <Compile Include="Interfaces\IDrawContext.cs" />
+    <Compile Include="Interfaces\ILoadCommand.cs" />
+    <Compile Include="Interfaces\ISlotResourceProvider.cs" />
     <Compile Include="DrawTree\SlotAllocation\LoadCommand.cs" />
     <Compile Include="DrawTree\SlotAllocation\SlotAllocation.cs" />
     <Compile Include="DrawTree\SlotAllocation\SlotPool.cs" />
     <Compile Include="Interfaces\IShaderResourceFactory.cs" />
-    <Compile Include="Interfaces\ISlotData.cs" />
+    <Compile Include="Interfaces\ISlotRequest.cs" />
     <Compile Include="ShaderResources\ShaderResourceFactory.cs" />
     <Compile Include="UI\Camera\Camera.cs" />
     <Compile Include="UI\Camera\MouseSphericNavigator.cs" />
@@ -83,10 +87,10 @@
     <Compile Include="ShaderResources\CBufferResource.cs" />
     <Compile Include="Extensions\Drawing\RectangleExtension.cs" />
     <Compile Include="DrawTree\CommandsSequence.cs" />
-    <Compile Include="DrawTree\SlotData.cs" />
-    <Compile Include="DrawTree\RootNode.cs" />
-    <Compile Include="DrawTree\ShapeGroupNode.cs" />
-    <Compile Include="DrawTree\ShapeNode.cs" />
+    <Compile Include="DrawTree\Models\SlotRequest.cs" />
+    <Compile Include="DrawTree\Models\RootNode.cs" />
+    <Compile Include="DrawTree\Models\ShapeGroupNode.cs" />
+    <Compile Include="DrawTree\Models\ShapeNode.cs" />
     <Compile Include="UI\DxContext.cs" />
     <Compile Include="MMath\Geometry\MeshAlghorithms.cs" />
     <Compile Include="DrawTree\HLSLProgram.cs" />
@@ -133,7 +137,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Shaders\ShaderColor2D.cs" />
-    <Compile Include="DrawTree\DrawInfo.cs" />
+    <Compile Include="DrawTree\Models\DrawInfo.cs" />
     <Compile Include="DrawTree\DrawTree.cs" />
     <Compile Include="UI\DxControl.cs" />
     <Compile Include="Shapes\ITopology.cs" />

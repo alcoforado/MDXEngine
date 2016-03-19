@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace MDXEngine.Interfaces
 {
-    public interface ISlotData
+    public interface ISlotRequest
     {
+        string SlotName { get; set; }
+        object Data { get; set; }
     }
 }
