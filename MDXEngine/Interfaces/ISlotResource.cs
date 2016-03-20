@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MDXEngine.DrawTree;
 
 namespace MDXEngine.Interfaces
 {
-    public interface ILoadCommand : ISlotResource
+    public interface ISlotResource
     {
-        
-        void Load();
+        string SlotName { get; set; }
+        object Data { get; set; }
     }
-
 }
