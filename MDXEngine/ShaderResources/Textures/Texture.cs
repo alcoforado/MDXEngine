@@ -193,7 +193,6 @@ namespace MDXEngine.Textures
                 var slot = slotRef.Value;
                 if (slot.IsTexture())
                 {
-                    slot.LoadedResource = this;
                     _dx.DeviceContext.PixelShader.SetShaderResource(slot.SlotId, this._view);
                 }
                 else

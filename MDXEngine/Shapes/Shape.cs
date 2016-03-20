@@ -27,7 +27,7 @@ namespace MDXEngine
             var vI = context.Indices;
             var vVPos = new Vertex3DArray<T>(vV);
             _topology.Write(vVPos, vI);
-            _renderer.Write(vV,vI,_topology.GetTopologyType());
+            _renderer.Draw(context);
         }
         public TopologyType GetTopology() { return _topology.GetTopologyType(); }
 

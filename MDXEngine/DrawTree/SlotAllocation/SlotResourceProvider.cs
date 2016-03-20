@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MDXEngine.Interfaces;
+using SharpDX.D3DCompiler;
 
 namespace MDXEngine.DrawTree.SlotAllocation
 {
@@ -19,7 +20,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
             {
                 foreach (var pool in _pools)
                 {
-                    pool.Dispose();
+                    pool.Value.Dispose();
                 }
             }
 
@@ -37,7 +38,24 @@ namespace MDXEngine.DrawTree.SlotAllocation
             return new LoadCommand(request, this);
         }
 
+        public IConstantBufferSlotResource<T> CreateConstantBuffer<T>(string slotName, T data)
+        {
+            //Validate data
+            if (_pools[slotName].Slot.ResourceType != ShaderInputType.ConstantBuffer)
+                throw new Exception(String.Format("Slot {0} is not a constant buffer", slotName));
+            if (!_pools.ContainsKey(slotName))
+                throw new Exception(String.Format("Slot name {0} not found", slotName));
+            if (_pools[slotName].Slot.DataType.FullName != typeof(T).FullName)
+               throw new Exception(String.Format("Slot name {0} has type {1} but data is of type {2}", slotName, _pools[slotName].Slot.DataType, typeof(T)));
+            
+                        
+             
+        }
 
+        public ITextureSlotResource CreateTexture(string slotName, string fileName)
+        {
+            throw new NotImplementedException();
+        }
     }
 
  }

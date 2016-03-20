@@ -7,9 +7,8 @@ namespace MDXEngine.Interfaces
     {
         ILoadCommand CreateLoadCommand(SlotRequest request);
 
-        IConstantBufferSlotResource<T> CreateConstantBufferSlotResource<T>(string slotName, T data);
+        IConstantBufferSlotResource<T> CreateConstantBuffer<T>(string slotName, T data);
 
-        ITextureSlotResource CreateTextureSlotResource(string slotName, string fileName);
-
+        ITextureSlotResource CreateTexture(string slotName, string fileName);
     }
 }

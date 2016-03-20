@@ -36,7 +36,7 @@ namespace MDXEngine
             _worldProj.Data = M;
 
             _drawTree.SetRootCommandsSequence(new List<SlotRequest> {new SlotRequest {
-                Data = _worldProj,o
+                Data = _worldProj,
                 SlotName ="TViewChange"
             } }); 
             

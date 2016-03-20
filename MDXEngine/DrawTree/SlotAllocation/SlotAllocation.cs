@@ -9,7 +9,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
 {
     internal class SlotAllocation
     {
-        public ISlotRequest SlotRequest { get; internal set; }
+        public ISlotResource SlotRequest { get; internal set; }
         public IShaderResource Resource { get; internal set; }
 
     }

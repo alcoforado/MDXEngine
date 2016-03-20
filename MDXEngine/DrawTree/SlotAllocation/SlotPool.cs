@@ -15,7 +15,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
     internal class SlotPool : IDisposable
     {
         private readonly IShaderResourceFactory _shaderResourceFactory;
-        private SlotDescription Slot;
+        public SlotDescription Slot { get; internal set; }
 
         public int NextBufferAvailableIndex { get; set; } /*The Buffer (Resource) currently binded to the slot*/
         public SlotAllocation CurrentBindedBuffer { get; set; } /*The Buffer (Resource) currently binded to the slot*/
@@ -89,7 +89,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
         }
 
 
-        public SlotAllocation Allocate(HLSLProgram program, ISlotRequest slotRequest, SlotAllocation alloc = null)
+        public SlotAllocation Allocate(HLSLProgram program, ISlotResource slotRequest, SlotAllocation alloc = null)
         {
             //If AllocationInfo is not null than the data is already loaded 
             //in a buffer in the gpu you just need to bind it.

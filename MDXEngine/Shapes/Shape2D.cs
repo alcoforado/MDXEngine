@@ -27,7 +27,7 @@ namespace MDXEngine.Shapes
 
             var vV1 = new Vertex2DArray<T>(context.Vertices);
             _topology.Write(vV1, context.Indices);
-            _renderer.Write(context.Vertices,context.Indices,_topology.GetTopologyType());
+            _renderer.Draw(context);
         }
 
         public List<SlotRequest> GetResourcesLoadCommands()
