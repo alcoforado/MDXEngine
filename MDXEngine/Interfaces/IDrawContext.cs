@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MDXEngine.Interfaces
 {
-    public interface IDrawContext<T>
+    public interface IDrawContext<T> : ISlotResourceProvider
     {
         SubArray<T> Vertices { get; }
         IArray<int> Indices { get;  }

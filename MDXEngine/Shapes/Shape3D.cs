@@ -43,7 +43,7 @@ namespace MDXEngine.Shapes
            _renderer.Draw(context);
         }
 
-        public List<SlotRequest> GetResourcesLoadCommands()
+        public List<SlotRequest> RequestSlotResources()
         {
          
                 return this._renderer.GetLoadResourcesCommands();

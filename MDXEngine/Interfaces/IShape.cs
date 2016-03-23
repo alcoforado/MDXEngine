@@ -15,6 +15,6 @@ namespace MDXEngine
         int  NVertices();
         int  NIndices();
         TopologyType GetTopology();
-        List<SlotRequest> GetResourcesLoadCommands();
+        List<SlotRequest> RequestSlotResources(ISlotResourceAllocator provider);
     }
 }

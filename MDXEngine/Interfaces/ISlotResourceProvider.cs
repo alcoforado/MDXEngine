@@ -5,9 +5,9 @@ namespace MDXEngine.Interfaces
 {
     public interface ISlotResourceProvider
     {
-        ILoadCommand CreateLoadCommand(SlotRequest request);
 
-        IConstantBufferSlotResource<T> CreateConstantBuffer<T>(string slotName, T data);
+
+        IConstantBufferSlotResource<T> CreateConstantBuffer<T>(string slotName, T data) where T : struct;
 
         ITextureSlotResource CreateTexture(string slotName, string fileName);
     }

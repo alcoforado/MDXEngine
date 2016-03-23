@@ -31,7 +31,7 @@ namespace MDXEngine
         }
         public TopologyType GetTopology() { return _topology.GetTopologyType(); }
 
-        public List<SlotRequest> GetResourcesLoadCommands()
+        public List<SlotRequest> RequestSlotResources()
         {
             return this._renderer.GetLoadResourcesCommands();
         }

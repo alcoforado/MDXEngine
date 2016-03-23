@@ -49,6 +49,10 @@ namespace MDXEngine
             _dx.DeviceContext.UpdateSubresource(ref dt, _constantBuffer);
         }
 
+        public void Load(T data)
+        {
+            _dx.DeviceContext.UpdateSubresource(ref data, _constantBuffer);
+        }
 
 
         public void Bind(IShaderProgram program, String varName)

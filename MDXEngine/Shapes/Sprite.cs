@@ -68,7 +68,7 @@ namespace MDXEngine.Shapes
 
         }
 
-        public List<SlotRequest> GetResourcesLoadCommands()
+        public List<SlotRequest> RequestSlotResources()
         {
 
             return new List<SlotRequest>();

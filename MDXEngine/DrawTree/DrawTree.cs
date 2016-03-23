@@ -222,7 +222,7 @@ namespace MDXEngine
 
         public void Add(IShape<T> shape, List<SlotRequest> extraCommands=null)
         {
-            var shapeCommands = shape.GetResourcesLoadCommands();
+            var shapeCommands = shape.RequestSlotResources();
 
             if (shapeCommands == null)
                 shapeCommands = new List<SlotRequest>();

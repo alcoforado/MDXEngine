@@ -32,13 +32,8 @@ namespace MDXEngine.DrawTree.SlotAllocation
         }
 
 
-        public ILoadCommand CreateLoadCommand(SlotRequest request)
-        {
 
-            return new LoadCommand(request, this);
-        }
-
-        public IConstantBufferSlotResource<T> CreateConstantBuffer<T>(string slotName, T data)
+        public IConstantBufferSlotResource<T> CreateConstantBuffer<T>(string slotName, T data) where T : struct
         {
             //Validate data
             if (_pools[slotName].Slot.ResourceType != ShaderInputType.ConstantBuffer)
@@ -47,8 +42,8 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 throw new Exception(String.Format("Slot name {0} not found", slotName));
             if (_pools[slotName].Slot.DataType.FullName != typeof(T).FullName)
                throw new Exception(String.Format("Slot name {0} has type {1} but data is of type {2}", slotName, _pools[slotName].Slot.DataType, typeof(T)));
-            
-                        
+
+            return new ConstantBufferSlotResource<T>(slotName, data, this);            
              
         }
 

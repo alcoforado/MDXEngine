@@ -20,7 +20,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
         public int NextBufferAvailableIndex { get; set; } /*The Buffer (Resource) currently binded to the slot*/
         public SlotAllocation CurrentBindedBuffer { get; set; } /*The Buffer (Resource) currently binded to the slot*/
 
-
+        private HLSLProgram _program;
 
         public LinkedList<SlotAllocation> Pool;
 
@@ -89,18 +89,25 @@ namespace MDXEngine.DrawTree.SlotAllocation
         }
 
 
-        public SlotAllocation Allocate(HLSLProgram program, ISlotResource slotRequest, SlotAllocation alloc = null)
+        public SlotAllocation Allocate(SlotResourceProvider.LoadCommandBase  loadCommand)
         {
+            var alloc = loadCommand.AllocationInfo;
+            var program = loadCommand.GetHLSL();
+
+            System.Diagnostics.Debug.Assert(loadCommand.SlotName == this.Slot.Name);
+
+
             //If AllocationInfo is not null than the data is already loaded 
             //in a buffer in the gpu you just need to bind it.
             //We also have to check if the AllocationInfo has a buffer (Resource) associated with it
             //if not then the AllocationInfo is invalid because it does not belong to any pool anymore. Probably because the pool size
             //changed by the client. 
-            if (alloc != null && alloc.Resource != null && alloc.SlotRequest == slotRequest)
+            if (alloc != null && alloc.Resource != null && alloc.SlotRequest == loadCommand)
             {
                 if (CurrentBindedBuffer != alloc) //if alloc is not already binded to the slot bind it
                 {
-                    alloc.Resource.Bind(program,slotRequest.SlotName);
+                    alloc.Resource.Bind(program,this.Slot.Name);
+                    CurrentBindedBuffer = alloc;
                 }
 
 
@@ -121,14 +128,17 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 {
                     var newAlloc = new SlotAllocation
                     {
-                        SlotRequest = slotRequest,
-                        Resource = _shaderResourceFactory.CreateForSlot(slotRequest.SlotName)
+                        SlotRequest = loadCommand,
+                        Resource = loadCommand.LoadData(null)
                     };
 
 
                     //Load and Bind
-                    newAlloc.Resource.Load(newAlloc.SlotRequest.Data);
                     newAlloc.Resource.Bind(program,newAlloc.SlotRequest.SlotName);
+                    CurrentBindedBuffer = newAlloc;
+                    loadCommand.AllocationInfo = newAlloc;
+
+
 
                     //Add at the end of the pool (this is the most recent used allocation)
                     Pool.AddLast(newAlloc);
@@ -140,9 +150,10 @@ namespace MDXEngine.DrawTree.SlotAllocation
                     var oldAlloc = Pool.First();
 
                     //Load and Bind with the alloc
-                    oldAlloc.SlotRequest = slotRequest;
-                    oldAlloc.Resource.Load(slotRequest.Data);
-                    oldAlloc.Resource.Bind(program,slotRequest.SlotName);
+                    oldAlloc.SlotRequest = loadCommand;
+                    oldAlloc.Resource = loadCommand.LoadData(oldAlloc.Resource);
+                    oldAlloc.Resource.Bind(program,loadCommand.SlotName);
+                    CurrentBindedBuffer = oldAlloc;
 
                     //Send the oldAlloc to the last element of the pool
                     //It is the most recent used now
@@ -152,8 +163,6 @@ namespace MDXEngine.DrawTree.SlotAllocation
                     return oldAlloc;
                 }
             }
-
-
         }
 
         public void Dispose()

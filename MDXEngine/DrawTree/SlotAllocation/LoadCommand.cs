@@ -9,18 +9,22 @@ namespace MDXEngine.DrawTree.SlotAllocation
 {
     public partial class SlotResourceProvider
     {
-        private class LoadCommand : ILoadCommand
+        internal abstract class LoadCommandBase 
         {
-            private SlotAllocation AllocationInfo;
+
+            public SlotAllocation AllocationInfo
+            {
+                get; set;
+            }
+
             private SlotResourceProvider _provider;
             public string SlotName { get; set; }
             public object Data { get; set; }
 
 
-            public LoadCommand(SlotRequest request, SlotResourceProvider provider)
+            public LoadCommandBase(string SlotName, SlotResourceProvider provider)
             {
-                this.SlotName  = request.SlotName;
-                this.Data = request.Data;
+                this.SlotName = SlotName;
                 AllocationInfo = null;
                 _provider = provider;
             }
@@ -31,11 +35,32 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 var alloc = this.AllocationInfo;
                 var hlsl = _provider._hlsl;
 
-                this.AllocationInfo = pool.Allocate(hlsl,this, this.AllocationInfo);
+                this.AllocationInfo = pool.Allocate(this);
 
             }
 
+           /// <summary>
+           /// The only method  the other load commands need to override. 
+           /// The caching system will try to allocate a resource for the 
+           /// object to load data into. If the caching system decides that
+           /// a  new resource need to be created  the chaching system will 
+           /// call this function with null parameter indicating that the load command
+           /// will have to create the resource  by itself. 
+           /// The method always return the IShaderResource where the data is been loaded.
+           /// </summary>
+           /// <param name="resource"></param>
+           /// <returns>The shaderresource just created</returns>
+           public abstract IShaderResource LoadData(IShaderResource resource);
+            
+            protected SlotPool GetSlotPool(string slotName)
+            {
+                return _provider._pools[this.SlotName];
+            }
 
+            public HLSLProgram GetHLSL()
+            {
+                return _provider._hlsl;
+            }
 
         }
     }

@@ -21,13 +21,10 @@ namespace MDXEngine
             _slotResourceProvider = slotResourceProvider;
         }
 
-        public CommandsSequence(IShaderProgram program,List<SlotRequest> lstSlotData)
+        public CommandsSequence(IShaderProgram program)
         {
             _program = program;
             _loadCommands = new Dictionary<string, ILoadCommand>();
-
-            var lstLoadCommand = lstSlotData.Select(x=>_slotResourceProvider.CreateLoadCommand(x)).ToList();
-            Add(lstLoadCommand);
         }
 
 
