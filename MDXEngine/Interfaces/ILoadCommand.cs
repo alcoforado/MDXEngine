@@ -7,10 +7,11 @@ using MDXEngine.DrawTree;
 
 namespace MDXEngine.Interfaces
 {
-    public interface ILoadCommand : ISlotResource
+    public interface ILoadCommand : ISlotAllocation
     {
-        
         void Load();
+
+
     }
 
 }

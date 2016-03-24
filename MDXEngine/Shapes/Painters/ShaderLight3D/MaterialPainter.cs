@@ -11,6 +11,7 @@ namespace MDXEngine.Painters.ShaderLight3D
 {
     public class MaterialPainter : IPainter<VerticeNormal>
     {
+        private IConstantBufferSlotResource<Material> _slotMaterial;
         private Material Material { get; set; }
 
 
@@ -25,17 +26,11 @@ namespace MDXEngine.Painters.ShaderLight3D
             return;
         }
 
-        public List<SlotRequest> GetLoadResourcesCommands()
+        public void RequestSlotResources(ISlotResourceAllocator provider)
         {
-            return new List<SlotRequest>
-            {
-                new SlotRequest {
-                   Data=Material,
-                   SlotName="Material"
-                }
-
-            };
+            _slotMaterial = provider.RequestConstantBuffer("Material", this.Material);
         }
+
 
 
     }

@@ -1,9 +1,12 @@
-﻿namespace MDXEngine.Interfaces
+﻿using MDXEngine.DrawTree;
+using MDXEngine.DrawTree.SlotAllocation;
+
+namespace MDXEngine.Interfaces
 {
     public interface ISlotResourceAllocator
     {
-        void RequestConstantBuffer<T>(string slotName, T data) where T : struct;
+        IConstantBufferSlotResource<T> RequestConstantBuffer<T>(string slotName, T data) where T : struct;
 
-        void RequestTexture(string slotName, string fileName);
+        ITextureSlotResource RequestTexture(string slotName, string fileName);
     }
 }

@@ -68,11 +68,11 @@ namespace MDXEngine.Shapes
 
         }
 
-        public List<SlotRequest> RequestSlotResources()
+        public void RequestSlotResources(ISlotResourceAllocator provider)
         {
-
-            return new List<SlotRequest>();
+            return;
         }
+
          
     }
 }

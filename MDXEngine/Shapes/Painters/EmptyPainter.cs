@@ -14,15 +14,13 @@ namespace MDXEngine.Painters
         {
             //do nothing
             return;
-        }       
-
-        /// <summary>
-        /// Resturns an empty list of resources config
-        /// </summary>
-        /// <returns></returns>
-        public List<SlotRequest> GetLoadResourcesCommands()
-        {
-            return new List<SlotRequest>();
         }
+
+        public void RequestSlotResources(ISlotResourceAllocator provider)
+        {
+            return;
+        }
+
+
     }
 }

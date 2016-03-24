@@ -19,12 +19,13 @@ namespace MDXEngine
     public interface IPainter<T>
     {
         void Draw(IDrawContext<T> context);
-        
-       /// <summary>
-       /// Get the Bind Resources commands. If the painter don't define any ShaderResources to be loaded,
-       /// just return null or empty list;
-       /// </summary>
-       /// <returns></returns>
-        List<SlotRequest> GetLoadResourcesCommands();
+
+        /// <summary>
+        /// Get the Bind Resources commands. If the painter don't define any ShaderResources to be loaded,
+        /// just return null or empty list;
+        /// </summary>
+        /// <returns></returns>
+        void RequestSlotResources(ISlotResourceAllocator provider);
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace MDXEngine.Interfaces
 {
-    public interface ITextureSlotResource
+    public interface ITextureSlotResource :ISlotAllocation
     {
 
     }

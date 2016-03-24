@@ -18,8 +18,8 @@ namespace MDXEngine
         IDxContext _dx;
         HLSLProgram _program;
         DrawTree<VerticeColor> _drawTree;
-        CBufferResource<Matrix> _worldProj;
-        
+        private IConstantBufferSlotResource<Matrix> _worldProj;
+
         public IObservable ObservableDock { get; private set; } //An IObservable used by observers to attach themselves
 
         public ShaderColor3D(IDxContext dxContext)
@@ -31,16 +31,7 @@ namespace MDXEngine
                         new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0)
                     });
             _drawTree = new DrawTree<VerticeColor>(_program);
-            _worldProj = new CBufferResource<Matrix>(_dx);
-            Matrix M = Matrix.Identity;
-            _worldProj.Data = M;
-
-            _drawTree.SetRootCommandsSequence(new List<SlotRequest> {new SlotRequest {
-                Data = _worldProj,
-                SlotName ="TViewChange"
-            } }); 
-            
-         
+            _worldProj = _drawTree.GetRootSlotResourceProvider().RequestConstantBuffer("TViewChange", Matrix.Identity);
              this.ObservableDock = new ShaderObservableDock(_drawTree);
         }
        
@@ -52,7 +43,7 @@ namespace MDXEngine
             dx.CurrentProgram = _program;
             if (dx.IsCameraChanged)
             {
-                _worldProj.Data = dx.Camera.GetWorldViewMatrix();
+                _worldProj.Lo.Data = dx.Camera.GetWorldViewMatrix();
             }
             _drawTree.Draw(dx);
         }

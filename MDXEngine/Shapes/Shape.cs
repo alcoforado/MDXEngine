@@ -30,11 +30,11 @@ namespace MDXEngine
             _renderer.Draw(context);
         }
         public TopologyType GetTopology() { return _topology.GetTopologyType(); }
-
-        public List<SlotRequest> RequestSlotResources()
+        public void RequestSlotResources(ISlotResourceAllocator provider)
         {
-            return this._renderer.GetLoadResourcesCommands();
+           _renderer.RequestSlotResources(provider);
         }
+
          
     }
 }

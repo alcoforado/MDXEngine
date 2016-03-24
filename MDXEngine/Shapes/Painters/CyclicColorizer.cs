@@ -38,7 +38,10 @@ namespace MDXEngine.Painters
             }
         }
 
-        public List<SlotRequest> GetLoadResourcesCommands() { return null; }
+        public void RequestSlotResources(ISlotResourceAllocator provider)
+        {
+        }
+
 
     }
 }

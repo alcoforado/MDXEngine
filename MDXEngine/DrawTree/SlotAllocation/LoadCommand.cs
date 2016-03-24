@@ -57,7 +57,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 return _provider._pools[this.SlotName];
             }
 
-            public HLSLProgram GetHLSL()
+            public IShaderProgram GetHLSL()
             {
                 return _provider._hlsl;
             }

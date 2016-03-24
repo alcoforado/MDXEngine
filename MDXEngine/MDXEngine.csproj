@@ -69,19 +69,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DrawTree\Models\DrawContext.cs" />
-    <Compile Include="DrawTree\Models\SlotResourceAllocator.cs" />
     <Compile Include="DrawTree\SlotAllocation\ConstantBufferSlotResource.cs" />
     <Compile Include="DrawTree\SlotAllocation\ICachedLoadCommand.cs" />
+    <Compile Include="DrawTree\SlotAllocation\ShapeContextSlotResourceProvider.cs" />
     <Compile Include="Interfaces\IConstantBufferSlotResource.cs" />
     <Compile Include="Interfaces\IDrawContext.cs" />
     <Compile Include="Interfaces\ILoadCommand.cs" />
     <Compile Include="Interfaces\ISlotResourceAllocator.cs" />
-    <Compile Include="Interfaces\ISlotResourceProvider.cs" />
     <Compile Include="DrawTree\SlotAllocation\LoadCommand.cs" />
     <Compile Include="DrawTree\SlotAllocation\SlotAllocation.cs" />
     <Compile Include="DrawTree\SlotAllocation\SlotPool.cs" />
     <Compile Include="Interfaces\IShaderResourceFactory.cs" />
-    <Compile Include="Interfaces\ISlotResource.cs" />
+    <Compile Include="Interfaces\ISlotAllocation.cs" />
     <Compile Include="Interfaces\ITextureSlotResource.cs" />
     <Compile Include="ShaderResources\ShaderResourceFactory.cs" />
     <Compile Include="UI\Camera\Camera.cs" />
@@ -93,7 +92,6 @@
     <Compile Include="ShaderResources\CBufferResource.cs" />
     <Compile Include="Extensions\Drawing\RectangleExtension.cs" />
     <Compile Include="DrawTree\CommandsSequence.cs" />
-    <Compile Include="DrawTree\Models\SlotRequest.cs" />
     <Compile Include="DrawTree\Models\RootNode.cs" />
     <Compile Include="DrawTree\Models\ShapeGroupNode.cs" />
     <Compile Include="DrawTree\Models\ShapeNode.cs" />

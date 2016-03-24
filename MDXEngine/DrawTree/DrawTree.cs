@@ -8,6 +8,7 @@ using Buffer = SharpDX.Direct3D11.Buffer;
 using System.Collections.Generic;
 using MDXEngine.Interfaces;
 using MDXEngine.DrawTree;
+using MDXEngine.DrawTree.SlotAllocation;
 
 namespace MDXEngine
 {
@@ -20,7 +21,7 @@ namespace MDXEngine
         private IDxContext _context;
         Buffer _vI;
         Buffer _vV;
-
+        private SlotResourceProvider _slotResourceProvider;
 
 
         public T[] Vertices { get { return _vertices; } }
@@ -182,6 +183,7 @@ namespace MDXEngine
             _indices = new int[nIndices];
             _resourcesObservers = new Dictionary<CommandsSequence, List<IObserver>>();
             _program = program;
+            _slotResourceProvider = new SlotResourceProvider(program);
         }
 
         public RootNode GetRootNode()
@@ -189,10 +191,10 @@ namespace MDXEngine
             return _ntree.GetData().RootNode;
         }
 
-        public void SetRootCommandsSequence(List<SlotRequest> commands)
+        public ISlotResourceAllocator GetRootSlotResourceProvider()
         {
-            _ntree.GetData().RootNode.Commands = new  CommandsSequence(_program,commands);
-            
+            var result = new ShapeContextSlotResourceProvider(_program, _ntree.GetData().RootNode.Commands,_slotResourceProvider);
+            return result;
         }
 
 
@@ -220,20 +222,14 @@ namespace MDXEngine
 
         
 
-        public void Add(IShape<T> shape, List<SlotRequest> extraCommands=null)
+        public void Add(IShape<T> shape)
         {
-            var shapeCommands = shape.RequestSlotResources();
 
-            if (shapeCommands == null)
-                shapeCommands = new List<SlotRequest>();
+            //Get Shapes Resources
+            CommandsSequence commands = this.GetShapeRequestedResources(shape);
+            
 
-            if (extraCommands!=null)
-            {
-                shapeCommands.AddRange(extraCommands);
-            }
-                
 
-            var commands = shapeCommands.Any() ? new CommandsSequence(_program,shapeCommands) : null;
             
 
 
@@ -268,6 +264,13 @@ namespace MDXEngine
             _ntree.AppendChild(groupNode);
             shapeNode.ForItselfAndAllParents(nd => nd.GetData().Changed = true);
             this.OnChanged();
+        }
+
+        private CommandsSequence GetShapeRequestedResources(IShape<T> shape)
+        {
+            var alloc = new ShapeContextSlotResourceProvider(_program,_slotResourceProvider);
+            shape.RequestSlotResources(alloc);
+            return alloc.GetLoadSequence();
         }
 
         public void RemoveAll()

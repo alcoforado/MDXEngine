@@ -22,6 +22,11 @@ namespace MDXEngine.Shapes
         public int NVertices(){return _topology.NVertices();}
         public int NIndices() { return _topology.NIndices(); }
         public TopologyType GetTopology() {return _topology.GetTopologyType();}
+        public void RequestSlotResources(ISlotResourceAllocator provider)
+        {
+           _renderer.RequestSlotResources(provider);
+        }
+
         public void Draw(IDrawContext<T> context)
         {
 
@@ -30,10 +35,6 @@ namespace MDXEngine.Shapes
             _renderer.Draw(context);
         }
 
-        public List<SlotRequest> RequestSlotResources()
-        {
-            return this._renderer.GetLoadResourcesCommands();
-        }
          
     }
 }

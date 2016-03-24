@@ -2,7 +2,7 @@
 
 namespace MDXEngine.DrawTree.SlotAllocation
 {
-    internal interface ICachedLoadCommand : ISlotResource
+    internal interface ICachedLoadCommand : ISlotAllocation
     {
 
         SlotAllocation AllocationInfo

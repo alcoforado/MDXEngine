@@ -14,7 +14,6 @@ namespace MDXEngine.DrawTree.SlotAllocation
     /// means "unlimited"
     internal class SlotPool : IDisposable
     {
-        private readonly IShaderResourceFactory _shaderResourceFactory;
         public SlotDescription Slot { get; internal set; }
 
         public int NextBufferAvailableIndex { get; set; } /*The Buffer (Resource) currently binded to the slot*/
@@ -79,9 +78,8 @@ namespace MDXEngine.DrawTree.SlotAllocation
         /// </summary>
         /// <param name="slot"></param>
         /// <param name="poolSize">Max number of buffers (cached elements). A value 0 indicates no limit</param>
-        public SlotPool(IShaderResourceFactory shaderResourceFactory, SlotDescription slot, uint poolSize = UInt32.MaxValue)
+        public SlotPool(SlotDescription slot, uint poolSize = UInt32.MaxValue)
         {
-            _shaderResourceFactory = shaderResourceFactory;
             this.Slot = slot;
             PoolSize = poolSize;
             NextBufferAvailableIndex = 0;

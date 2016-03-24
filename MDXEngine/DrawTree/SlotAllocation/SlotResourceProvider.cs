@@ -9,11 +9,10 @@ namespace MDXEngine.DrawTree.SlotAllocation
 
 
 
-    public partial  class SlotResourceProvider : IDisposable, ISlotResourceProvider
+    public partial  class SlotResourceProvider : IDisposable, ISlotResourceAllocator
     {
-        private readonly HLSLProgram _hlsl;
+        private readonly IShaderProgram _hlsl;
         private readonly Dictionary<string,SlotPool> _pools;
-        private readonly IShaderResourceFactory _shaderResourceFactory;
 
 
         public void Dispose()
@@ -24,30 +23,32 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 }
             }
 
-        public SlotResourceProvider(IShaderResourceFactory resourceFactory,HLSLProgram hlsl)
+        public SlotResourceProvider(IShaderProgram hlsl)
         {
             _hlsl = hlsl;
 
-            _pools = _hlsl.ProgramResourceSlots.ToList().ToDictionary(x => x.Name, x => new SlotPool(resourceFactory,x));
+            _pools = _hlsl.ProgramResourceSlots.ToList().ToDictionary(x => x.Name, x => new SlotPool(x));
         }
 
 
 
-        public IConstantBufferSlotResource<T> CreateConstantBuffer<T>(string slotName, T data) where T : struct
+        public IConstantBufferSlotResource<T> RequestConstantBuffer<T>(string slotName, T data) where T : struct
         {
             //Validate data
             if (_pools[slotName].Slot.ResourceType != ShaderInputType.ConstantBuffer)
-                throw new Exception(String.Format("Slot {0} is not a constant buffer", slotName));
+                throw new Exception($"Slot {slotName} is not a constant buffer");
             if (!_pools.ContainsKey(slotName))
-                throw new Exception(String.Format("Slot name {0} not found", slotName));
+                throw new Exception($"Slot name {slotName} not found");
             if (_pools[slotName].Slot.DataType.FullName != typeof(T).FullName)
-               throw new Exception(String.Format("Slot name {0} has type {1} but data is of type {2}", slotName, _pools[slotName].Slot.DataType, typeof(T)));
+               throw new Exception($"Slot name {slotName} has type {_pools[slotName].Slot.DataType} but data is of type {typeof(T)}");
 
             return new ConstantBufferSlotResource<T>(slotName, data, this);            
              
         }
 
-        public ITextureSlotResource CreateTexture(string slotName, string fileName)
+ 
+
+        public ITextureSlotResource RequestTexture(string slotName, string fileName)
         {
             throw new NotImplementedException();
         }

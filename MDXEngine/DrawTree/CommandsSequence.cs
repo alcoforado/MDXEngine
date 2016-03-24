@@ -13,8 +13,8 @@ namespace MDXEngine
     {
         private readonly Dictionary<string, ILoadCommand> _loadCommands;
         private readonly IShaderProgram _program;
-        private readonly ISlotResourceProvider _slotResourceProvider;
-        public CommandsSequence(IShaderProgram program,ISlotResourceProvider slotResourceProvider)
+        private readonly ISlotResourceAllocator _slotResourceProvider;
+        public CommandsSequence(IShaderProgram program,ISlotResourceAllocator slotResourceProvider)
         {
             _program = program;
             _loadCommands = new Dictionary<string, ILoadCommand>();
@@ -88,11 +88,18 @@ namespace MDXEngine
              if (!result.Exists)
                  throw new Exception(String.Format("Variable {0} is not defined in program", command.SlotName));
 #endif
-           var slot = result.Value;
+             
+
+            var slot = result.Value;
 
             if (_loadCommands.ContainsKey(slot.Name))
             {
-                return _loadCommands[slot.Name].Data == command.Data;
+                return false;
+            }
+            else
+            {
+                
+
             }
             _loadCommands[slot.Name] = command; 
             return true;
@@ -115,16 +122,9 @@ namespace MDXEngine
 
         
 
-        public bool CanAddLoadCommand(string varName, object data)
+        public bool CanAddLoadCommand(ILoadCommand comm)
         {
-            if (_loadCommands.ContainsKey(varName))
-            {
-                return _loadCommands[varName].Data == data;
-            }
-            else
-            {
-                return true;
-            }
+            return !_loadCommands.ContainsKey(comm.SlotName);
         }
       
         #endregion
@@ -132,6 +132,11 @@ namespace MDXEngine
         public int Count
         {
             get { return _loadCommands.Count; }
+        }
+
+        public bool Any()
+        {
+            return _loadCommands.Count >= 1;
         }
     }
 }

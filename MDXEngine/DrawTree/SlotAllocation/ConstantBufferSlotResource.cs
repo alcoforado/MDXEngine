@@ -1,6 +1,7 @@
 ﻿using MDXEngine.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.PerformanceData;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,5 +26,11 @@ namespace MDXEngine.DrawTree.SlotAllocation
             resource.Load(resource);
             return resource;
         }
+
+       public void SetData(T data)
+       {
+           _data = data;
+       }
+
     }
 }
