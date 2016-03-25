@@ -193,7 +193,7 @@ namespace MDXEngine
 
         public ISlotResourceAllocator GetRootSlotResourceProvider()
         {
-            var result = new ShapeContextSlotResourceProvider(_program, _ntree.GetData().RootNode.Commands,_slotResourceProvider);
+            var result = new ShapeSlotResourceAllocator(_program, _ntree.GetData().RootNode.Commands,_slotResourceProvider);
             return result;
         }
 
@@ -268,7 +268,7 @@ namespace MDXEngine
 
         private CommandsSequence GetShapeRequestedResources(IShape<T> shape)
         {
-            var alloc = new ShapeContextSlotResourceProvider(_program,_slotResourceProvider);
+            var alloc = new ShapeSlotResourceAllocator(_program,_slotResourceProvider);
             shape.RequestSlotResources(alloc);
             return alloc.GetLoadSequence();
         }

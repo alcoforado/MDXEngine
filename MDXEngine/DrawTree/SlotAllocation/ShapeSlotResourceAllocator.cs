@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace MDXEngine.DrawTree.SlotAllocation
 {
-    class ShapeContextSlotResourceProvider : ISlotResourceAllocator
+    class ShapeSlotResourceAllocator : ISlotResourceAllocator
     {
         readonly CommandsSequence _loadSequence;
         readonly SlotResourceProvider _globalProvider;
         readonly IShaderProgram _program;
 
-        public ShapeContextSlotResourceProvider(IShaderProgram program,CommandsSequence loadSequence,SlotResourceProvider provider)
+        public ShapeSlotResourceAllocator(IShaderProgram program,CommandsSequence loadSequence,SlotResourceProvider provider)
         {
             this._program = program;
             _globalProvider = provider;
             _loadSequence = loadSequence;
         }
 
-        public ShapeContextSlotResourceProvider(IShaderProgram program, SlotResourceProvider slotResourceProvider)
+        public ShapeSlotResourceAllocator(IShaderProgram program, SlotResourceProvider slotResourceProvider)
         {
             this._program = program;
             _globalProvider = slotResourceProvider;

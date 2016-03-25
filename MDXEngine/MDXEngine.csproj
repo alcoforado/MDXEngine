@@ -71,7 +71,7 @@
     <Compile Include="DrawTree\Models\DrawContext.cs" />
     <Compile Include="DrawTree\SlotAllocation\ConstantBufferSlotResource.cs" />
     <Compile Include="DrawTree\SlotAllocation\ICachedLoadCommand.cs" />
-    <Compile Include="DrawTree\SlotAllocation\ShapeContextSlotResourceProvider.cs" />
+    <Compile Include="DrawTree\SlotAllocation\ShapeSlotResourceAllocator.cs" />
     <Compile Include="Interfaces\IConstantBufferSlotResource.cs" />
     <Compile Include="Interfaces\IDrawContext.cs" />
     <Compile Include="Interfaces\ILoadCommand.cs" />
