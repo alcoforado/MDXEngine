@@ -10,7 +10,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
     class ShapeContextSlotResourceProvider : ISlotResourceAllocator
     {
         readonly CommandsSequence _loadSequence;
-        readonly ISlotResourceAllocator  _globalProvider;
+        readonly SlotResourceProvider _globalProvider;
         readonly IShaderProgram _program;
 
         public ShapeContextSlotResourceProvider(IShaderProgram program,CommandsSequence loadSequence,SlotResourceProvider provider)
@@ -35,11 +35,18 @@ namespace MDXEngine.DrawTree.SlotAllocation
             return result;
         }
 
+        public IConstantBufferSlotResource<T> RequestConstantBuffer<T>(string slotName) where T : struct
+        {
+            return this.RequestConstantBuffer<T>(slotName, new T());
+            
+        }
+
         public ITextureSlotResource RequestTexture(string slotName, string fileName)
         {
-            var result = _globalProvider.RequestTexture(slotName, fileName);
-            _loadSequence.Add(result);
-            return result;
+            throw new NotImplementedException();
+            //var result = _globalProvider.RequestTexture(slotName, fileName);
+            //_loadSequence.Add(result);
+            //return result;
         }
 
         public CommandsSequence GetLoadSequence()

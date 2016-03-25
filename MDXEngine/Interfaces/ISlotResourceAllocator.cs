@@ -7,6 +7,8 @@ namespace MDXEngine.Interfaces
     {
         IConstantBufferSlotResource<T> RequestConstantBuffer<T>(string slotName, T data) where T : struct;
 
+        IConstantBufferSlotResource<T> RequestConstantBuffer<T>(string slotName) where T : struct;
+
         ITextureSlotResource RequestTexture(string slotName, string fileName);
     }
 }

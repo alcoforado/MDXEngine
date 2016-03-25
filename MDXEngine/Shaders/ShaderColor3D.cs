@@ -43,7 +43,7 @@ namespace MDXEngine
             dx.CurrentProgram = _program;
             if (dx.IsCameraChanged)
             {
-                _worldProj.Lo.Data = dx.Camera.GetWorldViewMatrix();
+                _worldProj.SetData(dx.Camera.GetWorldViewMatrix());
             }
             _drawTree.Draw(dx);
         }

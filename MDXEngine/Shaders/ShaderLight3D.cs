@@ -26,10 +26,9 @@ namespace MDXEngine.Shaders
         IDxContext _dx;
         HLSLProgram _program;
         DrawTree<VerticeNormal> _drawTree;
-        CBufferResource<TViewChange> _worldProj;
-        CBufferResource<DirectionalLight> _lights;
-        CBufferResource<Material> _material;
-        
+        private IConstantBufferSlotResource<TViewChange> _worldProj;
+        private IConstantBufferSlotResource<DirectionalLight> _lights;
+
         public IObservable ObservableDock { get; private set; } //An IObservable used by observers to attach themselves
 
         public ShaderLight3D(IDxContext dxContext)
@@ -41,29 +40,18 @@ namespace MDXEngine.Shaders
                         new InputElement("NORMAL", 0, Format.R32G32B32A32_Float, 16, 0)
                     });
             _drawTree = new DrawTree<VerticeNormal>(_program);
-            _worldProj = new CBufferResource<TViewChange>(_dx);
-            _lights = new CBufferResource<DirectionalLight>(_dx);
-            _material = new CBufferResource<Material>(_dx);
+            var slotProvider = _drawTree.GetRootSlotResourceProvider();
 
-            _worldProj.Data = new TViewChange
+            _worldProj = slotProvider.RequestConstantBuffer(
+                "TViewChange",
+                new TViewChange
             {
                 projM = Matrix.Identity,
                 eyePos = new Vector4(0)
-            };
-
-            _drawTree.GetRootNode().Commands = new CommandsSequence(_program, new List<SlotRequest>
-            {
-                new SlotRequest
-                {
-                    Data=_worldProj,
-                    SlotName="TViewChange"
-                },
-                new SlotRequest
-                {
-                    Data=_lights,
-                    SlotName="OneTime"
-                }
             });
+
+
+            _lights = slotProvider.RequestConstantBuffer<DirectionalLight>("OneTime");
 
             //Exposed the tree as observable.
             this.ObservableDock = new ShaderObservableDock(_drawTree);
@@ -72,7 +60,7 @@ namespace MDXEngine.Shaders
 
         public void SetDirectionalLight(DirectionalLight light)
         {
-            _lights.Data = light;
+            _lights.SetData(light);
         }
 
         public DrawTree<VerticeNormal> Root { get { return _drawTree; } }
@@ -82,11 +70,11 @@ namespace MDXEngine.Shaders
             dx.CurrentProgram = _program;
             if (dx.IsCameraChanged)
             {
-                _worldProj.Data = new TViewChange
+                _worldProj.SetData(new TViewChange
                 {
                     projM = dx.Camera.GetWorldViewMatrix(),
                     eyePos = dx.Camera.Pos.ToVector4()
-                };
+                });
             }
             _drawTree.Draw(dx);
         }

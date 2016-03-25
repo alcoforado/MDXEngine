@@ -9,7 +9,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
 {
     public partial class SlotResourceProvider
     {
-        internal abstract class LoadCommandBase 
+        internal abstract class LoadCommandBase : ILoadCommand
         {
 
             public SlotAllocation AllocationInfo

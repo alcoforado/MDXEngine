@@ -51,7 +51,7 @@ namespace MDXEngine
         /// <returns></returns>
         public bool CanMerge(CommandsSequence commands)
         {
-            return _program == commands._program && commands._loadCommands.All(elem => this.CanAddLoadCommand(elem.Value.SlotName, elem.Value.Data));
+            return _program == commands._program && commands._loadCommands.All(elem => this.CanAddLoadCommand(elem.Value));
         }
 
         /// <summary>
@@ -66,10 +66,7 @@ namespace MDXEngine
             {
                 foreach (var elem in commands._loadCommands)
                 {
-                    if (_loadCommands.ContainsKey(elem.Key))
-                        Debug.Assert(_loadCommands[elem.Key].Data == elem.Value.Data);
-                    else
-                        _loadCommands[elem.Key] = elem.Value;
+                   _loadCommands[elem.Key] = elem.Value;
                 }
                 return true;
             }

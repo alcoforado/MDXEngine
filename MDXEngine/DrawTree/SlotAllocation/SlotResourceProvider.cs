@@ -9,7 +9,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
 
 
 
-    public partial  class SlotResourceProvider : IDisposable, ISlotResourceAllocator
+    public partial  class SlotResourceProvider : IDisposable
     {
         private readonly IShaderProgram _hlsl;
         private readonly Dictionary<string,SlotPool> _pools;
@@ -32,19 +32,21 @@ namespace MDXEngine.DrawTree.SlotAllocation
 
 
 
-        public IConstantBufferSlotResource<T> RequestConstantBuffer<T>(string slotName, T data) where T : struct
+        internal ConstantBufferSlotResource<T> RequestConstantBuffer<T>(string slotName, T data) where T : struct
         {
             //Validate data
             if (_pools[slotName].Slot.ResourceType != ShaderInputType.ConstantBuffer)
-                throw new Exception($"Slot {slotName} is not a constant buffer");
+                throw new Exception(String.Format("Slot {0} is not a constant buffer",slotName));
             if (!_pools.ContainsKey(slotName))
-                throw new Exception($"Slot name {slotName} not found");
+                throw new Exception(String.Format("Slot name {0} not found",slotName));
             if (_pools[slotName].Slot.DataType.FullName != typeof(T).FullName)
-               throw new Exception($"Slot name {slotName} has type {_pools[slotName].Slot.DataType} but data is of type {typeof(T)}");
+               throw new Exception(String.Format("Slot name {0}  has type {1} but data is of type {2}",slotName, _pools[slotName].Slot.DataType,typeof(T)));
 
             return new ConstantBufferSlotResource<T>(slotName, data, this);            
              
         }
+
+     
 
  
 

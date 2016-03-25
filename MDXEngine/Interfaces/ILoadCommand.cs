@@ -10,7 +10,7 @@ namespace MDXEngine.Interfaces
     public interface ILoadCommand : ISlotAllocation
     {
         void Load();
-
+        
 
     }
 
