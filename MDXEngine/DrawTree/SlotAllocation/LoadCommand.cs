@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 get; set;
             }
 
-            private SlotResourceProvider _provider;
+            protected SlotResourceProvider _provider;
             public string SlotName { get; set; }
             public object Data { get; set; }
 
@@ -29,11 +30,9 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 _provider = provider;
             }
 
-            public void Load()
+            public virtual void Load()
             {
                 var pool = _provider._pools[this.SlotName];
-                var alloc = this.AllocationInfo;
-                var hlsl = _provider._hlsl;
 
                 this.AllocationInfo = pool.Allocate(this);
 
@@ -57,10 +56,22 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 return _provider._pools[this.SlotName];
             }
 
+            protected BitmapCache  GetBitmapCache()
+            {
+                return _provider._bitmapCash;
+            }
+
+
             public IShaderProgram GetHLSL()
             {
                 return _provider._hlsl;
             }
+
+            public IDxContext GetDxContext()
+            {
+                return _provider._hlsl.DxContext;
+            }
+
 
         }
     }

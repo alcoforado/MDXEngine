@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using MDXEngine.Interfaces;
 using SharpDX.D3DCompiler;
@@ -15,6 +16,8 @@ namespace MDXEngine.DrawTree.SlotAllocation
         private readonly Dictionary<string,SlotPool> _pools;
 
 
+        private readonly BitmapCache _bitmapCash; 
+
         public void Dispose()
             {
                 foreach (var pool in _pools)
@@ -27,7 +30,14 @@ namespace MDXEngine.DrawTree.SlotAllocation
         {
             _hlsl = hlsl;
 
-            _pools = _hlsl.ProgramResourceSlots.ToList().ToDictionary(x => x.Name, x => new SlotPool(x));
+            //create pools for non texture types slots
+            _pools = _hlsl.ProgramResourceSlots.ToList()
+                .Where(x=>x.ResourceType != ShaderInputType.Texture && x.ResourceType != ShaderInputType.TextureBuffer)
+                .ToDictionary(x => x.Name, x => new SlotPool(x));
+
+            
+            //create bitmap cache to never allocate a texture more than once for a single bitmap. 
+            _bitmapCash = new BitmapCache();
         }
 
 
