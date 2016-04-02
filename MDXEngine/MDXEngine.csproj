@@ -74,6 +74,7 @@
     <Compile Include="DrawTree\SlotAllocation\ShapeSlotResourceAllocator.cs" />
     <Compile Include="DrawTree\SlotAllocation\SlotAllocationInfo.cs" />
     <Compile Include="DrawTree\SlotAllocation\TextureSlotResource.cs" />
+    <Compile Include="Interfaces\IBitmapHandler.cs" />
     <Compile Include="Interfaces\IConstantBufferSlotResource.cs" />
     <Compile Include="Interfaces\IDrawContext.cs" />
     <Compile Include="Interfaces\ILoadCommand.cs" />
@@ -85,6 +86,8 @@
     <Compile Include="Interfaces\ISlotAllocation.cs" />
     <Compile Include="Interfaces\ITextureSlotResource.cs" />
     <Compile Include="ShaderResources\ShaderResourceFactory.cs" />
+    <Compile Include="ShaderResources\Textures\BinPack\BitmapHandler.cs" />
+    <Compile Include="ShaderResources\Textures\BinPack\IBitmapHandler.cs" />
     <Compile Include="UI\Camera\Camera.cs" />
     <Compile Include="UI\Camera\MouseSphericNavigator.cs" />
     <Compile Include="UI\Camera\SphericVisualization.cs" />
@@ -168,7 +171,7 @@
     <Compile Include="ShaderResources\Textures\GDITextRendering.cs" />
     <Compile Include="ShaderResources\Textures\GDITexture.cs" />
     <Compile Include="ShaderResources\Textures\Texture.cs" />
-    <Compile Include="ShaderResources\Textures\BitmapAtlas.cs" />
+    <Compile Include="ShaderResources\Textures\BinPack\BitmapAtlas.cs" />
     <Compile Include="ShaderResources\Textures\TextureRegion.cs" />
     <Compile Include="ShaderResources\Textures\TextWriteOptions.cs" />
     <Compile Include="Shapes\Topologies\Triangle2DIndexed.cs" />

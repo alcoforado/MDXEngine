@@ -243,7 +243,32 @@ namespace MDXEngine.Textures.BinPack
 
         }
 
+        public Dictionary<Bitmap, Rectangle> GetBitmapsRegions()
+        {
+            var result = new Dictionary<Bitmap, Rectangle>();
 
+            Action<BinPackNode, Dictionary<Bitmap, Rectangle>> aux = null;
+            aux = (BinPackNode node, Dictionary<Bitmap, Rectangle> regions) =>
+            {
+                if (node == null)
+                    return;
+                if (node.IsFilled())
+                {
+                    System.Diagnostics.Debug.Assert(node.IsChildless());
+                    result.Add(node.Bitmap, node.Region);
+                }
+                else if (!node.IsChildless())
+                {
+                    foreach (var child in node.Childs)
+                        aux(child, regions);
+                }
+            };
+
+            aux(_root, result);
+            return result;
+
+
+        }
 
 
 
