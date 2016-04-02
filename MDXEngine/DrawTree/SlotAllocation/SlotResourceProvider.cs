@@ -8,13 +8,13 @@ using SharpDX.D3DCompiler;
 namespace MDXEngine.DrawTree.SlotAllocation
 {
 
-
+    
 
     public partial  class SlotResourceProvider : IDisposable
     {
         private readonly IShaderProgram _hlsl;
         private readonly Dictionary<string,SlotPool> _pools;
-
+        private readonly Dictionary<string, SlotAllocationInfo> _slotsAllocationInfo; 
 
         private readonly BitmapCache _bitmapCash; 
 
@@ -38,8 +38,18 @@ namespace MDXEngine.DrawTree.SlotAllocation
             
             //create bitmap cache to never allocate a texture more than once for a single bitmap. 
             _bitmapCash = new BitmapCache();
+
+            _slotsAllocationInfo = _hlsl.ProgramResourceSlots.ToList()
+                .ToDictionary(x => x.Name, x=>new SlotAllocationInfo()
+                {
+                    CurrentResource = null,
+                    Description =  x
+                });
+
+
         }
 
+        
 
 
         internal ConstantBufferSlotResource<T> RequestConstantBuffer<T>(string slotName, T data) where T : struct

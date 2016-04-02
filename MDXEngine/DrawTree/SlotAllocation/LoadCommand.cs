@@ -56,6 +56,12 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 return _provider._pools[this.SlotName];
             }
 
+            protected SlotAllocationInfo GetSlotAllocationInfo(string slotName)
+            {
+                return _provider._slotsAllocationInfo[slotName];
+            }
+
+
             protected BitmapCache  GetBitmapCache()
             {
                 return _provider._bitmapCash;
