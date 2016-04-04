@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MDXEngine.Interfaces;
 using MDXEngine.Textures;
+using RectangleF = SharpDX.RectangleF;
 
 namespace MDXEngine.DrawTree.SlotAllocation
 {
@@ -58,7 +59,15 @@ namespace MDXEngine.DrawTree.SlotAllocation
         }
 
 
+        public RectangleF BitmapRegion
+        {
+            get
+            {
+                System.Diagnostics.Debug.Assert(!_disposed);
+                return new RectangleF(0.0f,0.0f,1.0f,1.0f);
+            }
 
 
+        }
     }
 }

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MDXEngine.Interfaces;
 using MDXEngine.Textures;
+using SharpDX;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace MDXEngine.ShaderResources.Textures.BinPack
 {
@@ -23,11 +25,16 @@ namespace MDXEngine.ShaderResources.Textures.BinPack
             RegionSet = false;
         }
 
-        public Rectangle AtlasRegion()
+        public SharpDX.RectangleF GetAtlasNormalizedRegion()
         {
             if (!RegionSet)
                 throw new Exception("Region for the bitmap in the atlas not defined yet");
-            return Rectangle;
+            return new SharpDX.RectangleF(
+                ((float) Rectangle.X)/((float) Bitmap.Width) ,
+                ((float)Rectangle.Y) / ((float)Bitmap.Height),
+                ((float)Rectangle.Width) / ((float)Bitmap.Width),
+                ((float)Rectangle.Height) / ((float)Bitmap.Height)
+            );
         }
 
 

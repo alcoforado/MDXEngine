@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MDXEngine.Interfaces;
 using MDXEngine.Textures;
+using RectangleF = SharpDX.RectangleF;
 
 namespace MDXEngine.DrawTree.SlotAllocation
 {
@@ -66,6 +67,13 @@ namespace MDXEngine.DrawTree.SlotAllocation
         public override IShaderResource LoadData(IShaderResource resource)
         {
             throw new NotImplementedException();
+        }
+
+        public RectangleF BitmapRegion
+        {
+            get { return _bpHandler.GetAtlasNormalizedRegion(); }
+            
+
         }
     }
 }
