@@ -72,8 +72,22 @@ namespace MDXEngine.DrawTree.SlotAllocation
         public RectangleF BitmapRegion
         {
             get { return _bpHandler.GetAtlasNormalizedRegion(); }
-            
+        }
 
+
+        public void Dispose()
+        {
+            var atlas = _provider.GetBitmapAtlasCollection()[_atlasId];
+            if (this.GetBitmapCache().ReferenceCount(atlas.GetAtlas()) == 1)
+            {
+                this.GetBitmapCache().DecrementCacheReferenceCount(atlas.GetAtlas());
+                _provider.GetBitmapAtlasCollection().Remove(_atlasId);
+                atlas.Dispose();
+            }
+            else
+            {
+                this.GetBitmapCache().DecrementCacheReferenceCount(atlas.GetAtlas());
+            }
         }
     }
 }

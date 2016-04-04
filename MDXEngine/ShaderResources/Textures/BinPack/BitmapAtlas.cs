@@ -77,6 +77,11 @@ namespace MDXEngine.Textures
             {
                 bp.Dispose();
             }
+            //Flag all handlers as disposed
+            foreach (var handler in _handlers)
+            {
+                handler.IsDisposed = true;
+            }
         }
 
         public bool IsClosed()

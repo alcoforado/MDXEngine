@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using SharpDX;
 
 namespace MDXEngine.Interfaces
@@ -20,7 +21,7 @@ namespace MDXEngine.Interfaces
     ///So a shape should allocate all bitmaps it needs before hand. This is done when by calling the shape method RequestSlotResources.
     ///  
     /// </summary>
-    public interface ITextureSlotResource :ISlotAllocation
+    public interface ITextureSlotResource :ISlotAllocation, IDisposable
     {
        RectangleF BitmapRegion { get; }
     }

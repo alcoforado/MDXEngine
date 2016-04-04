@@ -18,17 +18,21 @@ namespace MDXEngine.ShaderResources.Textures.BinPack
         public Bitmap Bitmap { get; set; }
         public Rectangle Rectangle { get; set; }
         public bool RegionSet { get; set; }
+        public bool IsDisposed { get; set; }
         public BitmapHandler(BitmapAtlas owner, Bitmap bitmap)
         {
             Owner = owner;
             Bitmap = bitmap;
             RegionSet = false;
+            IsDisposed = false;
         }
 
         public SharpDX.RectangleF GetAtlasNormalizedRegion()
         {
             if (!RegionSet)
                 throw new Exception("Region for the bitmap in the atlas not defined yet");
+            if (IsDisposed)
+                throw new Exception("Atlas was disposed");
             return new SharpDX.RectangleF(
                 ((float) Rectangle.X)/((float) Bitmap.Width) ,
                 ((float)Rectangle.Y) / ((float)Bitmap.Height),

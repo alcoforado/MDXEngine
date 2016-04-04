@@ -53,17 +53,24 @@ namespace MDXEngine.DrawTree.SlotAllocation
 
         }
 
-        internal void DecrementCacheReferenceCount(Bitmap _resourceKey)
+        internal int ReferenceCount(Bitmap resourceKey)
         {
-            System.Diagnostics.Debug.Assert(_bitmapCash.ContainsKey(_resourceKey));
+            if (!_bitmapCash.ContainsKey(resourceKey))
+                throw new Exception("Bitmap not in cache");
+            return _bitmapCash[resourceKey].ReferenceCount;
+        }
 
-            var entry = _bitmapCash[_resourceKey];
+        internal void DecrementCacheReferenceCount(Bitmap resourceKey)
+        {
+            System.Diagnostics.Debug.Assert(_bitmapCash.ContainsKey(resourceKey));
+
+            var entry = _bitmapCash[resourceKey];
 
             entry.ReferenceCount--;
             if (entry.ReferenceCount == 0)
             {
                 entry.Resource.Dispose();
-                _bitmapCash.Remove(_resourceKey);
+                _bitmapCash.Remove(resourceKey);
             }
 
         }
