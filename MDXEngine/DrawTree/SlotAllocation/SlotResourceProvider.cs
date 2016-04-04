@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using MDXEngine.Interfaces;
+using MDXEngine.Textures;
 using SharpDX.D3DCompiler;
 
 namespace MDXEngine.DrawTree.SlotAllocation
@@ -14,7 +15,9 @@ namespace MDXEngine.DrawTree.SlotAllocation
     {
         private readonly IShaderProgram _hlsl;
         private readonly Dictionary<string,SlotPool> _pools;
-        private readonly Dictionary<string, SlotAllocationInfo> _slotsAllocationInfo; 
+        private readonly Dictionary<string, SlotAllocationInfo> _slotsAllocationInfo;
+        private readonly Dictionary<string, BitmapAtlas> _textureAtlasCollection;
+
 
         private readonly BitmapCache _bitmapCash; 
 
@@ -26,9 +29,29 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 }
             }
 
+        private void ValidateSlotForTexture(string slotName)
+        {
+            if (!_slotsAllocationInfo.ContainsKey(slotName))
+                throw new Exception(String.Format("Slot {0} does not exist", slotName));
+            if (_slotsAllocationInfo[slotName].Description.ResourceType != ShaderInputType.Texture && _slotsAllocationInfo[slotName].Description.ResourceType != ShaderInputType.TextureBuffer)
+                throw new Exception(String.Format("Slot {0} is not a Texture", slotName));
+        }
+
+
+        public Dictionary<string, BitmapAtlas>  GetBitmapAtlasCollection()
+        {
+            return _textureAtlasCollection;
+        }
+
+
+       
+
+
+
         public SlotResourceProvider(IShaderProgram hlsl)
         {
             _hlsl = hlsl;
+            _textureAtlasCollection = new Dictionary<string, BitmapAtlas>();
 
             //create pools for non texture types slots
             _pools = _hlsl.ProgramResourceSlots.ToList()
@@ -66,14 +89,23 @@ namespace MDXEngine.DrawTree.SlotAllocation
              
         }
 
-     
 
- 
+    
 
-        public ITextureSlotResource RequestTexture(string slotName, string fileName)
+        internal  ITextureSlotResource RequestTexture(string slotName, Bitmap bp)
         {
-            throw new NotImplementedException();
+           ValidateSlotForTexture(slotName);
+            return new TextureSlotResource(slotName,bp,this);
         }
+
+        internal ITextureSlotResource RequestTexture(string slotName, string atlasId, Bitmap bp)
+        {
+            ValidateSlotForTexture(slotName);
+            return new TextureAtlasRegionSlotResource(slotName,atlasId,bp,this);
+            
+        }
+
+
     }
 
  }

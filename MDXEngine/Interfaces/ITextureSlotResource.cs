@@ -1,4 +1,8 @@
-﻿namespace MDXEngine.Interfaces
+﻿
+
+using SharpDX;
+
+namespace MDXEngine.Interfaces
 {
     
     
@@ -18,6 +22,6 @@
     /// </summary>
     public interface ITextureSlotResource :ISlotAllocation
     {
-        
+       // RectangleF BitmapRegion { get; }
     }
 }

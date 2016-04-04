@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MDXEngine.Interfaces;
+using MDXEngine.Textures;
 
 namespace MDXEngine.DrawTree.SlotAllocation
 {
@@ -37,6 +38,9 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 this.AllocationInfo = pool.Allocate(this);
 
             }
+
+
+            
 
            /// <summary>
            /// The only method  the other load commands need to override. 
@@ -78,7 +82,9 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 return _provider._hlsl.DxContext;
             }
 
-
+           
         }
+
+       
     }
 }

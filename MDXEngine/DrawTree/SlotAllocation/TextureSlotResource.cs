@@ -35,9 +35,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
         {
             if (_disposed)
                 throw new Exception(String.Format("Cannot load TextureSlotResource for slot {0}. Resource is disposed",this.SlotName));
-            if (_alloc.CurrentResource == _resource)
-                return;
-            else
+            if (_alloc.CurrentResource != _resource)
             {
                 _resource.Bind(this.GetHLSL(),this.SlotName);
                 _alloc.CurrentResource = _resource;

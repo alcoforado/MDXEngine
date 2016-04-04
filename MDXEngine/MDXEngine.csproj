@@ -73,6 +73,7 @@
     <Compile Include="DrawTree\SlotAllocation\ConstantBufferSlotResource.cs" />
     <Compile Include="DrawTree\SlotAllocation\ShapeSlotResourceAllocator.cs" />
     <Compile Include="DrawTree\SlotAllocation\SlotAllocationInfo.cs" />
+    <Compile Include="DrawTree\SlotAllocation\TextureAtlasRegionSlotResource.cs" />
     <Compile Include="DrawTree\SlotAllocation\TextureSlotResource.cs" />
     <Compile Include="Interfaces\IBitmapHandler.cs" />
     <Compile Include="Interfaces\IConstantBufferSlotResource.cs" />

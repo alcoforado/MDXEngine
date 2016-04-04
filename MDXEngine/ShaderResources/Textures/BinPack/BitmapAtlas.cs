@@ -36,8 +36,10 @@ namespace MDXEngine.Textures
             return _handlers.Last();
         }
 
+  
 
-        public void GenerateAtlas()
+
+        public Bitmap GenerateAtlas()
         {
             if (_atlas != null)
                 throw new Exception("Atlas is already generated. Extra Bitmap additions are forbidden");
@@ -52,12 +54,23 @@ namespace MDXEngine.Textures
                 handler.Rectangle = bitmapRegions[handler.Bitmap];
                 handler.RegionSet = true;
             }
-            
+            return _atlas;
+
+        }
+
+        public Bitmap GetAtlas()
+        {
+            if (_atlas == null)
+            {
+                throw new Exception("Atlas is not generated yet, please call method GenerateAtlas() to create the atlas");
+            }
+            return _atlas;
         }
 
         public void Dispose()
         {
-            _atlas.Dispose();
+            if (_atlas!=null)
+                _atlas.Dispose();
 
             //dispose all bitmaps
             foreach (var bp in _bitmaps)
@@ -65,6 +78,10 @@ namespace MDXEngine.Textures
                 bp.Dispose();
             }
         }
-            
+
+        public bool IsClosed()
+        {
+            return (_atlas != null);
+        }
     }
 }
