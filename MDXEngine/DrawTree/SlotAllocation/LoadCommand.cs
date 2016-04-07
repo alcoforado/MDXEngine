@@ -39,10 +39,10 @@ namespace MDXEngine.DrawTree.SlotAllocation
 
             }
 
-
+            public abstract bool CanBeOnSameSlot(ILoadCommand command);
             
 
-           /// <summary>
+            /// <summary>
            /// The only method  the other load commands need to override. 
            /// The caching system will try to allocate a resource for the 
            /// object to load data into. If the caching system decides that

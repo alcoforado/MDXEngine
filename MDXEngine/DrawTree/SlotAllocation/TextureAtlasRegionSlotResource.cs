@@ -63,6 +63,18 @@ namespace MDXEngine.DrawTree.SlotAllocation
             }
         }
 
+        public override bool CanBeOnSameSlot(ILoadCommand command)
+        {
+            if (command.GetType() == typeof(TextureAtlasRegionSlotResource))
+            {
+                return ((TextureAtlasRegionSlotResource) command)._atlasId == this._atlasId;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         public override IShaderResource LoadData(IShaderResource resource)
         {

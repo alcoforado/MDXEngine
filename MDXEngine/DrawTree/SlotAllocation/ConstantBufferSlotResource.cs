@@ -32,5 +32,10 @@ namespace MDXEngine.DrawTree.SlotAllocation
            _data = data;
        }
 
+       public override bool CanBeOnSameSlot(ILoadCommand command)
+       {
+           return false;
+       }
+
     }
 }

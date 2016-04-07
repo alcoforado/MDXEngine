@@ -13,14 +13,14 @@ namespace MDXEngine.DrawTree.SlotAllocation
     internal class TextureSlotResource :  SlotResourceProvider.LoadCommandBase, ITextureSlotResource
     {
         private readonly Texture _resource;
-        private readonly Bitmap _resourceKey;
+        private readonly Bitmap _bitmap;
         private bool _disposed;
         private SlotAllocationInfo _alloc;
         public TextureSlotResource(string SlotName, Bitmap bp, SlotResourceProvider provider)
         :base(SlotName,provider)
         {
             _disposed = false;
-            _resourceKey = bp;
+            _bitmap = bp;
             //if bitmap is in cash reuse the shader resource already allocated for this bitmap
             _resource = this.GetBitmapCache().GetCacheAndIncrementReferenceCount(bp);
             if (_resource == null)
@@ -43,13 +43,23 @@ namespace MDXEngine.DrawTree.SlotAllocation
             }
         }
 
-        
+        public override bool CanBeOnSameSlot(ILoadCommand command)
+        {
+            if (command.GetType() == typeof(TextureSlotResource))
+            {
+                return ((TextureSlotResource)command)._resource == this._resource;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
 
         public void Dispose()
         {
             
-            this.GetBitmapCache().DecrementCacheReferenceCount(_resourceKey);
+            this.GetBitmapCache().DecrementCacheReferenceCount(_bitmap);
             _disposed = true;
         }
 
