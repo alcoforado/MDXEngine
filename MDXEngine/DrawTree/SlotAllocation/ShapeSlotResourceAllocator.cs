@@ -9,11 +9,11 @@ namespace MDXEngine.DrawTree.SlotAllocation
 {
     class ShapeSlotResourceAllocator : ISlotResourceAllocator
     {
-        readonly CommandsSequence _loadSequence;
+        readonly LoadCommandsSequence _loadSequence;
         readonly SlotResourceProvider _globalProvider;
         readonly IShaderProgram _program;
 
-        public ShapeSlotResourceAllocator(IShaderProgram program,CommandsSequence loadSequence,SlotResourceProvider provider)
+        public ShapeSlotResourceAllocator(IShaderProgram program,LoadCommandsSequence loadSequence,SlotResourceProvider provider)
         {
             this._program = program;
             _globalProvider = provider;
@@ -24,7 +24,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
         {
             this._program = program;
             _globalProvider = slotResourceProvider;
-            _loadSequence = new CommandsSequence(program);
+            _loadSequence = new LoadCommandsSequence(program);
 
         }
 
@@ -49,7 +49,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
             //return result;
         }
 
-        public CommandsSequence GetLoadSequence()
+        public LoadCommandsSequence GetLoadSequence()
         {
             return _loadSequence;
         }

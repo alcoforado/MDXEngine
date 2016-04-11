@@ -131,7 +131,7 @@ namespace MDXEngine
  #region Resources Observers Functionality
 
 
-        private Dictionary<CommandsSequence, List<IObserver>> _resourcesObservers;
+        private Dictionary<LoadCommandsSequence, List<IObserver>> _resourcesObservers;
         
         private class ResourceObserver : Observer
         {
@@ -159,7 +159,7 @@ namespace MDXEngine
             foreach (var lst in _resourcesObservers)
                 foreach (var ob in lst.Value)
                     ob.Detach();
-            _resourcesObservers = new Dictionary<CommandsSequence, List<IObserver>>();
+            _resourcesObservers = new Dictionary<LoadCommandsSequence, List<IObserver>>();
         }
 
 #endregion
@@ -181,7 +181,7 @@ namespace MDXEngine
             _ntree = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new RootNode()));
             _vertices = new T[nVertices];
             _indices = new int[nIndices];
-            _resourcesObservers = new Dictionary<CommandsSequence, List<IObserver>>();
+            _resourcesObservers = new Dictionary<LoadCommandsSequence, List<IObserver>>();
             _program = program;
             _slotResourceProvider = new SlotResourceProvider(program);
         }
@@ -193,7 +193,7 @@ namespace MDXEngine
 
         public ISlotResourceAllocator GetRootSlotResourceProvider()
         {
-            var result = new ShapeSlotResourceAllocator(_program, _ntree.GetData().RootNode.Commands,_slotResourceProvider);
+            var result = new ShapeSlotResourceAllocator(_program, _ntree.GetData().RootNode.LoadCommands,_slotResourceProvider);
             return result;
         }
 
@@ -226,7 +226,7 @@ namespace MDXEngine
         {
 
             //Get Shapes Resources
-            CommandsSequence commands = this.GetShapeRequestedResources(shape);
+            LoadCommandsSequence loadCommands = this.GetShapeRequestedResources(shape);
             
 
 
@@ -240,11 +240,11 @@ namespace MDXEngine
                 if (shapeGroup.CanHaveShapeAsChild(shape))
                 {
                     //Check if the command Sequence is compatible
-                    if (commands == null || shapeGroup.Commands.CanMerge(commands))
+                    if (loadCommands == null || shapeGroup.LoadCommands.CanMerge(loadCommands))
                     {
-                        if (commands != null)
+                        if (loadCommands != null)
                         {
-                            shapeGroup.Commands.TryMerge(commands);
+                            shapeGroup.LoadCommands.TryMerge(loadCommands);
                         }
 
                         //Add the shape in the shape group tree
@@ -259,14 +259,14 @@ namespace MDXEngine
             //If we reach here, there is no group to add this shape.
             //Create one
             var shapeNode = new NTreeNode<DrawInfo<T>>( new DrawInfo<T>( new ShapeNode<T>(shape)));
-            var groupNode = new NTreeNode<DrawInfo<T>>( new DrawInfo<T>( new ShapeGroupNode<T>(shape, commands)));
+            var groupNode = new NTreeNode<DrawInfo<T>>( new DrawInfo<T>( new ShapeGroupNode<T>(shape, loadCommands)));
             groupNode.AppendChild(shapeNode);
             _ntree.AppendChild(groupNode);
             shapeNode.ForItselfAndAllParents(nd => nd.GetData().Changed = true);
             this.OnChanged();
         }
 
-        private CommandsSequence GetShapeRequestedResources(IShape<T> shape)
+        private LoadCommandsSequence GetShapeRequestedResources(IShape<T> shape)
         {
             var alloc = new ShapeSlotResourceAllocator(_program,_slotResourceProvider);
             shape.RequestSlotResources(alloc);
@@ -326,10 +326,10 @@ namespace MDXEngine
                 FullSyncTree();
                 CopyToDxBuffers(dx);
             }
-            //Run Root Node commands
+            //Run Root Node loadCommands
             var rootNode=_ntree.GetData().RootNode;
-            if (rootNode.Commands!= null)
-                rootNode.Commands.Execute();
+            if (rootNode.LoadCommands!= null)
+                rootNode.LoadCommands.Execute();
           
             foreach (var child in _ntree.GetChilds())
             {
@@ -337,8 +337,8 @@ namespace MDXEngine
                 if (child.GetData().IsShapeGroupNode())
                 {
                     var shapeGroup = info.ShapeGroupNode;
-                    if (shapeGroup.Commands != null)
-                        shapeGroup.Commands.Execute();
+                    if (shapeGroup.LoadCommands != null)
+                        shapeGroup.LoadCommands.Execute();
 
                     switch (shapeGroup.GetTopology())
                     {

@@ -79,17 +79,17 @@ namespace MDXEngine
             } 
         }
 
-        public CommandsSequence GetCommandSequence()
+        public LoadCommandsSequence GetCommandSequence()
          {
             if (HasCommandSequence())
             {
                 if (IsRootNode())
                 {
-                    return RootNode.Commands;
+                    return RootNode.LoadCommands;
                 }
                 if (IsShapeGroupNode())
                 {
-                    return ShapeGroupNode.Commands;
+                    return ShapeGroupNode.LoadCommands;
                 }
             }
             return null;
@@ -98,8 +98,8 @@ namespace MDXEngine
 
         public bool  HasCommandSequence()
          {
-             return (IsShapeGroupNode() && ShapeGroupNode.Commands != null && ShapeGroupNode.Commands.Count >= 1) ||
-                 (IsRootNode() && RootNode.Commands != null && RootNode.Commands.Count >= 1); 
+             return (IsShapeGroupNode() && ShapeGroupNode.LoadCommands != null && ShapeGroupNode.LoadCommands.Count >= 1) ||
+                 (IsRootNode() && RootNode.LoadCommands != null && RootNode.LoadCommands.Count >= 1); 
          }
 
 

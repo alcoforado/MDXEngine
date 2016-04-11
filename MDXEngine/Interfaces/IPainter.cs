@@ -21,7 +21,7 @@ namespace MDXEngine
         void Draw(IDrawContext<T> context);
 
         /// <summary>
-        /// Get the Bind Resources commands. If the painter don't define any ShaderResources to be loaded,
+        /// Get the Bind Resources loadCommands. If the painter don't define any ShaderResources to be loaded,
         /// just return null or empty list;
         /// </summary>
         /// <returns></returns>

@@ -9,19 +9,19 @@ namespace MDXEngine
 {
     
 
-    public class CommandsSequence
+    public class LoadCommandsSequence
     {
         private readonly Dictionary<string, ILoadCommand> _loadCommands;
         private readonly IShaderProgram _program;
         private readonly ISlotResourceAllocator _slotResourceProvider;
-        public CommandsSequence(IShaderProgram program,ISlotResourceAllocator slotResourceProvider)
+        public LoadCommandsSequence(IShaderProgram program,ISlotResourceAllocator slotResourceProvider)
         {
             _program = program;
             _loadCommands = new Dictionary<string, ILoadCommand>();
             _slotResourceProvider = slotResourceProvider;
         }
 
-        public CommandsSequence(IShaderProgram program)
+        public LoadCommandsSequence(IShaderProgram program)
         {
             _program = program;
             _loadCommands = new Dictionary<string, ILoadCommand>();
@@ -39,32 +39,32 @@ namespace MDXEngine
             }
         }
 
-        #region Merge Two Commands Sequence
+        #region Merge Two loadCommands Sequence
 
 
 
         /// <summary>
-        /// Check if two commands sequence can merge in just one command sequence.
+        /// Check if two loadCommands sequence can merge in just one command sequence.
         /// This method returns true if not two different resources occupy the same slot.
         /// </summary>
-        /// <param name="commands"></param>
+        /// <param name="loadCommands"></param>
         /// <returns></returns>
-        public bool CanMerge(CommandsSequence commands)
+        public bool CanMerge(LoadCommandsSequence loadCommands)
         {
-            return _program == commands._program && commands._loadCommands.All(elem => this.CanAddLoadCommand(elem.Value));
+            return _program == loadCommands._program && loadCommands._loadCommands.All(elem => this.CanAddLoadCommand(elem.Value));
         }
 
         /// <summary>
-        /// Try to merge two commands sequence.
+        /// Try to merge two loadCommands sequence.
         /// 
         /// </summary>
-        /// <param name="commands"></param>
+        /// <param name="loadCommands"></param>
         /// <returns> true if merge was successfull, false otherwise</returns>
-        public bool TryMerge(CommandsSequence commands)
+        public bool TryMerge(LoadCommandsSequence loadCommands)
         {
-            if (CanMerge(commands))
+            if (CanMerge(loadCommands))
             {
-                foreach (var elem in commands._loadCommands)
+                foreach (var elem in loadCommands._loadCommands)
                 {
                    _loadCommands[elem.Key] = elem.Value;
                 }
@@ -102,14 +102,14 @@ namespace MDXEngine
             return true;
         }
 
-        public CommandsSequence Add(ILoadCommand elem)
+        public LoadCommandsSequence Add(ILoadCommand elem)
         {
             if (!TryAddLoadCommand(elem))
                 throw new Exception("Could not add command to the Sequence");
             return this;
         }
 
-        public CommandsSequence Add(List<ILoadCommand> elems)
+        public LoadCommandsSequence Add(List<ILoadCommand> elems)
         {
             foreach (var elem in elems)
                 Add(elem); 

@@ -97,7 +97,7 @@
     <Compile Include="Interfaces\IShaderResourceData.cs" />
     <Compile Include="ShaderResources\CBufferResource.cs" />
     <Compile Include="Extensions\Drawing\RectangleExtension.cs" />
-    <Compile Include="DrawTree\CommandsSequence.cs" />
+    <Compile Include="DrawTree\LoadCommandsSequence.cs" />
     <Compile Include="DrawTree\Models\RootNode.cs" />
     <Compile Include="DrawTree\Models\ShapeGroupNode.cs" />
     <Compile Include="DrawTree\Models\ShapeNode.cs" />

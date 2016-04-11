@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MDXEngine {
     public class RootNode
     {
-        public CommandsSequence Commands { get; set; }
+        public LoadCommandsSequence LoadCommands { get; set; }
         public int OffI, OffV;
         public int SizeI, SizeV;
 
@@ -17,7 +17,7 @@ namespace MDXEngine {
             OffV = -1;
             SizeI = 0;
             SizeV = 0;
-            Commands = null;
+            LoadCommands = null;
         }
     
     }

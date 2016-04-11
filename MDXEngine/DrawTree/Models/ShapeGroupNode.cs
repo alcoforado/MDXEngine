@@ -12,25 +12,25 @@ namespace MDXEngine
         public int SizeI, SizeV;
         private TopologyType _topology;
         private bool _isIndexed;
-        public CommandsSequence Commands { get; private set; }
-        public ShapeGroupNode(bool isIndexed, TopologyType topology, CommandsSequence commands = null)
+        public LoadCommandsSequence LoadCommands { get; private set; }
+        public ShapeGroupNode(bool isIndexed, TopologyType topology, LoadCommandsSequence loadCommands = null)
         {
                 OffI = -1;
                 OffV = -1;
                 _isIndexed = isIndexed;
                 _topology = topology;
-                Commands = commands;
+                LoadCommands = loadCommands;
 
         }
 
-        public ShapeGroupNode(IShape<T> shape, CommandsSequence commands = null)
+        public ShapeGroupNode(IShape<T> shape, LoadCommandsSequence loadCommands = null)
             
         {
             OffI = -1;
             OffV = -1;
             _isIndexed = shape.NIndices() != 0;
             _topology = shape.GetTopology();
-            Commands = commands;
+            LoadCommands = loadCommands;
         }
 
 

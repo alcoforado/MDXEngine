@@ -43,7 +43,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
             
 
             /// <summary>
-           /// The only method  the other load commands need to override. 
+           /// The only method  the other load loadCommands need to override. 
            /// The caching system will try to allocate a resource for the 
            /// object to load data into. If the caching system decides that
            /// a  new resource need to be created  the chaching system will 
