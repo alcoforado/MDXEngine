@@ -28,7 +28,7 @@ namespace MDXEngine
         }
 
 
-
+         
 
         public void Execute()
         {
@@ -121,7 +121,11 @@ namespace MDXEngine
 
         public bool CanAddLoadCommand(ILoadCommand comm)
         {
-            return !_loadCommands.ContainsKey(comm.SlotName);
+            if (_loadCommands.ContainsKey(comm.SlotName))
+            {
+                return comm.CanBeOnSameSlot(comm);
+            }
+            return true;
         }
       
         #endregion
