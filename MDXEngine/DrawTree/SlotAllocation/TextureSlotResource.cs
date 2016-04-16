@@ -13,10 +13,10 @@ namespace MDXEngine.DrawTree.SlotAllocation
     internal class TextureSlotResource :  SlotResourceProvider.LoadCommandBase, ITextureSlotResource
     {
         private readonly Texture _resource;
-        private readonly Bitmap _bitmap;
+        private readonly IBitmap _bitmap;
         private bool _disposed;
         private SlotAllocationInfo _alloc;
-        public TextureSlotResource(string SlotName, Bitmap bp, SlotResourceProvider provider)
+        public TextureSlotResource(string SlotName, IBitmap bp, SlotResourceProvider provider)
         :base(SlotName,provider)
         {
             _disposed = false;

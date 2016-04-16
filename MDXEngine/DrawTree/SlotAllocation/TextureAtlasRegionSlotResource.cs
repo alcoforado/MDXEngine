@@ -18,7 +18,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
         private Texture _texture = null;
         private SlotAllocationInfo _alloc;
 
-        public TextureAtlasRegionSlotResource(string slotName, string atlasId, Bitmap bp,    SlotResourceProvider provider) 
+        public TextureAtlasRegionSlotResource(string slotName, string atlasId, IBitmap bp,    SlotResourceProvider provider) 
             : base(slotName, provider)
         {
             _atlasId = atlasId;

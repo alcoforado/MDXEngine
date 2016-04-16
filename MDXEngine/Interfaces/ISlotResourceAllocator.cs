@@ -11,9 +11,9 @@ namespace MDXEngine.Interfaces
 
         ITextureSlotResource RequestTexture(string slotName, string fileName);
 
-        ITextureSlotResource RequestTextureInAtlas(string slotName, System.Drawing.Bitmap bp, string atlasName);
+        ITextureSlotResource RequestTextureInAtlas(string slotName, IBitmap bp, string atlasName);
 
-        ITextureSlotResource RequestTexture(string slotName, System.Drawing.Bitmap bp);
+        ITextureSlotResource RequestTexture(string slotName, IBitmap bp);
 
     }
 }

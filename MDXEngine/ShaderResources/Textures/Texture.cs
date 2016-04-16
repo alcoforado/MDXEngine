@@ -8,6 +8,7 @@ using SharpDX.Direct3D11;
 using System.Drawing;
 using System.Drawing.Imaging;
 using MDXEngine.Interfaces;
+using MDXEngine.ShaderResources.Textures.BinPack;
 
 namespace MDXEngine.Textures
 {
@@ -59,12 +60,10 @@ namespace MDXEngine.Textures
        
 
 
-         public void LoadFromBitmap(Bitmap bp)
+         public void LoadFromBitmap(IBitmap bp)
         {
             this.Dispose();
              this.ObservableDock = new ObservableDock();
-            if (bp.PixelFormat != PixelFormat.Format32bppArgb)
-                throw new Exception("Only Bitmap with PixelFormat Format32bppArgb is compatible for now");
             _resource= new Texture2D(_dx.Device,new Texture2DDescription()
                         {
                             BindFlags = BindFlags.ShaderResource,
@@ -106,8 +105,11 @@ namespace MDXEngine.Textures
             
         }
 
-        public void CopyFromBitmap(Bitmap bitmap)
+        public void CopyFromBitmap(IBitmap bp)
         {
+
+            var bitmap = ((GDIBitmap) bp)._bitmap;
+
             if (bitmap.PixelFormat == PixelFormat.Format32bppArgb)
             {
 

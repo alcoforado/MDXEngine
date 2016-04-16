@@ -6,7 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using MDXEngine.DrawingExtensions;
 using System.Diagnostics;
+using MDXEngine.Interfaces;
 using MDXEngine.MMath;
+using MDXEngine.ShaderResources.Textures;
+using MDXEngine.ShaderResources.Textures.BinPack;
+
 namespace MDXEngine.Textures.BinPack
 {
     public class BinPackAlghorithm
@@ -19,7 +23,7 @@ namespace MDXEngine.Textures.BinPack
 
 
 
-        private BinPackAnalysis findBestNodeToInsert(BinPackNode node, int width, int height, List<Bitmap> lst, int iStart)
+        private BinPackAnalysis findBestNodeToInsert(BinPackNode node, int width, int height, List<IBitmap> lst, int iStart)
         {
             if (node.canFit(width, height))
             {
@@ -142,7 +146,7 @@ namespace MDXEngine.Textures.BinPack
             return ((double) this.UsedArea())/(this.UsedDims.Height*this.UsedDims.Width);
         }
 
-        public BinPackAlghorithm(List<Bitmap> lstBp)
+        public BinPackAlghorithm(List<IBitmap> lstBp)
         {
             _root = new BinPackNode(new Rectangle(0, 0, MAX_SIZE, MAX_SIZE));
             UsedDims = new Size(0, 0);
@@ -173,82 +177,87 @@ namespace MDXEngine.Textures.BinPack
         /// Used for debugging mainly
         /// </summary>
         /// <returns></returns>
-        public Bitmap CreateBitmapWithWireframe()
+        public IBitmap CreateBitmapWithWireframe()
         {
-            var result = new Bitmap(this.UsedDims.Width, this.UsedDims.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            var g = Graphics.FromImage(result);
-
-
-            Action<BinPackNode, Graphics> aux = null;
-            aux = (BinPackNode node, Graphics resultBitmap) =>
+            var result = new GDIBitmap(this.UsedDims.Width, this.UsedDims.Height);
+            using (var painter = new BitmapPainter(result))
             {
-                if (node == null)
-                    return;
-                if (node.IsFilled())
-                {
-                    System.Diagnostics.Debug.Assert(node.IsChildless());
-                    resultBitmap.DrawImage(node.Bitmap, node.Region.Location);
-                    resultBitmap.DrawRectangle(new Pen(new SolidBrush(Color.White)), new Rectangle(node.Region.Location, new Size(node.Region.Size.Width-1,node.Region.Size.Height-1)));
-                }
-                else
-                {
-                    var width = Math.Min(node.Region.Width, UsedDims.Width-node.Region.Location.X);
-                    var height = Math.Min(node.Region.Height, UsedDims.Height-node.Region.Location.Y);
 
-                    var rect = new Rectangle(node.Region.Location,new Size(width-1,height-1));
-                    if (rect.Size.Width >= 2 && rect.Size.Height >= 2)
-                        resultBitmap.DrawRectangle(new Pen(new SolidBrush(Color.White)), rect);
-                }
-                
-                if (!node.IsChildless())
+
+                Action<BinPackNode> aux = null;
+                aux = (BinPackNode node) =>
                 {
-                    foreach (var child in node.Childs)
-                        aux(child, resultBitmap);
-                }
-            };
+                    if (node == null)
+                        return;
+                    if (node.IsFilled())
+                    {
+                        System.Diagnostics.Debug.Assert(node.IsChildless());
+                        painter.DrawImage(node.Bitmap, node.Region.Location);
+                        painter.DrawRectangle(Color.White,
+                            new Rectangle(node.Region.Location,
+                                new Size(node.Region.Size.Width - 1, node.Region.Size.Height - 1)));
+                    }
+                    else
+                    {
+                        var width = Math.Min(node.Region.Width, UsedDims.Width - node.Region.Location.X);
+                        var height = Math.Min(node.Region.Height, UsedDims.Height - node.Region.Location.Y);
 
-            aux(_root, g);
-            return result;
+                        var rect = new Rectangle(node.Region.Location, new Size(width - 1, height - 1));
+                        if (rect.Size.Width >= 2 && rect.Size.Height >= 2)
+                            painter.DrawRectangle(Color.White, rect);
+                    }
 
+                    if (!node.IsChildless())
+                    {
+                        foreach (var child in node.Childs)
+                            aux(child);
+                    }
+                };
+
+                aux(_root);
+                painter.Dispose();
+                return result;
+            }
 
         }
 
 
-        public Bitmap CreateBitmap()
-        {
-            var result = new Bitmap(this.UsedDims.Width, this.UsedDims.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            var g = Graphics.FromImage(result);
-
-
-            Action<BinPackNode, Graphics> aux = null;
-            aux = (BinPackNode node, Graphics resultBitmap) =>
+        public IBitmap CreateBitmap()
+             {
+            var result = new GDIBitmap(this.UsedDims.Width, this.UsedDims.Height);
+            using (var painter = new BitmapPainter(result))
             {
-                if (node == null)
-                    return;
-                if (node.IsFilled())
-                {
-                    System.Diagnostics.Debug.Assert(node.IsChildless());
-                    resultBitmap.DrawImage(node.Bitmap, node.Region.Location);
-                }
-                else if (!node.IsChildless())
-                {
-                    foreach (var child in node.Childs)
-                        aux(child, resultBitmap);
-                }
-            };
 
-            aux(_root, g);
-            return result;
 
+                Action<BinPackNode> aux = null;
+                aux = (BinPackNode node) =>
+                {
+                    if (node == null)
+                        return;
+                    if (node.IsFilled())
+                    {
+                        System.Diagnostics.Debug.Assert(node.IsChildless());
+                        painter.DrawImage(node.Bitmap, node.Region.Location);
+                    }
+                    else if (!node.IsChildless())
+                    {
+                        foreach (var child in node.Childs)
+                            aux(child);
+                    }
+                };
+                aux(_root);
+                painter.Dispose();
+                return result;
+            }
 
         }
-
-        public Dictionary<Bitmap, Rectangle> GetBitmapsRegions()
+       
+        public Dictionary<IBitmap, Rectangle> GetBitmapsRegions()
         {
-            var result = new Dictionary<Bitmap, Rectangle>();
+            var result = new Dictionary<IBitmap, Rectangle>();
 
-            Action<BinPackNode, Dictionary<Bitmap, Rectangle>> aux = null;
-            aux = (BinPackNode node, Dictionary<Bitmap, Rectangle> regions) =>
+            Action<BinPackNode, Dictionary<IBitmap, Rectangle>> aux = null;
+            aux = (BinPackNode node, Dictionary<IBitmap, Rectangle> regions) =>
             {
                 if (node == null)
                     return;

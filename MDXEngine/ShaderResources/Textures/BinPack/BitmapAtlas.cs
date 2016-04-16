@@ -16,35 +16,32 @@ namespace MDXEngine.Textures
     /// </summary>
     public class BitmapAtlas
     {
-        private List<Bitmap> _bitmaps;
+       
         private List<BitmapHandler> _handlers;
-        public Bitmap _atlas;
+        private IBitmap _atlas;
 
         public BitmapAtlas()
         {
-            _bitmaps = new List<Bitmap>();
+           
             _handlers = new List<BitmapHandler>();
             _atlas = null;
         }
 
-        public IBitmapHandler Add(Bitmap bitmap)
+        public IBitmapHandler Add(IBitmap bitmap)
         {
             if (_atlas!= null)
                 throw new Exception("Atlas is already generated. Extra Bitmap additions are forbidden");
-            _bitmaps.Add((Bitmap) bitmap.Clone());
+           
             _handlers.Add(new BitmapHandler(this,bitmap));
             return _handlers.Last();
         }
-
-  
-
-
-        public Bitmap GenerateAtlas()
+        
+        public IBitmap GenerateAtlas()
         {
             if (_atlas != null)
                 throw new Exception("Atlas is already generated. Extra Bitmap additions are forbidden");
 
-            BinPackAlghorithm binPack = new BinPackAlghorithm(_bitmaps.Distinct().ToList());
+            BinPackAlghorithm binPack = new BinPackAlghorithm(_handlers.Select(x=>x.Bitmap).Distinct().ToList());
             _atlas = binPack.CreateBitmap();
             var bitmapRegions = binPack.GetBitmapsRegions();
 
@@ -58,7 +55,7 @@ namespace MDXEngine.Textures
 
         }
 
-        public Bitmap GetAtlas()
+        public IBitmap GetAtlas()
         {
             if (_atlas == null)
             {
@@ -72,15 +69,10 @@ namespace MDXEngine.Textures
             if (_atlas!=null)
                 _atlas.Dispose();
 
-            //dispose all bitmaps
-            foreach (var bp in _bitmaps)
-            {
-                bp.Dispose();
-            }
-            //Flag all handlers as disposed
+            //dispose all handlers
             foreach (var handler in _handlers)
             {
-                handler.IsDisposed = true;
+                handler.Dispose();
             }
         }
 

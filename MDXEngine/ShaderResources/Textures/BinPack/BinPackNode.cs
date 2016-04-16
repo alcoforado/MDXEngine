@@ -6,12 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MDXEngine.DrawingExtensions;
+using MDXEngine.Interfaces;
+
 namespace MDXEngine.Textures.BinPack
 {
     public class BinPackNode 
     {
         public Rectangle Region {get; set;}
-        public Bitmap Bitmap {get; set;}
+        public IBitmap Bitmap {get; set;}
         public List<BinPackNode> Childs { get; set; }
         
         public bool IsFilled()
@@ -29,7 +31,7 @@ namespace MDXEngine.Textures.BinPack
             return !this.IsFilled() && this.IsChildless();
         }
 
-        public BinPackNode(Rectangle rect, Bitmap bitmap=null)
+        public BinPackNode(Rectangle rect, IBitmap bitmap=null)
         {
             this.Bitmap = bitmap;
             this.Region = rect;
@@ -43,7 +45,7 @@ namespace MDXEngine.Textures.BinPack
             return this.Childs.Count == 3;
         }
 
-        public bool canFit(Bitmap bitmap)
+        public bool canFit(IBitmap bitmap)
         {
             return canFit(bitmap.Width,bitmap.Height);
         }
@@ -77,7 +79,7 @@ namespace MDXEngine.Textures.BinPack
             return new List<Rectangle>() { rect1, rect2, rect3 };
         }
 
-        public void HorizontalDecompose(Bitmap bp)
+        public void HorizontalDecompose(IBitmap bp)
         {
             Debug.Assert(IsChildless());
             var regions = this.GetHorizontalDecomposeRegions(bp);
@@ -86,7 +88,7 @@ namespace MDXEngine.Textures.BinPack
             this.Childs.Add(new BinPackNode(regions[2]));
         }
 
-        public void VerticalDecompose(Bitmap bp)
+        public void VerticalDecompose(IBitmap bp)
         {
             Debug.Assert(IsChildless());
             var regions = this.GetVerticalDecomposeRegions(bp);
@@ -96,12 +98,12 @@ namespace MDXEngine.Textures.BinPack
         }
 
 
-        public List<Rectangle> GetVerticalDecomposeRegions(Bitmap bp)
+        public List<Rectangle> GetVerticalDecomposeRegions(IBitmap bp)
         {
             return  this.GetVerticalDecomposeRegions(bp.Width, bp.Height);
         }
 
-        public List<Rectangle> GetHorizontalDecomposeRegions(Bitmap bp)
+        public List<Rectangle> GetHorizontalDecomposeRegions(IBitmap bp)
         {
             return this.GetHorizontalDecomposeRegions(bp.Width, bp.Height);
         }

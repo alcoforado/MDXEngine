@@ -41,14 +41,14 @@ namespace MDXEngine.DrawTree.SlotAllocation
             
         }
 
-        public ITextureSlotResource RequestTextureInAtlas(string slotName, System.Drawing.Bitmap bp, string atlasName)
+        public ITextureSlotResource RequestTextureInAtlas(string slotName, IBitmap bp, string atlasName)
         {
             var result = _globalProvider.RequestTextureForAtlas(slotName, atlasName, bp);
             _loadSequence.Add(result);
             return result;
         }
 
-        public ITextureSlotResource RequestTexture(string slotName, System.Drawing.Bitmap bp)
+        public ITextureSlotResource RequestTexture(string slotName, IBitmap bp)
         {
             var result = _globalProvider.RequestTexture(slotName, bp);
             _loadSequence.Add(result);
@@ -59,7 +59,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
 
         public ITextureSlotResource RequestTexture(string slotName, string fileName)
         {
-           
+            throw new NotImplementedException();
             //var result = _globalProvider.RequestTexture(slotName, fileName);
             //_loadSequence.Add(result);
             //return result;

@@ -20,7 +20,7 @@ namespace TestApp.Actions
             var shaderTexture = new ShaderTexture2D(dx);
             control.AddShader(shaderTexture);
             var textRender = new GDITextRendering();
-            var texture = textRender.RenderText("Hello World",new Font(),new TextWriteOptions()
+            var texture = textRender.RenderText("Hello World",new TextWriteOptions()
             {
                 color = SharpDX.Color.Red,
                 font_size = 25,

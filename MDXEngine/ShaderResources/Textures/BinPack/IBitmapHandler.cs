@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MDXEngine.Interfaces
 {
-    public interface IBitmapHandler
+    public interface IBitmapHandler 
     {
         SharpDX.RectangleF GetAtlasNormalizedRegion();
     }

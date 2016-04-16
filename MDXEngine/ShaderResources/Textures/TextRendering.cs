@@ -9,22 +9,14 @@ using System.Threading.Tasks;
 namespace MDXEngine.Textures
 {
     
-    public class TextOptions
-    {
-    /*    int padding_bottom;
-        int padding_right;
-        int padding_top;
-        int padding_left;
-        int use_alpha_channel;
-        StringAlignment alignment;*/
-    };
+  
     
-    public class GDITextRendering
+    public class TextRendering
     {
         Bitmap _bitmap;
         Graphics _graphics;
 
-        public GDITextRendering(int initial_width=600,int initial_height=200)
+        public TextRendering(int initial_width=600,int initial_height=200)
         {
             this.ResizeBuffer(initial_width, initial_height);
 
@@ -42,9 +34,9 @@ namespace MDXEngine.Textures
         }
 
 
-        public Bitmap RenderText(String text, Font font, TextWriteOptions options = null)
+        public Bitmap RenderText(String text, TextWriteOptions options = null)
         {
-            
+            var font = new Font(options.font_type,options.font_size);
             var sizef = _graphics.MeasureString(text, font, new PointF(0.0f, 0.0f), StringFormat.GenericDefault);
 
              //Calculate the width height of the bitmap with the padding_bottom

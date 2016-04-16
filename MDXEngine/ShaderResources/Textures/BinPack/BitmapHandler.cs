@@ -12,19 +12,20 @@ using Rectangle = System.Drawing.Rectangle;
 
 namespace MDXEngine.ShaderResources.Textures.BinPack
 {
-    public class BitmapHandler : IBitmapHandler
+    public class BitmapHandler : IBitmapHandler, IDisposable
     {
         public BitmapAtlas Owner { get; set; }
-        public Bitmap Bitmap { get; set; }
+        public IBitmap Bitmap { get; set; }
         public Rectangle Rectangle { get; set; }
         public bool RegionSet { get; set; }
         public bool IsDisposed { get; set; }
-        public BitmapHandler(BitmapAtlas owner, Bitmap bitmap)
+        public BitmapHandler(BitmapAtlas owner, IBitmap bitmap)
         {
             Owner = owner;
             Bitmap = bitmap;
             RegionSet = false;
             IsDisposed = false;
+            Bitmap.IncRefCount();
         }
 
         public SharpDX.RectangleF GetAtlasNormalizedRegion()
@@ -39,6 +40,12 @@ namespace MDXEngine.ShaderResources.Textures.BinPack
                 ((float)Rectangle.Width) / ((float)Bitmap.Width),
                 ((float)Rectangle.Height) / ((float)Bitmap.Height)
             );
+        }
+
+        public void Dispose()
+        {
+            Bitmap.Dispose();
+            IsDisposed = true;
         }
 
 

@@ -17,10 +17,10 @@ namespace MDXEngine.Shapes
         protected Vector2 _p;
         protected float _height, _width;
         protected TextureRegion _texture;
-        protected Bitmap _bitmap;
+        protected IBitmap _bitmap;
         protected string _atlasId;
         protected string _slotName;
-        public Sprite(Vector2 BL, float width, float height, Bitmap texture, string slotName,string atlasId=null)
+        public Sprite(Vector2 BL, float width, float height, IBitmap texture, string slotName,string atlasId=null)
         {
             _p = BL;
             _width = width;
@@ -28,6 +28,7 @@ namespace MDXEngine.Shapes
             _bitmap = texture;
             _atlasId = atlasId;
             _slotName = slotName;
+            _bitmap.IncRefCount();
         }
         
         public void Draw(IDrawContext<VerticeTexture2D> context)
@@ -75,6 +76,7 @@ namespace MDXEngine.Shapes
         public void RequestSlotResources(ISlotResourceAllocator provider)
         {
             provider.RequestTexture(_slotName, _bitmap);
+            _bitmap.Dispose();
         }
 
          

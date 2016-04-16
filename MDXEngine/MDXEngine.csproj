@@ -75,7 +75,7 @@
     <Compile Include="DrawTree\SlotAllocation\SlotAllocationInfo.cs" />
     <Compile Include="DrawTree\SlotAllocation\TextureAtlasRegionSlotResource.cs" />
     <Compile Include="DrawTree\SlotAllocation\TextureSlotResource.cs" />
-    <Compile Include="Interfaces\IBitmapHandler.cs" />
+    <Compile Include="Interfaces\IBitmap.cs" />
     <Compile Include="Interfaces\IConstantBufferSlotResource.cs" />
     <Compile Include="Interfaces\IDrawContext.cs" />
     <Compile Include="Interfaces\ILoadCommand.cs" />
@@ -86,9 +86,12 @@
     <Compile Include="Interfaces\IShaderResourceFactory.cs" />
     <Compile Include="Interfaces\ISlotAllocation.cs" />
     <Compile Include="Interfaces\ITextureSlotResource.cs" />
+    <Compile Include="MUtils\MImage.cs" />
     <Compile Include="ShaderResources\ShaderResourceFactory.cs" />
     <Compile Include="ShaderResources\Textures\BinPack\BitmapHandler.cs" />
+    <Compile Include="ShaderResources\Textures\GDI\GDIBitmap.cs" />
     <Compile Include="ShaderResources\Textures\BinPack\IBitmapHandler.cs" />
+    <Compile Include="ShaderResources\Textures\BitmapPainter.cs" />
     <Compile Include="UI\Camera\Camera.cs" />
     <Compile Include="UI\Camera\MouseSphericNavigator.cs" />
     <Compile Include="UI\Camera\SphericVisualization.cs" />
@@ -169,8 +172,7 @@
     <Compile Include="ShaderResources\Textures\BinPack\BinPackAlghorithm.cs" />
     <Compile Include="ShaderResources\Textures\BinPack\BinPackAnalysis.cs" />
     <Compile Include="ShaderResources\Textures\BinPack\BinPackNode.cs" />
-    <Compile Include="ShaderResources\Textures\GDI\GDITextRendering.cs" />
-    <Compile Include="ShaderResources\Textures\GDI\GDITexture.cs" />
+    <Compile Include="ShaderResources\Textures\TextRendering.cs" />
     <Compile Include="ShaderResources\Textures\Texture.cs" />
     <Compile Include="ShaderResources\Textures\BinPack\BitmapAtlas.cs" />
     <Compile Include="ShaderResources\Textures\TextureRegion.cs" />

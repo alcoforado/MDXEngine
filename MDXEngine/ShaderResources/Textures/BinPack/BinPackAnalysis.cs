@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MDXEngine.DrawingExtensions;
+using MDXEngine.Interfaces;
+
 namespace MDXEngine.Textures.BinPack
 {
     enum Decomposition { Horizontal, Vertical };
@@ -52,7 +54,7 @@ namespace MDXEngine.Textures.BinPack
 
         }
 
-        public DecompositionAnalysis(BinPackNode node, Decomposition type, int width, int height, List<Bitmap> lst, int iStart)
+        public DecompositionAnalysis(BinPackNode node, Decomposition type, int width, int height, List<IBitmap> lst, int iStart)
         {
             List<Rectangle> v;
 
@@ -74,7 +76,7 @@ namespace MDXEngine.Textures.BinPack
         public int TotalMatches { get; set; }
         public int GoldenMatch { get; set; }
 
-        public FitAnalysisResult(Rectangle region, List<Bitmap> lst, int iStart)
+        public FitAnalysisResult(Rectangle region, List<IBitmap> lst, int iStart)
         {
             TotalMatches = 0;
             GoldenMatch = 0;
