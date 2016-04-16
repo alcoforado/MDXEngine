@@ -90,15 +90,19 @@ namespace MDXEngine.DrawTree.SlotAllocation
         }
 
 
-    
 
-        internal  ITextureSlotResource RequestTexture(string slotName, Bitmap bp)
+
+        internal TextureSlotResource RequestTexture(string slotName, Bitmap bp)
         {
            ValidateSlotForTexture(slotName);
             return new TextureSlotResource(slotName,bp,this);
         }
 
-        internal ITextureSlotResource RequestTexture(string slotName, string atlasId, Bitmap bp)
+       
+
+
+
+        internal TextureAtlasRegionSlotResource RequestTextureForAtlas(string slotName, string atlasId, Bitmap bp)
         {
             ValidateSlotForTexture(slotName);
             return new TextureAtlasRegionSlotResource(slotName,atlasId,bp,this);

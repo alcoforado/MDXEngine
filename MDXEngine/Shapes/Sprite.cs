@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,14 +17,17 @@ namespace MDXEngine.Shapes
         protected Vector2 _p;
         protected float _height, _width;
         protected TextureRegion _texture;
-
-
-        public Sprite(Vector2 BL, float width, float height, TextureRegion texture)
+        protected Bitmap _bitmap;
+        protected string _atlasId;
+        protected string _slotName;
+        public Sprite(Vector2 BL, float width, float height, Bitmap texture, string slotName,string atlasId=null)
         {
             _p = BL;
             _width = width;
             _height = height;
-            _texture = texture;
+            _bitmap = texture;
+            _atlasId = atlasId;
+            _slotName = slotName;
         }
         
         public void Draw(IDrawContext<VerticeTexture2D> context)
@@ -70,7 +74,7 @@ namespace MDXEngine.Shapes
 
         public void RequestSlotResources(ISlotResourceAllocator provider)
         {
-            return;
+            provider.RequestTexture(_slotName, _bitmap);
         }
 
          

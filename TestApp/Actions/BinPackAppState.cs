@@ -3,6 +3,7 @@ using MDXEngine.Textures;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace TestApp.Actions
     {
 
         public SecWindow _form;
-        public Texture Text { get; set;  }
+        public Bitmap Text { get; set;  }
 
         public BinPackAppState(IUnityContainer container, IDxViewControl control, MainWindow mainWindow, SecWindow form)
         {

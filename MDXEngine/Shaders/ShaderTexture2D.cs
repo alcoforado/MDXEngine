@@ -18,6 +18,9 @@ namespace MDXEngine
         HLSLProgram _program;
         DrawTree<VerticeTexture2D> _root;
         public IObservable ObservableDock { get; private set; } //An IObservable used by observers to attach themselves
+        public const string TextureSlotName = "gTexture";
+        
+        
         public ShaderTexture2D(IDxContext dxContext)
         {
             _dx = dxContext;

@@ -72,13 +72,12 @@ namespace TestApp.Controllers
 
             var bp = binPack.CreateBitmapWithWireframe();
             bp.Save("Test.png");
-            state.Text = new Texture(_dx.GetDxContext(),bp);
-            var shader = _dx.ResolveShader<ShaderTexture2D>();
+           var shader = _dx.ResolveShader<ShaderTexture2D>();
             shader.RemoveAll();
             
-            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new TextureRegion(state.Text));
-            shader.Add(shape, state.Text);
-            
+            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, bp,ShaderTexture2D.TextureSlotName);
+            shader.Add(shape);
+            bp.Dispose();
             
             return binPack.Efficiency();
 

@@ -169,12 +169,12 @@
     <Compile Include="ShaderResources\Textures\BinPack\BinPackAlghorithm.cs" />
     <Compile Include="ShaderResources\Textures\BinPack\BinPackAnalysis.cs" />
     <Compile Include="ShaderResources\Textures\BinPack\BinPackNode.cs" />
-    <Compile Include="ShaderResources\Textures\GDITextRendering.cs" />
-    <Compile Include="ShaderResources\Textures\GDITexture.cs" />
+    <Compile Include="ShaderResources\Textures\GDI\GDITextRendering.cs" />
+    <Compile Include="ShaderResources\Textures\GDI\GDITexture.cs" />
     <Compile Include="ShaderResources\Textures\Texture.cs" />
     <Compile Include="ShaderResources\Textures\BinPack\BitmapAtlas.cs" />
     <Compile Include="ShaderResources\Textures\TextureRegion.cs" />
-    <Compile Include="ShaderResources\Textures\TextWriteOptions.cs" />
+    <Compile Include="ShaderResources\Textures\GDI\TextWriteOptions.cs" />
     <Compile Include="Shapes\Topologies\Triangle2DIndexed.cs" />
     <Compile Include="Extensions\SharpDX\Vector2Extension.cs" />
     <Compile Include="Extensions\SharpDX\Vector3Extension.cs" />
