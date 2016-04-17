@@ -123,7 +123,7 @@
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Models\Lights.cs" />
     <Compile Include="Actions\HelloWorld.cs" />
-    <Compile Include="Actions\TextureDisplay.cs" />
+    <Compile Include="Actions\LoadTexture.cs" />
     <Compile Include="Array2DDataView.cs" />
     <Compile Include="Interfaces\IAppStateProvider.cs" />
     <Compile Include="Interfaces\IAjaxServer.cs" />

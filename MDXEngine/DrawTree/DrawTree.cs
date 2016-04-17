@@ -179,6 +179,7 @@ namespace MDXEngine
         {
 
             _ntree = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new RootNode()));
+            _ntree.GetData().RootNode.LoadCommands = new LoadCommandsSequence(program); 
             _vertices = new T[nVertices];
             _indices = new int[nIndices];
             _resourcesObservers = new Dictionary<LoadCommandsSequence, List<IObserver>>();

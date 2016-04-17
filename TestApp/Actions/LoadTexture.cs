@@ -12,9 +12,9 @@ using MDXEngine.ShaderResources.Textures.BinPack;
 
 namespace TestApp.Actions
 {
-    public class TextureDisplay : IAppState
+    public class LoadTexture : IAppState
     {
-        public TextureDisplay(DxControl control)
+        public LoadTexture(DxControl control)
         {
             var dx = control.GetDxContext();
             var shaderTexture = new ShaderTexture2D(dx);
@@ -24,12 +24,12 @@ namespace TestApp.Actions
             if (String.IsNullOrEmpty(file))
                 return;
 
-            var texture = (Bitmap) Image.FromFile(file);
+            var texture = GDIBitmap.LoadFromFile(file);
 
-            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new GDIBitmap(texture), ShaderTexture2D.TextureSlotName);
+            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, texture, ShaderTexture2D.TextureSlotName);
 
             shaderTexture.Add(shape);
-
+            texture.Dispose();
         }
 
         public void Dispose()

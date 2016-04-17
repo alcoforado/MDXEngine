@@ -29,6 +29,14 @@ namespace MDXEngine
                     {
                         new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
                         new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0)
+                    }, 
+                    new List<SlotInfo>
+                    {
+                        new SlotInfo
+                        {
+                            SlotName = "TViewChange",
+                            SlotType = typeof(Matrix)
+                        }
                     });
             _drawTree = new DrawTree<VerticeColor>(_program);
             _worldProj = _drawTree.GetRootSlotResourceProvider().RequestConstantBuffer("TViewChange", Matrix.Identity);

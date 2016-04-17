@@ -20,7 +20,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
         public int NextBufferAvailableIndex { get; set; } /*The Buffer (Resource) currently binded to the slot*/
         public SlotAllocation CurrentBindedBuffer { get; set; } /*The Buffer (Resource) currently binded to the slot*/
 
-        private HLSLProgram _program;
+        private IShaderProgram _program;
 
         public LinkedList<SlotAllocation> Pool;
 
@@ -78,6 +78,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 _pool = pool;
                 _alloc = alloc;
                 _resourceFactory = resourceFactory;
+                
             }
 
             public void Update(bool bForceResourceUpdate)
@@ -188,12 +189,14 @@ namespace MDXEngine.DrawTree.SlotAllocation
         /// </summary>
         /// <param name="slot"></param>
         /// <param name="poolSize">Max number of buffers (cached elements). A value 0 indicates no limit</param>
-        public SlotPool(SlotDescription slot, uint poolSize = UInt32.MaxValue)
+        public SlotPool(SlotDescription slot, IShaderProgram program,uint poolSize = UInt32.MaxValue)
         {
             this.Slot = slot;
             PoolSize = poolSize;
             NextBufferAvailableIndex = 0;
             CurrentBindedBuffer = null;
+            Pool = new LinkedList<SlotAllocation>();
+            _program = program;
         }
 
         public void Dispose()

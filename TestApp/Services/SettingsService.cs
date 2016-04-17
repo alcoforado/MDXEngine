@@ -81,6 +81,8 @@ namespace TestApp.Services
 
         static public void PersistSettings()
         {
+            if (_dictionary == null)
+                return;
             var result = new System.Collections.Specialized.StringCollection();
             foreach(var elem in _dictionary)
             {

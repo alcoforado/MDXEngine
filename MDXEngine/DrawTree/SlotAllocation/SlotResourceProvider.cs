@@ -56,7 +56,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
             //create pools for non texture types slots
             _pools = _hlsl.ProgramResourceSlots.ToList()
                 .Where(x=>x.ResourceType != ShaderInputType.Texture && x.ResourceType != ShaderInputType.TextureBuffer)
-                .ToDictionary(x => x.Name, x => new SlotPool(x));
+                .ToDictionary(x => x.Name, x => new SlotPool(x,_hlsl));
 
             
             //create bitmap cache to never allocate a texture more than once for a single bitmap. 

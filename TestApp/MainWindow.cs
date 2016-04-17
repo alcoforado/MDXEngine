@@ -181,14 +181,14 @@ namespace TestApp
             Properties.Settings.Default.Save();
             SettingsService.PersistSettings();
         }
-
+        /*
         private void loadTextureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.RemoveCurrentApp();
-            var app = new TestApp.Actions.TextureDisplay(_dx);
+            var app = new TestApp.Actions.LoadTexture(_dx);
             this.SetCurrentApp(app);
         }
-
+        */
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
