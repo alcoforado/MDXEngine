@@ -63,11 +63,7 @@ namespace MDXEngine.DrawTree.SlotAllocation
             _disposed = true;
         }
 
-        public override IShaderResource LoadData(IShaderResource resource)
-        {
-            throw new NotImplementedException();
-        }
-
+    
 
         public RectangleF BitmapRegion
         {

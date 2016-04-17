@@ -9,9 +9,14 @@ namespace MDXEngine.DrawTree.SlotAllocation
 {
     internal class SlotAllocation
     {
-        public SlotResourceProvider.LoadCommandBase SlotRequest { get; internal set; }
+        public SlotPool.SlotAllocationHandler SlotRequest { get; internal set; }
         public IShaderResource Resource { get; internal set; }
+        public bool Discarded { get; set; }
 
+        public SlotAllocation()
+        {
+            Discarded = false;
+        }
     }
 
 }

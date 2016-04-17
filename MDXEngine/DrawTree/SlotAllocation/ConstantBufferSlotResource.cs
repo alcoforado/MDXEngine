@@ -8,34 +8,52 @@ using System.Threading.Tasks;
 
 namespace MDXEngine.DrawTree.SlotAllocation
 {
-   internal  class ConstantBufferSlotResource<T> : SlotResourceProvider.LoadCommandBase, IConstantBufferSlotResource<T> where T:struct
+    internal class ConstantBufferSlotResource<T> : SlotResourceProvider.LoadCommandBase, IConstantBufferSlotResource<T>, ISlotPoolResourceFactory where T : struct
     {
         T _data;
-        public ConstantBufferSlotResource(string slotName,T data,SlotResourceProvider provider)
-            :base(slotName,provider)
+        private SlotPool.SlotAllocationHandler _handler;
+        private bool _dataChanged;
+        public ConstantBufferSlotResource(string slotName, T data, SlotResourceProvider provider)
+            : base(slotName, provider)
         {
-            _data = data; 
+            _data = data;
+            _handler = GetSlotPool(slotName).CreateHandler(this);
+            _dataChanged = true;
         }
 
-        public override IShaderResource LoadData(IShaderResource resource)
+        public override void Load()
         {
-            if (resource == null)
-            {
-                resource = new CBufferResource<T>(this.GetHLSL().DxContext);
-            }
-            resource.Load(resource);
+            _handler.Update(true);
+        }
+
+
+
+
+        public void SetData(T data)
+        {
+            _data = data;
+            _dataChanged = true;
+        }
+
+        public override bool CanBeOnSameSlot(ILoadCommand command)
+        {
+            return false;
+        }
+
+
+        public IShaderResource CreateResource()
+        {
+            var resource = new CBufferResource<T>(this.GetHLSL().DxContext);
+            resource.Load(_data);
+            _dataChanged = false;
             return resource;
         }
 
-       public void SetData(T data)
-       {
-           _data = data;
-       }
-
-       public override bool CanBeOnSameSlot(ILoadCommand command)
-       {
-           return false;
-       }
-
+        public void SetResource(IShaderResource resource)
+        {
+            if (_dataChanged)
+                resource.Load(_data);
+            _dataChanged = false;
+        }
     }
 }

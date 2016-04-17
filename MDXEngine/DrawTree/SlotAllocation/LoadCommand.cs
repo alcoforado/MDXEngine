@@ -31,29 +31,11 @@ namespace MDXEngine.DrawTree.SlotAllocation
                 _provider = provider;
             }
 
-            public virtual void Load()
-            {
-                var pool = _provider._pools[this.SlotName];
-
-                this.AllocationInfo = pool.Allocate(this);
-
-            }
-
+            public abstract void Load();
+           
             public abstract bool CanBeOnSameSlot(ILoadCommand command);
             
-
-            /// <summary>
-           /// The only method  the other load loadCommands need to override. 
-           /// The caching system will try to allocate a resource for the 
-           /// object to load data into. If the caching system decides that
-           /// a  new resource need to be created  the chaching system will 
-           /// call this function with null parameter indicating that the load command
-           /// will have to create the resource  by itself. 
-           /// The method always return the IShaderResource where the data is been loaded.
-           /// </summary>
-           /// <param name="resource"></param>
-           /// <returns>The shaderresource just created</returns>
-           public abstract IShaderResource LoadData(IShaderResource resource);
+          
             
             protected SlotPool GetSlotPool(string slotName)
             {

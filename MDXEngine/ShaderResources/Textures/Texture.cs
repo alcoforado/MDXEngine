@@ -165,7 +165,7 @@ namespace MDXEngine.Textures
     
         public void Load(object data)
         {
-            Bitmap bp = data as Bitmap;
+            IBitmap bp = data as IBitmap;
             if (bp != null )
             {
                 LoadFromBitmap(bp);

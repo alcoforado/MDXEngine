@@ -4,13 +4,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MDXEngine.Interfaces;
 using MDXEngine.Textures;
 
 namespace MDXEngine.DrawTree.SlotAllocation
 {
     public class BitmapCache
     {
-        private readonly Dictionary<Bitmap, BitmapCacheEntry> _bitmapCash; 
+        private readonly Dictionary<IBitmap, BitmapCacheEntry> _BitmapCash; 
 
         public  class BitmapCacheEntry
         {
@@ -21,14 +22,14 @@ namespace MDXEngine.DrawTree.SlotAllocation
 
         public BitmapCache()
         {
-            _bitmapCash = new Dictionary<Bitmap, BitmapCacheEntry>();
+            _BitmapCash = new Dictionary<IBitmap, BitmapCacheEntry>();
         }
 
-        public Texture GetCacheAndIncrementReferenceCount(Bitmap bp)
+        public Texture GetCacheAndIncrementReferenceCount(IBitmap bp)
         {
-            if (_bitmapCash.ContainsKey(bp))
+            if (_BitmapCash.ContainsKey(bp))
             {
-                var entry = _bitmapCash[bp];
+                var entry = _BitmapCash[bp];
                 entry.ReferenceCount++;
                 return entry.Resource;
             }
@@ -41,11 +42,11 @@ namespace MDXEngine.DrawTree.SlotAllocation
 
 
 
-        internal void AddIntoCash(Bitmap bp, Texture texture)
+        internal void AddIntoCash(IBitmap bp, Texture texture)
         {
-            if (_bitmapCash.ContainsKey(bp))
-                throw new Exception("Cache entry already exists for this bitmap");
-            _bitmapCash.Add(bp,new BitmapCacheEntry()
+            if (_BitmapCash.ContainsKey(bp))
+                throw new Exception("Cache entry already exists for this IBitmap");
+            _BitmapCash.Add(bp,new BitmapCacheEntry()
             {
                 ReferenceCount = 1,
                 Resource = texture
@@ -53,24 +54,24 @@ namespace MDXEngine.DrawTree.SlotAllocation
 
         }
 
-        internal int ReferenceCount(Bitmap resourceKey)
+        internal int ReferenceCount(IBitmap resourceKey)
         {
-            if (!_bitmapCash.ContainsKey(resourceKey))
-                throw new Exception("Bitmap not in cache");
-            return _bitmapCash[resourceKey].ReferenceCount;
+            if (!_BitmapCash.ContainsKey(resourceKey))
+                throw new Exception("IBitmap not in cache");
+            return _BitmapCash[resourceKey].ReferenceCount;
         }
 
-        internal void DecrementCacheReferenceCount(Bitmap resourceKey)
+        internal void DecrementCacheReferenceCount(IBitmap resourceKey)
         {
-            System.Diagnostics.Debug.Assert(_bitmapCash.ContainsKey(resourceKey));
+            System.Diagnostics.Debug.Assert(_BitmapCash.ContainsKey(resourceKey));
 
-            var entry = _bitmapCash[resourceKey];
+            var entry = _BitmapCash[resourceKey];
 
             entry.ReferenceCount--;
             if (entry.ReferenceCount == 0)
             {
                 entry.Resource.Dispose();
-                _bitmapCash.Remove(resourceKey);
+                _BitmapCash.Remove(resourceKey);
             }
 
         }
