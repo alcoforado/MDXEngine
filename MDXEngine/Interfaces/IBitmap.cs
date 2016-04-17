@@ -18,5 +18,7 @@ namespace MDXEngine.Interfaces
         int Width { get; }
 
         int Height { get; }
+
+        void Save(string file);
     }
 }

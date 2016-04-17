@@ -54,7 +54,7 @@ namespace MDXEngine
             _slots.AddResourceSlots(vertexReflection, ShaderStage.VertexShader);
             
             //Adding extra slot information given by the shader
-            if (slotsInfo == null)
+            if (slotsInfo != null)
                 _slots.AddSlotInfoFromShaders(slotsInfo);
 
 

@@ -91,12 +91,7 @@ namespace MDXEngine
 
             if (_loadCommands.ContainsKey(slot.Name))
             {
-                return false;
-            }
-            else
-            {
-                
-
+                return command.CanBeOnSameSlot(_loadCommands[slot.Name]);
             }
             _loadCommands[slot.Name] = command; 
             return true;

@@ -5,6 +5,7 @@ using MDXEngine.Textures;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using MDXEngine.DrawTree;
+using MDXEngine.Interfaces;
 
 namespace UnitTests
 {
@@ -12,56 +13,66 @@ namespace UnitTests
     public class CommandsSequenceUnitTests
     {
         private HLSLProgram _hlslProgram;
-        private CommandsSequence _commands;
-
+        private LoadCommandsSequence _commands;
+        private Mock<ILoadCommand> _load1;
+        private Mock<ILoadCommand> _load2;
 
         public CommandsSequenceUnitTests()
         {
             _hlslProgram = Utilities.GetHLSLProgramWithTwoTextureResources();
-            _commands = new CommandsSequence(_hlslProgram);
+            _commands = new LoadCommandsSequence(_hlslProgram);
+            _load1 = new Mock<ILoadCommand>();
+            _load2 = new Mock<ILoadCommand>();
         }
 
         [TestMethod]
         public void CommandsSequence_Load_A_Resource_Already_Loaded_Always_Succeed()
         {
-            var command = new CommandsSequence(_hlslProgram);
-            var texture = new Texture(Utilities.GetDxContext(), "./Images/fox.jpg");
+            var command = new LoadCommandsSequence(_hlslProgram);
 
-            command.TryAddLoadCommand("texture1", texture).Should().BeTrue();
-            command.TryAddLoadCommand("texture1", texture).Should().BeTrue();
-            command.Add(new SlotData {
-               SlotName= "texture1",
-               Data =  texture });
+            _load1.Setup(x => x.CanBeOnSameSlot(It.IsAny<ILoadCommand>())).Returns(true);
+            _load1.SetupGet(x=>x.SlotName).Returns("texture1");
+            
+            _load2.Setup(x => x.CanBeOnSameSlot(It.IsAny<ILoadCommand>())).Returns(true);
+            _load2.SetupGet(x => x.SlotName).Returns("texture1");
+
+            command.TryAddLoadCommand(_load1.Object).Should().BeTrue();
+            command.TryAddLoadCommand(_load2.Object).Should().BeTrue();
+            
         }
 
         [TestMethod]
         public void CommandsSequence_Load_A_Resource_In_A_Already_Filled_Slot_Should_Fail()
         {
-            var command = new CommandsSequence(_hlslProgram);
-            var texture1 = new Texture(Utilities.GetDxContext(), "./Images/fox.jpg");
-            var texture2 = new Texture(Utilities.GetDxContext(), "./Images/fox.jpg");
+            var command = new LoadCommandsSequence(_hlslProgram);
+
+            _load1.Setup(x => x.CanBeOnSameSlot(It.IsAny<ILoadCommand>())).Returns(false);
+            _load1.SetupGet(x => x.SlotName).Returns("texture1");
+
+            _load2.Setup(x => x.CanBeOnSameSlot(It.IsAny<ILoadCommand>())).Returns(false);
+            _load2.SetupGet(x => x.SlotName).Returns("texture1");
+            
            
-            command.TryAddLoadCommand("texture1", texture1).Should().BeTrue();
-            command.TryAddLoadCommand("texture1", texture2).Should().BeFalse();
-            command.Invoking(x=> x.Add(new SlotData
-            {
-                SlotName = "texture1",
-                Data = texture2
-            })).ShouldThrow<Exception>();
+            command.TryAddLoadCommand(_load1.Object).Should().BeTrue();
+            command.TryAddLoadCommand(_load2.Object).Should().BeFalse();
+            command.Invoking(x=> x.Add(_load2.Object)).ShouldThrow<Exception>();
         }
 
 
         [TestMethod]
         public void CommandsSequence_Merging_Two_Sequences_That_Load_Resources_In_Different_Slots_Should_Succeed()
         {
-            var command1 = new CommandsSequence(_hlslProgram);
-            var command2 = new CommandsSequence(_hlslProgram);
-        
-            var texture1 = new Texture(Utilities.GetDxContext(), "./Images/fox.jpg");
-            var texture2 = new Texture(Utilities.GetDxContext(), "./Images/fox.jpg");
+            var command1 = new LoadCommandsSequence(_hlslProgram);
+            var command2 = new LoadCommandsSequence(_hlslProgram);
 
-            command1.TryAddLoadCommand("texture1", texture1).Should().BeTrue();
-            command2.TryAddLoadCommand("texture2", texture2).Should().BeTrue();
+            _load1.Setup(x => x.CanBeOnSameSlot(It.IsAny<ILoadCommand>())).Returns(false);
+            _load1.SetupGet(x => x.SlotName).Returns("texture1");
+
+            _load2.Setup(x => x.CanBeOnSameSlot(It.IsAny<ILoadCommand>())).Returns(false);
+            _load2.SetupGet(x => x.SlotName).Returns("texture2");
+
+            command1.TryAddLoadCommand(_load1.Object).Should().BeTrue();
+            command2.TryAddLoadCommand(_load2.Object).Should().BeTrue();
             command1.CanMerge(command2).Should().BeTrue();
             command2.CanMerge(command1).Should().BeTrue();
             command1.TryMerge(command2).Should().BeTrue();
@@ -72,18 +83,23 @@ namespace UnitTests
         [TestMethod]
         public void CommandsSequence_Execute_Should_Load_All_Resources()
         {
-            var command = new CommandsSequence(_hlslProgram);
+            var command = new LoadCommandsSequence(_hlslProgram);
             var res1 = new Mock<IShaderResource>();
             var res2 = new Mock<IShaderResource>();
 
+            _load1.Setup(x => x.CanBeOnSameSlot(It.IsAny<ILoadCommand>())).Returns(false);
+            _load1.SetupGet(x => x.SlotName).Returns("texture1");
+
+            _load2.Setup(x => x.CanBeOnSameSlot(It.IsAny<ILoadCommand>())).Returns(false);
+            _load2.SetupGet(x => x.SlotName).Returns("texture2");
           
-            command.TryAddLoadCommand("texture1", res1.Object).Should().BeTrue();
-            command.TryAddLoadCommand("texture2", res2.Object).Should().BeTrue();
+            command.TryAddLoadCommand(_load1.Object).Should().BeTrue();
+            command.TryAddLoadCommand(_load2.Object).Should().BeTrue();
 
             command.Execute();
 
-            res1.Verify(x => x.Load(It.IsAny<HLSLProgram>(), It.IsAny<string>()));
-            res2.Verify(x => x.Load(It.IsAny<HLSLProgram>(), It.IsAny<string>()));
+            _load1.Verify(x => x.Load());
+            _load2.Verify(x => x.Load());
 
         }
 

@@ -67,6 +67,7 @@ namespace UnitTests
 
             _programMock = new Mock<IShaderProgram>();
             _program = _programMock.Object;
+            _programMock.SetupGet(x=>x.ProgramResourceSlots).Returns(new ShaderSlotsCollection());
 
         }
 
@@ -274,55 +275,55 @@ namespace UnitTests
         [TestMethod]
         public void DrawTree_FullSyncTreeOfJustOneIndexedShapeShouldPassIndicesAndVerticesArraysOfCorrectSize()
         {
-            this.mShapeI5V3.Setup(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()))
-                .Callback((SubArray<ColorVerticeData> v, IArray<int> i) =>
+            this.mShapeI5V3.Setup(x => x.Draw(It.IsAny<IDrawContext<ColorVerticeData>>()))
+                .Callback((IDrawContext<ColorVerticeData> context) =>
                 {
-                    i.Length.Should().Be(5);
-                    v.Length.Should().Be(3);
+                    context.Indices.Length.Should().Be(5);
+                    context.Vertices.Length.Should().Be(3);
                 });
 
             var tree = new DrawTree<ColorVerticeData>(_program);
             tree.Add(mShapeI5V3.Object);
             tree.FullSyncTree();
-            mShapeI5V3.Verify(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<SubArray<int>>()));
+            mShapeI5V3.Verify((x => x.Draw(It.IsAny<IDrawContext<ColorVerticeData>>())));
         }
 
         [TestMethod]
         public void DrawTree_FullSyncTreeOfJustOneIndexedShapeShouldCopyShapeIndices()
         {
-            this.mShapeI5V3.Setup(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()))
-                .Callback((SubArray<ColorVerticeData> v, IArray<int> i) =>
+            this.mShapeI5V3.Setup((x => x.Draw(It.IsAny<IDrawContext<ColorVerticeData>>())))
+                .Callback((IDrawContext<ColorVerticeData> context) =>
                 {
-                    i[0]=0;
-                    i[1]=1;
-                    i[2]=2;
-                    i[3]=3;
-                    i[4]=4;
+                    context.Indices[0]=0;
+                    context.Indices[1]=1;
+                    context.Indices[2]=2;
+                    context.Indices[3]=3;
+                    context.Indices[4]=4;
                 });
 
             var tree = new DrawTree<ColorVerticeData>(_program);
             tree.Add(mShapeI5V3.Object);
             tree.FullSyncTree();
             tree.Indices.Should().Equal(new int[]{0,1,2,3,4},(int left,int right) => left==right);
-            mShapeI5V3.Verify(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()));
+           
         }
 
         [TestMethod]
         public void DrawTree_FullSyncTreeOfJustOneIndexedShapeShouldCopyShapeVertices()
         {
-            this.mShapeI5V3.Setup(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()))
-                .Callback((SubArray<ColorVerticeData> v, IArray<int> i) =>
+            this.mShapeI5V3.Setup(x => x.Draw(It.IsAny<IDrawContext<ColorVerticeData>>()))
+                .Callback((IDrawContext<ColorVerticeData> context) =>
                 {
                     ColorVerticeData aux = new ColorVerticeData();
                     
                     aux.Position = new Vector3(0f);
-                    v[0] = aux;
+                    context.Vertices[0] = aux;
 
                     aux.Position = new Vector3(1f);
-                    v[1] = aux;
+                    context.Vertices[1] = aux;
 
                     aux.Position = new Vector3(2f);
-                    v[2] = aux;
+                    context.Vertices[2] = aux;
 
                 });
             var tree = new DrawTree<ColorVerticeData>(_program);
@@ -336,7 +337,7 @@ namespace UnitTests
             };
 
             tree.Vertices.Should().Equal(result, (left,right) => left.Position == right.Position);
-            mShapeI5V3.Verify(x => x.Write(It.IsAny<SubArray<ColorVerticeData>>(), It.IsAny<IArray<int>>()));
+            mShapeI5V3.Verify(x => x.Draw(It.IsAny<IDrawContext<ColorVerticeData>>()));
         }
 
 

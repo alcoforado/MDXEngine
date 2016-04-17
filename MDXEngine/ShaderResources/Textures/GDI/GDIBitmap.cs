@@ -28,9 +28,9 @@ namespace MDXEngine.ShaderResources.Textures.BinPack
             RefCount = 1;
         }
 
-        public int Width { get { return Width; } }
+        public int Width { get { return _bitmap.Width; } }
 
-        public int Height{ get { return Height; }}
+        public int Height{ get { return _bitmap.Height; }}
     
     
 
@@ -50,6 +50,11 @@ namespace MDXEngine.ShaderResources.Textures.BinPack
         public void IncRefCount()
         {
             RefCount++;
+        }
+
+        public void Save(string file)
+        {
+            _bitmap.Save(file);
         }
 
 

@@ -62,10 +62,8 @@ namespace UnitTests
         [TestMethod]
         public void GDITextRendering_ShouldReturnNotNullBitmap()
         {
-            var textRendering = new GDITextRendering(200,200);
-            var bitmap=textRendering.RenderText("Hello World",new System.Drawing.Font("Arial",77));
-
-            bitmap.Save("HelloWorld.png");
+            var textRendering = new TextRendering(200,200);
+            var bitmap=textRendering.RenderText("Hello World",new TextWriteOptions());
             bitmap.Should().NotBeNull();
         }
     }
