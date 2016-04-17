@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using MDXEngine.Shapes;
 using MDXEngine.Textures;
 using SharpDX;
 using MDXEngine;
+using MDXEngine.ShaderResources.Textures.BinPack;
 
 namespace TestApp.Actions
 {
@@ -22,11 +24,11 @@ namespace TestApp.Actions
             if (String.IsNullOrEmpty(file))
                 return;
 
-            var texture = new Texture(dx,file);
+            var texture = (Bitmap) Image.FromFile(file);
 
-            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new TextureRegion(texture));
+            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new GDIBitmap(texture), ShaderTexture2D.TextureSlotName);
 
-            shaderTexture.Add(shape,texture);
+            shaderTexture.Add(shape);
 
         }
 

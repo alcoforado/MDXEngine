@@ -5,13 +5,16 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MDXEngine.Interfaces;
+using MDXEngine.ShaderResources.Textures.BinPack;
 
 namespace MDXEngine.Textures
 {
     
   
     
-    public class TextRendering
+    public class TextRendering : IDisposable
+
     {
         Bitmap _bitmap;
         Graphics _graphics;
@@ -34,7 +37,7 @@ namespace MDXEngine.Textures
         }
 
 
-        public Bitmap RenderText(String text, TextWriteOptions options = null)
+        public IBitmap RenderText(String text, TextWriteOptions options = null)
         {
             var font = new Font(options.font_type,options.font_size);
             var sizef = _graphics.MeasureString(text, font, new PointF(0.0f, 0.0f), StringFormat.GenericDefault);
@@ -58,8 +61,17 @@ namespace MDXEngine.Textures
             var brush = new SolidBrush(Color.Red);
             _graphics.DrawString(text, font, brush, rect);
 
-            return _bitmap.Clone(new Rectangle(new Point(0, 0), new Size((int) width, (int) height)),
-                _bitmap.PixelFormat);
+            var result = _bitmap.Clone(new Rectangle(new Point(0, 0), new Size((int) width, (int) height)),_bitmap.PixelFormat);
+            return new GDIBitmap(result);
+        }
+
+
+        public void Dispose()
+        {
+            _graphics.Dispose();
+            _bitmap.Dispose();
+            _graphics = null;
+            _bitmap = null;
         }
     }
 }

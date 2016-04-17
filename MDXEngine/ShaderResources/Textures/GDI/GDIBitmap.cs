@@ -8,7 +8,7 @@ using MDXEngine.Interfaces;
 
 namespace MDXEngine.ShaderResources.Textures.BinPack
 {
-    internal class GDIBitmap : IBitmap
+    public class GDIBitmap : IBitmap
     {
         public Bitmap _bitmap;
         private int RefCount;

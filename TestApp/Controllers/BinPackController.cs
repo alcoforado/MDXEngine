@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using TestApp.Models;
 using MDXEngine.SharpDXExtensions;
 using MDXEngine;
+using MDXEngine.Interfaces;
+using MDXEngine.ShaderResources.Textures.BinPack;
 using MDXEngine.Textures.BinPack;
 using TestApp.Actions;
 using MDXEngine.Textures;
@@ -61,7 +63,7 @@ namespace TestApp.Controllers
                 new Interval(model.minWidth, model.maxWidth),
                 new Interval(model.minHeight, model.maxHeight),
                 model.NumElements);
-            var binPack = new BinPackAlghorithm(list);
+            var binPack = new BinPackAlghorithm(list.Select(x=>(IBitmap) new GDIBitmap(x)).ToList());
             var state = _appStateProvider.GetAppState<BinPackAppState>();
             
             if (state.Text != null )
@@ -71,7 +73,7 @@ namespace TestApp.Controllers
             }
 
             var bp = binPack.CreateBitmapWithWireframe();
-            bp.Save("Test.png");
+          
            var shader = _dx.ResolveShader<ShaderTexture2D>();
             shader.RemoveAll();
             

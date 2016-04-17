@@ -19,14 +19,14 @@ namespace TestApp.Actions
             var dx = control.GetDxContext();
             var shaderTexture = new ShaderTexture2D(dx);
             control.AddShader(shaderTexture);
-            var textRender = new GDITextRendering();
+            var textRender = new TextRendering();
             var texture = textRender.RenderText("Hello World",new TextWriteOptions()
             {
                 color = SharpDX.Color.Red,
                 font_size = 25,
             });
-            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, new TextureRegion(texture));
-            shaderTexture.Add(shape, texture);
+            var shape = new Sprite(new Vector2(-1f, -1f), 2.0f, 2.0f, texture,ShaderTexture2D.TextureSlotName);
+            shaderTexture.Add(shape);
 
         
         }
