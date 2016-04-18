@@ -68,7 +68,15 @@ namespace MDXEngine
                     throw new Exception(String.Format("Error cannot find slot names {0}",slotInfo.SlotName));
                 }
             }
+            foreach (var slotinfo in _slots)
+            {
+                if (slotinfo.Value.ResourceType == ShaderInputType.ConstantBuffer && slotinfo.Value.DataType == null)
+                {
+                    throw new Exception(String.Format("Error slot data type not specified for constant buffer slot {0}", slotinfo.Key));
+                }
+            }
         }
+
     }
 
 

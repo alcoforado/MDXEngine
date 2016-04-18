@@ -39,7 +39,7 @@ namespace MDXEngine
             _pixelShader = new PixelShader(device, pixelShaderByteCode);
 
              
-            // Layout from VertexShader input signature
+            //Layout from VertexShader input signature
             var signature = ShaderSignature.GetInputSignature(vertexShaderByteCode);
             _layout = new InputLayout(device, signature, elems);
 
@@ -54,9 +54,11 @@ namespace MDXEngine
             _slots.AddResourceSlots(vertexReflection, ShaderStage.VertexShader);
             
             //Adding extra slot information given by the shader
-            if (slotsInfo != null)
-                _slots.AddSlotInfoFromShaders(slotsInfo);
+            if (slotsInfo == null)
+                slotsInfo = new List<SlotInfo>();
+            _slots.AddSlotInfoFromShaders(slotsInfo);
 
+            
 
 
 

@@ -38,6 +38,20 @@ namespace MDXEngine.Shaders
                     {
                         new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
                         new InputElement("NORMAL", 0, Format.R32G32B32A32_Float, 16, 0)
+                    },
+                    new List<SlotInfo>{
+                        new SlotInfo{
+                            SlotName = "OneTime",
+                            SlotType = typeof(DirectionalLight)
+                        },
+                        new SlotInfo{
+                            SlotName = "ManyPerFrame",
+                            SlotType = typeof(Material)
+                        },
+                        new SlotInfo{
+                            SlotName = "TViewChange",
+                            SlotType = typeof(TViewChange)
+                        }
                     });
             _drawTree = new DrawTree<VerticeNormal>(_program);
             var slotProvider = _drawTree.GetRootSlotResourceProvider();

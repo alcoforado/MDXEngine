@@ -93,6 +93,7 @@
     <Compile Include="ShaderResources\Textures\GDI\GDIBitmap.cs" />
     <Compile Include="ShaderResources\Textures\BinPack\IBitmapHandler.cs" />
     <Compile Include="ShaderResources\Textures\BitmapPainter.cs" />
+    <Compile Include="Shapes\Topologies\OrthoMesh2d.cs" />
     <Compile Include="UI\Camera\Camera.cs" />
     <Compile Include="UI\Camera\MouseSphericNavigator.cs" />
     <Compile Include="UI\Camera\SphericVisualization.cs" />
