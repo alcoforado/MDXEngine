@@ -21,7 +21,7 @@ public class OrthoMesh2D
     private double _dy;
     public Vector2 O;
     public Vector2 P;
-    
+    private readonly uint[] _cellVerticeOffset;
 
     public OrthoMesh2D(uint numElemsX, uint numElemsY, Vector2 o, Vector2 p)
     {
@@ -40,19 +40,38 @@ public class OrthoMesh2D
         _lastY = numElemsY - 1;
         _lastX = numElemsX - 1;
         _dx = (double) (P.X - O.X)/(double) numElemsX;
-        _dy = (double)(P.Y - O.Y) /(double) numElemsY;
+        _dy = (double) (P.Y - O.Y)/(double) numElemsY;
+
+        _cellVerticeOffset = new uint[4];
+        _cellVerticeOffset[(int) CellVertice.BottomLeft] = 0;
+        _cellVerticeOffset[(int) CellVertice.BottomRight] = 1;
+        _cellVerticeOffset[(int) CellVertice.UpLeft] = _numVerticesX;
+        _cellVerticeOffset[(int) CellVertice.UpRight] = _numVerticesX+1;
     }
 
-    enum CellVertices
+
+    public CellIt BeginCell()
     {
-        BottomLeft,
-        BottomRight,
-        UpRight,
-        UpLeft
+        return new CellIt(this);
+    }
+
+    public VerticeIt BeginVertice()
+    {
+        return new VerticeIt(this);
+    }
+
+
+    public enum CellVertice
+    {
+        BottomLeft=0,
+        BottomRight=1,
+        UpRight=2,
+        UpLeft=3
     };
+
     public class VerticeIt
     {
-        private OrthoMesh2D _mesh;
+        private readonly OrthoMesh2D _mesh;
         private uint _i;
         private uint _j;
 
@@ -74,13 +93,14 @@ public class OrthoMesh2D
                 return false;
             }
             _j++;
+            _i = 0;
             return true;
 
         }
 
         public Vector2 Vertice()
         {
-            return new Vector2((float)_mesh._dx * _i + _mesh.O.X, (float)_mesh._dy * _j + _mesh.O.Y);
+            return new Vector2((float) _mesh._dx*_i + _mesh.O.X, (float) _mesh._dy*_j + _mesh.O.Y);
         }
 
 
@@ -91,7 +111,9 @@ public class OrthoMesh2D
     {
         uint _i;
         uint _j;
-        private OrthoMesh2D _mesh;
+        private uint _index;
+        private readonly OrthoMesh2D _mesh;
+
         public CellIt(OrthoMesh2D mesh)
         {
             _i = _j = 0;
@@ -102,18 +124,30 @@ public class OrthoMesh2D
         {
 
             if (++_i < _mesh.NumElemsX)
+            {
+                _index++;
                 return true;
+            }
             if (_j == _mesh._lastY)
             {
                 _i = _mesh.NumElemsX;
                 return false;
             }
             _j++;
+            _i = 0;
+            _index++;
             return true;
+        }
+
+        public uint vertex_index(CellVertice v)
+        {
+            return _j*_mesh.NumElemsX + _i + _mesh._cellVerticeOffset[(int) v];
         }
 
 
 
     }
 
-    }
+
+
+}
