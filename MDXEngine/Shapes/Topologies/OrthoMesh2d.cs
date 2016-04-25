@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MDXEngine;
 using SharpDX;
 
 
 
 
-public class OrthoMesh2D
+public class OrthoMesh2D 
 {
 
     public uint NumElemsX;
@@ -49,6 +50,8 @@ public class OrthoMesh2D
         _cellVerticeOffset[(int) CellVertice.UpRight] = _numVerticesX+1;
     }
 
+    public const uint InvalidIndex = UInt32.MaxValue;
+
 
     public CellIt BeginCell()
     {
@@ -74,32 +77,47 @@ public class OrthoMesh2D
         private readonly OrthoMesh2D _mesh;
         private uint _i;
         private uint _j;
+        public uint _index;
 
         public VerticeIt(OrthoMesh2D mesh)
         {
             _mesh = mesh;
 
-            _i = _j = 0;
+            _i = _j = _index=0;
         }
 
         public bool Next()
         {
 
             if (++_i < _mesh._numVerticesX)
+            {
+                _index++;
                 return true;
+            }
             if (_j == _mesh.NumElemsY)
             {
+                _j = _mesh._numVerticesY;
                 _i = _mesh._numVerticesX;
+                _index = uint.MaxValue;
                 return false;
             }
             _j++;
             _i = 0;
+            _index++;
             return true;
 
         }
 
+
+        public uint Index()
+        {
+            return _index;
+        }
+
         public Vector2 Vertice()
         {
+            if (_index == uint.MaxValue)
+                throw new Exception("OrthoMesh2D: Vertice past the end");
             return new Vector2((float) _mesh._dx*_i + _mesh.O.X, (float) _mesh._dy*_j + _mesh.O.Y);
         }
 
@@ -131,6 +149,7 @@ public class OrthoMesh2D
             if (_j == _mesh._lastY)
             {
                 _i = _mesh.NumElemsX;
+                _index =  OrthoMesh2D.InvalidIndex;
                 return false;
             }
             _j++;
@@ -139,13 +158,17 @@ public class OrthoMesh2D
             return true;
         }
 
-        public uint vertex_index(CellVertice v)
+        public uint VertexIndex(CellVertice v)
         {
-            return _j*_mesh.NumElemsX + _i + _mesh._cellVerticeOffset[(int) v];
+            return _j*_mesh._numVerticesX + _i + _mesh._cellVerticeOffset[(int) v];
         }
 
 
+        public uint Index()
+        {
 
+            return _index;
+        }
     }
 
 

@@ -108,6 +108,7 @@
     <Compile Include="ColorGeneratorTest.cs" />
     <Compile Include="HScoreTests.cs" />
     <Compile Include="HlslCompilationTests.cs" />
+    <Compile Include="Orthomesh2DTests.cs" />
     <Compile Include="UnitTestExtensions.cs" />
     <Compile Include="UnitTestDrawTree.cs" />
     <Compile Include="UnitTestObservers.cs" />
