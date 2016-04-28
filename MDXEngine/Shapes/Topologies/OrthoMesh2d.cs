@@ -8,11 +8,13 @@ using SharpDX;
 
 
 
-public class OrthoMesh2D 
+public class OrthoMesh2D : ITopology 
 {
 
-    public uint NumElemsX;
-    public uint NumElemsY;
+    public uint NumElemsX { get; private set; }
+    public uint NumElemsY { get; private set; }
+    public uint NumCells { get; private set; }
+    public uint NumVertices { get; private set; }
     private uint _lastY;
     private uint _lastX;
     private uint _numVerticesX;
@@ -28,10 +30,10 @@ public class OrthoMesh2D
     {
         NumElemsX = numElemsX;
         NumElemsY = numElemsY;
-
+        NumCells = numElemsX*numElemsY;
         _numVerticesX = numElemsX + 1;
         _numVerticesY = numElemsY + 1;
-
+        NumVertices = _numVerticesX*_numVerticesY;
         O = o;
         P = p;
 
@@ -172,5 +174,37 @@ public class OrthoMesh2D
     }
 
 
+    public int NIndices()
+    {
+       return  (int) (this.NumCells*6);
+    }
 
+    public int NVertices()
+    {
+        return (int) (this.NumVertices);
+    }
+
+    public void Write(IArray<Vector3> vV, IArray<int> vI)
+    {
+        int i = 0;
+        for (var v = BeginVertice(); v.Next();)
+        {
+            vV[i++]=new Vector3(v.Vertice(),0.0f);
+        }
+        i = 0;
+        for (var it = BeginCell(); it.Next();)
+        {
+            vI[i++] = (int) it.VertexIndex(CellVertice.BottomLeft);
+            vI[i++] = (int) it.VertexIndex(CellVertice.BottomRight);
+            vI[i++] = (int) it.VertexIndex(CellVertice.UpLeft);
+            vI[i++] = (int) it.VertexIndex(CellVertice.BottomRight);
+            vI[i++] = (int) it.VertexIndex(CellVertice.UpRight);
+            vI[i++] = (int) it.VertexIndex(CellVertice.UpLeft);
+        }
+    }
+
+    public TopologyType GetTopologyType()
+    {
+        return TopologyType.TRIANGLES;
+    }
 }
