@@ -60,7 +60,7 @@ namespace TestApp
         
 
         //If this constructor is used the controller will be created every time
-        //we execute. (It is like Asp.NET). Stateless controllers tend to be better code.
+        //we execute. (It is like Asp.NET). Stateless controllers tend to have better code.
         public ControllerHandler(IFactory<IController> factory, string controllerId, MethodInfo method)
         {
             _controllerCashed = null;

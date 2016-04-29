@@ -44,10 +44,16 @@ template {
 }
 a {
   background-color: transparent;
+    cursor: pointer;
+    color: white;
 }
+
+
+
 a:active,
 a:hover {
   outline: 0;
+  text-decoration: underline;
 }
 abbr[title] {
   border-bottom: 1px dotted;
@@ -1096,15 +1102,7 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
-a {
-  color: #337ab7;
-  text-decoration: none;
-}
-a:hover,
-a:focus {
-  color: #23527c;
-  text-decoration: underline;
-}
+
 a:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
@@ -4033,19 +4031,22 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: relative;
   display: block;
   padding: 10px 15px;
-  color: #797979;
+  color: #9E9E9E;
+    text-decoration: none;
 }
-.nav > li > a:hover,
-.nav > li > a:focus {
-  text-decoration: none;
-  color: lightgray;
+
+.nav > li > a:hover {
+    text-decoration: none;
+    color: #DEDEDE;
 }
+
+
 .nav > li.disabled > a {
-  color: #777;
+  color: #E89800;
 }
 .nav > li.disabled > a:hover,
 .nav > li.disabled > a:focus {
-  color: #777;
+  color: #E89800;
   text-decoration: none;
   cursor: not-allowed;
   background-color: transparent;
@@ -4066,30 +4067,29 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   max-width: none;
 }
 .nav-tabs {
-  border-bottom: 5px solid #636060;
+  border-bottom: 5px solid #E89800;
+   
 }
 .nav-tabs > li {
   float: left;
-  margin-bottom: -1px;
+  
   position: relative;
   top: 5px;
-  border-bottom: 5px solid #636060;
+ 
 }
 .nav-tabs > li > a {
   margin-right: 2px;
   line-height: 1.42857143;
  
 }
-.nav-tabs > li > a:hover {
-  color: #999999
-}
+
 
 .nav-tabs > li.active {
     border-bottom: 5px solid white;
     background: url("../images/triangle.svg") no-repeat center bottom;
     background-size: 10px;
-    transition : border 500ms linear,background-color 500ms linear;
-    
+    /*transition : border 500ms linear,background-color 500ms linear;*/
+    padding-bottom: 0px;
 
 }
 

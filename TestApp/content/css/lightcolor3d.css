@@ -52,34 +52,95 @@ input[type="color"] {
     transition:transform 0.1s;
    
 }
-.form-icon img
+
+
+.main-form
 {
-    width:62px;
-    position:relative;
-    top: 11px;
-    left: -20px;
+    color: white;
+    display:inline-block;
+    width: 353px;
+    
+    animation-name: fadein;
+    font-size: 15px;
+    animation-duration: 1s;
+    transition: transform 0.1s;
+    border-color: rgb(2, 5, 58);
 }
-.form-title {
+
+.form-header {
+    border: 6px solid #7F7F84;
+    border-width: 6px 6px 0px 6px;
+    padding: 0px 27px 27px 27px;
     height: 62px;
+    width: 100%;
     line-height: 62px;
     font-size: 26px;
+    color: white;
+    border-top-left-radius: 27px;
+    border-top-right-radius: 27px;
+    background: #2E2E35;
+    background-color: #d28900;
+    text-align: center;
 }
 
-.form-title img{
+.form-body {
+    border: 6px solid #7F7F84;
+    border-width: 1px 6px 6px 6px;
+    padding: 15px 27px 27px 27px;
+    
+    width: 100%;
+    
+    
+    color: white;
+    border-bottom-left-radius: 27px;
+    border-bottom-right-radius: 27px;
+    background: #2E2E35;
+}
+
+
+
+.form-header img{
    width: 35px;
-   display:inline-block;
+    float: left;
+    margin-left: -19px;
+    margin-top: 10px;
+   
 }
 
-.form-title h1{
-   width:50px;
-   display:inline-block;
-}
 
 
 
 .form-row {
     padding: 0px 0px 10px 0px;
 }
+
+.vertical-toolbar {
+
+    padding-right: 5px;
+    height: 100%;
+    
+    display: inline-block;
+    color: white;
+}
+
+
+.vertical-toolbar img {
+    display: inline-block;
+    height: 24px;
+    vertical-align: text-top;
+}
+
+
+.content-vertical-toolbar-right {
+    display: inline-block;
+     border-left: 2px solid #7F7F84;
+    padding-left: 10px;
+    vertical-align: top;
+   
+}
+
+
+
 
 .group-form {
     margin: 0 auto;
@@ -117,20 +178,7 @@ input[type="color"] {
     border: 1px solid;
     /*box-shadow: 10px 10px 5px #888888;*/
 }
-.main-form
-{
-    color: white;
-    display:inline-block;
-    width: 353px;
-    background: #2E2E35;
-    border-color: rgb(2, 5, 58);
-    border: 6px solid #7F7F84;
-    animation-name: fadein;
-    font-size: 15px;
-    animation-duration: 1s;
-    transition: transform 0.1s;
-    padding: 0px 27px 27px 27px;
-}
+
 
 
 .efficiency-graph-container
@@ -234,3 +282,4 @@ input[type="color"] {
     background: white url("../images/radar.svg") no-repeat center;
 
 }
+

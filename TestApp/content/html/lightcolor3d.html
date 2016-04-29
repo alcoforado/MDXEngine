@@ -38,55 +38,64 @@
     </div>
     <br />
     <br />
-    
+
     <div class="view-panel">
         <uib-tabset>
-            <uib-tab ng-repeat="tab in tabs" heading="hello" active="tab.active" disable="tab.disabled">
+           
+            <uib-tab heading="Shapes">
+                <form>
+                    <div class="vertical-toolbar">
+                        <div class="vertical-toolbar-item"><img src="../images/add.svg" /> <a>Add</a></div>
+                    </div>
+                    <div class="content-vertical-toolbar-right">
+                        <div class="main-form">
+                            <div class="form-header"><img src="../images/directional_light.svg" /> <img src="" />OrthoMesh2D</div>
+                            <div class="form-body"></div>
+                        </div>
+                    </div>
+                </form>
             </uib-tab>
+
             <uib-tab>
                 <uib-tab-heading>
                     Lights
                 </uib-tab-heading>
 
 
-
-                <form class="main-form round-panel">
-                                       
-                        <div class="form-icon">
-                        <img src="../images/directional_light.svg" />
-                    </div>
-                    
-                    <div class="form-title center-text">
-                          Directional Light
-                    </div>
+                <form class="main-form">
 
 
-                    <div class="form-row">
-                        <span class="span-label">
-                            Direction:
-                        </span>
-                        <vector-picker vector="dirLight.Direction"/>
-                    </div>
+                    <div class="form-header"><img src="../images/directional_light.svg" /> Directional Light</div>
 
-                    <div class="form-row">
-                        <span class="span-col2">
-                            <span class="span-label">Ambient:</span><dx-color-picker ng-model="dirLight.Ambient" />
-                        </span>
-                        <span class="span-col2">
-                            <span class="span-label">Diffuse:</span><dx-color-picker ng-model="dirLight.Diffuse" />
-                        </span>
-                    </div>
-                    <div class="form-row">
-                        <span class="span-col2">
-                            <span class="span-label">Specullar:</span><dx-color-picker ng-model="dirLight.Specular" />
-                        </span>
-                        <span class="span-col2">
-                            <span class="span-label">Power:</span><input type="number" value="1" min="1" ng-model="dirLight.SpecPower"/>
-                        </span>
-                    </div>
-                    <div class="center-text" ng-click="controller.set_lights()">
-                        <div class="round-button">
-                            Ok
+
+                    <div class="form-body">
+                        <div class="form-row">
+                            <span class="span-label">
+                                Direction:
+                            </span>
+                            <vector-picker vector="dirLight.Direction" />
+                        </div>
+
+                        <div class="form-row">
+                            <span class="span-col2">
+                                <span class="span-label">Ambient:</span><dx-color-picker ng-model="dirLight.Ambient" />
+                            </span>
+                            <span class="span-col2">
+                                <span class="span-label">Diffuse:</span><dx-color-picker ng-model="dirLight.Diffuse" />
+                            </span>
+                        </div>
+                        <div class="form-row">
+                            <span class="span-col2">
+                                <span class="span-label">Specullar:</span><dx-color-picker ng-model="dirLight.Specular" />
+                            </span>
+                            <span class="span-col2">
+                                <span class="span-label">Power:</span><input type="number" value="1" min="1" ng-model="dirLight.SpecPower" />
+                            </span>
+                        </div>
+                        <div class="center-text" ng-click="controller.set_lights()">
+                            <div class="round-button">
+                                Ok
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -128,9 +137,8 @@
 
 
                 </form>
-
-
             </uib-tab>
+           
 
         </uib-tabset>
     </div>
