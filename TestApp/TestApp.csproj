@@ -111,10 +111,11 @@
     <Compile Include="Controllers\CADController.cs" />
     <Compile Include="Controllers\PersistenceController.cs" />
     <Compile Include="Controllers\ShapesMngrController.cs" />
+    <Compile Include="Models\ShapesManagerService\Render\SolidColorRender.cs" />
     <Compile Include="Interfaces\IShapesRemder.cs" />
     <Compile Include="Models\RenderTypeInfo.cs" />
-    <Compile Include="Models\ShapesManagerService\SolidColorRender.cs" />
-    <Compile Include="Models\ShapesManagerService\Topologies\ITopologyViewModel.cs" />
+    <Compile Include="Models\ShapesManagerService\Render\IRenderViewModel.cs" />
+    <Compile Include="Models\ShapesManagerService\Topologies\IShapeViewModel.cs" />
     <Compile Include="Models\ShapesManagerService\Topologies\Orthomesh2DViewModel.cs" />
     <Compile Include="Services\Interfaces\ISettingsService.cs" />
     <Compile Include="Services\SettingsService.cs" />
