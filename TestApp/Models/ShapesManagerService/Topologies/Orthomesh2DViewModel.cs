@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MDXEngine;
 using SharpDX;
 using TestApp.Models.ShapesManagerService.Render;
 
@@ -15,6 +16,11 @@ namespace TestApp.Models.ShapesManagerService.Topologies
             return "OrthoMesh2D";
         }
         public IRenderViewModel Render { get; set; }
+        public ITopology CreateTopology()
+        {
+            throw new NotImplementedException();
+        }
+
         public string Id { get; set; }
         public int NumElemsX { get; set; }
         public int NumElemsY { get; set; }

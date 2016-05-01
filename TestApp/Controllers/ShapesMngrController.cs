@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using MDXEngine;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.ObjectBuilder;
 using TestApp.Models.ShapesManagerService.Render;
 using TestApp.Models.ShapesManagerService.Topologies;
 
@@ -15,7 +18,7 @@ namespace TestApp.Controllers
     {
         private Dictionary<string, Type> _typeMap;
         private int _idCounter=0;
-
+        private IUnityContainer _container;
 
         public List<string> GetTopologies()
         {
@@ -26,7 +29,7 @@ namespace TestApp.Controllers
         }
 
 
-        public ShapesMngrController()
+        public ShapesMngrController(IDxViewControl viewControl)
         {
             var shapes = new List<IShapeViewModel>(){new Orthomesh2DViewModel()};
             var painters = new List<IRenderViewModel>() {new SolidColorRender()};
@@ -37,6 +40,10 @@ namespace TestApp.Controllers
             {
                 _typeMap[pt.GetPainterName()] = pt.GetType();
             }
+
+
+
+
 
         }
 
