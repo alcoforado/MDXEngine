@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * @overview  Ember - JavaScript Application Framework
  * @copyright Copyright 2011-2014 Tilde Inc. and contributors
  *            Portions Copyright 2006-2011 Strobe Inc.
@@ -9039,7 +9039,7 @@ define("ember-handlebars/helpers/partial",
 
         return bind.call(context, name, options, true, exists);
       } else {
-        // Render the partial right into parent template.
+        // RenderBase the partial right into parent template.
         renderPartial(context, name, options);
       }
     }
@@ -23556,7 +23556,7 @@ define("ember-routing/system/route",
           renderTemplate: function(controller, model) {
             var favController = this.controllerFor('favoritePost');
 
-            // Render the `favoritePost` template into
+            // RenderBase the `favoritePost` template into
             // the outlet `posts`, and display the `favoritePost`
             // controller.
             this.render('favoritePost', {

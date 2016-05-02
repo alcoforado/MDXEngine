@@ -13,6 +13,11 @@ namespace MDXEngine.SharpDXExtensions
             return new Vector4(v.X, v.Y, Z, W);
         }
 
+        public static Vector2 Scale(this Vector2 v, float scale)
+        {
+            return new Vector2(v.X*scale, v.Y*scale);
+        }
+
 
     }
 }

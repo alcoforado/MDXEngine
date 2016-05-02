@@ -64,6 +64,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=2.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -111,12 +115,12 @@
     <Compile Include="Controllers\CADController.cs" />
     <Compile Include="Controllers\PersistenceController.cs" />
     <Compile Include="Controllers\ShapesMngrController.cs" />
-    <Compile Include="Models\ShapesManagerService\Render\SolidColorRender.cs" />
+    <Compile Include="Models\ShapesManagerService\Render\SolidColorRenderBase.cs" />
     <Compile Include="Interfaces\IShapesRemder.cs" />
     <Compile Include="Models\RenderTypeInfo.cs" />
-    <Compile Include="Models\ShapesManagerService\Render\IRenderViewModel.cs" />
-    <Compile Include="Models\ShapesManagerService\Topologies\IShapeViewModel.cs" />
-    <Compile Include="Models\ShapesManagerService\Topologies\Orthomesh2DViewModel.cs" />
+    <Compile Include="Models\ShapesManagerService\Render\RenderBaseViewModel.cs" />
+    <Compile Include="Models\ShapesManagerService\Topologies\ShapeBaseViewModel.cs" />
+    <Compile Include="Models\ShapesManagerService\Topologies\Orthomesh2DViewModelBase.cs" />
     <Compile Include="Services\Interfaces\ISettingsService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Models\Lights.cs" />
