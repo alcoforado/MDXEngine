@@ -23,5 +23,11 @@ namespace TestApp.Models.ShapesManagerService.Render
             shader.Add(shape);
             return shape;
         }
+
+        public override void DetachFromShader(IDxViewControl _dx, object p)
+        {
+            var shader = _dx.ResolveShader<ShaderColor3D>();
+            shader.Remove((Shape3D<VerticeColor>) p);
+        }
     }
 }
