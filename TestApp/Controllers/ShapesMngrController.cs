@@ -45,6 +45,24 @@ namespace TestApp.Controllers
         }
 
 
+
+        public void DeleteShape(string shapeId)
+        {
+            if (!_shapeCollection.ContainsKey(shapeId)) 
+            {
+                throw new Exception(String.Format("Error, Shape Id {0} not found", shapeId));
+            }
+            else
+            {
+                var shape = _shapeCollection[shapeId];
+                shape.RenderBase.DetachFromShader(_dx, shape.ShaderShape);
+                if (shape.ShaderShape is IDisposable)
+                    ((IDisposable)shape).Dispose();
+                _shapeCollection.Remove(shapeId);
+            }
+
+        }
+
         //TODO: Update Shape
         public void UpdateShape(string shapeId,string shapeJsonData,string painterId, string painterJsonData)
         {
