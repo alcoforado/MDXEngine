@@ -48,15 +48,6 @@ namespace MDXEngine.Textures
         }
 
 
-        public void LoadFromFile(string fileName)
-        {
-            this.Dispose();
-            _resource = Texture2D.FromFile<Texture2D>(_dx.Device, fileName, ImageLoadInformation.Default);
-            _view = new ShaderResourceView(_dx.Device, _resource);
-            this.ObservableDock = new ObservableDock();
-
-        }
-
        
 
 
@@ -170,11 +161,6 @@ namespace MDXEngine.Textures
             {
                 LoadFromBitmap(bp);
                 return;
-            }
-            string fileName = data as string;
-            if (fileName != null)
-            {
-                LoadFromFile(fileName);
             }
             throw new Exception(String.Format("Cannot build a texture from type {0}",data.GetType().FullName));
         }
