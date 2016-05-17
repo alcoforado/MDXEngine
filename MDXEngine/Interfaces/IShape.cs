@@ -8,13 +8,18 @@ using MDXEngine.Interfaces;
 
 namespace MDXEngine
 {
-    public enum TopologyType { POINTS, LINES, TRIANGLES}
-    public interface IShape<T> 
+    public interface IShape
     {
-        void Draw(IDrawContext<T> context);
-        int  NVertices();
-        int  NIndices();
+        int NVertices();
+        int NIndices();
         TopologyType GetTopology();
         void RequestSlotResources(ISlotResourceAllocator provider);
+    }
+
+    public enum TopologyType { POINTS, LINES, TRIANGLES}
+    public interface IShape<T> : IShape
+    {
+        void Draw(IDrawContext<T> context);
+       
     }
 }

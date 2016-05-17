@@ -55,7 +55,7 @@ namespace TestApp.Controllers
             else
             {
                 var shape = _shapeCollection[shapeId];
-                shape.RenderBase.DetachFromShader(_dx, shape.ShaderShape);
+                shape.Painter.DetachFromShader(_dx, shape.ShaderShape);
                 if (shape.ShaderShape is IDisposable)
                     ((IDisposable)shape).Dispose();
                 _shapeCollection.Remove(shapeId);
@@ -63,7 +63,7 @@ namespace TestApp.Controllers
 
         }
 
-        //TODO: Update Shape
+       
         public void UpdateShape(string shapeId,string shapeJsonData,string painterId, string painterJsonData)
         {
             if (!_shapeCollection.ContainsKey(shapeId) || !_shapeCollection.ContainsKey(painterId))
@@ -75,20 +75,20 @@ namespace TestApp.Controllers
             
             var serializer = new JavaScriptSerializer();
             var newShape = serializer.Deserialize(shapeJsonData, shape.GetType());
-            var painter = serializer.Deserialize(painterJsonData, shape.RenderBase.GetType());
+            var painter = serializer.Deserialize(painterJsonData, shape.Painter.GetType());
 
             
 
             shape.CopyPublicPropertiesFrom(newShape);
-            shape.RenderBase.CopyPublicPropertiesFrom(painter);
+            shape.Painter.CopyPublicPropertiesFrom(painter);
 
-            shape.RenderBase.DetachFromShader(_dx, shape.ShaderShape);
+            shape.Painter.DetachFromShader(_dx, shape.ShaderShape);
             if (shape.ShaderShape is IDisposable)
                 ((IDisposable) shape).Dispose();
 
            
             var topology = shape.CreateTopology();
-            shape.ShaderShape = shape.RenderBase.AttachToShader(_dx, topology);
+            shape.ShaderShape = shape.Painter.AttachToShader(_dx, topology);
         }
 
         public ShapeBaseViewModel CreateShape(string shapeTypeId, string renderTypeId)
@@ -105,7 +105,7 @@ namespace TestApp.Controllers
             var shape = (ShapeBaseViewModel)Activator.CreateInstance(_typeMap[shapeTypeId]);
             var render = (RenderBaseViewModel)Activator.CreateInstance(_typeMap[renderTypeId]);
 
-            shape.RenderBase = render;
+            shape.Painter = render;
 
             shape.Id = "Shape" + Interlocked.Increment(ref _idCounter).ToString();
 

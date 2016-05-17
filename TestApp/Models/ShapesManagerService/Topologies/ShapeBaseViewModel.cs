@@ -11,7 +11,7 @@ namespace TestApp.Models.ShapesManagerService.Topologies
     {
         public string Id { get; set; }
 
-        internal RenderBaseViewModel RenderBase { get; set; }
+        internal RenderBaseViewModel Painter { get; set; }
         internal object ShaderShape { get; set; }
 
         internal abstract string GetShapeName();

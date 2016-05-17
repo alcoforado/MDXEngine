@@ -9039,7 +9039,7 @@ define("ember-handlebars/helpers/partial",
 
         return bind.call(context, name, options, true, exists);
       } else {
-        // RenderBase the partial right into parent template.
+        // Painter the partial right into parent template.
         renderPartial(context, name, options);
       }
     }
@@ -23556,7 +23556,7 @@ define("ember-routing/system/route",
           renderTemplate: function(controller, model) {
             var favController = this.controllerFor('favoritePost');
 
-            // RenderBase the `favoritePost` template into
+            // Painter the `favoritePost` template into
             // the outlet `posts`, and display the `favoritePost`
             // controller.
             this.render('favoritePost', {

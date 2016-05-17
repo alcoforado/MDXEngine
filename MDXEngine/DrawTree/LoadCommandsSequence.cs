@@ -11,20 +11,25 @@ namespace MDXEngine
 
     public class LoadCommandsSequence
     {
-        private readonly Dictionary<string, ILoadCommand> _loadCommands;
+        private class LoadCommandEntry
+        {
+            public ILoadCommand LoadCommand { get; set; }
+
+            public int RefCount  { get; set; } 
+        }
+
+        private readonly Dictionary<string, LoadCommandEntry> _loadCommands;
         private readonly IShaderProgram _program;
-        private readonly ISlotResourceAllocator _slotResourceProvider;
         public LoadCommandsSequence(IShaderProgram program,ISlotResourceAllocator slotResourceProvider)
         {
             _program = program;
-            _loadCommands = new Dictionary<string, ILoadCommand>();
-            _slotResourceProvider = slotResourceProvider;
+            _loadCommands = new Dictionary<string, LoadCommandEntry>();
         }
 
         public LoadCommandsSequence(IShaderProgram program)
         {
             _program = program;
-            _loadCommands = new Dictionary<string, ILoadCommand>();
+            _loadCommands = new Dictionary<string, LoadCommandEntry>();
         }
 
 
@@ -35,7 +40,7 @@ namespace MDXEngine
             foreach (var pair in _loadCommands)
             {
                 var command = pair.Value;
-                command.Load();
+                command.LoadCommand.Load();
             }
         }
 
@@ -51,7 +56,7 @@ namespace MDXEngine
         /// <returns></returns>
         public bool CanMerge(LoadCommandsSequence loadCommands)
         {
-            return _program == loadCommands._program && loadCommands._loadCommands.All(elem => this.CanAddLoadCommand(elem.Value));
+            return _program == loadCommands._program && loadCommands._loadCommands.All(elem => this.CanAddLoadCommand(elem.Value.LoadCommand));
         }
 
         /// <summary>
@@ -83,7 +88,7 @@ namespace MDXEngine
            var result = _program.ProgramResourceSlots[command.SlotName];
 #if DEBUG
              if (!result.Exists)
-                 throw new Exception(String.Format("Variable {0} is not defined in program", command.SlotName));
+                 throw new Exception(String.Format("Variable {0} is not defined in shader program", command.SlotName));
 #endif
              
 
@@ -91,9 +96,18 @@ namespace MDXEngine
 
             if (_loadCommands.ContainsKey(slot.Name))
             {
-                return command.CanBeOnSameSlot(_loadCommands[slot.Name]);
+                if (command.CanBeOnSameSlot(_loadCommands[slot.Name].LoadCommand))
+                {
+                    _loadCommands[slot.Name].RefCount++;
+                    return true;
+                }
+                return false;
             }
-            _loadCommands[slot.Name] = command; 
+            _loadCommands[slot.Name] = new LoadCommandEntry()
+            {
+                LoadCommand = command,
+                RefCount = 1
+            }; 
             return true;
         }
 
@@ -104,12 +118,7 @@ namespace MDXEngine
             return this;
         }
 
-        public LoadCommandsSequence Add(List<ILoadCommand> elems)
-        {
-            foreach (var elem in elems)
-                Add(elem); 
-            return this;
-        }
+       
 
 
         
