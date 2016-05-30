@@ -201,12 +201,13 @@ namespace MDXEngine
 
         public void Remove(IShape<T> shape)
         {
-            var nodeToDelete = _ntree.FindNodeWhere((node) => node.GetData().IsShapeNode() && node.GetData().ShapeNode == shape);
+            var nodeToDelete = _ntree.FindNodeWhere((node) => node.GetData().IsShapeNode() && node.GetData().ShapeNode.Shape == shape);
             if (nodeToDelete == null) //node does not exist nothing to do
                 return;
             var parent = nodeToDelete.GetParent();
             nodeToDelete.CutSubTree();
-
+            if (parent.GetData().IsShapeGroupNode())
+                parent.GetData().ShapeGroupNode.LoadCommands.Remove(nodeToDelete.GetData().ShapeNode.LoadCommands);
             //Now make sure you remove all possible empty  
             //GroupNodes from the tree
             parent.ForItselfAndAllParents(
@@ -249,7 +250,7 @@ namespace MDXEngine
                         }
 
                         //Add the shape in the shape group tree
-                        var newNode = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new ShapeNode<T>(shape)));
+                        var newNode = new NTreeNode<DrawInfo<T>>(new DrawInfo<T>(new ShapeNode<T>(shape,loadCommands)));
                         node.AppendChild(newNode);
                         newNode.ForItselfAndAllParents(nd => nd.GetData().Changed = true);
                         return;
@@ -259,7 +260,7 @@ namespace MDXEngine
             }
             //If we reach here, there is no group to add this shape.
             //Create one
-            var shapeNode = new NTreeNode<DrawInfo<T>>( new DrawInfo<T>( new ShapeNode<T>(shape)));
+            var shapeNode = new NTreeNode<DrawInfo<T>>( new DrawInfo<T>( new ShapeNode<T>(shape,loadCommands)));
             var groupNode = new NTreeNode<DrawInfo<T>>( new DrawInfo<T>( new ShapeGroupNode<T>(shape, loadCommands)));
             groupNode.AppendChild(shapeNode);
             _ntree.AppendChild(groupNode);
@@ -284,10 +285,7 @@ namespace MDXEngine
  
         public void FullSyncTree()
         {
-
             ComputeSizes();
-
-
 
             _vertices = new T[_ntree.GetData().RootNode.SizeV];
             _indices  = new int[_ntree.GetData().RootNode.SizeI];
@@ -316,9 +314,80 @@ namespace MDXEngine
                     }
                     info.Changed = false;
                 });
-
-
         }
+
+
+        public struct FragmentationState
+        {
+            public int OffI;
+            public int OffV;
+            public int SizeI;
+            public int SizeV;
+        }
+        public void DeFragSyncTree()
+        {
+            var fragments = new List<FragmentationState>();
+            _ntree.ForAllInOrder(node =>
+            {
+                if (node.GetData().IsShapeNode() && node.GetData().ShapeNode.IsMemoryAllocated())
+                {
+                    fragments.Add(new FragmentationState()
+                    {
+                        OffI = node.GetData().ShapeNode.OffI,
+                        OffV = node.GetData().ShapeNode.OffV,
+                        SizeI = node.GetData().ShapeNode.SizeI,
+                        SizeV = node.GetData().ShapeNode.SizeV
+                    });
+                }
+            });
+
+            //Sizes in tree are now correct to the new size of shapes
+            ComputeSizes();
+
+
+            if (_vertices.Length < _ntree.GetData().RootNode.SizeV )
+                _vertices = new T[_ntree.GetData().RootNode.SizeV];
+            if (_indices.Length < _ntree.GetData().RootNode.SizeI)
+                _indices = new int[_ntree.GetData().RootNode.SizeI];
+
+
+            _vertices = new T[_ntree.GetData().RootNode.SizeV];
+            _indices  = new int[_ntree.GetData().RootNode.SizeI];
+
+            _ntree.ForAllInOrder(
+                node =>
+                {
+                    DrawInfo<T> info = node.GetData();
+                    if (info.IsShapeNode())
+                    {
+                        var shapeNode = info.ShapeNode;
+                        var vV = new SubArray<T>(_vertices, shapeNode.OffV, shapeNode.SizeV);
+                        var vI = new SubArray<int>(_indices, shapeNode.OffI, shapeNode.SizeI);
+                        shapeNode.Shape.Draw(new DrawContext<T>
+                        {
+                            Vertices = vV,
+                            Indices = vI,
+                            TopologyType = info.ShapeNode.GetTopology()
+                        });
+
+                        //Adjust Indices;
+                        for (int i = shapeNode.OffI; i < shapeNode.SizeI; i++)
+                        {
+                            _indices[i] += shapeNode.OffI;
+                        }
+                    }
+                    info.Changed = false;
+                });
+        }
+
+
+
+
+
+
+
+
+
 
         public void Draw(IDxContext dx)
         {

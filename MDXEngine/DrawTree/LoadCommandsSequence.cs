@@ -143,5 +143,21 @@ namespace MDXEngine
         {
             return _loadCommands.Count >= 1;
         }
+
+        public void Remove(LoadCommandsSequence loadCommands)
+        {
+            foreach (var cm in loadCommands._loadCommands)
+            {
+                var cmSlotName = cm.Value.LoadCommand.SlotName;
+                var entry = this._loadCommands[cmSlotName];
+                entry.RefCount--;
+                if (entry.RefCount == 0)
+                {
+                    this._loadCommands.Remove(cmSlotName);
+                }
+
+                Debug.Assert(cm.Value.LoadCommand.CanBeOnSameSlot(entry.LoadCommand));
+            }
+        }
     }
 }

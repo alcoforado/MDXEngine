@@ -14,6 +14,7 @@ namespace MDXEngine
         public IShape<T> Shape { get; set; }
         private TopologyType _topology;
         private bool _isIndexed;
+        public LoadCommandsSequence LoadCommands { get; private set; }
 
         public bool IsIndexed()
         {
@@ -25,14 +26,23 @@ namespace MDXEngine
             return _topology;
         }
 
-        public ShapeNode(IShape<T> shape)
+        public ShapeNode(IShape<T> shape,LoadCommandsSequence commands)
         {
 
-                OffI = -1;
-                OffV = -1;
-                Shape = shape;
-                _isIndexed = shape.NIndices() != 0;
-                _topology = shape.GetTopology();
+            OffI = -1;
+            OffV = -1;
+            SizeI = 0;
+            SizeV = 0;
+
+            Shape = shape;
+            _isIndexed = shape.NIndices() != 0;
+            _topology = shape.GetTopology();
+            LoadCommands = commands;
+        }
+
+        public bool IsMemoryAllocated()
+        {
+            return OffV > 0 ;
         }
 
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,6 +31,20 @@ namespace MUtils.Reflection
             
             }
 
+        }
+
+        public static List<Type>  GetImplementationsInCurrentAssembly(this Type type)
+        {
+            
+            var result = new List<Type>();
+            foreach (var t in Assembly.GetCallingAssembly().GetTypes())
+            {
+                if (!t.IsAbstract && !t.IsInterface && type.IsAssignableFrom(t))
+                {
+                    result.Add(t);
+                }
+            }
+            return result;
         }
 
     }

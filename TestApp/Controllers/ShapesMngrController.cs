@@ -10,6 +10,8 @@ using MDXEngine;
 using TestApp.Models.ShapesManagerService.Render;
 using TestApp.Models.ShapesManagerService.Topologies;
 using MUtils.Reflection;
+using Newtonsoft.Json;
+
 namespace TestApp.Controllers
 {
     public class ShapesMngrController : IController
@@ -31,16 +33,26 @@ namespace TestApp.Controllers
 
         public ShapesMngrController(IDxViewControl dx)
         {
-            var shapes = new List<ShapeBaseViewModel>(){new Orthomesh2DBaseViewModel()};
             var painters = new List<RenderBaseViewModel>() {new SolidColorRenderBase()};
             _dx = dx;
-            
-            _typeMap =  shapes.ToDictionary(x => x.GetShapeName(), x => x.GetType());
-            foreach (var pt in painters)
+            _shapeCollection = new Dictionary<string, ShapeBaseViewModel>();
+
+            _typeMap = new Dictionary<string, Type>();
+
+            var shapesT = typeof(ShapeBaseViewModel).GetImplementationsInCurrentAssembly();
+            foreach (var type in shapesT)
             {
-                _typeMap[pt.GetPainterName()] = pt.GetType();
+                _typeMap.Add(((ShapeBaseViewModel) Activator.CreateInstance(type)).GetShapeName(),type);
             }
 
+            var paintersT = typeof(RenderBaseViewModel).GetImplementationsInCurrentAssembly();
+            foreach (var type in paintersT)
+            {
+                _typeMap.Add(((RenderBaseViewModel)Activator.CreateInstance(type)).GetPainterName(), type);
+            }
+
+
+            
 
         }
 
@@ -73,14 +85,11 @@ namespace TestApp.Controllers
             var shape = _shapeCollection[shapeId];
 
             
-            var serializer = new JavaScriptSerializer();
-            var newShape = serializer.Deserialize(shapeJsonData, shape.GetType());
-            var painter = serializer.Deserialize(painterJsonData, shape.Painter.GetType());
+          JsonConvert.PopulateObject(shapeJsonData, shape);
+            JsonConvert.PopulateObject(painterJsonData, shape.Painter);
 
             
 
-            shape.CopyPublicPropertiesFrom(newShape);
-            shape.Painter.CopyPublicPropertiesFrom(painter);
 
             shape.Painter.DetachFromShader(_dx, shape.ShaderShape);
             if (shape.ShaderShape is IDisposable)
