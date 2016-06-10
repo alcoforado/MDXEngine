@@ -184,3 +184,4 @@ FakesAssemblies/
 
 #map files
 *.map
+*.config

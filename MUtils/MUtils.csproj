@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DefragArray\CopyPlanSequenceDetail.cs" />
     <Compile Include="DefragArray\DefragArray.cs" />
     <Compile Include="DefragArray\FragmentRegion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

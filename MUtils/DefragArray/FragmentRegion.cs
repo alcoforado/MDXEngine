@@ -25,7 +25,15 @@ namespace MUtils.DefragArray
         }
 
 
+        public bool IsAfter(FragmentRegion frag)
+        {
+            return frag.offI + frag.size < this.offI;
+        }
 
+        public bool Intersects(FragmentRegion frag)
+        {
+            return !(frag.offI + frag.size <= this.offI || frag.offI  >= this.offI + this.size);
+        }
     }
 
     public struct CopyPlan
@@ -43,6 +51,11 @@ namespace MUtils.DefragArray
                 return true;
             }
             return false;
+        }
+
+        public bool IsRightOf(CopyPlan cp)
+        {
+            return true;
         }
     }
 
