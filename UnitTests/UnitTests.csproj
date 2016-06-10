@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="CameraTests.cs" />
     <Compile Include="CommandsSequenceUnitTests.cs" />
+    <Compile Include="DefragArrayTests.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +134,10 @@
     <ProjectReference Include="..\MDXEngine\MDXEngine.csproj">
       <Project>{b11ed3c2-35cf-4316-87d9-a0e24250875d}</Project>
       <Name>MDXEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MUtils\MUtils.csproj">
+      <Project>{5baf97c5-781b-41a3-87fb-8a9759fcabfc}</Project>
+      <Name>MUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

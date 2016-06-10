@@ -9,11 +9,15 @@ namespace MUtils.DefragArray
 {
     public static class DefragArray
     {
-        private static List<CopyPlan> OptimizePlan(List<CopyPlan> plan)
+        private static List<CopyPlan> OptimizePlan(List<CopyPlan> p)
         {
+            var plan = new List<CopyPlan>(p);
             plan.Sort((a, b) => a.Orig.offI - b.Orig.offI);
+
+
             var optimumPlan = new List<CopyPlan>();
-            if (plan.Count > 2)
+        
+            if (plan.Count > 1)
             {
                 var mergedSegment = plan[0];
                 for (int i = 1; i < plan.Count; i++)
@@ -24,6 +28,7 @@ namespace MUtils.DefragArray
                         mergedSegment = plan[i];
                     }
                 }
+                optimumPlan.Add(mergedSegment);
             }
             else
             {
@@ -68,7 +73,7 @@ namespace MUtils.DefragArray
                     var cp2 = seqPlan[j];
                     if (cp2.Copy.Orig.IsAfter(cp1.Copy.Dst))
                     {
-                        continue;
+                        break;
                     }
                     if (cp2.Copy.Orig.Intersects(cp1.Copy.Dst))
                     {
@@ -111,6 +116,7 @@ namespace MUtils.DefragArray
                 }
 
                 minElem.RemoveBlocks();
+                seqPlan.Remove(minElem);
 
             }
             foreach (var backupElem in backupList)
