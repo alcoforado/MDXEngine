@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using MDXEngine.Interfaces;
 using MDXEngine.DrawTree;
 using MDXEngine.DrawTree.SlotAllocation;
+using MUtils.DefragArray;
 
 namespace MDXEngine
 {
@@ -221,9 +222,6 @@ namespace MDXEngine
                 });
         }
 
-
-        
-
         public void Add(IShape<T> shape)
         {
 
@@ -317,27 +315,32 @@ namespace MDXEngine
         }
 
 
-        public struct FragmentationState
-        {
-            public int OffI;
-            public int OffV;
-            public int SizeI;
-            public int SizeV;
-        }
+       
         public void DeFragSyncTree()
         {
-            var fragments = new List<FragmentationState>();
+            var vFragments = new List<CopyPlan>();
+            var iFragments = new List<CopyPlan>();
             _ntree.ForAllInOrder(node =>
             {
-                if (node.GetData().IsShapeNode() && node.GetData().ShapeNode.IsMemoryAllocated())
+                if (node.GetData().IsShapeNode() && node.GetData().ShapeNode.IsMemoryAllocated() && !node.GetData().Changed)
                 {
-                    fragments.Add(new FragmentationState()
+                    vFragments.Add(new CopyPlan()
                     {
-                        OffI = node.GetData().ShapeNode.OffI,
-                        OffV = node.GetData().ShapeNode.OffV,
-                        SizeI = node.GetData().ShapeNode.SizeI,
-                        SizeV = node.GetData().ShapeNode.SizeV
+                        Orig = new FragmentRegion()
+                        {
+                            offI = node.GetData().ShapeNode.OffV,
+                            size = node.GetData().ShapeNode.SizeV
+                        },
                     });
+                   iFragments.Add(new CopyPlan()
+                    {
+                        Orig = new FragmentRegion()
+                        {
+                            offI = node.GetData().ShapeNode.OffI,
+                            size = node.GetData().ShapeNode.SizeI
+                        }
+                    });
+
                 }
             });
 
@@ -345,20 +348,60 @@ namespace MDXEngine
             ComputeSizes();
 
 
-            if (_vertices.Length < _ntree.GetData().RootNode.SizeV )
-                _vertices = new T[_ntree.GetData().RootNode.SizeV];
+            int it = 0;
+            _ntree.ForAllInOrder(node =>
+            {
+                if (node.GetData().IsShapeNode() && node.GetData().ShapeNode.IsMemoryAllocated() && !node.GetData().Changed)
+                {
+                    vFragments[it].Dst = new FragmentRegion()
+                    {
+                        offI = node.GetData().ShapeNode.OffV,
+                        size = node.GetData().ShapeNode.SizeV
+                    };
+
+                    iFragments[it++].Dst = new FragmentRegion()
+                    {
+                        offI = node.GetData().ShapeNode.OffI,
+                        size = node.GetData().ShapeNode.SizeI
+                    };
+
+
+                }
+            });
+            //Allocate new arrays if necessary
+            T[] newVertices = null;
+            int[] newIndices = null;
+            if (_vertices.Length < _ntree.GetData().RootNode.SizeV)
+                newVertices = new T[_ntree.GetData().RootNode.SizeV];
             if (_indices.Length < _ntree.GetData().RootNode.SizeI)
-                _indices = new int[_ntree.GetData().RootNode.SizeI];
+                newIndices = new int[_ntree.GetData().RootNode.SizeI];
+
+            if (newVertices != null)
+            {
+                DefragArray.CopyArraySegments(_vertices, newVertices, vFragments);
+                _vertices = newVertices;
+            }
+            else
+                DefragArray.ReorganizeArray(_vertices, vFragments);
+
+            if (newIndices != null)
+            {
+                DefragArray.CopyArraySegments(_indices, newIndices, iFragments);
+                _indices = newIndices;
+            }
+            else
+            {
+                DefragArray.ReorganizeArray(_indices, iFragments);
+            }
 
 
-            _vertices = new T[_ntree.GetData().RootNode.SizeV];
-            _indices  = new int[_ntree.GetData().RootNode.SizeI];
+
 
             _ntree.ForAllInOrder(
                 node =>
                 {
                     DrawInfo<T> info = node.GetData();
-                    if (info.IsShapeNode())
+                    if (info.IsShapeNode() && info.Changed)
                     {
                         var shapeNode = info.ShapeNode;
                         var vV = new SubArray<T>(_vertices, shapeNode.OffV, shapeNode.SizeV);

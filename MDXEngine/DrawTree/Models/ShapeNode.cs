@@ -28,7 +28,6 @@ namespace MDXEngine
 
         public ShapeNode(IShape<T> shape,LoadCommandsSequence commands)
         {
-
             OffI = -1;
             OffV = -1;
             SizeI = 0;

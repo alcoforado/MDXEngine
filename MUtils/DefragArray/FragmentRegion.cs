@@ -36,7 +36,7 @@ namespace MUtils.DefragArray
         }
     }
 
-    public struct CopyPlan
+    public class CopyPlan
     {
         public FragmentRegion Dst;
         public FragmentRegion Orig;

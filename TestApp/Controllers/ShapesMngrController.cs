@@ -20,7 +20,7 @@ namespace TestApp.Controllers
         private int _idCounter=0;
         private IDxViewControl _dx;
         private Dictionary<string, ShapeBaseViewModel> _shapeCollection;
-   
+        private Dictionary<string, object> _shaderShapeCollection;
 
         public List<string> GetTopologies()
         {
@@ -36,7 +36,7 @@ namespace TestApp.Controllers
             var painters = new List<RenderBaseViewModel>() {new SolidColorRenderBase()};
             _dx = dx;
             _shapeCollection = new Dictionary<string, ShapeBaseViewModel>();
-
+            _shaderShapeCollection = new Dictionary<string, object>();
             _typeMap = new Dictionary<string, Type>();
 
             var shapesT = typeof(ShapeBaseViewModel).GetImplementationsInCurrentAssembly();
@@ -67,8 +67,9 @@ namespace TestApp.Controllers
             else
             {
                 var shape = _shapeCollection[shapeId];
-                shape.Painter.DetachFromShader(_dx, shape.ShaderShape);
-                if (shape.ShaderShape is IDisposable)
+                var shaderShape = _shaderShapeCollection[shapeId];
+                shape.Painter.DetachFromShader(_dx, shaderShape);
+                if (shaderShape is IDisposable)
                     ((IDisposable)shape).Dispose();
                 _shapeCollection.Remove(shapeId);
             }
@@ -88,16 +89,17 @@ namespace TestApp.Controllers
           JsonConvert.PopulateObject(shapeJsonData, shape);
             JsonConvert.PopulateObject(painterJsonData, shape.Painter);
 
-            
 
 
-            shape.Painter.DetachFromShader(_dx, shape.ShaderShape);
-            if (shape.ShaderShape is IDisposable)
-                ((IDisposable) shape).Dispose();
+            var shaderShape = _shaderShapeCollection[shapeId];
+            shape.Painter.DetachFromShader(_dx, shaderShape);
+            if (shaderShape is IDisposable)
+                ((IDisposable) shaderShape).Dispose();
 
            
             var topology = shape.CreateTopology();
-            shape.ShaderShape = shape.Painter.AttachToShader(_dx, topology);
+            shaderShape = shape.Painter.AttachToShader(_dx, topology);
+            _shaderShapeCollection.Add(shapeId,shaderShape);
         }
 
         public ShapeBaseViewModel CreateShape(string shapeTypeId, string renderTypeId)
@@ -119,7 +121,8 @@ namespace TestApp.Controllers
             shape.Id = "Shape" + Interlocked.Increment(ref _idCounter).ToString();
 
             var topology = shape.CreateTopology();
-            shape.ShaderShape = render.AttachToShader(_dx,topology);
+            var shaderShape = render.AttachToShader(_dx, topology);
+            _shaderShapeCollection.Add(shape.Id, shaderShape);
             _shapeCollection.Add(shape.Id,shape);
             return shape;
         }
