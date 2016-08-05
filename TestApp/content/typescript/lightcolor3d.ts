@@ -16,22 +16,28 @@ import Interop = require('./shared/wpf');
 import ui_bootstrap = require('ui-bootstrap');
 import dx = require('./shared/models');
 import Services = require('./shared/services');
+import ShapeType = Services.ShapeType;
+import ShapeUi = Services.ShapeUI;
 var d = typeof ui_bootstrap;
 
 
 
 
-interface IScope extends ng.IScope {
-    dirLight: dx.DirectionalLightData
 
+interface IScope extends ng.IScope {
+    dirLight: dx.DirectionalLightData;
+    shapes: Array<ShapeUi>;
+    
 }
+
+
 
 class Ctrl {
 
 
 
 
-    constructor(private $wpf: Interop.Wpf, private $settings:Services.Settings,private $scope: IScope) {
+    constructor(private $wpf: Interop.Wpf, private $settings:Services.Settings,private $shapesMngr:Services.ShapeMngr, private $scope: IScope) {
         $scope.dirLight = new dx.DirectionalLightData(
             new dx.DXVector4(1, 0, 0, 0),
             new dx.DXVector4(0, 0, 0, 0),
@@ -62,7 +68,11 @@ if (typeof ((<any> window.external).JavascriptRequest) != "undefined")
     app.service('$wpf', Interop.Wpf);
 else
     app.service('$wpf', Interop.MoqWpf);
-app.service('$settings', Services.Settings);
+
+
+Services.registerServices(app);
+//app.service('$settings', Services.Settings);
+//app.service('$shapesMngr', Services.ShapeMngr);
 directives.RegisterDirectives(app);
 
 

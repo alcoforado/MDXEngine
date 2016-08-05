@@ -19,3 +19,5 @@ export class DirectionalLightData {
         public SpecPower: number,
         public Direction: DXVector3) { }
 }
+
+

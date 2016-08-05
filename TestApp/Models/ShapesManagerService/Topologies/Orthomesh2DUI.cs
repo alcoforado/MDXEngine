@@ -10,7 +10,7 @@ using TestApp.Models.ShapesManagerService.Render;
 
 namespace TestApp.Models.ShapesManagerService.Topologies
 {
-    public class Orthomesh2DBaseViewModel : ShapeBaseViewModel
+    public class Orthomesh2DUI : ShapeUIBase
     {
         internal override string GetShapeName()
         {
