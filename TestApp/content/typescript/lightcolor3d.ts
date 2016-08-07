@@ -45,6 +45,7 @@ class Ctrl {
             0,
             new dx.DXVector3(1, 1,1));
         $settings.SetObject("lights", $scope.dirLight);
+        $scope.shapes = $shapesMngr.GetShapes();
     }
 
     set_lights() {
@@ -79,6 +80,41 @@ directives.RegisterDirectives(app);
 //Register Fixtures
 Interop.MoqWpf.Fixtures["persistence/save"] = null;
 Interop.MoqWpf.Fixtures["persistence/load"] = null;
+Interop.MoqWpf.Fixtures["shapesmngr/gettypes"] = [
+    {
+        typeName: "OtrhoMesh",
+        members: [
+            {
+                fieldName: "elemsX",
+                labelName: "elements in X",
+                directiveType: "number"
+            }, {
+                fieldName: "elemsX",
+                labelName: "elements in Y",
+                directiveType: "number"
+            }
+        ]
+    }
+];
+
+Interop.MoqWpf.Fixtures["shapesmngr/getshapes"] = [
+    {
+        typeName: "OtrhoMesh",
+        members: [
+            {
+                fieldName: "elemsX",
+                labelName: "elements in X",
+                directiveType: "number"
+            }, {
+                fieldName: "elemsX",
+                labelName: "elements in Y",
+                directiveType: "number"
+            }
+        ]
+    }
+];
+
+
 
 
 var $html = angular.element(document.getElementsByTagName('html')[0]);
