@@ -99,18 +99,12 @@ Interop.MoqWpf.Fixtures["shapesmngr/gettypes"] = [
 
 Interop.MoqWpf.Fixtures["shapesmngr/getshapes"] = [
     {
-        typeName: "OtrhoMesh",
-        members: [
-            {
-                fieldName: "elemsX",
-                labelName: "elements in X",
-                directiveType: "number"
-            }, {
-                fieldName: "elemsX",
-                labelName: "elements in Y",
-                directiveType: "number"
-            }
-        ]
+        shapeType: "OtrhoMesh",
+        shapeData:
+        {
+            elemsX: 10,
+            elemsY: 5
+        }
     }
 ];
 

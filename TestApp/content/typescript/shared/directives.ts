@@ -219,7 +219,6 @@ export class VectorPicker implements angular.IDirective
        }
 }
 
-
 export class DxColorPicker implements angular.IDirective {
     template(): string { return '<input id="DxColorPicker{0}" type="text" ng-model="cl" />'.replace("{0}",(DxColorPicker.idCount++).toString()) }
     restrict: string = 'E';
@@ -244,7 +243,7 @@ export class DxColorPicker implements angular.IDirective {
     }
 
 
-    link(
+    link(   
         scope: any,
         instanceElement: angular.IAugmentedJQuery,
         instanceAttributes: angular.IAttributes,
@@ -295,3 +294,60 @@ export function RegisterDirectives(app: angular.IModule) {
     app.directive('dxColorPicker',() => new DxColorPicker())
 
 }
+
+export class ShapeForm implements angular.IDirective {
+
+    template(): string { return '<input id="DxColorPicker{0}" type="text" ng-model="cl" />'.replace("{0}", (DxColorPicker.idCount++).toString()) }
+    restrict: string = 'E';
+    require: string = 'ngModel';
+    static idCount: number;
+    scope: any = { cl: "@" };
+    constructor() {
+    }
+
+    
+    
+
+    link(
+        scope: any,
+        instanceElement: angular.IAugmentedJQuery,
+        instanceAttributes: angular.IAttributes,
+        controller: angular.INgModelController,
+        transclude: angular.ITranscludeFunction) {
+        (<any>instanceElement.find("input")).spectrum(
+            {
+                preferredFormat: "hex",
+            }
+        );
+
+        controller.$render = () => {
+            scope.cl = controller.$viewValue.cl;
+            (<any>instanceElement.find("input")).spectrum("set", scope.cl);
+        }
+
+        controller.$parsers.push((viewValue: any) => {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(viewValue.cl);
+            var parsed: any = {
+                X: parseInt(result[1], 16) / 255.0,
+                Y: parseInt(result[2], 16) / 255.0,
+                Z: parseInt(result[3], 16) / 255.0
+            };
+            return parsed;
+        })
+
+
+
+        var that = this;
+        controller.$formatters.push((modelValue: any) => {
+            var hex: string = DxColorPicker.toColorString(<dx.DXVector3>modelValue);
+            return {
+                cl: hex
+            };
+        });
+
+        scope.$watch('cl', () => {
+            controller.$setViewValue({ cl: scope.cl });
+        });
+
+    }
+}  
