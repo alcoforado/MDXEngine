@@ -35,6 +35,7 @@
 <body ng-controller="Ctrl as controller">
     <div class="title-panel">
         CAD System
+
     </div>
     <br />
     <br />
@@ -45,12 +46,19 @@
             <uib-tab heading="Shapes">
                 <form>
                     <div class="vertical-toolbar">
-                        <div class="vertical-toolbar-item"><img src="../images/add.svg" /> <a>Add</a></div>
+                        <div class="vertical-toolbar-item"><img src="../images/add.svg"/> <a>Add</a>
+                        </div>
                     </div>
+                    
                     <div class="content-vertical-toolbar-right">
-                        <div class="main-form">
-                            <div class="form-header"><img src="../images/directional_light.svg" /> <img src="" />OrthoMesh2D</div>
-                            <div class="form-body"></div>
+                        <div class="main-form" ng-repeat="shape in shapes">
+                            <shapeForm></shapeForm>
+                            <!--<div class="form-header"><img src="../images/shapes.svg"/>{{shape.type.typeName}}</div>
+                            <div class="form-body">
+                                <div class="form-row" ng-repeat="field in shape.type.members">
+                                    {{field.directiveType}} {{field.labelName}}
+                                </div>
+                            </div>-->
                         </div>
                     </div>
                 </form>

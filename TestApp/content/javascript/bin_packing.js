@@ -5,6 +5,7 @@
 /// <reference path="./shared/svg_plots.ts" />
 /// <reference path="./shared/wpf.ts" />
 define(["require", "exports", "./shared/svg_plots", "angular", './shared/wpf'], function (require, exports, plots, angular, Interop) {
+    "use strict";
     var Data = (function () {
         function Data(NumElements, minWidth, maxWidth, minHeight, maxHeight, numberOfRuns, rotate, areaUsageValues) {
             if (numberOfRuns === void 0) { numberOfRuns = 1; }
@@ -20,7 +21,7 @@ define(["require", "exports", "./shared/svg_plots", "angular", './shared/wpf'], 
             this.areaUsageValues = areaUsageValues;
         }
         return Data;
-    })();
+    }());
     var Ctrl = (function () {
         function Ctrl($wpf, $scope) {
             this.$wpf = $wpf;
@@ -75,7 +76,7 @@ define(["require", "exports", "./shared/svg_plots", "angular", './shared/wpf'], 
         Ctrl.prototype.RunAgain = function () {
         };
         return Ctrl;
-    })();
+    }());
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     //Angular initialization with require.js
     /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,4 +106,3 @@ define(["require", "exports", "./shared/svg_plots", "angular", './shared/wpf'], 
 //    var y = [100, 200, 300,400,500];
 //   // p.plot2d($(".efficiency-graph-container")[0],x,y, options);
 //});
-//# sourceMappingURL=bin_packing.js.map

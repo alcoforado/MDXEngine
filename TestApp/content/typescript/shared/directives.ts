@@ -30,6 +30,7 @@ interface IVectorPickerScope extends ng.IScope {
 
 
 
+
 export class VectorPicker implements angular.IDirective
 {
     template: string;
@@ -290,8 +291,32 @@ export class DxColorPicker implements angular.IDirective {
 
 }
 
+export class ShapeForm implements angular.IDirective {
+    replace  = true;
+    restrict = "E";
+    scope: any = {};
+    
+
+
+    template():string {return `<div>Hello</div>` }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export function RegisterDirectives(app: angular.IModule) {
-    app.directive('vectorPicker',() => new VectorPicker())
-    app.directive('dxColorPicker',() => new DxColorPicker())
+    app.directive('vectorPicker', () => new VectorPicker());
+    app.directive('dxColorPicker', () => new DxColorPicker());
+    app.directive('shapeform', () => new ShapeForm());
 
 }

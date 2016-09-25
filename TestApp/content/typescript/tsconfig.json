@@ -1,0 +1,11 @@
+﻿{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "amd",
+    "target": "ES5",
+    "sourceMap": false,
+    "outDir":  "../javascript"
+  }
+
+
+}

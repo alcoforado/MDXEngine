@@ -20,14 +20,10 @@ import ShapeType = Services.ShapeType;
 import ShapeUi = Services.ShapeUI;
 var d = typeof ui_bootstrap;
 
-
-
-
-
 interface IScope extends ng.IScope {
     dirLight: dx.DirectionalLightData;
     shapes: Array<ShapeUi>;
-    
+    types:Array<ShapeType>;
 }
 
 
@@ -37,7 +33,7 @@ class Ctrl {
 
 
 
-    constructor(private $wpf: Interop.Wpf, private $settings:Services.Settings,private $shapesMngr:Services.ShapeMngr, private $scope: IScope) {
+    constructor(private $wpf: Interop.Wpf, private $settings: Services.Settings, private $shapesMngr:Services.ShapeMngr, private $scope: IScope) {
         $scope.dirLight = new dx.DirectionalLightData(
             new dx.DXVector4(1, 0, 0, 0),
             new dx.DXVector4(0, 0, 0, 0),
@@ -46,6 +42,7 @@ class Ctrl {
             new dx.DXVector3(1, 1,1));
         $settings.SetObject("lights", $scope.dirLight);
         $scope.shapes = $shapesMngr.GetShapes();
+
     }
 
     set_lights() {
@@ -82,14 +79,14 @@ Interop.MoqWpf.Fixtures["persistence/save"] = null;
 Interop.MoqWpf.Fixtures["persistence/load"] = null;
 Interop.MoqWpf.Fixtures["shapesmngr/gettypes"] = [
     {
-        typeName: "OtrhoMesh",
+        typeName: "OrthoMesh",
         members: [
             {
                 fieldName: "elemsX",
                 labelName: "elements in X",
                 directiveType: "number"
             }, {
-                fieldName: "elemsX",
+                fieldName: "elemsY",
                 labelName: "elements in Y",
                 directiveType: "number"
             }
@@ -97,20 +94,23 @@ Interop.MoqWpf.Fixtures["shapesmngr/gettypes"] = [
     }
 ];
 
+
+
+
 Interop.MoqWpf.Fixtures["shapesmngr/getshapes"] = [
     {
-        typeName: "OtrhoMesh",
-        members: [
-            {
-                fieldName: "elemsX",
-                labelName: "elements in X",
-                directiveType: "number"
-            }, {
-                fieldName: "elemsX",
-                labelName: "elements in Y",
-                directiveType: "number"
-            }
-        ]
+        shapeType: "OrthoMesh",
+        shapeData: {
+            elemsX: 5,
+            elemsY: 6
+        }
+    },
+    {
+        shapeType: "OrthoMesh",
+        shapeData: {
+            elemsX: 2,
+            elemsY: 3
+        }
     }
 ];
 

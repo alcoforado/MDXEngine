@@ -1,3 +1,11 @@
+export var shape:string ='\
+<div class="form-header"><img src="../images/shapes.svg" />{{shape.type.typeName}}</div>\
+<div class="form-body">\
+    <div class="form-row" ng-repeat="field in shape.type.members">\
+        {{field.directiveType}} {{field.labelName}}\
+    </div>\
+</div>';
+
 export var vectorpicker:string ='\
 \
 <div class="vector-input-container">\
@@ -5,6 +13,8 @@ export var vectorpicker:string ='\
     <input class="vector-input" type="number" ng-model="vector.Y" />\
     <input class="vector-input" type="number" ng-model="vector.Z" />\
     <div class="dialog-button" ng-click="displayDialog()"></div>\
+\
+\
 \
     <div class="screen-container" ng-show="showDialog">\
         <div class="left-pane">\

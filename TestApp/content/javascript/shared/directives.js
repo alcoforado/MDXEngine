@@ -5,6 +5,7 @@
 /// <reference path="../defines/spectrum.d.ts"/>
 /// <reference path="../defines/spectrum.d.ts" />
 define(["require", "exports", "templates", "linearalgebra", "jquery", 'spectrum'], function (require, exports, templates, la, $, spectrum) {
+    "use strict";
     var e = typeof spectrum;
     var VectorPicker = (function () {
         /*
@@ -105,7 +106,9 @@ define(["require", "exports", "templates", "linearalgebra", "jquery", 'spectrum'
             var x = v[0] * Math.cos(v[1]) * Math.cos(v[2]);
             var y = v[0] * Math.sin(v[1]) * Math.cos(v[2]);
             var z = v[0] * Math.sin(v[2]);
-            if (la.gl_equal(x, scope.vector.X) && la.gl_equal(y, scope.vector.Y) && la.gl_equal(z, scope.vector.Z))
+            if (la.gl_equal(x, scope.vector.X) &&
+                la.gl_equal(y, scope.vector.Y) &&
+                la.gl_equal(z, scope.vector.Z))
                 return;
             if (Math.abs(x) < 1.e-10)
                 x = 0.0;
@@ -136,7 +139,7 @@ define(["require", "exports", "templates", "linearalgebra", "jquery", 'spectrum'
             }
         };
         return VectorPicker;
-    })();
+    }());
     exports.VectorPicker = VectorPicker;
     var DxColorPicker = (function () {
         function DxColorPicker() {
@@ -144,15 +147,16 @@ define(["require", "exports", "templates", "linearalgebra", "jquery", 'spectrum'
             this.require = 'ngModel';
             this.scope = { cl: "@" };
         }
-        DxColorPicker.prototype.template = function () {
-            return '<input id="DxColorPicker{0}" type="text" ng-model="cl" />'.replace("{0}", (DxColorPicker.idCount++).toString());
-        };
+        DxColorPicker.prototype.template = function () { return '<input id="DxColorPicker{0}" type="text" ng-model="cl" />'.replace("{0}", (DxColorPicker.idCount++).toString()); };
         DxColorPicker.componentToHex = function (c) {
             var hex = (c * 255).toString(16);
             return hex.length == 1 ? "0" + hex : hex;
         };
         DxColorPicker.toColorString = function (color) {
-            return "#" + DxColorPicker.componentToHex(color.X) + DxColorPicker.componentToHex(color.Y) + DxColorPicker.componentToHex(color.Z);
+            return "#" +
+                DxColorPicker.componentToHex(color.X) +
+                DxColorPicker.componentToHex(color.Y) +
+                DxColorPicker.componentToHex(color.Z);
         };
         DxColorPicker.prototype.link = function (scope, instanceElement, instanceAttributes, controller, transclude) {
             instanceElement.find("input").spectrum({
@@ -183,12 +187,22 @@ define(["require", "exports", "templates", "linearalgebra", "jquery", 'spectrum'
             });
         };
         return DxColorPicker;
-    })();
+    }());
     exports.DxColorPicker = DxColorPicker;
+    var ShapeForm = (function () {
+        function ShapeForm() {
+            this.replace = true;
+            this.restrict = "E";
+            this.scope = {};
+        }
+        ShapeForm.prototype.template = function () { return "<div>Hello</div>"; };
+        return ShapeForm;
+    }());
+    exports.ShapeForm = ShapeForm;
     function RegisterDirectives(app) {
         app.directive('vectorPicker', function () { return new VectorPicker(); });
         app.directive('dxColorPicker', function () { return new DxColorPicker(); });
+        app.directive('shapeform', function () { return new ShapeForm(); });
     }
     exports.RegisterDirectives = RegisterDirectives;
 });
-//# sourceMappingURL=directives.js.map

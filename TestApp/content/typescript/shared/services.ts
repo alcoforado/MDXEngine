@@ -74,7 +74,10 @@ export class ShapeMember {
 
 
 export class ShapeMngr {
-    constructor(private $wpf: Interop.Wpf, private Types: { [typeName: string]: ShapeType }=null ) {
+    private Types: { [typeName: string]: ShapeType }=null;
+
+    constructor(private $wpf: Interop.Wpf)
+    {
 
 
     }
@@ -84,8 +87,7 @@ export class ShapeMngr {
     GetTypes(): { [typeName: string]: ShapeType } {
         if (this.Types == null) {
             this.Types = {};
-            var json = <string>this.$wpf.postSync("shapesmngr/gettypes");
-            var value = <Array<ShapeType>> JSON.parse(json);
+            var value: Array<ShapeType> = this.$wpf.postSync("shapesmngr/gettypes");
             value.forEach((elem) => {
                 this.Types[elem.typeName] = elem;
             });
@@ -94,22 +96,25 @@ export class ShapeMngr {
     }
 
     GetType(name: string): ShapeType {
-        if (typeof (this.GetTypes[name]) == "undefined")
-            throw "Type " + name + " nott found";
+        if (typeof (this.GetTypes()[name]) == "undefined")
+            throw "Type " + name + " not found";
         else {
             return this.Types[name];
         }
     }
 
     GetShapes():Array<ShapeUI> {
-        var json = <string>this.$wpf.postSync("shapesmngr/gettypes");
-        var value = <Array<ShapeUI>>JSON.parse(json);
+        var value:Array<ShapeUI> = this.$wpf.postSync("shapesmngr/getshapes");
         value.forEach((elem) => {
             elem.type = this.GetType(elem.shapeType);
         });
 
         return value;
     }
+
+
+
+
 
 
 
@@ -123,4 +128,5 @@ export class ShapeMngr {
 export function registerServices(app: angular.IModule) {
     app.service('$settings', Settings);
     app.service('$shapesMngr', ShapeMngr);
+   
 }

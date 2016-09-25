@@ -1,10 +1,10 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports"], function (require, exports) {
+    "use strict";
     var Wpf = (function () {
         function Wpf() {
         }
@@ -84,8 +84,12 @@ define(["require", "exports"], function (require, exports) {
                 return message.Data;
             }
         };
+        Wpf.prototype.postTSync = function (call, data) {
+            if (data === void 0) { data = null; }
+            return this.postSync(call, data);
+        };
         return Wpf;
-    })();
+    }());
     exports.Wpf = Wpf;
     var AjaxRequest = (function () {
         function AjaxRequest(call, onError, onSuccess, requestId) {
@@ -95,7 +99,7 @@ define(["require", "exports"], function (require, exports) {
             this.requestId = requestId;
         }
         return AjaxRequest;
-    })();
+    }());
     exports.AjaxRequest = AjaxRequest;
     ;
     var WpfAjaxManager = (function () {
@@ -141,7 +145,7 @@ define(["require", "exports"], function (require, exports) {
         };
         WpfAjaxManager.Instance = new WpfAjaxManager();
         return WpfAjaxManager;
-    })();
+    }());
     exports.WpfAjaxManager = WpfAjaxManager;
     var MoqWpf = (function (_super) {
         __extends(MoqWpf, _super);
@@ -172,19 +176,13 @@ define(["require", "exports"], function (require, exports) {
                         try {
                             var result = MoqWpf.Fixtures[request.call](request.data);
                             var msg = {
-                                Call: request.call,
-                                Code: 201,
-                                Data: result,
-                                ErrorMessages: null
+                                Call: request.call, Code: 201, Data: result, ErrorMessages: null
                             };
                             WpfAjaxManager.Instance.finishRequest(request.call, id, JSON.stringify(msg));
                         }
                         catch (e) {
                             var msg = {
-                                Call: request.call,
-                                Code: 503,
-                                Data: null,
-                                ErrorMessages: [e]
+                                Call: request.call, Code: 503, Data: null, ErrorMessages: [e]
                             };
                             WpfAjaxManager.Instance.finishRequest(request.call, id, JSON.stringify(msg));
                         }
@@ -193,10 +191,7 @@ define(["require", "exports"], function (require, exports) {
                 else {
                     setTimeout(function () {
                         var msg = {
-                            Call: request.call,
-                            Code: 201,
-                            Data: MoqWpf.Fixtures[request.call],
-                            ErrorMessages: null
+                            Call: request.call, Code: 201, Data: MoqWpf.Fixtures[request.call], ErrorMessages: null
                         };
                         WpfAjaxManager.Instance.finishRequest(request.call, id, JSON.stringify(msg));
                     }, 5000);
@@ -206,10 +201,9 @@ define(["require", "exports"], function (require, exports) {
         MoqWpf.Fixtures = [];
         MoqWpf.Delay = 1500;
         return MoqWpf;
-    })(Wpf);
+    }(Wpf));
     exports.MoqWpf = MoqWpf;
     function WpfFinishRequest(call, requestId, data) {
         WpfAjaxManager.Instance.finishRequest(call, requestId, data);
     }
 });
-//# sourceMappingURL=wpf.js.map

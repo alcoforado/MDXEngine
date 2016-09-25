@@ -88,7 +88,7 @@
 
 
 
-        public postSync(call: string, data: any = null): any {
+        postSync(call: string, data: any = null):any {
             var value = JSON.stringify(data)
             var external: any = window.external;
             var message: WpfMessage;
@@ -111,6 +111,11 @@
                 return message.Data;
             }
         }
+
+        postTSync<T>(call: string, data: any = null): T {
+            return this.postSync(call, data);
+        }
+
 
     }
 

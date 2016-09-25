@@ -2,11 +2,20 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptOutDir>C:\Users\mmendes\workspace\MDXEngine\TestApp\content\javascript</TypeScriptOutDir>
-    <TypeScriptModuleKind>amd</TypeScriptModuleKind>
+    <TypeScriptOutDir>
+    </TypeScriptOutDir>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptTarget>Unknown</TypeScriptTarget>
+    <TypeScriptJSXEmit>-1</TypeScriptJSXEmit>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>False</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <PropertyGroup>
@@ -187,6 +196,7 @@
     <EmbeddedResource Include="SecWindow.resx">
       <DependentUpon>SecWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="content\typescript\tsconfig.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -249,6 +259,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="content\html\lightcolor3d.html" />
+    <Content Include="content\html\templates\shape.html" />
     <Content Include="content\html\templates\vectorpicker.html" />
     <Content Include="content\images\clock_pointer.svg" />
     <Content Include="content\images\directional_light.svg" />
@@ -274,7 +285,6 @@
     <TypeScriptCompile Include="content\typescript\bin_packing.ts" />
     <TypeScriptCompile Include="content\typescript\CubeFractal\cubefractal.ts" />
     <TypeScriptCompile Include="content\typescript\defines\angular.d.ts" />
-    <TypeScriptCompile Include="content\typescript\defines\backbone.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\custom.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\d3.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\handlebars.d.ts" />
