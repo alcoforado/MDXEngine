@@ -21,3 +21,26 @@ export class DirectionalLightData {
 }
 
 
+export class ShapeUI {
+    constructor(
+        public shapeType: string,
+        public shapeData: any,
+        public type: ShapeType
+    ) {
+    }
+}
+
+export class ShapeType {
+    constructor(
+        public typeName: string,
+        public members: Array<ShapeMember>
+    ) { }
+}
+
+export class ShapeMember {
+    constructor(
+        public fieldName: string,
+        public labelName: string,
+        public directiveType: string
+    ) { }
+}

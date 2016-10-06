@@ -1,9 +1,13 @@
 ﻿/// <reference path="./wpf.ts" />
+/// <reference path="./models.ts" />
 /// <reference path="../defines/angular.d.ts" />
 
 
 import Interop = require('./wpf');
- 
+
+import Models = require("./models");
+import ShapeType = Models.ShapeType;
+import ShapeUI = Models.ShapeUI;
 
 export class Settings {
 
@@ -45,30 +49,6 @@ export class Settings {
 
 
 
-}
-
-export class ShapeUI {
-    constructor(
-        public shapeType: string,
-        public shapeData: any,
-        public type: ShapeType
-    ) {
-    }
-}
-
-export class ShapeType {
-    constructor(
-        public typeName: string,
-        public members: Array<ShapeMember>
-    ) { }
-}
-
-export class ShapeMember {
-    constructor(
-        public fieldName: string,
-        public labelName: string,
-        public directiveType: string
-    ) { }
 }
 
 

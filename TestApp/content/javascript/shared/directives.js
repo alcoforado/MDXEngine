@@ -193,9 +193,29 @@ define(["require", "exports", "templates", "linearalgebra", "jquery", 'spectrum'
         function ShapeForm() {
             this.replace = true;
             this.restrict = "E";
-            this.scope = {};
+            this.scope = {
+                shape: "="
+            };
         }
-        ShapeForm.prototype.template = function () { return "<div>Hello</div>"; };
+        ShapeForm.prototype.template = function () {
+            return '<form class="main-form"><div class="form-header"><img src="../images/shapes.svg"/>{{shape.type.typeName}}</div><div class="form-body"></div></form>';
+        };
+        ShapeForm.prototype.link = function (scope, instanceElement, instanceAttributes, controller, transclude) {
+            var result = "";
+            var shape = scope.shape;
+            shape.type.members.forEach(function (member) {
+                var inputHtml = "";
+                switch (member.directiveType.toLowerCase()) {
+                    case "number":
+                        inputHtml = "<input class=\"input-number\" type=\"number\" name=\"" + member.fieldName + " ng-model=\"{{shape.shapeData." + member.fieldName + "}}\"/>";
+                        break;
+                    default:
+                        throw "Shape member type " + member.directiveType.toLowerCase() + " is unknown";
+                }
+                result += "<div class=\"form-input\">\n                            <span class=\"span-label\">\n                                " + member.labelName + ":\n                            </span>\n                            " + inputHtml + "\n                        </div>";
+            });
+            instanceElement.find(".form-body").html(result);
+        };
         return ShapeForm;
     }());
     exports.ShapeForm = ShapeForm;
