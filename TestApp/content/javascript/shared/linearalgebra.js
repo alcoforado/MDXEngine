@@ -1,4 +1,5 @@
 define(["require", "exports"], function (require, exports) {
+    "use strict";
     var Angle = (function () {
         function Angle() {
         }
@@ -9,7 +10,7 @@ define(["require", "exports"], function (require, exports) {
             return (rad / Math.PI * 180) % 360;
         };
         return Angle;
-    })();
+    }());
     exports.Angle = Angle;
     var Vec2 = (function () {
         function Vec2(arr) {
@@ -102,7 +103,7 @@ define(["require", "exports"], function (require, exports) {
             return new Vec2([(v[0] + this[0]) / 2.0, (v[1] + this[1]) / 2.0]);
         };
         return Vec2;
-    })();
+    }());
     exports.Vec2 = Vec2;
     function ToRad(degree) {
         return degree * Math.PI / 180.0;
@@ -177,7 +178,7 @@ define(["require", "exports"], function (require, exports) {
             return result;
         };
         return Vec3;
-    })();
+    }());
     exports.Vec3 = Vec3;
     var Mat3 = (function () {
         function Mat3(a) {
@@ -346,7 +347,7 @@ define(["require", "exports"], function (require, exports) {
             out[8] = 1;
         };
         return Mat3;
-    })();
+    }());
     exports.Mat3 = Mat3;
     ;
     exports.gl_tol = 0.0000001;
@@ -363,7 +364,7 @@ define(["require", "exports"], function (require, exports) {
         SegmentIntersection.NO_POINT = "NO_POINT";
         SegmentIntersection.ALL_POINTS = "ALL_POINTS";
         return SegmentIntersection;
-    })();
+    }());
     exports.SegmentIntersection = SegmentIntersection;
     var Segment2D = (function () {
         function Segment2D(a, b) {
@@ -473,7 +474,7 @@ define(["require", "exports"], function (require, exports) {
             return new Segment2D(vM.add(vS), vM.sub(vS));
         };
         return Segment2D;
-    })();
+    }());
     exports.Segment2D = Segment2D;
     var Interval = (function () {
         function Interval(a, b) {
@@ -494,7 +495,7 @@ define(["require", "exports"], function (require, exports) {
             return Number(d.toFixed(0));
         };
         return Interval;
-    })();
+    }());
     exports.Interval = Interval;
     var GLScreenMapping = (function () {
         function GLScreenMapping(origin, dims, invertY) {
@@ -518,16 +519,16 @@ define(["require", "exports"], function (require, exports) {
             return v;
         };
         GLScreenMapping.prototype.GetMapToGLTransform = function () {
-            return new Mat3(new Float32Array([this.scale_inv[0], 0, this.origin.x(), 0, this.scale_inv[1], this.origin.y(), 0, 0, 1]));
+            return new Mat3(new Float32Array([this.scale_inv[0], 0, this.origin.x(),
+                0, this.scale_inv[1], this.origin.y(),
+                0, 0, 1]));
         };
         GLScreenMapping.prototype.GetScreenRect = function () {
             return [
                 this.MapToScreen(new Vec2([-1, -1])),
-                this.MapToScreen(new Vec2([1, 1]))
-            ];
+                this.MapToScreen(new Vec2([1, 1]))];
         };
         return GLScreenMapping;
-    })();
+    }());
     exports.GLScreenMapping = GLScreenMapping;
 });
-//# sourceMappingURL=linearalgebra.js.map

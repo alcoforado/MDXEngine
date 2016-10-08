@@ -3,17 +3,20 @@
 /// <reference path="../templates.ts" />
 /// <reference path="../shared/models.ts" />
 /// <reference path="../defines/spectrum.d.ts"/>
+/// <reference path="linearalgebra.ts"/>
 /// <reference path="../defines/spectrum.d.ts" />
 
 
-import templates = require("templates");
+import templates = require("../templates");
 import angular = require("angular");
-import la = require("linearalgebra");
+import la = require("../shared/linearalgebra");
 import $ = require("jquery");
 import dx = require("../shared/models");
 import spectrum = require('spectrum');
 import ShapeUI = dx.ShapeUI;
 var e = typeof spectrum;
+
+
 
 
 interface IVectorPickerScope extends ng.IScope {
@@ -28,6 +31,8 @@ interface IVectorPickerScope extends ng.IScope {
     hideDialog(ev:any);
     
 }
+
+
 
 
 
@@ -275,7 +280,7 @@ export class DxColorPicker implements angular.IDirective {
 
 
 
-        var that = this;
+        
         controller.$formatters.push((modelValue: any) => {
             var hex: string = DxColorPicker.toColorString(<dx.DXVector3> modelValue);
             return {
@@ -292,25 +297,38 @@ export class DxColorPicker implements angular.IDirective {
 }
 
 export class ShapeForm implements angular.IDirective {
-    replace  = true;
+    
     restrict = "E";
     scope: any = {
         shape:"="
     };
 
-    constructor(private $compile: ng.ICompileService) {}
+    constructor(private $compile: ng.ICompileService) {
+        this.link = this._link.bind(this);
+    }
 
 
     template(): string {
         return '<form class="main-form"><div class="form-header"><img src="../images/shapes.svg"/>{{shape.type.typeName}}</div><div class="form-body"></div></form>';
     }
 
-    link(
+
+    static Factory($compile: ng.ICompileService): ShapeForm {
+        return new ShapeForm($compile)
+    }
+
+
+
+
+
+    public link: any;
+
+    _link(
         scope: any,
         instanceElement: angular.IAugmentedJQuery,
         instanceAttributes: angular.IAttributes,
         controller: angular.INgModelController,
-        transclude: angular.ITranscludeFunction) {
+        transclude: angular.ITranscludeFunction) { 
 
         var result: string = "";
 
@@ -320,7 +338,7 @@ export class ShapeForm implements angular.IDirective {
             var inputHtml = "";
             switch (member.directiveType.toLowerCase()) {
                 case "number":
-                    inputHtml = `<input class="input-number" type="number" name="${member.fieldName} ng-model="{{shape.shapeData.${member.fieldName}}}"/>`;
+                    inputHtml = `<input class="input-number" type="number" name="${member.fieldName}" ng-model="shape.shapeData.${member.fieldName}"/>`;
                     break;
                 default:
                     throw `Shape member type ${member.directiveType.toLowerCase()} is unknown`;
@@ -333,10 +351,9 @@ export class ShapeForm implements angular.IDirective {
                             ${inputHtml}
                         </div>`;
         });
+        var el = this.$compile(result)(scope);
         var recompileElem = instanceElement.find(".form-body");
-        recompileElem.html(result);
-        var elem = this.$compile()
-
+        recompileElem.html(el);
     }
 
 
@@ -344,21 +361,8 @@ export class ShapeForm implements angular.IDirective {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 export function RegisterDirectives(app: angular.IModule) {
     app.directive('vectorPicker', () => new VectorPicker());
     app.directive('dxColorPicker', () => new DxColorPicker());
-    app.directive('shapeform', () => new ShapeForm());
-
+    app.directive('shapeform', ["$compile", ($compile: ng.ICompileService) => { return new ShapeForm($compile); }]);
 }

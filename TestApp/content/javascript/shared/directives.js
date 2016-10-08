@@ -3,8 +3,9 @@
 /// <reference path="../templates.ts" />
 /// <reference path="../shared/models.ts" />
 /// <reference path="../defines/spectrum.d.ts"/>
+/// <reference path="linearalgebra.ts"/>
 /// <reference path="../defines/spectrum.d.ts" />
-define(["require", "exports", "templates", "linearalgebra", "jquery", 'spectrum'], function (require, exports, templates, la, $, spectrum) {
+define(["require", "exports", "../templates", "../shared/linearalgebra", "jquery", 'spectrum'], function (require, exports, templates, la, $, spectrum) {
     "use strict";
     var e = typeof spectrum;
     var VectorPicker = (function () {
@@ -175,7 +176,6 @@ define(["require", "exports", "templates", "linearalgebra", "jquery", 'spectrum'
                 };
                 return parsed;
             });
-            var that = this;
             controller.$formatters.push(function (modelValue) {
                 var hex = DxColorPicker.toColorString(modelValue);
                 return {
@@ -190,31 +190,37 @@ define(["require", "exports", "templates", "linearalgebra", "jquery", 'spectrum'
     }());
     exports.DxColorPicker = DxColorPicker;
     var ShapeForm = (function () {
-        function ShapeForm() {
-            this.replace = true;
+        function ShapeForm($compile) {
+            this.$compile = $compile;
             this.restrict = "E";
             this.scope = {
                 shape: "="
             };
+            this.link = this._link.bind(this);
         }
         ShapeForm.prototype.template = function () {
             return '<form class="main-form"><div class="form-header"><img src="../images/shapes.svg"/>{{shape.type.typeName}}</div><div class="form-body"></div></form>';
         };
-        ShapeForm.prototype.link = function (scope, instanceElement, instanceAttributes, controller, transclude) {
+        ShapeForm.Factory = function ($compile) {
+            return new ShapeForm($compile);
+        };
+        ShapeForm.prototype._link = function (scope, instanceElement, instanceAttributes, controller, transclude) {
             var result = "";
             var shape = scope.shape;
             shape.type.members.forEach(function (member) {
                 var inputHtml = "";
                 switch (member.directiveType.toLowerCase()) {
                     case "number":
-                        inputHtml = "<input class=\"input-number\" type=\"number\" name=\"" + member.fieldName + " ng-model=\"{{shape.shapeData." + member.fieldName + "}}\"/>";
+                        inputHtml = "<input class=\"input-number\" type=\"number\" name=\"" + member.fieldName + "\" ng-model=\"shape.shapeData." + member.fieldName + "\"/>";
                         break;
                     default:
                         throw "Shape member type " + member.directiveType.toLowerCase() + " is unknown";
                 }
                 result += "<div class=\"form-input\">\n                            <span class=\"span-label\">\n                                " + member.labelName + ":\n                            </span>\n                            " + inputHtml + "\n                        </div>";
             });
-            instanceElement.find(".form-body").html(result);
+            var el = this.$compile(result)(scope);
+            var recompileElem = instanceElement.find(".form-body");
+            recompileElem.html(el);
         };
         return ShapeForm;
     }());
@@ -222,7 +228,7 @@ define(["require", "exports", "templates", "linearalgebra", "jquery", 'spectrum'
     function RegisterDirectives(app) {
         app.directive('vectorPicker', function () { return new VectorPicker(); });
         app.directive('dxColorPicker', function () { return new DxColorPicker(); });
-        app.directive('shapeform', function () { return new ShapeForm(); });
+        app.directive('shapeform', ["$compile", function ($compile) { return new ShapeForm($compile); }]);
     }
     exports.RegisterDirectives = RegisterDirectives;
 });

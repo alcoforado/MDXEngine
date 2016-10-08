@@ -16,8 +16,9 @@ import Interop = require('./shared/wpf');
 import ui_bootstrap = require('ui-bootstrap');
 import dx = require('./shared/models');
 import Services = require('./shared/services');
-import ShapeType = Services.ShapeType;
-import ShapeUi = Services.ShapeUI;
+
+import ShapeType = dx.ShapeType;
+import ShapeUi = dx.ShapeUI;
 var d = typeof ui_bootstrap;
 
 interface IScope extends ng.IScope {
@@ -25,6 +26,7 @@ interface IScope extends ng.IScope {
     shapes: Array<ShapeUi>;
     types:Array<ShapeType>;
 }
+
 
 
 
@@ -42,7 +44,7 @@ class Ctrl {
             new dx.DXVector3(1, 1,1));
         $settings.SetObject("lights", $scope.dirLight);
         $scope.shapes = $shapesMngr.GetShapes();
-
+        
     }
 
     set_lights() {

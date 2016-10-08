@@ -1,4 +1,5 @@
 define(["require", "exports", "linearalgebra"], function (require, exports, la) {
+    "use strict";
     var precision = function (x, p) {
         return parseFloat(x.toPrecision(p));
     };
@@ -7,9 +8,7 @@ define(["require", "exports", "linearalgebra"], function (require, exports, la) 
             this.x = x;
             this.y = y;
         }
-        Vector2.prototype.toArray = function () {
-            return [this.x, this.y];
-        };
+        Vector2.prototype.toArray = function () { return [this.x, this.y]; };
         Vector2.prototype.toVec2 = function () {
             return new la.Vec2([this.x, this.y]);
         };
@@ -29,16 +28,14 @@ define(["require", "exports", "linearalgebra"], function (require, exports, la) 
             return new Vector2(this.x * c, this.y * c);
         };
         return Vector2;
-    })();
+    }());
     exports.Vector2 = Vector2;
     var Vector3 = (function () {
         function Vector3() {
         }
-        Vector3.prototype.toArray = function () {
-            return [this.x, this.y, this.z];
-        };
+        Vector3.prototype.toArray = function () { return [this.x, this.y, this.z]; };
         return Vector3;
-    })();
+    }());
     exports.Vector3 = Vector3;
     var Vector4 = (function () {
         function Vector4(x, y, z, w) {
@@ -47,11 +44,9 @@ define(["require", "exports", "linearalgebra"], function (require, exports, la) 
             this.z = z;
             this.w = w;
         }
-        Vector4.prototype.toArray = function () {
-            return [this.x, this.y, this.z, this.w];
-        };
+        Vector4.prototype.toArray = function () { return [this.x, this.y, this.z, this.w]; };
         return Vector4;
-    })();
+    }());
     exports.Vector4 = Vector4;
     var CyclicColorArray = (function () {
         function CyclicColorArray(cls) {
@@ -61,7 +56,7 @@ define(["require", "exports", "linearalgebra"], function (require, exports, la) 
             return this.colors[i % this.colors.length];
         };
         return CyclicColorArray;
-    })();
+    }());
     exports.CyclicColorArray = CyclicColorArray;
     var Shape2D = (function () {
         function Shape2D(top, colorizer) {
@@ -87,7 +82,7 @@ define(["require", "exports", "linearalgebra"], function (require, exports, la) 
             return this.topology.topology_type();
         };
         return Shape2D;
-    })();
+    }());
     exports.Shape2D = Shape2D;
     //Shapes
     (function (TopologyType) {
@@ -104,7 +99,7 @@ define(["require", "exports", "linearalgebra"], function (require, exports, la) 
             throw "not Implemented";
         };
         Line2D.prototype.topology_type = function () {
-            return 1 /* LINES */;
+            return TopologyType.LINES;
         };
         Line2D.prototype.n_vertices = function () {
             return 2;
@@ -118,16 +113,14 @@ define(["require", "exports", "linearalgebra"], function (require, exports, la) 
             ];
         };
         return Line2D;
-    })();
+    }());
     exports.Line2D = Line2D;
     var Rect2D = (function () {
         function Rect2D(p1, p2) {
             this.p1 = p1;
             this.p2 = p2;
         }
-        Rect2D.prototype.topology_type = function () {
-            return 0 /* INDEXED_TRIANGLES */;
-        };
+        Rect2D.prototype.topology_type = function () { return TopologyType.INDEXED_TRIANGLES; };
         Rect2D.createRectFromPoint = function (barycenter, width, length) {
             return new Rect2D(new la.Vec2([barycenter[0] - width / 2.0, barycenter[1] - length / 2.0]), new la.Vec2([barycenter[0] + width / 2.0, barycenter[1] + length / 2.0]));
         };
@@ -148,31 +141,21 @@ define(["require", "exports", "linearalgebra"], function (require, exports, la) 
         };
         Rect2D.prototype.vertices = function () {
             return [
-                this.p1[0],
-                this.p1[1],
-                this.p2[0],
-                this.p1[1],
-                this.p2[0],
-                this.p2[1],
-                this.p1[0],
-                this.p2[1]
-            ];
+                this.p1[0], this.p1[1],
+                this.p2[0], this.p1[1],
+                this.p2[0], this.p2[1],
+                this.p1[0], this.p2[1]];
         };
         Rect2D.prototype.indices = function () {
             return [
-                0,
-                1,
-                3,
-                1,
-                2,
-                3
+                0, 1, 3,
+                1, 2, 3
             ];
         };
         Rect2D.prototype.canContain = function (rect) {
             return this.width() >= rect.width() && this.height() >= rect.height();
         };
         return Rect2D;
-    })();
+    }());
     exports.Rect2D = Rect2D;
 });
-//# sourceMappingURL=shapes2d.js.map
