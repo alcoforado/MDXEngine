@@ -20,11 +20,15 @@ define(["require", "exports", "angular", "./shared/directives", './shared/wpf', 
             $scope.dirLight = new dx.DirectionalLightData(new dx.DXVector4(1, 0, 0, 0), new dx.DXVector4(0, 0, 0, 0), new dx.DXVector3(0, 0, 0), 0, new dx.DXVector3(1, 1, 1));
             $settings.SetObject("lights", $scope.dirLight);
             $scope.shapes = $shapesMngr.GetShapes();
+            $scope.types = $shapesMngr.GetTypesAsArray();
         }
         Ctrl.prototype.set_lights = function () {
             //this.$scope
             this.$settings.Save("lights", this.$scope.dirLight);
             this.$wpf.postSync("cad/setlights", this.$scope.dirLight);
+        };
+        Ctrl.prototype.createShape = function (type) {
+            alert("Create Shape " + type.typeName);
         };
         return Ctrl;
     }());

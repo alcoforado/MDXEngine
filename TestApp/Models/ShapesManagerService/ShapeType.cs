@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace TestApp.Models.ShapesManagerService
 {
-   public  class ShapeType
+   public  class UIType
    {
        public string TypeName;
-       public List<ShapeMember> Members;
+       public List<UITypeMember> Members;
    }
 
-    public class ShapeMember
+    public class UITypeMember
     {
         public string FieldName { get; set; }
         public string LabelName { get; set; }

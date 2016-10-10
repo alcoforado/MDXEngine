@@ -48,6 +48,10 @@
                     <div class="vertical-toolbar">
                         <div class="vertical-toolbar-item"><img src="../images/add.svg"/> <a>Add</a>
                         </div>
+                        <div class="vertical-toolbar-item" ng-repeat="type in types">
+                            <a ng-click="controller.createShape(type)">{{type.typeName}}</a>
+                        </div>
+
                     </div>
                     
                     <div class="content-vertical-toolbar-right">

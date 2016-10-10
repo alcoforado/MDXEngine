@@ -44,13 +44,17 @@ class Ctrl {
             new dx.DXVector3(1, 1,1));
         $settings.SetObject("lights", $scope.dirLight);
         $scope.shapes = $shapesMngr.GetShapes();
-        
+        $scope.types = $shapesMngr.GetTypesAsArray();
     }
 
     set_lights() {
         //this.$scope
         this.$settings.Save("lights",this.$scope.dirLight);
         this.$wpf.postSync("cad/setlights", this.$scope.dirLight);   
+    }
+
+    createShape(type: ShapeType) {
+        this.$shapesMngr.createShape(type)
     }
 
 }

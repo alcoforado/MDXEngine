@@ -46,12 +46,16 @@ define(["require", "exports"], function (require, exports) {
             var _this = this;
             if (this.Types == null) {
                 this.Types = {};
-                var value = this.$wpf.postSync("shapesmngr/gettypes");
-                value.forEach(function (elem) {
+                this.TypesArray = this.$wpf.postSync("shapesmngr/gettypes");
+                this.TypesArray.forEach(function (elem) {
                     _this.Types[elem.typeName] = elem;
                 });
             }
             return this.Types;
+        };
+        ShapeMngr.prototype.GetTypesAsArray = function () {
+            this.GetTypes();
+            return this.TypesArray;
         };
         ShapeMngr.prototype.GetType = function (name) {
             if (typeof (this.GetTypes()[name]) == "undefined")

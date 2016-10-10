@@ -32,12 +32,12 @@ namespace TestApp.Mappers
 
         }
 
-        public ShapeType ToShapeTypeDto(string name, Type type)
+        public UIType ToUITypeDto(string name, Type type)
         {
 
             var tt = type.GetProperties().Select(p =>
 
-                new ShapeMember()
+                new UITypeMember()
                 {
                     FieldName = p.Name,
                     LabelName = this.GetLabelNameFromFieldName(p.Name),
@@ -45,7 +45,7 @@ namespace TestApp.Mappers
 
                 }
             ).ToList();
-            return new ShapeType()
+            return new UIType()
             {
                 Members = tt,
                 TypeName = name

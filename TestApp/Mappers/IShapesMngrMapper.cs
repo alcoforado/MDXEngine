@@ -7,6 +7,6 @@ namespace TestApp.Mappers
     {
         string GetLabelNameFromFieldName(string fieldName);
         string MapTypeWithJavascriptRender(Type propertyType);
-        ShapeType ToShapeTypeDto(string name, Type type);
+        UIType ToUITypeDto(string name, Type type);
     }
 }

@@ -18,7 +18,9 @@ namespace TestApp.Controllers
 {
     public class ShapesMngrController : IController
     {
-        private Dictionary<string, Type> _typeMap;
+        private Dictionary<string, Type> _shapeTypes;
+        private Dictionary<string, Type> _renderTypes;
+
         private int _idCounter=0;
         private IDxViewControl _dx;
         private IShapesMngrMapper _mapper;
@@ -28,7 +30,7 @@ namespace TestApp.Controllers
         public List<string> GetTopologies()
         {
             return (
-                from x in _typeMap
+                from x in _shapeTypes
                 select x.Key
                 ).ToList();;
         }
@@ -41,26 +43,29 @@ namespace TestApp.Controllers
             _dx = dx;
             _shapeCollection = new Dictionary<string, ShapeUIBase>();
             _shaderShapeCollection = new Dictionary<string, object>();
-            _typeMap = new Dictionary<string, Type>();
+            _shapeTypes = new Dictionary<string, Type>();
 
             var shapesT = typeof(ShapeUIBase).GetImplementationsInCurrentAssembly();
             foreach (var type in shapesT)
             {
-                _typeMap.Add(((ShapeUIBase) Activator.CreateInstance(type)).GetShapeName(),type);
+                _shapeTypes.Add(((ShapeUIBase) Activator.CreateInstance(type)).GetShapeName(),type);
             }
 
             var paintersT = typeof(RenderBaseViewModel).GetImplementationsInCurrentAssembly();
             foreach (var type in paintersT)
             {
-                _typeMap.Add(((RenderBaseViewModel)Activator.CreateInstance(type)).GetPainterName(), type);
+                _renderTypes.Add(((RenderBaseViewModel)Activator.CreateInstance(type)).GetPainterName(), type);
             }
         }
 
 
-        public List<ShapeType> GetShapeTypes()
+        public List<UIType> GetShapeTypes()
         {
-            return _typeMap.Select(pair => _mapper.ToShapeTypeDto(pair.Key, pair.Value)).ToList();
+            return _shapeTypes.Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
         }
+
+        public List<RenderType>
+
 
         public List<ShapeViewModel> GetShapes()
         {
@@ -117,17 +122,17 @@ namespace TestApp.Controllers
 
         public ShapeUIBase CreateShape(string shapeTypeId, string renderTypeId)
         {
-            if (!_typeMap.ContainsKey(shapeTypeId))
+            if (!_shapeTypes.ContainsKey(shapeTypeId))
             {
                 throw new Exception(String.Format("Error, type {0} not identified", shapeTypeId));
             }
-            if (!_typeMap.ContainsKey(renderTypeId))
+            if (!_shapeTypes.ContainsKey(renderTypeId))
             {
                 throw new Exception(String.Format("Error, type {0} not identified", renderTypeId));
             }
 
-            var shape = (ShapeUIBase)Activator.CreateInstance(_typeMap[shapeTypeId]);
-            var render = (RenderBaseViewModel)Activator.CreateInstance(_typeMap[renderTypeId]);
+            var shape = (ShapeUIBase)Activator.CreateInstance(_shapeTypes[shapeTypeId]);
+            var render = (RenderBaseViewModel)Activator.CreateInstance(_shapeTypes[renderTypeId]);
 
             shape.Painter = render;
 

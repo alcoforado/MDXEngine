@@ -2,7 +2,7 @@ html,body {
     height: 100%;
     color: #2997A9;
     font-size: 22px;
-    width: 847px;
+    width: 100%;
     margin: -1px;
     padding: 0;
     margin-top: 20px;
@@ -36,16 +36,26 @@ input[type="color"] {
 
 
 .title-panel {
- padding: 1px;
- padding-left: 27px;
- background: #D28900;
- border-top-right-radius: 19px;
- border-bottom-right-radius: 19px;
- border: 1px solid #737373;
- font-size: 35px;
- color: white;
- animation-name: appearingFromLeft300;
- animation-duration: 0.5s;
+ 
+padding: 1px;
+ 
+padding-left: 27px;
+ 
+background: #D28900;
+ 
+border-top-right-radius: 19px;
+ 
+border-bottom-right-radius: 19px;
+ 
+border: 1px solid #737373;
+ 
+font-size: 35px;
+ 
+color: white;
+ 
+animation-name: appearingFromLeft300;
+ 
+animation-duration: 0.5s;
 }
 .title-panel:hover {
     transform: scale(1.1);
@@ -116,11 +126,13 @@ input[type="color"] {
 
 .vertical-toolbar {
 
-    padding-right: 5px;
-    height: 100%;
-    
-    display: inline-block;
-    color: white;
+padding-right: 5px;
+
+height: 100%;
+
+display: table-cell;
+
+color: white;
 }
 
 
@@ -132,11 +144,10 @@ input[type="color"] {
 
 
 .content-vertical-toolbar-right {
-    display: inline-block;
-     border-left: 2px solid #7F7F84;
+    display: table-cell;
+    border-left: 2px solid #7F7F84;
     padding-left: 10px;
     vertical-align: top;
-   
 }
 
 
