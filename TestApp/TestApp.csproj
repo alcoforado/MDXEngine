@@ -293,6 +293,7 @@
     <TypeScriptCompile Include="content\typescript\defines\spectrum.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\underscore.d.ts" />
+    <TypeScriptCompile Include="content\typescript\shaders.tsx" />
     <TypeScriptCompile Include="content\typescript\shared\directives.ts" />
     <TypeScriptCompile Include="content\typescript\lightcolor3d.ts" />
     <TypeScriptCompile Include="content\typescript\shared\linearalgebra.ts" />

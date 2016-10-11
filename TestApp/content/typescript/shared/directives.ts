@@ -313,10 +313,7 @@ export class ShapeForm implements angular.IDirective {
     }
 
 
-    static Factory($compile: ng.ICompileService): ShapeForm {
-        return new ShapeForm($compile)
-    }
-
+    public 
 
 
 
@@ -338,6 +335,9 @@ export class ShapeForm implements angular.IDirective {
             var inputHtml = "";
             switch (member.directiveType.toLowerCase()) {
                 case "number":
+                case "int":
+                case "float":
+                case "double":
                     inputHtml = `<input class="input-number" type="number" name="${member.fieldName}" ng-model="shape.shapeData.${member.fieldName}"/>`;
                     break;
                 default:
