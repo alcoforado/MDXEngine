@@ -72,6 +72,9 @@ define(["require", "exports"], function (require, exports) {
             });
             return value;
         };
+        ShapeMngr.prototype.CreateShape = function (type) {
+            return this.$wpf.postSync("shapesmngr/createShape", {});
+        };
         return ShapeMngr;
     }());
     exports.ShapeMngr = ShapeMngr;

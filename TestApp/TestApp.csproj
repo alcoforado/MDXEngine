@@ -133,6 +133,7 @@
     <Compile Include="Controllers\CADController.cs" />
     <Compile Include="Controllers\PersistenceController.cs" />
     <Compile Include="Controllers\ShapesMngrController.cs" />
+    <Compile Include="Controllers\TemplatesController.cs" />
     <Compile Include="Mappers\IShapesMngrMapper.cs" />
     <Compile Include="Mappers\ShapesMngrMapper.cs" />
     <Compile Include="Models\ShapesManagerService\Render\SolidColorRenderBase.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Models\ShapesManagerService\Topologies\ShapeViewModel.cs" />
     <Compile Include="Models\ShapesManagerService\Topologies\ShapeUIBase.cs" />
     <Compile Include="Models\ShapesManagerService\Topologies\Orthomesh2DUI.cs" />
+    <Compile Include="Models\Templates\GetTemplatesViewModel.cs" />
     <Compile Include="Services\Interfaces\ISettingsService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Models\Lights.cs" />

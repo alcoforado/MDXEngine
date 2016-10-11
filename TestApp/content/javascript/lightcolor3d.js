@@ -28,7 +28,7 @@ define(["require", "exports", "angular", "./shared/directives", './shared/wpf', 
             this.$wpf.postSync("cad/setlights", this.$scope.dirLight);
         };
         Ctrl.prototype.createShape = function (type) {
-            alert("Create Shape " + type.typeName);
+            this.$shapesMngr.createShape(type);
         };
         return Ctrl;
     }());

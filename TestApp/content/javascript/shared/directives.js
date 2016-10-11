@@ -201,9 +201,6 @@ define(["require", "exports", "../templates", "../shared/linearalgebra", "jquery
         ShapeForm.prototype.template = function () {
             return '<form class="main-form"><div class="form-header"><img src="../images/shapes.svg"/>{{shape.type.typeName}}</div><div class="form-body"></div></form>';
         };
-        ShapeForm.Factory = function ($compile) {
-            return new ShapeForm($compile);
-        };
         ShapeForm.prototype._link = function (scope, instanceElement, instanceAttributes, controller, transclude) {
             var result = "";
             var shape = scope.shape;
@@ -211,6 +208,9 @@ define(["require", "exports", "../templates", "../shared/linearalgebra", "jquery
                 var inputHtml = "";
                 switch (member.directiveType.toLowerCase()) {
                     case "number":
+                    case "int":
+                    case "float":
+                    case "double":
                         inputHtml = "<input class=\"input-number\" type=\"number\" name=\"" + member.fieldName + "\" ng-model=\"shape.shapeData." + member.fieldName + "\"/>";
                         break;
                     default:
