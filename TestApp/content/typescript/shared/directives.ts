@@ -14,6 +14,7 @@ import $ = require("jquery");
 import dx = require("../shared/models");
 import spectrum = require('spectrum');
 import ShapeUI = dx.ShapeUI;
+import ShapeType = dx.ShapeType;
 var e = typeof spectrum;
 
 
@@ -325,20 +326,32 @@ export class ShapeForm implements angular.IDirective {
         instanceElement: angular.IAugmentedJQuery,
         instanceAttributes: angular.IAttributes,
         controller: angular.INgModelController,
-        transclude: angular.ITranscludeFunction) { 
+        transclude: angular.ITranscludeFunction):void { 
 
         var result: string = "";
 
         var shape = <ShapeUI> scope.shape;
 
-        shape.type.members.forEach((member) => {
+        var template= this.createTemplate(shape.type,"shape.shapeData");
+        
+        var el = this.$compile(template)(scope);
+        var recompileElem = instanceElement.find(".form-body");
+        recompileElem.html(el);
+
+    }
+
+    createTemplate(type: ShapeType,scopeDatadPath: string): string
+    {
+        var result = "";
+        type.members.forEach((member) => {
             var inputHtml = "";
+            var fieldPath= `${scopeDatadPath}.${member.fieldName}`;
             switch (member.directiveType.toLowerCase()) {
                 case "number":
                 case "int":
                 case "float":
                 case "double":
-                    inputHtml = `<input class="input-number" type="number" name="${member.fieldName}" ng-model="shape.shapeData.${member.fieldName}"/>`;
+                    inputHtml = `<input class="input-number" type="number" name="${member.fieldName}" ng-model="${fieldPath}"/>`;
                     break;
                 default:
                     throw `Shape member type ${member.directiveType.toLowerCase()} is unknown`;
@@ -351,11 +364,8 @@ export class ShapeForm implements angular.IDirective {
                             ${inputHtml}
                         </div>`;
         });
-        var el = this.$compile(result)(scope);
-        var recompileElem = instanceElement.find(".form-body");
-        recompileElem.html(el);
+        return result;
     }
-
 
 }
 

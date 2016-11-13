@@ -64,7 +64,10 @@ namespace TestApp.Controllers
             return _shapeTypes.Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
         }
 
-        public List<RenderType>
+        public List<UIType> GetShaderTypes()
+        {
+            return _renderTypes.Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
+        }
 
 
         public List<ShapeViewModel> GetShapes()

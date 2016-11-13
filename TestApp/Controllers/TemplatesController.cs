@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestApp.Models.Templates;
 
 namespace TestApp.Controllers
 {
     public class TemplatesController : IController
     {
 
-        public string GetTemplatesInFolder(string path)
+        public List<GetTemplatesViewModel> GetTemplatesInFolder(string path)
         {
             var startup = AppDomain.CurrentDomain.BaseDirectory;
             if (path.StartsWith("~"))
@@ -20,8 +21,14 @@ namespace TestApp.Controllers
             }
             var files=Directory.GetFiles(path).ToList();
 
-            var files = new FileInfo(path);
-            
+            return files.Select(file =>
+            {
+                return new GetTemplatesViewModel()
+                {
+                    BaseName = Path.GetFileNameWithoutExtension(path),
+                    Content = System.IO.File.ReadAllText(file)
+                };
+            }).ToList();
         }
 
     }

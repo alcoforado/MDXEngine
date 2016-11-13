@@ -8,7 +8,7 @@ namespace TestApp.Models.Templates
 {
     public class GetTemplatesViewModel
     {
-        string BaseName { get; set; }
-        string Content { get; set; }
+        public string BaseName { get; set; }
+        public string Content { get; set; }
     }
 }

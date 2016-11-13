@@ -245,7 +245,9 @@
       <Name>MUtils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="content\html\templates\painters\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="content\css\binpack.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
