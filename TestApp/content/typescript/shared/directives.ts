@@ -305,7 +305,7 @@ export class ShapeForm implements angular.IDirective {
     };
 
     constructor(private $compile: ng.ICompileService) {
-        this.link = this._link.bind(this);
+        this.link = (<any> this._link).bind(this);
     }
 
 
@@ -336,7 +336,7 @@ export class ShapeForm implements angular.IDirective {
         
         var el = this.$compile(template)(scope);
         var recompileElem = instanceElement.find(".form-body");
-        recompileElem.html(el);
+        //recompileElem.html(el);
 
     }
 

@@ -787,15 +787,8 @@ declare module D3 {
         */
         transition(): Transition.Transition;
 
-        /**
-        * Sorts the elements in the current selection according to the specified comparator
-        * function.
-        *
-        * @param comparator a comparison function, which will be passed two data elements a and b
-        * to compare, and should return either a negative, positive, or zero value to indicate
-        * their relative order.
-        */
-        sort<T>(comparator?: (a: T, b: T) => number): Selection;
+        
+        
 
         /**
         * Re-inserts elements into the document such that the document order matches the selection

@@ -54,7 +54,7 @@ class Ctrl {
     }
 
     createShape(type: ShapeType) {
-        this.$shapesMngr.createShape(type)
+        this.$shapesMngr.CreateShape(type)
     }
 
 }
@@ -123,7 +123,7 @@ Interop.MoqWpf.Fixtures["shapesmngr/getshapes"] = [
 
 
 
-var $html = angular.element(document.getElementsByTagName('html')[0]);
+var $html = angular.element((<any> document).getElementsByTagName('html')[0]);
 angular.element().ready(function () {
     angular.bootstrap(document, ['app']);
 });

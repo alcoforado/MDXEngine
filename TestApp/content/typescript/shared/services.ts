@@ -52,17 +52,15 @@ export class Settings {
 }
 
 
-
 export class ShapeMngr {
     private Types: { [typeName: string]: ShapeType }=null;
 
     private TypesArray: Array<ShapeType>;
-    constructor(private $wpf: Interop.Wpf)
-    {
+
+    constructor(private $wpf: Interop.Wpf) {
 
 
     }
-
 
 
     GetTypes(): { [typeName: string]: ShapeType } {
@@ -76,7 +74,7 @@ export class ShapeMngr {
         return this.Types;
     }
 
-    GetTypesAsArray():Array<ShapeType> {
+    GetTypesAsArray(): Array<ShapeType> {
         this.GetTypes();
         return this.TypesArray;
     }
@@ -89,8 +87,8 @@ export class ShapeMngr {
         }
     }
 
-    GetShapes():Array<ShapeUI> {
-        var value:Array<ShapeUI> = this.$wpf.postSync("shapesmngr/getshapes");
+    GetShapes(): Array<ShapeUI> {
+        var value: Array<ShapeUI> = this.$wpf.postSync("shapesmngr/getshapes");
         value.forEach((elem) => {
             elem.type = this.GetType(elem.shapeType);
         });
@@ -99,19 +97,9 @@ export class ShapeMngr {
     }
 
     CreateShape(type: ShapeType): ShapeType {
-        return this.$wpf.postSync("shapesmngr/createShape",{
-
-
+        return this.$wpf.postSync("shapesmngr/createShape",
+        {});
     }
-
-
-
-
-
-        
-    
-
-
 }
 
 

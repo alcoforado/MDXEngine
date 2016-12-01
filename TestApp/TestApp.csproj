@@ -198,7 +198,10 @@
     <EmbeddedResource Include="SecWindow.resx">
       <DependentUpon>SecWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="content\typescript\tsconfig.json" />
+    <None Include="content\bs-config.json" />
+    <None Include="content\typescript\Cad3d\tsconfig.json" />
+    <None Include="content\package.json" />
+    <None Include="content\tsconfig.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -262,6 +265,7 @@
     <Content Include="content\html\CubeFractal\CubeFractal.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="content\html\cad3d.html" />
     <Content Include="content\html\lightcolor3d.html" />
     <Content Include="content\html\templates\shape.html" />
     <Content Include="content\html\templates\vectorpicker.html" />
@@ -277,16 +281,23 @@
     <Content Include="content\images\xyz_axis.svg" />
     <Content Include="content\images\xy_axis.svg" />
     <Content Include="content\javascript\angular.js" />
+    <Content Include="content\javascript\angular2\common.umd.js" />
+    <Content Include="content\javascript\angular2\compiler.umd.js" />
+    <Content Include="content\javascript\angular2\core.umd.js" />
+    <Content Include="content\javascript\angular2\http.umd.js" />
+    <Content Include="content\javascript\Rx.umd.js" />
     <Content Include="content\javascript\d3.js" />
     <Content Include="content\javascript\handlebars.js" />
     <Content Include="content\javascript\jquery-2.1.3.js" />
     <Content Include="content\javascript\require.js" />
     <Content Include="content\javascript\require_config.js" />
     <Content Include="content\javascript\spectrum.js" />
+    <Content Include="content\javascript\system_config.js" />
     <Content Include="content\javascript\ui-bootstrap.js" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="content\typescript\bin_packing.ts" />
+    <TypeScriptCompile Include="content\typescript\Cad3d\cad3d.ts" />
     <TypeScriptCompile Include="content\typescript\CubeFractal\cubefractal.ts" />
     <TypeScriptCompile Include="content\typescript\defines\angular.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\custom.d.ts" />
@@ -297,7 +308,6 @@
     <TypeScriptCompile Include="content\typescript\defines\spectrum.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\underscore.d.ts" />
-    <TypeScriptCompile Include="content\typescript\shaders.tsx" />
     <TypeScriptCompile Include="content\typescript\shared\directives.ts" />
     <TypeScriptCompile Include="content\typescript\lightcolor3d.ts" />
     <TypeScriptCompile Include="content\typescript\shared\linearalgebra.ts" />
