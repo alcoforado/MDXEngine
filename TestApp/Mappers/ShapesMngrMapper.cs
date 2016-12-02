@@ -55,10 +55,10 @@ namespace TestApp.Mappers
 
         public string MapTypeWithJavascriptRender(Type propertyType)
         {
-            throw new NotImplementedException();
+            return propertyType.Name;
         }
 
-
+      
 
     }
 }

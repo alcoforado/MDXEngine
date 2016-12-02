@@ -9,7 +9,9 @@ using MDXEngine.Shapes;
 using SharpDX;
 using MDXEngine.Painters;
 using MDXEngine.Geometry;
+using Microsoft.Owin.Hosting;
 using Microsoft.Practices.Unity;
+using TestApp.App_Config;
 using TestApp.Services;
 namespace TestApp
 {
@@ -74,9 +76,12 @@ namespace TestApp
 
 
             this.RegisterTypesInContainer();
-            
 
-          
+            string baseAddress = "http://localhost:9000/";
+            WebApp.Start<Startup>(url: baseAddress);
+
+
+
         }
 
 

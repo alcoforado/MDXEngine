@@ -25,8 +25,6 @@ namespace TestApp.Models.ShapesManagerService.Topologies
                 throw new Exception("Number of elements in Y must be greater than 0");
             if (Dims.X <= 0f || Dims.Y <= 0f)
                 throw new Exception("Dimensions must be positive");
-                
-
             Vector2 O = new Vector2(0,0) - Dims*0.5f;
             Vector2 P = new Vector2(0,0) + Dims*0.5f;
             return new OrthoMesh2D((uint) NumElemsX,(uint) NumElemsY,O,P);

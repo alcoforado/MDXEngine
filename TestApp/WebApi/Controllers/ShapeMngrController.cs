@@ -1,54 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using System.Web.Http;
 using MDXEngine;
-using TestApp.Models.ShapesManagerService.Render;
-using TestApp.Models.ShapesManagerService.Topologies;
 using MUtils.Reflection;
 using Newtonsoft.Json;
+using SharpDX;
 using TestApp.Mappers;
 using TestApp.Models.ShapesManagerService;
+using TestApp.Models.ShapesManagerService.Render;
+using TestApp.Models.ShapesManagerService.Topologies;
+using TestApp.WebApi.Models.ShapeMngr;
 
-namespace TestApp.Controllers
+namespace TestApp.WebApi.Controllers
 {
-    public class ShapesMngrController : IController
+    public class ShapeMngrController : ApiController
     {
         private Dictionary<string, Type> _shapeTypes;
         private Dictionary<string, Type> _renderTypes;
 
-        private int _idCounter=0;
+        private int _idCounter = 0;
         private IDxViewControl _dx;
         private IShapesMngrMapper _mapper;
         private Dictionary<string, ShapeUIBase> _shapeCollection;
-        private Dictionary<string, object> _shaderShapeCollection;
 
         public List<string> GetTopologies()
         {
             return (
                 from x in _shapeTypes
                 select x.Key
-                ).ToList();;
+                ).ToList(); ;
         }
 
 
-        public ShapesMngrController(IDxViewControl dx,IShapesMngrMapper mapper)
+        public ShapeMngrController(IDxViewControl dx, IShapesMngrMapper mapper)
         {
             _mapper = mapper;
-            var painters = new List<RenderBaseViewModel>() {new SolidColorRenderBase()};
+            var painters = new List<RenderBaseViewModel>() { new SolidColorRender() };
             _dx = dx;
             _shapeCollection = new Dictionary<string, ShapeUIBase>();
-            _shaderShapeCollection = new Dictionary<string, object>();
             _shapeTypes = new Dictionary<string, Type>();
 
             var shapesT = typeof(ShapeUIBase).GetImplementationsInCurrentAssembly();
             foreach (var type in shapesT)
             {
-                _shapeTypes.Add(((ShapeUIBase) Activator.CreateInstance(type)).GetShapeName(),type);
+                _shapeTypes.Add(((ShapeUIBase)Activator.CreateInstance(type)).GetShapeName(), type);
             }
 
             var paintersT = typeof(RenderBaseViewModel).GetImplementationsInCurrentAssembly();
@@ -81,61 +78,45 @@ namespace TestApp.Controllers
 
         public void DeleteShape(string shapeId)
         {
-            if (!_shapeCollection.ContainsKey(shapeId)) 
+            if (!_shapeCollection.ContainsKey(shapeId))
             {
                 throw new Exception(String.Format("Error, Shape Id {0} not found", shapeId));
             }
             else
             {
                 var shape = _shapeCollection[shapeId];
-                var shaderShape = _shaderShapeCollection[shapeId];
-                shape.Painter.DetachFromShader(_dx, shaderShape);
-                if (shaderShape is IDisposable)
-                    ((IDisposable)shape).Dispose();
+                shape.Painter.DetachFromShader(_dx);
                 _shapeCollection.Remove(shapeId);
             }
 
         }
 
-       
-        public void UpdateShape(string shapeId,string shapeJsonData,string painterId, string painterJsonData)
+
+        public void UpdateShape(UpdateShapeViewModel model)
         {
-            if (!_shapeCollection.ContainsKey(shapeId) || !_shapeCollection.ContainsKey(painterId))
+            if (!_shapeCollection.ContainsKey(model.ShapeId))
             {
-                throw new Exception(String.Format("Error, type {0} not identified",shapeId));
+                throw new Exception(String.Format("Error, type {0} not identified", model.ShapeId));
             }
-            var shape = _shapeCollection[shapeId];
+            ShapeUIBase shape = _shapeCollection[model.ShapeId];
 
-            
-          JsonConvert.PopulateObject(shapeJsonData, shape);
-            JsonConvert.PopulateObject(painterJsonData, shape.Painter);
-
-
-
-            var shaderShape = _shaderShapeCollection[shapeId];
-            shape.Painter.DetachFromShader(_dx, shaderShape);
-            if (shaderShape is IDisposable)
-                ((IDisposable) shaderShape).Dispose();
 
            
+            shape.Painter.DetachFromShader(_dx);
             var topology = shape.CreateTopology();
-            shaderShape = shape.Painter.AttachToShader(_dx, topology);
-            _shaderShapeCollection.Add(shapeId,shaderShape);
+            shape.Painter.AttachToShader(_dx, topology);
+            
         }
 
-        public ShapeUIBase CreateShape(string shapeTypeId, string renderTypeId)
+        public ShapeViewModel CreateShape(string shapeTypeId)
         {
             if (!_shapeTypes.ContainsKey(shapeTypeId))
             {
                 throw new Exception(String.Format("Error, type {0} not identified", shapeTypeId));
             }
-            if (!_shapeTypes.ContainsKey(renderTypeId))
-            {
-                throw new Exception(String.Format("Error, type {0} not identified", renderTypeId));
-            }
 
             var shape = (ShapeUIBase)Activator.CreateInstance(_shapeTypes[shapeTypeId]);
-            var render = (RenderBaseViewModel)Activator.CreateInstance(_shapeTypes[renderTypeId]);
+            var render = new SolidColorRender() {Color = Color.Aquamarine}; 
 
             shape.Painter = render;
 
@@ -143,10 +124,16 @@ namespace TestApp.Controllers
 
             var topology = shape.CreateTopology();
             var shaderShape = render.AttachToShader(_dx, topology);
-            _shaderShapeCollection.Add(shape.Id, shaderShape);
-            _shapeCollection.Add(shape.Id,shape);
-            return shape;
+            _shapeCollection.Add(shape.Id, shape);
+            return new ShapeViewModel()
+            {
+                ShapeType = shapeTypeId,
+                ShapeData = shape
+            };
         }
-       
+
+
+
+
     }
 }
