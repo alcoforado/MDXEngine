@@ -7,11 +7,10 @@ using SharpDX;
 
 namespace TestApp.Models.ShapesManagerService.Render
 {
-    class SolidColorRender: RenderBaseViewModel
+    class SolidColorRender: RenderBase
     {
         public Color Color { get; set; }
 
-        private Shape3D<VerticeColor> Shape { get; set; }
 
         public override string GetPainterName()
         {
@@ -21,15 +20,15 @@ namespace TestApp.Models.ShapesManagerService.Render
         public override IShape AttachToShader(IDxViewControl _dx, ITopology topology)
         {
             var shader = _dx.ResolveShader<ShaderColor3D>();
-            this.Shape = new Shape3D<VerticeColor>(topology, new CyclicColorizer(Color));
-            shader.Add(this.Shape);
-            return Shape;
+            var shape = new Shape3D<VerticeColor>(topology, new CyclicColorizer(Color));
+            shader.Add(shape);
+            return shape;
         }
 
-        public override void DetachFromShader(IDxViewControl _dx)
+        public override void DetachFromShader(IDxViewControl _dx,IShape shape )
         {
             var shader = _dx.ResolveShader<ShaderColor3D>();
-            shader.Remove(this.Shape);
+            shader.Remove((IShape<VerticeColor>) shape);
         }
     }
 }

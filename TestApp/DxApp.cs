@@ -76,12 +76,11 @@ namespace TestApp
 
 
             this.RegisterTypesInContainer();
+            TestApp.App_Config.UnityConfig.Config(this.Container);
 
             string baseAddress = "http://localhost:9000/";
+            Startup.Container = this.Container;
             WebApp.Start<Startup>(url: baseAddress);
-
-
-
         }
 
 

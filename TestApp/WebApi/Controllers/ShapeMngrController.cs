@@ -37,31 +37,31 @@ namespace TestApp.WebApi.Controllers
         public ShapeMngrController(IDxViewControl dx, IShapesMngrMapper mapper)
         {
             _mapper = mapper;
-            var painters = new List<RenderBaseViewModel>() { new SolidColorRender() };
+            var painters = new List<RenderBase>() { new SolidColorRender() };
             _dx = dx;
             _shapeCollection = new Dictionary<string, ShapeUIBase>();
             _shapeTypes = new Dictionary<string, Type>();
-
+            _renderTypes = new Dictionary<string, Type>();
             var shapesT = typeof(ShapeUIBase).GetImplementationsInCurrentAssembly();
             foreach (var type in shapesT)
             {
                 _shapeTypes.Add(((ShapeUIBase)Activator.CreateInstance(type)).GetShapeName(), type);
             }
 
-            var paintersT = typeof(RenderBaseViewModel).GetImplementationsInCurrentAssembly();
+            var paintersT = typeof(RenderBase).GetImplementationsInCurrentAssembly();
             foreach (var type in paintersT)
-            {
-                _renderTypes.Add(((RenderBaseViewModel)Activator.CreateInstance(type)).GetPainterName(), type);
+            { 
+                _renderTypes.Add(((RenderBase)Activator.CreateInstance(type)).GetPainterName(), type);
             }
         }
 
-
+        [HttpGet]
         public List<UIType> GetShapeTypes()
         {
             return _shapeTypes.Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
         }
 
-        public List<UIType> GetShaderTypes()
+        public List<UIType> GetPainterTypes()
         {
             return _renderTypes.Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
         }
@@ -108,6 +108,7 @@ namespace TestApp.WebApi.Controllers
             
         }
 
+        [HttpGet]
         public ShapeViewModel CreateShape(string shapeTypeId)
         {
             if (!_shapeTypes.ContainsKey(shapeTypeId))

@@ -16,18 +16,18 @@ namespace TestApp.Mappers
 
             var array = fieldName.ToCharArray();
             array[0] = Char.ToUpper(array[0]);
-            var result = new List<char>();
+            var result = "";
             foreach (var ch in array)
             {
                 if (Char.IsUpper(ch))
                 {
-                    result.Add(' ');
+                    result+=' ';
 
                 }
-                result.Add(ch);
+                result+=ch;
 
             }
-            var str = result.ToArray().ToString().Trim();
+            var str = result.Trim();
             return str;
 
         }
@@ -36,7 +36,6 @@ namespace TestApp.Mappers
         {
 
             var tt = type.GetProperties().Select(p =>
-
                 new UITypeMember()
                 {
                     FieldName = p.Name,

@@ -149,6 +149,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unity.WebApi, Version=5.2.3.0, Culture=neutral, PublicKeyToken=43da31bc42a85347, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.WebAPI.5.2.3\lib\net45\Unity.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +163,8 @@
     <Compile Include="Actions\LightColor3DAppState.cs" />
     <Compile Include="Actions\WireCube3D.cs" />
     <Compile Include="App_Config\Startup.cs" />
+    <Compile Include="App_Config\UnityConfig.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\BinPackController.cs" />
     <Compile Include="Controllers\CADController.cs" />
     <Compile Include="Controllers\PersistenceController.cs" />
@@ -168,7 +174,7 @@
     <Compile Include="Models\ShapesManagerService\Render\SolidColorRenderBase.cs" />
     <Compile Include="Interfaces\IShapesRemder.cs" />
     <Compile Include="Models\RenderTypeInfo.cs" />
-    <Compile Include="Models\ShapesManagerService\Render\RenderBaseViewModel.cs" />
+    <Compile Include="Models\ShapesManagerService\Render\RenderBase.cs" />
     <Compile Include="Models\ShapesManagerService\ShapeType.cs" />
     <Compile Include="Models\ShapesManagerService\Topologies\ShapeUIBase.cs" />
     <Compile Include="Models\ShapesManagerService\Topologies\Orthomesh2DUI.cs" />
