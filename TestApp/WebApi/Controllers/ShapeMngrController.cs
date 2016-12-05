@@ -11,65 +11,48 @@ using TestApp.Mappers;
 using TestApp.Models.ShapesManagerService;
 using TestApp.Models.ShapesManagerService.Render;
 using TestApp.Models.ShapesManagerService.Topologies;
+using TestApp.Services.Interfaces;
 using TestApp.WebApi.Models.ShapeMngr;
 
 namespace TestApp.WebApi.Controllers
 {
     public class ShapeMngrController : ApiController
     {
-        private Dictionary<string, Type> _shapeTypes;
-        private Dictionary<string, Type> _renderTypes;
-
+        
         private int _idCounter = 0;
-        private IDxViewControl _dx;
         private IShapesMngrMapper _mapper;
-        private Dictionary<string, ShapeUIBase> _shapeCollection;
+        private IShapeMngrService _mngrService;
 
         public List<string> GetTopologies()
         {
             return (
-                from x in _shapeTypes
+                from x in _mngrService.GetShapeTypes()
                 select x.Key
                 ).ToList(); ;
         }
 
 
-        public ShapeMngrController(IDxViewControl dx, IShapesMngrMapper mapper)
+        public ShapeMngrController(IShapeMngrService mngrService, IShapesMngrMapper mapper)
         {
             _mapper = mapper;
-            var painters = new List<RenderBase>() { new SolidColorRender() };
-            _dx = dx;
-            _shapeCollection = new Dictionary<string, ShapeUIBase>();
-            _shapeTypes = new Dictionary<string, Type>();
-            _renderTypes = new Dictionary<string, Type>();
-            var shapesT = typeof(ShapeUIBase).GetImplementationsInCurrentAssembly();
-            foreach (var type in shapesT)
-            {
-                _shapeTypes.Add(((ShapeUIBase)Activator.CreateInstance(type)).GetShapeName(), type);
-            }
-
-            var paintersT = typeof(RenderBase).GetImplementationsInCurrentAssembly();
-            foreach (var type in paintersT)
-            { 
-                _renderTypes.Add(((RenderBase)Activator.CreateInstance(type)).GetPainterName(), type);
-            }
+            _mngrService = mngrService;
         }
 
         [HttpGet]
         public List<UIType> GetShapeTypes()
         {
-            return _shapeTypes.Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
+            return _mngrService.GetShapeTypes().Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
         }
 
         public List<UIType> GetPainterTypes()
         {
-            return _renderTypes.Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
+            return _mngrService.GetRenderTypes().Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
         }
 
-
+       
         public List<ShapeViewModel> GetShapes()
         {
-            return _shapeCollection.Select(x => new ShapeViewModel()
+            return _mngrService.GetShapes().Select(x => new ShapeViewModel()
             {
                 ShapeType = x.Value.GetShapeName(),
                 ShapeData = x.Value
@@ -78,54 +61,26 @@ namespace TestApp.WebApi.Controllers
 
         public void DeleteShape(string shapeId)
         {
-            if (!_shapeCollection.ContainsKey(shapeId))
-            {
-                throw new Exception(String.Format("Error, Shape Id {0} not found", shapeId));
-            }
-            else
-            {
-                var shape = _shapeCollection[shapeId];
-                shape.Painter.DetachFromShader(_dx);
-                _shapeCollection.Remove(shapeId);
-            }
-
+            _mngrService.DeleteShape(shapeId);
         }
 
 
         public void UpdateShape(UpdateShapeViewModel model)
         {
-            if (!_shapeCollection.ContainsKey(model.ShapeId))
-            {
-                throw new Exception(String.Format("Error, type {0} not identified", model.ShapeId));
-            }
-            ShapeUIBase shape = _shapeCollection[model.ShapeId];
-
-
-           
-            shape.Painter.DetachFromShader(_dx);
-            var topology = shape.CreateTopology();
-            shape.Painter.AttachToShader(_dx, topology);
             
+            ShapeUIBase shape = _mngrService.GetShape(model.ShapeId);
+            JsonConvert.PopulateObject(model.ShapeJsonData, shape);
+            
+            var render = _mngrService.CreateRender(model.ShapePainterType);
+            JsonConvert.PopulateObject(model.ShapePainterJsonData,render);
+            _mngrService.SetShapeRender(model.ShapeId, render);
         }
 
         [HttpGet]
         public ShapeViewModel CreateShape(string shapeTypeId)
         {
-            if (!_shapeTypes.ContainsKey(shapeTypeId))
-            {
-                throw new Exception(String.Format("Error, type {0} not identified", shapeTypeId));
-            }
-
-            var shape = (ShapeUIBase)Activator.CreateInstance(_shapeTypes[shapeTypeId]);
-            var render = new SolidColorRender() {Color = Color.Aquamarine}; 
-
-            shape.Painter = render;
-
-            shape.Id = "Shape" + Interlocked.Increment(ref _idCounter).ToString();
-
-            var topology = shape.CreateTopology();
-            var shaderShape = render.AttachToShader(_dx, topology);
-            _shapeCollection.Add(shape.Id, shape);
+            var shape=_mngrService.CreateShape(shapeTypeId);
+        
             return new ShapeViewModel()
             {
                 ShapeType = shapeTypeId,

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using TestApp.Mappers;
+using TestApp.Services;
+using TestApp.Services.Interfaces;
 
 namespace TestApp.App_Config
 {
@@ -13,7 +15,8 @@ namespace TestApp.App_Config
         static public void Config(IUnityContainer container)
         {
             container.RegisterType<IShapesMngrMapper, ShapesMngrMapper>();
-            
+            container.RegisterType<IShapeMngrService, ShapeMngrService>(new ContainerControlledLifetimeManager());
+
         }
 
     }

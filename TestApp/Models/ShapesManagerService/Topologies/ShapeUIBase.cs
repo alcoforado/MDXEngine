@@ -9,10 +9,31 @@ namespace TestApp.Models.ShapesManagerService.Topologies
 {
     public abstract class  ShapeUIBase
     {
+        private RenderBase _render;
+        private IShape _shape;
+        internal string PainterType() {return _render.GetType().Name; }
+        protected abstract ITopology CreateTopology();
+
         public string Id { get; set; }
-        public RenderBase Painter { get; set; }
-        public string PainterType { get; set; }
-        internal  abstract string GetShapeName();
-        internal abstract ITopology CreateTopology();
+        public void SetRender(IDxViewControl dx, RenderBase render)
+        {
+            _render?.DetachFromShader(dx,_shape);
+            _render = render;
+            _render.AttachToShader(dx, this.CreateTopology());
+        }
+
+        public abstract string GetShapeName();
+
+        public void DetachFromShader(IDxViewControl dx)
+        {
+            _render.DetachFromShader(dx,_shape);
+        }
+
+
+        public void Redraw(IDxViewControl dx)
+        {
+            _render.DetachFromShader(dx,_shape);
+            _shape=_render.AttachToShader(dx, this.CreateTopology());
+        }
     }
 }

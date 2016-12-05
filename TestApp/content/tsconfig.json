@@ -4,8 +4,12 @@
     "module": "amd",
     "target": "ES5",
     "sourceMap": false,
-    "outDir":  "../javascript"
-  }
+    "outDir": "../javascript"
+  },
+   "exclude": [
+    "node_modules/*",
+    "**/*-aot.ts"
+  ]
 
 
 }

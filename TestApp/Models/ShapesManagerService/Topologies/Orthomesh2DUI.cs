@@ -12,12 +12,12 @@ namespace TestApp.Models.ShapesManagerService.Topologies
 {
     public class Orthomesh2DUI : ShapeUIBase
     {
-        internal override string GetShapeName()
+        public override string GetShapeName()
         {
             return "OrthoMesh2D";
         }
 
-        internal  override ITopology CreateTopology()
+        protected  override ITopology CreateTopology()
         {
             if (NumElemsX <= 0) 
                 throw new Exception("Number of elements in X must be greater than 0");
