@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var http_1 = require('@angular/http');
-var angular_in_memory_web_api_1 = require('angular-in-memory-web-api');
 require('./rxjs-extensions');
 var app_component_1 = require('./app.component');
 var AppModule = (function () {
@@ -18,11 +17,7 @@ var AppModule = (function () {
     AppModule = __decorate([
         NgModule({
             imports: [
-                BrowserModule,
-                FormsModule,
-                AppRoutingModule,
-                http_1.HttpModule,
-                angular_in_memory_web_api_1.InMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 600 })
+                http_1.HttpModule
             ],
             declarations: [
                 app_component_1.AppComponent,

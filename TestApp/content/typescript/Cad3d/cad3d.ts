@@ -1,4 +1,6 @@
-﻿import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+﻿import { NgModule } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -9,19 +11,16 @@ import { AppComponent } from './app.component';
 @NgModule({
     imports: [
         BrowserModule,
-        FormsModule,
-        AppRoutingModule,
-        HttpModule,
-        InMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 600 })
+        HttpModule
     ],
     declarations: [
-        AppComponent,
-        HeroSearchComponent,
-        routedComponents
+        BrowserModule
     ],
     providers: [
         HeroService
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule)

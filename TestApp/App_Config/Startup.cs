@@ -5,6 +5,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.StaticFiles;
 using Microsoft.Practices.Unity;
 using Owin;
 using Unity.WebApi;
@@ -29,6 +31,18 @@ namespace TestApp.App_Config
                 .Add(new MediaTypeHeaderValue("text/html"));
             config.DependencyResolver = new UnityDependencyResolver(Container);
             appBuilder.UseWebApi(config);
+
+
+            var fileSystem = new PhysicalFileSystem("../../../content");
+            var options = new FileServerOptions
+            {
+                EnableDirectoryBrowsing = true,
+                FileSystem = fileSystem
+            };
+
+            appBuilder.UseFileServer(options);
+
+
         }
     }
 }
