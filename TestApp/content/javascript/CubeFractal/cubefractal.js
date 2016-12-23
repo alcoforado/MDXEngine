@@ -3,3 +3,4 @@ var Hello = (function () {
     }
     return Hello;
 }());
+//# sourceMappingURL=cubefractal.js.map

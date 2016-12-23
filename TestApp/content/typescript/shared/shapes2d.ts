@@ -1,5 +1,5 @@
 ﻿
-import la = require("linearalgebra");
+import la = require("./linearalgebra");
 
 
 var precision = function (x: number, p: number):number {
@@ -123,8 +123,8 @@ export class Shape2D {
 export enum TopologyType { INDEXED_TRIANGLES, LINES }
 
 export interface ITopology2D {
-    vertices()
-    indices()
+    vertices():Array<number>
+    indices():Array<number>
     n_vertices(): number
     topology_type():TopologyType
 }
@@ -139,7 +139,7 @@ export class Line2D implements ITopology2D {
         this.p2 = p2;
     }
 
-    indices() {
+    indices(): Array<number> {
         throw "not Implemented"
     }
 

@@ -1,13 +1,12 @@
-define(["require", "exports"], function (require, exports) {
-    "use strict";
-    exports.shape = '\
+"use strict";
+exports.shape = '\
 <div class="form-header"><img src="../images/shapes.svg" />{{shape.type.typeName}}</div>\
 <div class="form-body">\
     <div class="form-row" ng-repeat="field in shape.type.members">\
         {{field.directiveType}} {{field.labelName}}\
     </div>\
 </div>';
-    exports.vectorpicker = '\
+exports.vectorpicker = '\
 \
 <div class="vector-input-container">\
     <input class="vector-input" type="number" ng-model="vector.X" />\
@@ -42,4 +41,4 @@ define(["require", "exports"], function (require, exports) {
 \
 \
 ';
-});
+//# sourceMappingURL=templates.js.map

@@ -70,9 +70,9 @@ export class SvgPlot {
             .enter()
             .append("circle")
             .attr("r", options.points_size)
-            .attr("cx", function (d) { return xs(d) })
+            .attr("cx", function (d:any) { return xs(d) })
             .data(y)
-            .attr("cy", function (d) { return ys(d); })
+            .attr("cy", function (d:any) { return ys(d); })
 
         //XAxis
         svg.append("g")

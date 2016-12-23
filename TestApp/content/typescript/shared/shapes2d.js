@@ -1,5 +1,5 @@
 "use strict";
-var la = require("linearalgebra");
+var la = require("./linearalgebra");
 var precision = function (x, p) {
     return parseFloat(x.toPrecision(p));
 };

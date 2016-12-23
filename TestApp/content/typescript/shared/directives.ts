@@ -28,8 +28,8 @@ interface IVectorPickerScope extends ng.IScope {
     norm: number;
     vector: dx.DXVector3;
     showDialog: boolean;
-    displayDialog(ev: any);
-    hideDialog(ev:any);
+    displayDialog(ev: any):void;
+    hideDialog(ev:any):void;
     
 }
 
@@ -314,7 +314,7 @@ export class ShapeForm implements angular.IDirective {
     }
 
 
-    public 
+
 
 
 

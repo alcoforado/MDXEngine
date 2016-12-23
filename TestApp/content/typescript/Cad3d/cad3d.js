@@ -5,37 +5,47 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var platform_browser_dynamic_1 = require('@angular/platform-browser-dynamic');
+var platform_browser_1 = require('@angular/platform-browser');
 var http_1 = require('@angular/http');
-var angular_in_memory_web_api_1 = require('angular-in-memory-web-api');
-var in_memory_data_service_1 = require('./in-memory-data.service');
-require('./rxjs-extensions');
-var app_component_1 = require('./app.component');
-var app_routing_module_1 = require('./app-routing.module');
-var hero_service_1 = require('./hero.service');
-var hero_search_component_1 = require('./hero-search.component');
+var core_2 = require('@angular/core');
+//helloffsdfdgsffsfs
+var AppComponent = (function () {
+    function AppComponent() {
+    }
+    AppComponent = __decorate([
+        core_2.Component({
+            selector: 'my-app',
+            template: "<p>Hello World</p>"
+        }), 
+        __metadata('design:paramtypes', [])
+    ], AppComponent);
+    return AppComponent;
+}());
+exports.AppComponent = AppComponent;
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
-        NgModule({
+        core_1.NgModule({
             imports: [
-                BrowserModule,
-                FormsModule,
-                app_routing_module_1.AppRoutingModule,
-                http_1.HttpModule,
-                angular_in_memory_web_api_1.InMemoryWebApiModule.forRoot(in_memory_data_service_1.InMemoryDataService, { delay: 600 })
+                platform_browser_1.BrowserModule,
+                http_1.HttpModule
             ],
             declarations: [
-                app_component_1.AppComponent,
-                hero_search_component_1.HeroSearchComponent,
-                app_routing_module_1.routedComponents
+                platform_browser_1.BrowserModule
             ],
-            providers: [
-                hero_service_1.HeroService
-            ],
-            bootstrap: [app_component_1.AppComponent]
-        })
+            providers: [],
+            bootstrap: [AppComponent]
+        }), 
+        __metadata('design:paramtypes', [])
     ], AppModule);
     return AppModule;
 }());
-exports.AppModule = AppModule;
+platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(AppModule);
+alert("Iam here");
+//# sourceMappingURL=cad3d.js.map
