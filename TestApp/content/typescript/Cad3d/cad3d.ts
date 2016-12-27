@@ -1,15 +1,14 @@
 ﻿import { NgModule } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
 import {Component} from '@angular/core';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import {HttpModule} from '@angular/http'
 
-
-//helloffsdfdgsffsfs
 @Component({
+    moduleId: module.id,
     selector: 'my-app',
-    template:`<p>Hello World</p>`
+    templateUrl: 'app.component.html'
 })
 export class AppComponent {
     
@@ -29,13 +28,14 @@ export class AppComponent {
 
 
 
+
 @NgModule({
     imports: [
-        BrowserModule,
-        HttpModule
+        HttpModule,
+        BrowserModule
     ],
     declarations: [
-        BrowserModule
+        AppComponent
     ],
     providers: [
     ],
@@ -45,4 +45,3 @@ class AppModule { }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
 
-alert("Iam here");

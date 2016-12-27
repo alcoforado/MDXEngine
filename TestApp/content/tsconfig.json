@@ -10,7 +10,6 @@
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true
   },
-  "compileOnSave": true,
   "exclude": [
     "node_modules/*",
     "**/*-aot.ts"

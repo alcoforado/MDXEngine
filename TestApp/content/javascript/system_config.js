@@ -22,6 +22,7 @@
         'cad3d':'ts:/cad3d/cad3d.js',
         // other libraries
         'rxjs': 'npm:rxjs',
+        'rxjs/Observable': 'npm:rxjs/Observable',
         'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
