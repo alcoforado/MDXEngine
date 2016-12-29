@@ -341,10 +341,13 @@
     <Content Include="content\javascript\spectrum.js" />
     <Content Include="content\javascript\system_config.js" />
     <Content Include="content\javascript\ui-bootstrap.js" />
+    <Content Include="content\typescript\Cad3d\shapes-mngr.component.html" />
+    <Content Include="content\typescript\Cad3d\app.component.html" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="content\typescript\bin_packing.ts" />
     <TypeScriptCompile Include="content\typescript\Cad3d\cad3d.ts" />
+    <TypeScriptCompile Include="content\typescript\Cad3d\shapes-mngr.component.ts" />
     <TypeScriptCompile Include="content\typescript\CubeFractal\cubefractal.ts" />
     <TypeScriptCompile Include="content\typescript\defines\angular.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\custom.d.ts" />
@@ -355,6 +358,7 @@
     <TypeScriptCompile Include="content\typescript\defines\spectrum.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\underscore.d.ts" />
+    <TypeScriptCompile Include="content\typescript\services\mocks.ts" />
     <TypeScriptCompile Include="content\typescript\services\shapes-mngr-service.ts" />
     <TypeScriptCompile Include="content\typescript\shared\directives.ts" />
     <TypeScriptCompile Include="content\typescript\lightcolor3d.ts" />

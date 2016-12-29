@@ -9,7 +9,7 @@
 var templates = require("../templates");
 var la = require("../shared/linearalgebra");
 var $ = require("jquery");
-var spectrum = require('spectrum');
+var spectrum = require("spectrum");
 var e = typeof spectrum;
 var VectorPicker = (function () {
     /*

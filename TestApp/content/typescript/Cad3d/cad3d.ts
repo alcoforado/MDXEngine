@@ -3,7 +3,10 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserModule } from '@angular/platform-browser';
 import {Component} from '@angular/core';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import {HttpModule} from '@angular/http'
+import {InMemMockService} from '../services/mocks'
+import {HttpModule} from '@angular/http';
+import {ShapesMngrService} from '../services/shapes-mngr-service';
+import {ShapesMngrComponent} from 'typescript/Cad3d/shapes-mngr.component';
 
 @Component({
     moduleId: module.id,
@@ -11,7 +14,7 @@ import {HttpModule} from '@angular/http'
     templateUrl: 'app.component.html'
 })
 export class AppComponent {
-    
+   
 }
 
 
@@ -32,12 +35,15 @@ export class AppComponent {
 @NgModule({
     imports: [
         HttpModule,
-        BrowserModule
+        BrowserModule,
+        InMemoryWebApiModule.forRoot(InMemMockService)
     ],
     declarations: [
-        AppComponent
+        AppComponent,
+        ShapesMngrComponent
     ],
     providers: [
+        ShapesMngrService
     ],
     bootstrap: [AppComponent]
 })

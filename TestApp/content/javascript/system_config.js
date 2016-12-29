@@ -7,6 +7,7 @@
         'js:': 'javascript/',
         'jsts':'javascript/typescript/'
     },
+    defaultJSExtensions:true,
     // map tells the System loader where to look for things
     map: {
         // angular bundles
@@ -23,7 +24,10 @@
         // other libraries
         'rxjs': 'npm:rxjs',
         'rxjs/Observable': 'npm:rxjs/Observable',
-        'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
+        'rxjs/Rx': 'npm:rxjs/Rx',
+        'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
+        'services/mocks': 'typescript/services/mocks'
+
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {

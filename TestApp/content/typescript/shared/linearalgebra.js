@@ -359,11 +359,11 @@ var SegmentIntersection = (function () {
         this.Point = Point;
         this.Type = Type;
     }
-    SegmentIntersection.ONE_POINT = "ONE_POINT";
-    SegmentIntersection.NO_POINT = "NO_POINT";
-    SegmentIntersection.ALL_POINTS = "ALL_POINTS";
     return SegmentIntersection;
 }());
+SegmentIntersection.ONE_POINT = "ONE_POINT";
+SegmentIntersection.NO_POINT = "NO_POINT";
+SegmentIntersection.ALL_POINTS = "ALL_POINTS";
 exports.SegmentIntersection = SegmentIntersection;
 var Segment2D = (function () {
     function Segment2D(a, b) {
@@ -525,7 +525,8 @@ var GLScreenMapping = (function () {
     GLScreenMapping.prototype.GetScreenRect = function () {
         return [
             this.MapToScreen(new Vec2([-1, -1])),
-            this.MapToScreen(new Vec2([1, 1]))];
+            this.MapToScreen(new Vec2([1, 1]))
+        ];
     };
     return GLScreenMapping;
 }());

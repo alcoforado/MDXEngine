@@ -142,14 +142,14 @@ var WpfAjaxManager = (function () {
         }
         delete this.requests[requestId];
     };
-    WpfAjaxManager.Instance = new WpfAjaxManager();
     return WpfAjaxManager;
 }());
+WpfAjaxManager.Instance = new WpfAjaxManager();
 exports.WpfAjaxManager = WpfAjaxManager;
 var MoqWpf = (function (_super) {
     __extends(MoqWpf, _super);
     function MoqWpf() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     MoqWpf.prototype.postSync = function (call, data) {
         if (data === void 0) { data = null; }
@@ -197,10 +197,10 @@ var MoqWpf = (function (_super) {
             }
         }
     };
-    MoqWpf.Fixtures = [];
-    MoqWpf.Delay = 1500;
     return MoqWpf;
 }(Wpf));
+MoqWpf.Fixtures = [];
+MoqWpf.Delay = 1500;
 exports.MoqWpf = MoqWpf;
 function WpfFinishRequest(call, requestId, data) {
     WpfAjaxManager.Instance.finishRequest(call, requestId, data);

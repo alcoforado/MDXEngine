@@ -11,10 +11,10 @@
 "use strict";
 var angular = require("angular");
 var directives = require("./shared/directives");
-var Interop = require('./shared/wpf');
-var ui_bootstrap = require('ui-bootstrap');
-var dx = require('./shared/models');
-var Services = require('./shared/services');
+var Interop = require("./shared/wpf");
+var ui_bootstrap = require("ui-bootstrap");
+var dx = require("./shared/models");
+var Services = require("./shared/services");
 var d = typeof ui_bootstrap;
 var Ctrl = (function () {
     function Ctrl($wpf, $settings, $shapesMngr, $scope) {

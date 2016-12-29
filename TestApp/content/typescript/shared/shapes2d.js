@@ -85,11 +85,11 @@ var Shape2D = (function () {
 }());
 exports.Shape2D = Shape2D;
 //Shapes
+var TopologyType;
 (function (TopologyType) {
     TopologyType[TopologyType["INDEXED_TRIANGLES"] = 0] = "INDEXED_TRIANGLES";
     TopologyType[TopologyType["LINES"] = 1] = "LINES";
-})(exports.TopologyType || (exports.TopologyType = {}));
-var TopologyType = exports.TopologyType;
+})(TopologyType = exports.TopologyType || (exports.TopologyType = {}));
 var Line2D = (function () {
     function Line2D(p1, p2) {
         this.p1 = p1;
@@ -144,7 +144,8 @@ var Rect2D = (function () {
             this.p1[0], this.p1[1],
             this.p2[0], this.p1[1],
             this.p2[0], this.p2[1],
-            this.p1[0], this.p2[1]];
+            this.p1[0], this.p2[1]
+        ];
     };
     Rect2D.prototype.indices = function () {
         return [

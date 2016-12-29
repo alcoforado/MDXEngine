@@ -18,6 +18,12 @@ bld/
 [Bb]in/
 [Oo]bj/
 
+#node modules	
+node_modules/
+
+#Javascript in typescript folders
+TestApp/content/typescript/**/*.js
+
 # Roslyn cache directories
 *.ide/
 

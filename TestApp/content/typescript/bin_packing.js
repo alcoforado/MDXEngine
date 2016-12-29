@@ -7,7 +7,7 @@
 "use strict";
 var plots = require("./shared/svg_plots");
 var angular = require("angular");
-var Interop = require('./shared/wpf');
+var Interop = require("./shared/wpf");
 var Data = (function () {
     function Data(NumElements, minWidth, maxWidth, minHeight, maxHeight, numberOfRuns, rotate, areaUsageValues) {
         if (numberOfRuns === void 0) { numberOfRuns = 1; }
