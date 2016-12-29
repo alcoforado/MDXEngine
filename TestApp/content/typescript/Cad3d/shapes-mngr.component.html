@@ -1,8 +1,14 @@
 ﻿Add Shapes
 
-<ul>
-    <li *ngFor="let t of shapeTypes;let id=index">
-        {{id}} Shape {{t.typeName}}
-    </li>
+<form *ngFor="let sh of shapes;let id=index" class="main-form">
 
-</ul>
+    <div class="form-header">
+        <img src="../images/shapes.svg" />{{sh.type.typeName}}
+    </div>
+
+    <div class="form-body">
+
+
+
+    </div>
+</form>

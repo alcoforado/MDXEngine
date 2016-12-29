@@ -295,7 +295,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="content\html\templates\painters\" />
-    <Folder Include="content\typescript\components\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="content\bs-config.js" />
@@ -343,11 +342,13 @@
     <Content Include="content\javascript\ui-bootstrap.js" />
     <Content Include="content\typescript\Cad3d\shapes-mngr.component.html" />
     <Content Include="content\typescript\Cad3d\app.component.html" />
+    <Content Include="content\typescript\components\form\number-input.html" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="content\typescript\bin_packing.ts" />
     <TypeScriptCompile Include="content\typescript\Cad3d\cad3d.ts" />
     <TypeScriptCompile Include="content\typescript\Cad3d\shapes-mngr.component.ts" />
+    <TypeScriptCompile Include="content\typescript\components\form\number-input.ts" />
     <TypeScriptCompile Include="content\typescript\CubeFractal\cubefractal.ts" />
     <TypeScriptCompile Include="content\typescript\defines\angular.d.ts" />
     <TypeScriptCompile Include="content\typescript\defines\custom.d.ts" />
