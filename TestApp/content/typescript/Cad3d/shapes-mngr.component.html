@@ -12,6 +12,9 @@
         <div *ngFor="let member of sh.type.members"  class="form-input">
             <span class="span-label">
                 {{member.labelName}}
+                <fieldset [ngSwitch]="member.directiveType">
+                    <number-input *ngSwitchCase="number" [formValue]=""
+                </fieldset>
             </span>
            
         </div>
