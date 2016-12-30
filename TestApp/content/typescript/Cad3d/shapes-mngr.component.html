@@ -7,7 +7,14 @@
     </div>
 
     <div class="form-body">
-
+        
+        
+        <div *ngFor="let member of sh.type.members"  class="form-input">
+            <span class="span-label">
+                {{member.labelName}}
+            </span>
+           
+        </div>
 
 
     </div>
