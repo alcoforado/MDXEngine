@@ -13,7 +13,7 @@
             <span class="span-label">
                 {{member.labelName}}
                 <fieldset [ngSwitch]="member.directiveType">
-                    <number-input *ngSwitchCase="number" [formValue]=""
+                    <number-input *ngSwitchCase="number" [formGroup]="shapeForms[id].createFormComponent(member.fieldName)"></number-input>
                 </fieldset>
             </span>
            

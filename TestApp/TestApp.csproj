@@ -350,6 +350,7 @@
     <TypeScriptCompile Include="content\typescript\Cad3d\cad3d.ts" />
     <TypeScriptCompile Include="content\typescript\Cad3d\shapes-mngr.component.ts" />
     <TypeScriptCompile Include="content\typescript\components\form\dynamic-input.ts" />
+    <TypeScriptCompile Include="content\typescript\components\form\mformmodel.ts" />
     <TypeScriptCompile Include="content\typescript\components\form\number-input.ts" />
     <TypeScriptCompile Include="content\typescript\CubeFractal\cubefractal.ts" />
     <TypeScriptCompile Include="content\typescript\defines\angular.d.ts" />
