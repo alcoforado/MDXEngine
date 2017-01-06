@@ -7,8 +7,9 @@
     "**/.hg": true,
     "**/.DS_Store": true,
     "**/typescript/**/*.js":true,
-    "**/typescript/**/*.map":true
-    
+    "**/typescript/**/*.map":true,
+    "**/angular2/cad3d/src/app/**/*.js":true,
+    "**/angular2/cad3d/src/app/**/*.map":true
   }
 
 }
