@@ -1,15 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-
+import {ShapeUI,ShapeType,ShapesMngrService}  from '../services/shapes-mngr-service';
+import {MFormModel} from '../modules/mform/mformmodel'
 @Component({
+  moduleId: module.id.toString(),
   selector: 'app-shapes-mngr',
-  templateUrl: './shapes-mngr.component.html',
-  styleUrls: ['./shapes-mngr.component.css']
+  templateUrl: './shapes-mngr.component.html'
 })
 export class ShapesMngrComponent implements OnInit {
 
-  constructor() { }
+    shapeTypes: Array<ShapeType> = [];
+    shapes:Array<ShapeUI>=[]
+    shapeForms: Array<MFormModel<ShapeUI>>; 
+    ngOnInit() {
+        this.shapesMngrService.GetTypesAsArray().subscribe(x => this.shapeTypes = x);
 
-  ngOnInit() {
-  }
+
+        this.shapesMngrService.GetShapes().subscribe(x => {
+            this.shapes = x;
+            this.shapeForms = this.shapes.map(sh => new MFormModel(sh.shapeData));
+        });
+
+
+
+    }
+
+    constructor(private shapesMngrService: ShapesMngrService) {
+
+    }
+
+
 
 }

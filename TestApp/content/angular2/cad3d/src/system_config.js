@@ -20,7 +20,7 @@
         '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
         '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
         '@angular/upgrade': 'npm:@angular/upgrade/bundles/upgrade.umd.js',
-        'cad3d':'ts:/cad3d/cad3d.js',
+        'main':'/src/main_system',
         // other libraries
         'rxjs': 'npm:rxjs',
         'rxjs/Observable': 'npm:rxjs/Observable',

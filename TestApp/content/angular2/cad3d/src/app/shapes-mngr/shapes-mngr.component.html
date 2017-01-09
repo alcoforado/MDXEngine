@@ -1,6 +1,6 @@
 Add Shapes
 
-<form *ngFor="let sh of shapes;let id=index" class="main-form">
+<form  class="main-form">
 
     <div class="form-header">
         <img src="../images/shapes.svg" />{{sh.type.typeName}}
@@ -9,7 +9,7 @@ Add Shapes
     <div class="form-body">
         
         
-        <div *ngFor="let member of sh.type.members"  class="form-input">
+        <!--<div *ngFor="let member of sh.type.members"  class="form-input">
             <span class="span-label">
                 {{member.labelName}}
                 <fieldset [ngSwitch]="member.directiveType">
@@ -17,7 +17,7 @@ Add Shapes
                 </fieldset>
             </span>
            
-        </div>
+        </div>-->
 
 
     </div>

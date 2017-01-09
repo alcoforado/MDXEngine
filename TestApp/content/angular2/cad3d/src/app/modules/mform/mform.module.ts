@@ -8,8 +8,8 @@ import { DynamicInputComponent } from './dynamic-input/dynamic-input.component'
 
 @NgModule({
   declarations: [
-      NumberInputComponent,
-      DynamicInputComponent
+      NumberInputComponent
+     
   ],
   imports: [
    ReactiveFormsModule
