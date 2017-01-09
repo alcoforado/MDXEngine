@@ -6,7 +6,7 @@
 
 # dependencies
 /node_modules
-
+/debug
 # IDEs and editors
 /.idea
 .project
@@ -38,3 +38,7 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+
+#Produced Javascript files
+/src/**/*.js
+/src/**/*.js.map

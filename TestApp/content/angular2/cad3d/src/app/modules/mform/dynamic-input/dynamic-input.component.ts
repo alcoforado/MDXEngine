@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-
+import {Component,Input} from '@angular/core';
 @Component({
-  selector: 'app-dynamic-input',
-  templateUrl: './dynamic-input.component.html',
-  styleUrls: ['./dynamic-input.component.css']
+    moduleId: module.id,
+    selector: 'dynamic-input',
+    templateUrl: 'dynmaic-input.component.html',
 })
-export class DynamicInputComponent implements OnInit {
+export class DynamicInputComponent  {
+    @Input() member: IMemberInfo;
+    @Input() value: any;
+}
 
-  constructor() { }
 
-  ngOnInit() {
-  }
-
+export interface IMemberInfo {
+    directiveType: string
 }
