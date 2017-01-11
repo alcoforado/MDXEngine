@@ -59,9 +59,14 @@ export class MFormModel<T> {
                 }
             case "object":
                 {
+                    if (typeof(this._formComponentCash[propertyName])!=="undefined")
+                    {
+                        return this._formComponentCash[propertyName];
+                    }
                     let child = new FormGroup(this.model[propertyName]);
                     this.root.addControl(propertyName, child);
-                    return new MFormComponent(child, propertyName, false);
+                    this._formComponentCash[propertyName] = new MFormComponent(child, propertyName, false);
+                    return this._formComponentCash[propertyName];
                 }
             default:
                 throw `Not valid type ${type} for property ${propertyName}`;
