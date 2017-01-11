@@ -1,24 +1,23 @@
 Add Shapes
-
-<form  class="main-form">
+<div >
+<form  *ngFor="let sh of shapes;let id=index" class="main-form" [formGroup]="shapeForms[id].getRoot()">
 
     <div class="form-header">
         <img src="../images/shapes.svg" />{{sh.type.typeName}}
     </div>
-
     <div class="form-body">
         
-        
-        <!--<div *ngFor="let member of sh.type.members"  class="form-input">
+     
+        <div *ngFor="let member of sh.type.members"  class="form-input">
             <span class="span-label">
-                {{member.labelName}}
-                <fieldset [ngSwitch]="member.directiveType">
-                    <number-input *ngSwitchCase="number" [formGroup]="shapeForms[id].createFormComponent(member.fieldName)"></number-input>
-                </fieldset>
+                {{member.labelName}}: 
+                <span [ngSwitch]="member.directiveType">
+                   <number-input *ngSwitchCase="'int'" [model]="shapeForms[id]" [field]="member.fieldName"  [formComponent]="shapeForms[id].getFormComponent(member.fieldName)"></number-input>
+                </span>
             </span>
-           
-        </div>-->
+        </div>
 
 
     </div>
 </form>
+</div>

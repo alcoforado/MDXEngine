@@ -20,7 +20,7 @@ export class ShapesMngrComponent implements OnInit {
             this.shapeForms = this.shapes.map(sh => new MFormModel(sh.shapeData));
         });
 
-
+        
 
     }
 

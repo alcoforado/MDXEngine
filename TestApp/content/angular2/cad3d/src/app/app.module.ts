@@ -10,11 +10,13 @@ import {ShapesMngrService} from './services/shapes-mngr-service';
 import {ShapesMngrComponent} from './shapes-mngr/shapes-mngr.component';
 import {AppComponent} from './app.component';
 import {MFormModule} from './modules/mform/mform.module'
+
 @NgModule({
     imports: [
         HttpModule,
         BrowserModule,
         ReactiveFormsModule,
+        MFormModule,
         InMemoryWebApiModule.forRoot(InMemMockService)
     ],
     declarations: [
