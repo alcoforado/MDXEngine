@@ -114,7 +114,6 @@
     </Compile>
     <Compile Include="MathUnitTest.cs" />
     <Compile Include="MeshAlghorithmsUnitTests.cs" />
-    <Compile Include="JsonFileStore.cs" />
     <Compile Include="Textures\BinPackingUnitTests.cs" />
     <Compile Include="Textures\UnitTestGDITextRendering.cs" />
     <Compile Include="HLSLProgramUnitTest.cs" />
