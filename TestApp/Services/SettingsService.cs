@@ -10,6 +10,8 @@ namespace TestApp.Services
 {
     public class SettingsService : ISettingsService
     {
+        public string Cad3DMainFile { get; set; }
+
 
         private static Object lck = new Object();
 

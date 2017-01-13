@@ -187,6 +187,7 @@
     <Compile Include="Models\ShapesManagerService\Topologies\ShapeUIBase.cs" />
     <Compile Include="Models\ShapesManagerService\Topologies\Orthomesh2DUI.cs" />
     <Compile Include="Models\Templates\GetTemplatesViewModel.cs" />
+    <Compile Include="Services\AppSettings.cs" />
     <Compile Include="Services\Interfaces\IAppStore.cs" />
     <Compile Include="Services\Interfaces\ISettingsService.cs" />
     <Compile Include="Services\Interfaces\IShapeMngrService.cs" />

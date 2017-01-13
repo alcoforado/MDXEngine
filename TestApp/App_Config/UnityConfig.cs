@@ -16,7 +16,8 @@ namespace TestApp.App_Config
         {
             container.RegisterType<IShapesMngrMapper, ShapesMngrMapper>();
             container.RegisterType<IShapeMngrService, ShapeMngrService>(new ContainerControlledLifetimeManager());
-
+            container.RegisterType<IAppStore, JsonFileStore>();
+            container.RegisterType<AppSettings>();
         }
 
     }
