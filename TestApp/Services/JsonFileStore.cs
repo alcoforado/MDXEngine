@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TestApp.Services.Interfaces;
 
 namespace TestApp.Services
 {
-    public class JsonFileStore : IDisposable
+    public class JsonFileStore : IAppStore
     {
         private JObject _store;
         private JsonSerializer _serializer;
@@ -50,7 +51,7 @@ namespace TestApp.Services
 
             AssertStoreWasOpenned();
             var sectionToken = _store[section];
-            _store[section] = JToken.FromObject(value);
+            _store[section] = JToken.FromObject(value, _serializer);
         }
 
         public T Load<T>(string section)

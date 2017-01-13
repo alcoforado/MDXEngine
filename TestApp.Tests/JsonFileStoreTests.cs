@@ -54,7 +54,8 @@ namespace TestApp.Tests
                 store.Save("Dog2", test2);
             }
             System.Diagnostics.Debug.Write(File.ReadAllText("./test.json"));
-            File.ReadAllText("./test.json").ShouldBeEquivalentTo("{\r\n  \"Dog1\": {\r\n    \"id\": 5,\r\n    \"str\": \"Rex\"\r\n  },\r\n  \"Dog2\": {\r\n    \"id\": 7,\r\n    \"str\": \"Snoopy\"\r\n  }\r\n}");
+            //var str = File.ReadAllText("./test.json");
+            File.ReadAllText("./test.json").ShouldBeEquivalentTo("{\r\n  \"Dog1\": {\r\n    \"$type\": \"TestApp.Tests.JsonStoreTest+DogTest, TestApp.Tests\",\r\n    \"id\": 5,\r\n    \"str\": \"Rex\"\r\n  },\r\n  \"Dog2\": {\r\n    \"$type\": \"TestApp.Tests.JsonStoreTest+DogTest, TestApp.Tests\",\r\n    \"id\": 7,\r\n    \"str\": \"Snoopy\"\r\n  }\r\n}");
         }
 
         [TestMethod]
