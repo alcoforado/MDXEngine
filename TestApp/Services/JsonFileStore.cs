@@ -13,10 +13,15 @@ namespace TestApp.Services
     public class JsonFileStore : IDisposable
     {
         private JObject _store;
+        private JsonSerializer _serializer;
         private string _fileName;
         public JsonFileStore()
         {
             _store = null;
+            _serializer = JsonSerializer.Create(new JsonSerializerSettings()
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                });
         }
 
         public void Open(string fileName)
@@ -52,7 +57,6 @@ namespace TestApp.Services
         {
             AssertStoreWasOpenned();
             var sectionToken = _store[section];
-
             var obj = JsonConvert.DeserializeObject<T>(sectionToken.ToString());
             return obj;
         }
