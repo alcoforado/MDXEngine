@@ -29,6 +29,7 @@ namespace TestApp.Models.ShapesManagerService.Topologies
             _render.DetachFromShader(dx,_shape);
         }
 
+       
 
         public void Redraw(IDxViewControl dx)
         {

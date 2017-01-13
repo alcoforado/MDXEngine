@@ -114,6 +114,7 @@
     </Compile>
     <Compile Include="MathUnitTest.cs" />
     <Compile Include="MeshAlghorithmsUnitTests.cs" />
+    <Compile Include="JsonFileStore.cs" />
     <Compile Include="Textures\BinPackingUnitTests.cs" />
     <Compile Include="Textures\UnitTestGDITextRendering.cs" />
     <Compile Include="HLSLProgramUnitTest.cs" />
@@ -138,6 +139,10 @@
     <ProjectReference Include="..\MUtils\MUtils.csproj">
       <Project>{5baf97c5-781b-41a3-87fb-8a9759fcabfc}</Project>
       <Name>MUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestApp\TestApp.csproj">
+      <Project>{9A102EB9-6B34-4095-8671-E4A91CF18D7C}</Project>
+      <Name>TestApp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

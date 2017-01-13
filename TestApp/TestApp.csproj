@@ -189,6 +189,7 @@
     <Compile Include="Models\Templates\GetTemplatesViewModel.cs" />
     <Compile Include="Services\Interfaces\ISettingsService.cs" />
     <Compile Include="Services\Interfaces\IShapeMngrService.cs" />
+    <Compile Include="Services\JsonFileStore.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Models\Lights.cs" />
     <Compile Include="Actions\HelloWorld.cs" />
