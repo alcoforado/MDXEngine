@@ -1,13 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 html,body {
     height: 100%;
-    color: #2997A9;
+    color: #ffffff;
     font-size: 22px;
     width: 100%;
     margin: -1px;
     padding: 0;
     margin-top: 20px;
-    background: #5F5F5F;
+    background: #252830;
 }
 
 input {
@@ -38,15 +38,15 @@ input[type="color"] {
 
 .title-panel {
  
-padding: 1px;
+/* padding: 1px; */
  
-padding-left: 27px;
+padding-left: 12px;
  
 background: #D28900;
  
-border-top-right-radius: 19px;
+/* border-top-right-radius: 19px; */
  
-border-bottom-right-radius: 19px;
+/* border-bottom-right-radius: 19px; */
  
 border: 1px solid #737373;
  
@@ -58,11 +58,7 @@ animation-name: appearingFromLeft300;
  
 animation-duration: 0.5s;
 }
-.title-panel:hover {
-    transform: scale(1.1);
-    transition:transform 0.1s;
-   
-}
+
 
 
 .main-form
@@ -152,7 +148,12 @@ color: white;
 }
 
 
-
+section {
+    padding: 13px 11px 2px 11px;
+    font-size:32px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #434857;
+}
 
 .group-form {
     margin: 0 auto;
@@ -164,6 +165,7 @@ color: white;
 
 .group-form div {
     margin-bottom:5px;
+  
 }
 
 
@@ -250,19 +252,30 @@ color: white;
     display:inline-block;
     text-align:center;
     border-radius:10px;
-    border: 2px solid #8A8A8A;
-    padding: 5px;
-    background: #6D6969;
+    /* border: 3px solid #d28900; */
+    padding: 5px 5px 5px 1px;
+    background: #d28900;
     color: white;
     cursor: default;
-    box-shadow: 4px 4px 0px rgb(0, 0, 0);
+    box-shadow: 2px 2px 0px rgb(0, 0, 0);
     min-width: 80px;
+    cursor: default;
 }
+.round-button img {
+  width:21px;
+  vertical-align:text-top;
+  padding-top:1px;
+
+}
+
+
+
 
 .round-button:hover
 {
     /* background: #4A4A4A; */
-    border-color: #FBFBFB;
+    
+    background-color:#ffa500
 }
 
 .round-button:active
@@ -270,6 +283,7 @@ color: white;
     position: relative;
     top:2px;
     left:2px;
+    box-shadow:none;
 }
 
 .rectangle {
@@ -295,3 +309,21 @@ color: white;
 
 }
 
+/**
+bootstrap
+
+**/
+.modal
+{
+    color:black;
+    opacity:0;
+/* display: block; */
+}
+
+.show
+{
+    display:block;
+    opacity:1;
+    transition: opacity 2s linear;
+
+}

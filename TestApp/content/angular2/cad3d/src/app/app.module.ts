@@ -16,8 +16,8 @@ import {MFormModule} from './modules/mform/mform.module'
         HttpModule,
         BrowserModule,
         ReactiveFormsModule,
-        MFormModule,
-        InMemoryWebApiModule.forRoot(InMemMockService)
+        MFormModule
+        
     ],
     declarations: [
         AppComponent,

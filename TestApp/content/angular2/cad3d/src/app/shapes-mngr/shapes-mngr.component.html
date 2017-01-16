@@ -1,4 +1,6 @@
-Add Shapes
+<section>Manage Shapes</section> 
+<span class="round-button" (click)="enableAddShapeDialog()"><img src="/src/images/add.svg"/> Add</span> 
+
 <div >
 <form  *ngFor="let sh of shapes;let id=index" class="main-form" [formGroup]="shapeForms[id].getRoot()">
 
@@ -11,8 +13,8 @@ Add Shapes
         <div *ngFor="let member of sh.type.members"  class="form-input">
             <span class="span-label">
                 {{member.labelName}}: 
-                <span [ngSwitch]="member.directiveType">
-                   <number-input *ngSwitchCase="'int'" [model]="shapeForms[id]" [field]="member.fieldName"  [formComponent]="shapeForms[id].getFormComponent(member.fieldName)"></number-input>
+                <span [ngSwitch]="member.directiveType.toLowerCase()">
+                   <number-input *ngSwitchCase="'int32'"   [formComponent]="shapeForms[id].getFormComponent(member.fieldName)"></number-input>
                 </span>
             </span>
         </div>
@@ -21,3 +23,21 @@ Add Shapes
     </div>
 </form>
 </div>
+
+<div  class="modal" [class.show]="showAddShapeDialog"  [class.fade]="!showAddShapeDialog" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="disableAddShapeDialog()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Shape</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="disableAddShapeDialog()">Cancel</button>
+        <button type="button" class="btn btn-primary">Ok</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

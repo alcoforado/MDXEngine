@@ -38,7 +38,7 @@ export class ShapesMngrService {
 
     private extractData<T>(res: Response): T {
         let body = res.json();
-        return <T>(body.data || {});
+        return <T>(body || {});
     }
 
 
@@ -51,7 +51,7 @@ export class ShapesMngrService {
 
     GetTypes(): Observable<{ [typeName: string]: ShapeType }> {
         if (this.Types == null) {
-            this.Types = this.$http.get("api/shapemngr/shapetypes").map(this.extractData)
+            this.Types = this.$http.get("/api/shapemngr/shapetypes").map(this.extractData)
             this.TypesHash = this.Types.map((c: Array<ShapeType>) => {
                     let typeHash: { [typeName: string]: ShapeType } = {};
                     c.forEach((elem) => {
@@ -79,7 +79,7 @@ export class ShapesMngrService {
     GetShapes(): Observable<Array<ShapeUI>> {
 
         return this.GetTypes().mergeMap((types:{ [typeName: string]: ShapeType }) => {
-            return this.$http.get('api/shapesmngr/shapes')
+            return this.$http.get('api/shapemngr/shapes')
                 .map(this.extractData)
                     .map((shapes: Array<ShapeUI>) => {
                         shapes.forEach((elem) => {

@@ -11,9 +11,9 @@ export class ShapesMngrComponent implements OnInit {
     shapeTypes: Array<ShapeType> = [];
     shapes:Array<ShapeUI>=[]
     shapeForms: Array<MFormModel<ShapeUI>>; 
+    showAddShapeDialog:boolean=false;
     ngOnInit() {
         this.shapesMngrService.GetTypesAsArray().subscribe(x => this.shapeTypes = x);
-
 
         this.shapesMngrService.GetShapes().subscribe(x => {
             this.shapes = x;
@@ -24,10 +24,17 @@ export class ShapesMngrComponent implements OnInit {
 
     }
 
-    constructor(private shapesMngrService: ShapesMngrService) {
+    constructor(private shapesMngrService: ShapesMngrService) {}
 
+    disableAddShapeDialog():void
+    {
+        this.showAddShapeDialog=false;
     }
 
-
+    enableAddShapeDialog():void
+    {
+        
+        this.showAddShapeDialog=true;
+    }
 
 }
