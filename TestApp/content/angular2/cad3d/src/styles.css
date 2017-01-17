@@ -310,6 +310,21 @@ section {
 }
 
 /**
+List view component
+**/
+.list-view-item
+{
+    display:inline-block;
+}
+
+.list-view-item img
+{
+    width:50px;
+    vertical-align: text-bottom;
+}
+
+
+/**
 bootstrap
 
 **/

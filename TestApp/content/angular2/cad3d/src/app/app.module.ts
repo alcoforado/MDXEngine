@@ -9,7 +9,8 @@ import {HttpModule} from '@angular/http';
 import {ShapesMngrService} from './services/shapes-mngr-service';
 import {ShapesMngrComponent} from './shapes-mngr/shapes-mngr.component';
 import {AppComponent} from './app.component';
-import {MFormModule} from './modules/mform/mform.module'
+import {MFormModule} from './modules/mform/mform.module';
+import { ListViewComponent } from './list-view/list-view.component'
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import {MFormModule} from './modules/mform/mform.module'
     ],
     declarations: [
         AppComponent,
-        ShapesMngrComponent
+        ShapesMngrComponent,
+        ListViewComponent
     ],
     providers: [
         ShapesMngrService

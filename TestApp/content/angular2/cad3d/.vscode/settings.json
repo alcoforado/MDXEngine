@@ -1,3 +1,22 @@
 {
-    "typescript.check.workspaceVersion": false
+    "typescript.check.workspaceVersion": false,
+"files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "src/app/**/*.js":true,
+    "src/app/**/*.map":true,
+     "src/main_system.js.map":true,
+      "src/main_system.js":true,
+      "src/main.js.map":true,
+      "src/main.js":true,
+      "src/test.js.map":true,
+      "src/test.js":true,
+      "src/polyfill.js.map":true,
+      "src/polyfill.js":true
+  }
 }
+
+
+
