@@ -5,24 +5,26 @@
 <form  *ngFor="let sh of shapes;let id=index" class="main-form" [formGroup]="shapeForms[id].getRoot()">
 
     <div class="form-header">
-        <img src="../images/shapes.svg" />{{sh.type.typeName}}
+        <img src="/src/images/shapes.svg" />{{sh.Type.TypeName}}
     </div>
-    <div class="form-body">
+    <div class="form-body container">
         
      
-        <div *ngFor="let member of sh.type.members"  class="form-input">
-            <span class="span-label">
-                {{member.labelName}}: 
-                <span [ngSwitch]="member.directiveType.toLowerCase()">
-                   <number-input *ngSwitchCase="'int32'"   [formComponent]="shapeForms[id].getFormComponent(member.fieldName)"></number-input>
-                </span>
+        <div *ngFor="let member of sh.Type.Members"  class="form-input row">
+            <span class="span-label col" >
+                {{member.LabelName}}: 
             </span>
+                <span class="col" [ngSwitch]="member.DirectiveType.toLowerCase()">
+                   <number-input *ngSwitchCase="'int32'"   [formComponent]="shapeForms[id].getFormComponent(member.FieldName)"></number-input>
+                </span>
         </div>
+
 
 
     </div>
 </form>
 </div>
+
 
 <div  class="modal" [class.show]="showAddShapeDialog"   tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -32,7 +34,7 @@
         <h4 class="modal-title">Add Shape</h4>
       </div>
       <div class="modal-body">
-        <p>One fine body&hellip;</p>
+        <app-list-view [items]="shapesListView" [defaultImage]="'/src/images/shapes.svg'" (itemSelected)="createShape($event)" ></app-list-view>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" (click)="disableAddShapeDialog()">Cancel</button>

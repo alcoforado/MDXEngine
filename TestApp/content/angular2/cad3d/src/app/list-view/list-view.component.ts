@@ -1,7 +1,7 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
 
 
-export interface IListViewItem
+export class ListViewItem
 {
   imageUrl:string;
   itemId:string;
@@ -15,9 +15,15 @@ export interface IListViewItem
   templateUrl: './list-view.component.html'
 })
 export class ListViewComponent implements OnInit {
-  @Input() items:Array<IListViewItem> 
+  @Input() items:Array<ListViewItem>; 
   @Input() defaultImage:string;
+  @Output() itemSelected:EventEmitter<ListViewItem>=new EventEmitter();
   constructor() { }
+
+  onImageNotFound(event:ErrorEvent)
+  {
+     (<HTMLImageElement> event.srcElement).src=this.defaultImage;
+  }
 
   ngOnInit() {
   }

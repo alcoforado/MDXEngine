@@ -9,6 +9,9 @@ html,body {
     margin-top: 20px;
     background: #252830;
 }
+div {
+    cursor: default;
+}
 
 input {
     background: #3E3E3E;
@@ -65,8 +68,7 @@ animation-duration: 0.5s;
 {
     color: white;
     display:inline-block;
-    width: 353px;
-    
+    /* width: 627px; */
     animation-name: fadein;
     font-size: 15px;
     animation-duration: 1s;
@@ -90,6 +92,11 @@ animation-duration: 0.5s;
     text-align: center;
 }
 
+.form-input {
+    margin-top:5px;
+    margin-bottom:10px;
+}
+
 .form-body {
     border: 6px solid #7F7F84;
     border-width: 1px 6px 6px 6px;
@@ -107,11 +114,10 @@ animation-duration: 0.5s;
 
 
 .form-header img{
-   width: 35px;
-    float: left;
-    margin-left: -19px;
-    margin-top: 10px;
-   
+   width: 44px;
+   margin-left: -15px;
+   padding: 0px 5px 0px 0px;
+   vertical-align: text-bottom;
 }
 
 
@@ -171,7 +177,7 @@ section {
 
 .span-label {
     display:inline-block;
-    width: 69px;
+    width: 100px;
     text-align:left;
 }
 
@@ -315,15 +321,24 @@ List view component
 .list-view-item
 {
     display:inline-block;
+    font-size: 22px;
+}
+
+.list-view-item {
+    padding: 9px 10px 5px 9px;
+    transition: background-color .25s;
+    border-radius:10px;
 }
 
 .list-view-item img
 {
-    width:50px;
+    width: 30px;
     vertical-align: text-bottom;
 }
 
-
+.list-view-item:hover {
+    background-color: #e7eaea;
+}
 /**
 bootstrap
 
@@ -337,9 +352,14 @@ bootstrap
    overflow:hidden;
     display:block;
     transition: visibility 0.25s,opacity 0.25s linear;
-    
+   
 }
 
+
+.modal-body
+{
+    padding: 10px 10px 10px 20px;
+}
 .show
 {
    overflow:hidden;

@@ -9,25 +9,25 @@ import { Injectable } from '@angular/core';
 
 export class ShapeType {
     constructor(
-        public typeName: string,
-        public members: Array<ShapeMember>
+        public TypeName: string,
+        public Members: Array<ShapeMember>
     ) { }
 }
 
 export class ShapeUI {
     constructor(
-        public typeName: string,
-        public shapeData: any,
-        public type: ShapeType
+        public TypeName: string,
+        public ShapeData: any,
+        public Type: ShapeType
     ) {
     }
 }
 
 export class ShapeMember {
     constructor(
-        public fieldName: string,
-        public labelName: string,
-        public directiveType: string
+        public FieldName: string,
+        public LabelName: string,
+        public DirectiveType: string
     ) { }
 }
 
@@ -49,13 +49,13 @@ export class ShapesMngrService {
 
 
 
-    GetTypes(): Observable<{ [typeName: string]: ShapeType }> {
+    getTypes(): Observable<{ [typeName: string]: ShapeType }> {
         if (this.Types == null) {
             this.Types = this.$http.get("/api/shapemngr/shapetypes").map(this.extractData)
             this.TypesHash = this.Types.map((c: Array<ShapeType>) => {
                     let typeHash: { [typeName: string]: ShapeType } = {};
                     c.forEach((elem) => {
-                        typeHash[elem.typeName] = elem;
+                        typeHash[elem.TypeName] = elem;
                     })
                     return typeHash;
                 });
@@ -63,33 +63,38 @@ export class ShapesMngrService {
         return this.TypesHash;
     }
 
-    GetTypesAsArray(): Observable<Array<ShapeType>> {
-        this.GetTypes();
+    getTypesAsArray(): Observable<Array<ShapeType>> {
+        this.getTypes();
         return this.Types;
     }
 
-    GetType(name: string): ShapeType {
-        if (typeof (this.GetTypes()[name]) == "undefined")
+    getType(name: string): ShapeType {
+        if (typeof (this.getTypes()[name]) == "undefined")
             throw "Type " + name + " not found";
         else {
             return this.Types[name];
         }
     }
 
-    GetShapes(): Observable<Array<ShapeUI>> {
+    getShapes(): Observable<Array<ShapeUI>> {
 
-        return this.GetTypes().mergeMap((types:{ [typeName: string]: ShapeType }) => {
+        return this.getTypes().mergeMap((types:{ [typeName: string]: ShapeType }) => {
             return this.$http.get('api/shapemngr/shapes')
                 .map(this.extractData)
                     .map((shapes: Array<ShapeUI>) => {
                         shapes.forEach((elem) => {
-                            elem.type = types[elem.typeName];
+                            elem.Type = types[elem.TypeName];
                         });
                         return shapes;
                     });
         });
 
     }
+    createShape(shapeType:string):Observable<ShapeUI>
+    {
+        return this.$http.put(`/api/shapemngr/createshape?shapeTypeId=${shapeType}`,"").map(this.extractData);
+    }
+
     /*
 CreateShape(type: ShapeType): ShapeType {
     return this.$wpf.postSync("shapesmngr/createShape",

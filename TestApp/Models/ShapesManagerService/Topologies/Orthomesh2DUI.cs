@@ -17,6 +17,14 @@ namespace TestApp.Models.ShapesManagerService.Topologies
             return "OrthoMesh2D";
         }
 
+
+        public Orthomesh2DUI ()
+        {
+            NumElemsX = 2;
+            NumElemsY = 2;
+            Dims= new Vector2(1,1);
+        }
+
         protected  override ITopology CreateTopology()
         {
             if (NumElemsX <= 0) 

@@ -15,21 +15,21 @@ export class ShapesMngrComponent implements OnInit {
     showAddShapeDialog:boolean=false;
     shapesListView:Array<ListViewItem>=[];
     ngOnInit() {
-        this.shapesMngrService.GetTypesAsArray().subscribe(x => {
+        this.shapesMngrService.getTypesAsArray().subscribe(x => {
             this.shapeTypes = x;
             this.shapesListView = this.shapeTypes.map(
                 (sh:ShapeType)=> { 
                     let result = new ListViewItem();
-                    result.imageUrl = sh.typeName+".svg",
-                    result.itemLabel=sh.typeName;
-                    result.itemId=sh.typeName;
+                    result.imageUrl = `/src/images/${sh.TypeName}.svg`,
+                    result.itemLabel=sh.TypeName;
+                    result.itemId=sh.TypeName;
                     return result;
                 });
         });
 
-        this.shapesMngrService.GetShapes().subscribe(x => {
-            this.shapes = x;
-            this.shapeForms = this.shapes.map(sh => new MFormModel(sh.shapeData));
+        this.shapesMngrService.getShapes().subscribe(x => {
+            this.shapes = x || [];
+            this.shapeForms = this.shapes.map(sh => new MFormModel(sh.ShapeData));
             
         });
 
@@ -48,6 +48,15 @@ export class ShapesMngrComponent implements OnInit {
     {
         
         this.showAddShapeDialog=true;
+    }
+
+    createShape($event:ListViewItem)
+    {
+        this.shapesMngrService.createShape($event.itemId)
+            .subscribe(x=>this.shapes.push(x));
+        this.disableAddShapeDialog();
+
+
     }
 
 }

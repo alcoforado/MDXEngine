@@ -55,7 +55,7 @@ namespace TestApp.WebApi.Controllers
         {
             return _mngrService.GetShapes().Select(x => new ShapeViewModel()
             {
-                ShapeType = x.Value.GetShapeName(),
+                TypeName = x.Value.GetShapeName(),
                 ShapeData = x.Value
             }).ToList();
         }
@@ -77,14 +77,14 @@ namespace TestApp.WebApi.Controllers
             _mngrService.SetShapeRender(model.ShapeId, render);
         }
 
-        [HttpGet]
+        [HttpPut]
         public ShapeViewModel CreateShape(string shapeTypeId)
         {
             var shape=_mngrService.CreateShape(shapeTypeId);
         
             return new ShapeViewModel()
             {
-                ShapeType = shapeTypeId,
+                TypeName = shapeTypeId,
                 ShapeData = shape
             };
         }

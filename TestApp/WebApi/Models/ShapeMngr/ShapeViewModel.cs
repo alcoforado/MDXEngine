@@ -9,7 +9,7 @@ namespace TestApp.WebApi.Models.ShapeMngr
 {
     public class ShapeViewModel
     {
-        public string ShapeType { get; set; }
+        public string TypeName { get; set; }
         public ShapeUIBase ShapeData { get; set; }
     }
 }
