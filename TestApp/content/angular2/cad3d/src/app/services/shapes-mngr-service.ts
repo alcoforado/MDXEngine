@@ -92,15 +92,17 @@ export class ShapesMngrService {
     }
     createShape(shapeType:string):Observable<ShapeUI>
     {
-        return this.$http.put(`/api/shapemngr/createshape?shapeTypeId=${shapeType}`,"").map(this.extractData);
+        return this.$http.put(`/api/shapemngr/createshape?shapeTypeId=${shapeType}`,"")
+        .map(this.extractData)
+        .mergeMap((sh:ShapeUI)=>
+        { 
+            return this.getTypes()
+            .map(x => {
+                sh.Type=x[sh.TypeName];
+                return sh;
+            })
+        });
     }
-
-    /*
-CreateShape(type: ShapeType): ShapeType {
-    return this.$wpf.postSync("shapesmngr/createShape",
-        {});
-}
-    */
 }
 
 InMemMockService.AddFixture('api_shapesmngr_types', [
