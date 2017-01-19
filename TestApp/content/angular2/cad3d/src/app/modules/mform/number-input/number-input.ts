@@ -3,7 +3,7 @@ import { MFormComponent,MFormModel,IMFormModel } from "./../mformmodel";
 import {FormGroup,FormControl,AbstractControl} from '@angular/forms'
 @Component({
     moduleId: module.id.toString(),
-    selector: 'number-input',
+    selector: 'app-number-input',
     templateUrl: './number-input.component.html',
 })
 export class NumberInputComponent  {

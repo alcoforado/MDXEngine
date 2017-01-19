@@ -15,8 +15,12 @@
                 {{member.LabelName}}: 
             </span>
                 <span class="col" [ngSwitch]="member.DirectiveType.toLowerCase()">
-                   <number-input *ngSwitchCase="'int32'"   [formComponent]="shapeForms[id].getFormComponent(member.FieldName)"></number-input>
+                   <app-number-input *ngSwitchCase="'int'"   [formComponent]="shapeForms[id].getFormComponent(member.FieldName)"></app-number-input>
+                   <app-number-input *ngSwitchCase="'float'"   [formComponent]="shapeForms[id].getFormComponent(member.FieldName)"></app-number-input>
+                   <app-text-input *ngSwitchCase="'string'"   [formComponent]="shapeForms[id].getFormComponent(member.FieldName)"></app-text-input>
+                   
                 </span>
+                
         </div>
 
 

@@ -8,8 +8,17 @@ using TestApp.Models.ShapesManagerService;
 namespace TestApp.Mappers
 {
     class ShapesMngrMapper : IShapesMngrMapper
-    { 
-   
+    {
+        private Dictionary<string, string> typeMapping = new Dictionary<string,string>()
+        {
+            {"System.Single", "float"},
+            {"System.Int32","int" },
+            {"System.String","string" }
+        };
+            
+
+
+
         public string GetLabelNameFromFieldName(string fieldName)
         {
 
@@ -54,7 +63,11 @@ namespace TestApp.Mappers
 
         public string MapTypeWithJavascriptRender(Type propertyType)
         {
-            return propertyType.Name;
+            if (typeMapping.ContainsKey(propertyType.FullName))
+                return typeMapping[propertyType.FullName];
+            else
+                return propertyType.Name;
+            
         }
 
       

@@ -22,16 +22,18 @@ namespace TestApp.Models.ShapesManagerService.Topologies
         {
             NumElemsX = 2;
             NumElemsY = 2;
-            Dims= new Vector2(1,1);
+            Width = 1;
+            Length = 1;
         }
 
         protected  override ITopology CreateTopology()
         {
+            var Dims = new Vector2(Width,Length);
             if (NumElemsX <= 0) 
                 throw new Exception("Number of elements in X must be greater than 0");
             if (NumElemsY <= 0)
                 throw new Exception("Number of elements in Y must be greater than 0");
-            if (Dims.X <= 0f || Dims.Y <= 0f)
+            if (Length <= 0f || Width <= 0f)
                 throw new Exception("Dimensions must be positive");
             Vector2 O = new Vector2(0,0) - Dims*0.5f;
             Vector2 P = new Vector2(0,0) + Dims*0.5f;
@@ -41,6 +43,7 @@ namespace TestApp.Models.ShapesManagerService.Topologies
 
         public int NumElemsX { get; set; }
         public int NumElemsY { get; set; }
-        public Vector2 Dims { get; set; }
+        public float Length { get; set; }
+        public float Width { get; set; }
     }
 }

@@ -4,18 +4,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {NumberInputComponent} from './number-input/number-input';
 import { DynamicInputComponent } from './dynamic-input/dynamic-input.component'
-
+import {TextInputComponent} from './text-input/text-input.component'
 
 @NgModule({
   declarations: [
-      NumberInputComponent
-     
+      NumberInputComponent,
+      TextInputComponent
   ],
   imports: [
    ReactiveFormsModule
   ],
   exports: [
-    NumberInputComponent
+    NumberInputComponent,
+    TextInputComponent
   ],
   providers: []
 })
