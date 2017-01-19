@@ -45,7 +45,7 @@ namespace TestApp.WebApi.Controllers
         }
 
         [HttpGet]
-        public List<UIType> PainterTypes()
+        public List<UIType> RenderTypes()
         {
             return _mngrService.GetRenderTypes().Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
         }

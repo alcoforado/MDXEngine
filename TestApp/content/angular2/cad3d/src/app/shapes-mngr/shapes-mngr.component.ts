@@ -9,15 +9,16 @@ import {ListViewItem} from '../list-view/list-view.component';
 })
 export class ShapesMngrComponent implements OnInit {
 
-    UITypes: Array<UIType> = [];
+    ShapeTypes: Array<UIType> = [];
+    RenderTypes: Array<UIType> = [];
     shapes:Array<ShapeUI>=[]
     shapeForms: Array<MFormModel<ShapeUI>>; 
     showAddShapeDialog:boolean=false;
     shapesListView:Array<ListViewItem>=[];
     ngOnInit() {
         this.shapesMngrService.getTypesAsArray().subscribe(x => {
-            this.UITypes = x;
-            this.shapesListView = this.UITypes.map(
+            this.ShapeTypes = x;
+            this.shapesListView = this.ShapeTypes.map(
                 (sh:UIType)=> { 
                     let result = new ListViewItem();
                     result.imageUrl = `/src/images/${sh.TypeName}.svg`,
@@ -32,7 +33,7 @@ export class ShapesMngrComponent implements OnInit {
             this.shapeForms = this.shapes.map(sh => new MFormModel(sh.ShapeData));
             
         });
-
+        this.shapesMngrService.getRenderTypes().subscribe(x=>{this.RenderTypes=x})
        
 
     }
