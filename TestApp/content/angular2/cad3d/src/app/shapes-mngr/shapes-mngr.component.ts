@@ -53,7 +53,10 @@ export class ShapesMngrComponent implements OnInit {
     createShape($event:ListViewItem)
     {
         this.shapesMngrService.createShape($event.itemId)
-            .subscribe(x=>this.shapes.push(x));
+            .subscribe(x=>{
+                this.shapes.push(x)
+                this.shapeForms = this.shapes.map(sh => new MFormModel(sh.ShapeData));
+            });
         this.disableAddShapeDialog();
 
 
