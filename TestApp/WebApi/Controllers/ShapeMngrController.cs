@@ -44,7 +44,8 @@ namespace TestApp.WebApi.Controllers
             return _mngrService.GetShapeTypes().Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
         }
 
-        public List<UIType> GetPainterTypes()
+        [HttpGet]
+        public List<UIType> PainterTypes()
         {
             return _mngrService.GetRenderTypes().Select(pair => _mapper.ToUITypeDto(pair.Key, pair.Value)).ToList();
         }
@@ -85,7 +86,9 @@ namespace TestApp.WebApi.Controllers
             return new ShapeViewModel()
             {
                 TypeName = shapeTypeId,
-                ShapeData = shape
+                ShapeData = shape,
+                RenderData = shape.Render,
+                RenderType = shape.Render.GetType().Name
             };
         }
 

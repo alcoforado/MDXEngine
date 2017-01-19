@@ -13,6 +13,7 @@ namespace TestApp.Models.ShapesManagerService.Topologies
         private IShape _shape;
         internal string PainterType() {return _render.GetType().Name; }
         protected abstract ITopology CreateTopology();
+        internal RenderBase Render { get; set; }
 
         public string Id { get; set; }
         public void SetRender(IDxViewControl dx, RenderBase render)
