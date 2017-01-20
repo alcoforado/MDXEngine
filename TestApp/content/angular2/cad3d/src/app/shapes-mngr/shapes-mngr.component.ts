@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ShapeUI,UIType,ShapesMngrService}  from '../services/shapes-mngr-service';
 import {MFormModel} from '../modules/mform/mformmodel';
 import {ListViewItem} from '../list-view/list-view.component';
+import {Observable} from 'rxjs/Observable'
 @Component({
   moduleId: module.id.toString(),
   selector: 'app-shapes-mngr',
@@ -10,7 +11,7 @@ import {ListViewItem} from '../list-view/list-view.component';
 export class ShapesMngrComponent implements OnInit {
 
     ShapeTypes: Array<UIType> = [];
-    RenderTypes: Array<UIType> = [];
+    RenderTypes: Observable<Array<UIType>> = null;
     shapes:Array<ShapeUI>=[]
     shapeForms: Array<MFormModel<ShapeUI>>; 
     showAddShapeDialog:boolean=false;
@@ -31,9 +32,8 @@ export class ShapesMngrComponent implements OnInit {
         this.shapesMngrService.getShapes().subscribe(x => {
             this.shapes = x || [];
             this.shapeForms = this.shapes.map(sh => new MFormModel(sh.ShapeData));
-            
         });
-        this.shapesMngrService.getRenderTypes().subscribe(x=>{this.RenderTypes=x})
+        this.RenderTypes = this.shapesMngrService.getRenderTypes();
        
 
     }

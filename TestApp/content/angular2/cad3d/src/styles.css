@@ -13,10 +13,16 @@ div {
     cursor: default;
 }
 
-input {
+input,select {
     background: #3E3E3E;
     border-color: #565555;
 }
+option:hover {
+    background: #e7eaea
+}
+
+
+
 
 input[type="color"] {
     width: 52px;

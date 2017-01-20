@@ -4,19 +4,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {NumberInputComponent} from './number-input/number-input';
 import { DynamicInputComponent } from './dynamic-input/dynamic-input.component'
-import {TextInputComponent} from './text-input/text-input.component'
+import {TextInputComponent} from './text-input/text-input.component';
+import { DropBoxComponent } from './drop-box/drop-box.component'
 
 @NgModule({
   declarations: [
       NumberInputComponent,
-      TextInputComponent
+      TextInputComponent,
+      DropBoxComponent
   ],
   imports: [
    ReactiveFormsModule
   ],
   exports: [
     NumberInputComponent,
-    TextInputComponent
+    TextInputComponent,
+    DropBoxComponent
   ],
   providers: []
 })
