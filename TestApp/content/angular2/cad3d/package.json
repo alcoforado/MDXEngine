@@ -5,16 +5,20 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "tsc": "tsc --version && tsc --project ./src/tsconfig.debug.json&& tsc  --project ./src/tsconfig.debug.json -w",
+    "watch-css": "catw ./src/less/*.less -v -o ./src/styles.css",
+    "tsc": "tsc --version && tsc --project ./src/tsconfig.debug.json && concurrently \"tsc  --project ./src/tsconfig.debug.json -w\" \"watch-less -e .css -r ./src/ -d ./src\"",
     "lite": "lite-server",
     "start": "ng serve",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
+    "less-test": "watch-less -e .css -r ./src/ -d ./src",
+    "less-test2": "less-watch-compiler ./src/less ./src --source-map",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor"
   },
   "private": true,
   "dependencies": {
+    "jquery": "^2.2.0",
     "@angular/common": "^2.3.1",
     "@angular/compiler": "^2.3.1",
     "@angular/core": "^2.3.1",
@@ -35,6 +39,7 @@
     "@angular/compiler-cli": "^2.3.1",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.42",
+    "@types/jquery": "^2.0.39",
     "angular-cli": "1.0.0-beta.24",
     "codelyzer": "~2.0.0-beta.1",
     "jasmine-core": "2.5.2",
@@ -52,7 +57,11 @@
      "canonical-path": "0.0.2",
     "http-server": "^0.9.0",
     "http-proxy-middleware": "0.17.2",
-    "concurrently": "^3.1.0"
-
+    "concurrently": "^3.1.0",
+    "catw":"1.0.1",
+    "less":"2.7.2",
+    "watch-less": "0.0.4",
+    "less-watch-compiler": "1.4.2",
+    "gulp": "3.9.1"
   }
 }

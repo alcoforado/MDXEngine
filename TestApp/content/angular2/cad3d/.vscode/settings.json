@@ -15,7 +15,8 @@
       "src/test.js":true,
       "src/polyfill.js.map":true,
       "src/polyfill.js":true
-  }
+  },
+  "terminal.integrated.shell.windows":"C:\\Windows\\sysnative\\WindowsPowerShell\\v1.0\\powershell.exe"
 }
 
 

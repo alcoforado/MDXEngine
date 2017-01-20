@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import * as $ from 'jquery'
 @Component({
   moduleId: module.id.toString(),
   selector: 'app-drop-box',
@@ -13,3 +13,4 @@ export class DropBoxComponent implements OnInit {
   }
 
 }
+

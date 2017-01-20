@@ -6,7 +6,7 @@ var apiProxy = proxy('/api', {
 });
 
 module.exports = {
-    files: ["./**/*.{html,htm,js}"],
+    files: ["./**/*.{html,htm,js,less}"],
     browser: "chrome",
     server: {
         middleware: {
