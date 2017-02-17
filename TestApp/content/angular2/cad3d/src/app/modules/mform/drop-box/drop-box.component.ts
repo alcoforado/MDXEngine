@@ -11,6 +11,11 @@ export class DropBoxComponent implements OnInit {
 
   ngOnInit() {
   }
+  clicked()
+  {
+    alert("hello")
 
+  }
 }
+
 
