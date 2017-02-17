@@ -6,15 +6,16 @@ import * as $ from 'jquery'
   templateUrl: './drop-box.component.html',
 })
 export class DropBoxComponent implements OnInit {
-
+  isExpanded: boolean = false;
+  
   constructor() { }
 
   ngOnInit() {
   }
+  
   clicked()
   {
-    alert("hello")
-
+    this.isExpanded = !this.isExpanded;
   }
 }
 

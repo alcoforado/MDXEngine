@@ -4,11 +4,15 @@
 @panel-border-color: #434a57;
 @panel-color: @background;
 @highlight-color: #D28900;
+@font-color: white;
+@font-size: 15px;
+@font-size-big: 22px;
+@highlight-line-color:  #1385e5;
 /* You can add global styles to this file, and also import other style files */
 html,body {
     height: 70%;
-    color: #ffffff;
-    font-size: 22px;
+    color: @font-color;
+    font-size: @font-size;
     width: 100%;
     margin: -1px;
     padding: 0;
@@ -118,8 +122,7 @@ animation-duration: 0.5s;
     color: white;
     border-top-left-radius: 27px;
     border-top-right-radius: 27px;
-    background: #2E2E35;
-    background-color: @highlight-color;
+    background: linear-gradient(to bottom, lighten(@highlight-color,10%),@highlight-color);
 
      img{
          width: 44px;
@@ -289,18 +292,19 @@ section {
     border-radius:10px;
     /* border: 3px solid #d28900; */
     padding: 5px 5px 5px 1px;
-    background: @highlight-color;
+    background: linear-gradient(to bottom, lighten(@highlight-color,30%),@highlight-color);
     color: white;
     cursor: default;
     box-shadow: 2px 2px 0px rgb(0, 0, 0);
     min-width: 80px;
     cursor: default;
+    font-size: @font-size-big;
 }
 .round-button img {
   width:21px;
   vertical-align:text-top;
   padding-top:1px;
-
+  
 }
 
 
@@ -399,6 +403,7 @@ bootstrap
 
 
 
+
 @keyframes example {
     from {opacity: 0;}
     to {opacity: 1;}
@@ -413,17 +418,21 @@ bootstrap
   position: relative;
   display: block;
   overflow: hidden;
-  padding: 3px 0 3px 8px;
+  padding: 3px 0 3px 0px;
   border: 1px solid #000;
   border-radius: 5px;
-  background-color: @focus-input-background;
+  background-color: @background;
   background-clip: padding-box;
   box-shadow: 0 0 3px white inset, 0 1px 1px rgba(0, 0, 0, 0.1);
-  color: #444;
   text-decoration: none;
   white-space: nowrap;
   
-    div {
+.selected-option {
+    padding:0px 0px 0px 8px;
+
+}
+
+    .expand-icon {
         position: absolute;
         top: 0;
         right: 0;
@@ -439,5 +448,39 @@ bootstrap
         }
     }
 
+    .chosen-drop 
+    {
+        display:none;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+       padding-left:8px;
+        
+    }
+    li:hover {
+    
+        
+        background:linear-gradient(to bottom, lighten(@highlight-line-color,10%),@highlight-line-color);
+        //  #007be8;
+        
+    }
+
+
+
 }
 
+.chosen-container.expanded {
+     .chosen-drop 
+    {
+        display:block;
+    }
+    .selected-option {
+        background: linear-gradient(to bottom, lighten(@focus-input-background,10%),@focus-input-background);
+        padding:0px 0px 3px 8px;
+        margin: 0 1px 0 1px;
+    }
+    
+}
