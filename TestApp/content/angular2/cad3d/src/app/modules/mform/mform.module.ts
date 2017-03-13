@@ -11,7 +11,8 @@ import { DropBoxComponent } from './drop-box/drop-box.component'
   declarations: [
       NumberInputComponent,
       TextInputComponent,
-      DropBoxComponent
+      DropBoxComponent,
+      BrowserModule
   ],
   imports: [
    ReactiveFormsModule
