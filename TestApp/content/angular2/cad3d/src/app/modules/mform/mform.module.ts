@@ -7,15 +7,17 @@ import { DynamicInputComponent } from './dynamic-input/dynamic-input.component'
 import {TextInputComponent} from './text-input/text-input.component';
 import { DropBoxComponent } from './drop-box/drop-box.component'
 
+
 @NgModule({
   declarations: [
       NumberInputComponent,
       TextInputComponent,
       DropBoxComponent,
-      BrowserModule
+      
   ],
   imports: [
-   ReactiveFormsModule
+   ReactiveFormsModule,
+   BrowserModule
   ],
   exports: [
     NumberInputComponent,
