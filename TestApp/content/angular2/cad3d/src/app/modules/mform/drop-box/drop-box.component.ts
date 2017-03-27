@@ -20,12 +20,23 @@ export class DropBoxComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+     
     if (this.items==null)
     {
+      
       this.items=[{label:"United States"},{label:"Iraq"},{label:"Vietnam"},{label:"North Korea"}];
     }
   }
-  
+
+ item_clicked(evt:MouseEvent)
+ {
+    let i = evt.srcElement.getAttribute("data-option-array-index");
+    if (i==null || i == "")
+      throw "No array index was found for option";
+    let ii = parseInt(i);
+    this.selectedIndex=ii;    
+ }
+
   clicked()
   {
     this.isExpanded = !this.isExpanded;

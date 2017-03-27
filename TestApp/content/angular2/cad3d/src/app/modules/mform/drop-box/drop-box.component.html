@@ -1,11 +1,11 @@
 <div class="chosen-container" [class.expanded]="isExpanded" (click)="clicked()">
   <div class="selected-option">
-    <span>{{items[selectedIndex].Label}}</span> <div class="expand-icon"><b></b></div>
+    <span>{{items[selectedIndex].label}}</span> <div class="expand-icon"><b></b></div>
   </div>
   <div class="chosen-drop">
     <!--<div class="chosen-search"><input type="text" autocomplete="off" tabindex="2"></div>-->
     <ul class="chosen-results" >
-       <div *ngFor="let item of items;let i=index"  class="active-result result-selected">item.Label</div>
+       <li *ngFor="let item of items;let i=index" [attr.data-option-array-index]='i' class="active-result result-selected">{{item.label}}</li>
     </ul>
    </div>
 </div>

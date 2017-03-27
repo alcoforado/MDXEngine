@@ -415,9 +415,9 @@ bootstrap
 }
 
 .chosen-container {
+    
   position: relative;
   display: block;
-  overflow: hidden;
   padding: 3px 0 3px 0px;
   border: 1px solid #000;
   border-radius: 5px;
@@ -426,7 +426,10 @@ bootstrap
   box-shadow: 0 0 3px white inset, 0 1px 1px rgba(0, 0, 0, 0.1);
   text-decoration: none;
   white-space: nowrap;
-  
+  * {
+      box-sizing:border-box;
+  }
+
 .selected-option {
     padding:0px 0px 0px 8px;
 
@@ -450,7 +453,21 @@ bootstrap
 
     .chosen-drop 
     {
-        display:none;
+    display:none;
+    box-shadow: 0 0 3px white inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 100%;
+    z-index: 101000;
+    width: 100%;
+  border: 1px solid #000;
+  border-radius: 0 0 5px 5px;
+  background-color: @background;
+  background-clip: padding-box;
+  border-top: 0;
+  box-sizing:content-box;
+  margin-left:-1px;
+//   box-shadow: 0 0 3px white inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+
     }
     ul {
         list-style-type: none;
@@ -473,14 +490,18 @@ bootstrap
 }
 
 .chosen-container.expanded {
-     .chosen-drop 
+    border-bottom: 0;
+    border-radius: 5px 5px 0px 0px;
+    background: linear-gradient(to bottom, lighten(@focus-input-background,10%),@focus-input-background);
+    
+
+    .chosen-drop 
     {
         display:block;
     }
     .selected-option {
-        background: linear-gradient(to bottom, lighten(@focus-input-background,10%),@focus-input-background);
         padding:0px 0px 3px 8px;
-        margin: 0 1px 0 1px;
+        margin: 0 0px 0 0px;
     }
     
 }
