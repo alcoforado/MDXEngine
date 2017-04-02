@@ -30,15 +30,11 @@ export class ShapesMngrComponent implements OnInit {
                     return result;
                 });
         });
-
         this.shapesMngrService.getShapes().subscribe(x => {
             this.shapes = x || [];
             this.shapeForms = this.shapes.map(sh => new MFormModel(sh.ShapeData));
         });
-        
         this.RenderTypes = this.shapesMngrService.getRenderTypes();
-        
-
     }
 
     constructor(private shapesMngrService: ShapesMngrService) {}

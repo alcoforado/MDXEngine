@@ -13,7 +13,7 @@ import { DropBoxComponent } from './drop-box/drop-box.component'
       NumberInputComponent,
       TextInputComponent,
       DropBoxComponent,
-      
+      DynamicInputComponent
   ],
   imports: [
    ReactiveFormsModule,
@@ -22,7 +22,8 @@ import { DropBoxComponent } from './drop-box/drop-box.component'
   exports: [
     NumberInputComponent,
     TextInputComponent,
-    DropBoxComponent
+    DropBoxComponent,
+    DynamicInputComponent
   ],
   providers: []
 })
