@@ -10,7 +10,8 @@ import { Injectable } from '@angular/core';
 export class UIType {
     constructor(
         public TypeName: string,
-        public Members: Array<ShapeMember>
+        public Members: Array<ShapeMember>,
+        public TypeLabel: string
     ) { }
 }
 
@@ -117,8 +118,8 @@ export class ShapesMngrService {
 
 
 InMemMockService.AddFixture('api_shapesmngr_types', [
-    new UIType("OrthoMesh", [new ShapeMember("ElemsX", "Elems X", "int"), new ShapeMember("ElemsY", "Elems Y", "int")]),
-    new UIType("OrthoMesh3D", [new ShapeMember("ElemsX", "Elems X", "int"), new ShapeMember("ElemsY", "Elems Y", "int"), new ShapeMember("ElemsZ", "Elems Z", "int")])
+    new UIType("OrthoMesh", [new ShapeMember("ElemsX", "Elems X", "int"), new ShapeMember("ElemsY", "Elems Y", "int")],"Ortho Mesh"),
+    new UIType("OrthoMesh3D", [new ShapeMember("ElemsX", "Elems X", "int"), new ShapeMember("ElemsY", "Elems Y", "int"), new ShapeMember("ElemsZ", "Elems Z", "int")],"Ortho Mesh")
 ]);
 
 InMemMockService.AddFixture('api_shapesmngr_shapes', [

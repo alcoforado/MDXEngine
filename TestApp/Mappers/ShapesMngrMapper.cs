@@ -56,7 +56,8 @@ namespace TestApp.Mappers
             return new UIType()
             {
                 Members = tt,
-                TypeName = name
+                TypeName = name,
+                TypeLabel = this.GetLabelNameFromFieldName(name)
             };
 
         }

@@ -8,7 +8,7 @@
      "**/*.js.map": true,
     "**/*.js": {"when": "$(basename).ts"}
   },
-"terminal.integrated.shell.windows": "C:\\Windows\\sysnative\\WindowsPowerShell\\v1.0\\powershell.exe",
+
 "vsicons.presets.angular": true
 }
 

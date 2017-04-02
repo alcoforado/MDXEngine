@@ -15,18 +15,26 @@ interface IDropBoxItem {
 export class DropBoxComponent implements OnInit {
   isExpanded: boolean = false;
   selectedIndex:number = 0;
-  @Input() items: Array<IDropBoxItem>=null;
-
+  @Input() items: Array<any>=[];
+  @Input() fieldName: string=null;
   constructor() { }
 
   ngOnInit() {
-     
-    if (this.items==null)
+    if (this.isEmpty())
     {
-      
-      this.items=[{label:"United States"},{label:"Iraq"},{label:"Vietnam"},{label:"North Korea"}];
-    }
+      if (this.fieldName ==null)
+      {
+        this.fieldName="label"
+      }
+      this.items=[{}];
+      this.items[0][this.fieldName]=" ";
+    }  
   }
+
+ isEmpty():boolean
+ {
+   return this.items == null || this.items.length == 0;
+ }
 
  item_clicked(evt:MouseEvent)
  {
@@ -39,6 +47,8 @@ export class DropBoxComponent implements OnInit {
 
   clicked()
   {
+    if (this.items == null || this.items.length == 0)
+      return;
     this.isExpanded = !this.isExpanded;
   }
 

@@ -10,6 +10,7 @@ namespace TestApp.Models.ShapesManagerService
    {
        public string TypeName;
        public List<UITypeMember> Members;
+        public string TypeLabel;
    }
 
     public class UITypeMember

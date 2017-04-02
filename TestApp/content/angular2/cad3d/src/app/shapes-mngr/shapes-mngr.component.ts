@@ -12,7 +12,9 @@ export class ShapesMngrComponent implements OnInit {
 
     ShapeTypes: Array<UIType> = [];
     RenderTypes: Observable<Array<UIType>> = null;
-    shapes:Array<ShapeUI>=[]
+
+    shapes:Array<ShapeUI>=[];
+
     shapeForms: Array<MFormModel<ShapeUI>>; 
     showAddShapeDialog:boolean=false;
     shapesListView:Array<ListViewItem>=[];
@@ -33,8 +35,9 @@ export class ShapesMngrComponent implements OnInit {
             this.shapes = x || [];
             this.shapeForms = this.shapes.map(sh => new MFormModel(sh.ShapeData));
         });
+        
         this.RenderTypes = this.shapesMngrService.getRenderTypes();
-       
+        
 
     }
 
@@ -59,8 +62,6 @@ export class ShapesMngrComponent implements OnInit {
                 this.shapeForms.push(new MFormModel(x.ShapeData));
             });
         this.disableAddShapeDialog();
-
-
     }
 
 }
