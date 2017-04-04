@@ -1,38 +1,46 @@
-<section>Manage Shapes</section> 
-<span class="round-button" (click)="enableAddShapeDialog()"><img src="/src/images/add.svg"/> Add</span> 
-
-<div >
-<form  *ngFor="let sh of shapes;let id=index" class="main-form" [formGroup]="shapeForms[id].getRoot()">
+<section>Manage Shapes</section>
+<processing-animation></processing-animation>
+<span class="round-button" (click)="enableAddShapeDialog()"><img src="/src/images/add.svg"/> Add</span>
+<div>
+  <form *ngFor="let sh of shapes;let id=index" class="main-form" [formGroup]="shapeForms[id].getRoot()">
 
     <div class="form-header">
-        <img src="/src/images/shapes.svg" />{{sh.Type.TypeName}}
+      <img src="/src/images/shapes.svg" />{{sh.Type.TypeName}}
     </div>
     <div class="form-body container">
-        
-     
-        <div *ngFor="let member of sh.Type.Members"  class="form-input row">
-            <span class="span-label col" >
+
+
+      <div *ngFor="let member of sh.Type.Members" class="form-input row">
+        <span class="span-label col">
                 {{member.LabelName}}: 
             </span>
-                <span class="col" [ngSwitch]="member.DirectiveType.toLowerCase()">
-                   <app-number-input *ngSwitchCase="'int'"   [formComponent]="shapeForms[id].getFormComponent(member.FieldName)"></app-number-input>
+        <span class="col">
+                   <dynamic-input directiveType="{{member.DirectiveType}}" [mformComponent]="shapeForms[id].getFormComponent(member.FieldName)"></dynamic-input>
+                  </span>
+        <!--<app-number-input *ngSwitchCase="'int'"   [formComponent]="shapeForms[id].getFormComponent(member.FieldName)"></app-number-input>
                    <app-number-input *ngSwitchCase="'float'"   [formComponent]="shapeForms[id].getFormComponent(member.FieldName)"></app-number-input>
                    <app-text-input *ngSwitchCase="'string'"   [formComponent]="shapeForms[id].getFormComponent(member.FieldName)"></app-text-input>
+<<<<<<< HEAD
                 </span>
                 
         </div>
+=======
+                </span>-->
 
-     <app-drop-box></app-drop-box>
-     
+      </div>
+
+      <app-drop-box [items]="RenderTypes | async" fieldName="TypeLabel"></app-drop-box>
+>>>>>>> prototype
+
 
 
     </div>
-</form>
+  </form>
 </div>
 
 
 
-<div  class="modal" [class.show]="showAddShapeDialog"   tabindex="-1" role="dialog">
+<div class="modal" [class.show]="showAddShapeDialog" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -40,12 +48,15 @@
         <h4 class="modal-title">Add Shape</h4>
       </div>
       <div class="modal-body">
-        <app-list-view [items]="shapesListView" [defaultImage]="'/src/images/shapes.svg'" (itemSelected)="createShape($event)" ></app-list-view>
+        <app-list-view [items]="shapesListView" [defaultImage]="'/src/images/shapes.svg'" (itemSelected)="createShape($event)"></app-list-view>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" (click)="disableAddShapeDialog()">Cancel</button>
         <button type="button" class="btn btn-primary">Ok</button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
