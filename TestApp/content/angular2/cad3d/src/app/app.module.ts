@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
-import {ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms'
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserModule } from '@angular/platform-browser';
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import {InMemMockService} from './services/mocks'
-import {HttpModule} from '@angular/http';
-import {ShapesMngrService} from './services/shapes-mngr-service';
-import {ShapesMngrComponent} from './shapes-mngr/shapes-mngr.component';
-import {AppComponent} from './app.component';
-import {MFormModule} from './modules/mform/mform.module';
+import { InMemMockService } from './services/mocks'
+import { HttpModule } from '@angular/http';
+import { ShapesMngrService } from './services/shapes-mngr-service';
+import { ShapesMngrComponent } from './shapes-mngr/shapes-mngr.component';
+import { AppComponent } from './app.component';
+import { MFormModule } from './modules/mform/mform.module';
 import { ListViewComponent } from './list-view/list-view.component'
-
+import { ProcessingAnimation } from './processing-animation/processing-animation.component'
 
 @NgModule({
     imports: [
@@ -23,7 +23,8 @@ import { ListViewComponent } from './list-view/list-view.component'
     declarations: [
         AppComponent,
         ShapesMngrComponent,
-        ListViewComponent
+        ListViewComponent,
+        ProcessingAnimation
     ],
     providers: [
         ShapesMngrService

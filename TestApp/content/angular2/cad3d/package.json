@@ -5,7 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "watch-css": "less-watch-compiler ./src/less ./src --source-map",
+    "watch-css": "less-watch-compiler ./src/less ./src styles.less",
     "tsc": "tsc --version && tsc --project ./src/tsconfig.debug.json && concurrently \"tsc  --project ./src/tsconfig.debug.json -w\" \"npm run watch-css\"",
     "lite": "lite-server",
     "start": "ng serve",
@@ -36,7 +36,7 @@
     "bootstrap": "^3.3.7"
   },
   "devDependencies": {
-"@types/jasmine": "^2.5.36",
+    "@types/jasmine": "^2.5.36",
     "@types/node": "^6.0.46",
     "codelyzer": "^2.0.0-beta.4",
     "concurrently": "^3.1.0",
@@ -57,9 +57,8 @@
     "canonical-path": "0.0.2",
     "http-server": "^0.9.0",
     "http-proxy-middleware": "0.17.2",
-    "less":"2.7.2",
+    "less": "2.7.2",
     "watch-less": "0.0.4",
     "less-watch-compiler": "1.4.2"
-   
   }
 }
