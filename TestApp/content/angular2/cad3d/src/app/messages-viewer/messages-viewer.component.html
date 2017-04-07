@@ -1,0 +1,139 @@
+<div class="message-viewer">
+
+   <collapse-panel css="centerfy" [show]="!messagesReceived">
+      <processing-animation>loading messages</processing-animation>
+    </collapse-panel>
+  <div class="container">
+    
+   
+    <div *ngFor="let msg of messages;let id=index">
+      <div *ngIf="!msg.defectedMessage">
+        <div class="panel panel-default panel-success">
+          <div class="panel-heading">
+            <!--<span class="field-name bf">Id:</span><span class="field-value">{{msg.id}}</span>  -->
+            <span class="field-name bf">From:</span><span class="field-value">{{msg.data.sourceSystemName}}</span>
+            <span class="field-name bf">Operation:</span><span class="field-value">{{msg.data.operationTypeName}}</span>
+            <span class="field-name bf">Transaction:</span><span class="field-value">{{msg.data.transactionId}}</span>
+            <span class="field-name bf">TimeStamp (Utc):</span><span class="field-value">{{msg.data.eventTimestampUTC}}</span>
+          </div>
+          <div class="panel-body">
+            <span class="row">
+              <span class="col-sm-7">
+                <div class="form-col-1">
+                <div class="line"><span class="col-label bf">Email:</span><span class="col-info">{{msg.data.contactRecord.email}}</span></div>
+                <div class="line"><span class="col-label bf">First Name:</span><span class="col-info">{{msg.data.contactRecord.firstName}}</span></div>
+                <div class="line"><span class="col-label bf">Last Name:</span><span class="col-info">{{msg.data.contactRecord.lastName}}</span></div>
+          <!--<span class="row"><span class="col-sm-3 bf">Nickname:</span><span class="col-info">{{msg.data.contactRecord.nickName}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Middle Name:</span><span class="col-sm-9">{{msg.data.contactRecord.middleName}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Full Name:</span><span class="col-sm-9">{{msg.data.contactRecord.fullName}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Prefix:</span><span class="col-sm-9">{{msg.data.contactRecord.prefix}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Suffix:</span><span class="col-sm-9">{{msg.data.contactRecord.suffix}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Job Title:</span><span class="col-sm-9">{{msg.data.contactRecord.jobTitle}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Language:</span><span class="col-sm-9">{{msg.data.contactRecord.preferredLanguage}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Mobile Phone:</span><span class="col-sm-9">{{msg.data.contactRecord.mobilePhone}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Primary Phone:</span><span class="col-sm-9">{{msg.data.contactRecord.primaryPhone}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Employer Name:</span><span class="col-sm-9">{{msg.data.contactRecord.employerName}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Login:</span><span class="col-sm-9">{{msg.data.contactRecord.login}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Address:</span><span class="col-sm-9">{{msg.data.contactRecord.address}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Address 2:</span><span class="col-sm-9">{{msg.data.contactRecord.addressLine2}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Address 3:</span><span class="col-sm-9">{{msg.data.contactRecord.addressLine3}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">City:</span><span class="col-sm-9">{{msg.data.contactRecord.city}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Postal Code:</span><span class="col-sm-9">{{msg.data.contactRecord.postalCode}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Country:</span><span class="col-sm-9">{{msg.data.contactRecord.country}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">State:</span><span class="col-sm-9">{{msg.data.contactRecord.stateOrProvidence}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Member Number:</span><span class="col-sm-9">{{msg.data.contactRecord.memberNumber}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Is Member:</span><span class="col-sm-9">{{msg.data.contactRecord.isMember}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Sec Email:</span><span class="col-sm-9">{{msg.data.contactRecord.secondaryEmail}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Designation:</span><span class="col-sm-9">{{msg.data.contactRecord.isc2Designations}}</span></span>
+                <span class="row"><span class="col-sm-3 bf">Contact Id:</span><span class="col-sm-9">{{msg.data.contactRecord.contactId}}</span></span>-->
+        </div>
+        </span>
+        <span class="col-sm-3">
+           <div class="form-col-2">
+            <div class="line"  *ngFor="let sub of subscriptions">
+              <span class="col-label bf">{{sub}}:</span>
+              <span class="col-info" [ngClass]="{'success-text':isMessageDelivered(msg,sub) == 'Success', 'failure-text':isMessageDelivered(msg,sub) != 'Success' }">{{isMessageDelivered(msg,sub)}}</span>
+            </div>
+           </div>
+        </span>
+        <span class="col-sm-2">
+            <div class="form-col-2">
+              <div class="line">
+                <button type="button" class="btn btn-success" (click)="showJsonEditor=true">Send/Edit Json</button>
+              </div>
+              <div class="line">
+                <button type="button" class="btn btn-danger">Delete</button>
+              </div>
+            </div>                
+        </span>
+        </span>
+        <div class="details" [ngClass]="{collapsed:!showDetails[id],expanded:showDetails[id]}">
+         <span class="row">
+          <span class="col-sm-6">
+            <div class="form-col-1">
+                <div class="row"><span class="col-label bf">Nickname:</span><span class="col-info">{{msg.data.contactRecord.nickName}}</span></div>
+                <div class="row"><span class="col-label bf">Middle Name:</span><span class="col-info">{{msg.data.contactRecord.middleName}}</span></div>
+                <div class="row"><span class="col-label bf">Full Name:</span><span class="col-info">{{msg.data.contactRecord.fullName}}</span></div>
+                <div class="row"><span class="col-label bf">Prefix:</span><span class="col-info">{{msg.data.contactRecord.prefix}}</span></div>
+                <div class="row"><span class="col-label bf">Suffix:</span><span class="col-info">{{msg.data.contactRecord.suffix}}</span></div>
+                <div class="row"><span class="col-label bf">Job Title:</span><span class="col-info">{{msg.data.contactRecord.jobTitle}}</span></div>
+                <div class="row"><span class="col-label bf">Language:</span><span class="col-info">{{msg.data.contactRecord.preferredLanguage}}</span></div>
+                <div class="row"><span class="col-label bf">Mobile Phone:</span><span class="col-info">{{msg.data.contactRecord.mobilePhone}}</span></div>
+                <div class="row"><span class="col-label bf">Primary Phone:</span><span class="col-info">{{msg.data.contactRecord.primaryPhone}}</span></div>
+                <div class="row"><span class="col-label bf">Employer Name:</span><span class="col-info">{{msg.data.contactRecord.employerName}}</span></div>
+                <div class="row"><span class="col-label bf">Login:</span><span class="col-info">{{msg.data.contactRecord.login}}</span></div>
+            </div>
+          </span>
+          <span class="col-sm-6">
+            <div class="form-col-1">
+                <div class="row"><span class="col-label bf">Address:</span><span class="col-info">{{msg.data.contactRecord.address}}</span></div>
+                <div class="row"><span class="col-label bf">Address 2:</span><span class="col-info">{{msg.data.contactRecord.addressLine2}}</span></div>
+                <div class="row"><span class="col-label bf">Address 3:</span><span class="col-info">{{msg.data.contactRecord.addressLine3}}</span></div>
+                <div class="row"><span class="col-label bf">City:</span><span class="col-info">{{msg.data.contactRecord.city}}</span></div>
+                <div class="row"><span class="col-label bf">Postal Code:</span><span class="col-info">{{msg.data.contactRecord.postalCode}}</span></div>
+                <div class="row"><span class="col-label bf">Country:</span><span class="col-info">{{msg.data.contactRecord.country}}</span></div>
+                <div class="row"><span class="col-label bf">State:</span><span class="col-info">{{msg.data.contactRecord.stateOrProvidence}}</span></div>
+                <div class="row"><span class="col-label bf">Member Number:</span><span class="col-info">{{msg.data.contactRecord.memberNumber}}</span></div>
+                <div class="row"><span class="col-label bf">Is Member:</span><span class="col-info">{{msg.data.contactRecord.isMember}}</span></div>
+                <div class="row"><span class="col-label bf">Sec Email:</span><span class="col-info">{{msg.data.contactRecord.secondaryEmail}}</span></div>
+                <div class="row"><span class="col-label bf">Designation:</span><span class="col-info">{{msg.data.contactRecord.isc2Designations}}</span></div>
+                <div class="row"><span class="col-label bf">Contact Id:</span><span class="col-info">{{msg.data.contactRecord.contactId}}</span></div>
+            </div>
+          </span>
+        </span>
+        </div>
+        <div class="button-nav">
+                <button type="button" class="btn btn-primary" (click)="showDetails[id]=!showDetails[id]">{{showDetails[id] ? "Hide Details" : "Show Details"}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div  class="modal" [class.show]="showJsonEditor"   tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="closeJsonEditor()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Message</h4>
+      </div>
+      <div class="modal-body">
+        <app-json-editor></app-json-editor>
+        <collapse-panel [show]="sendingMessages">
+        <div class="centerfy  padding-top">
+          <processing-animation>sending message</processing-animation>
+        </div>
+        </collapse-panel>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="closeJsonEditor()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="sendMessageJsonEditor()">Send Message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>
