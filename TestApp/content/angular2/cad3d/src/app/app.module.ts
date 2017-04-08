@@ -11,7 +11,9 @@ import { ShapesMngrComponent } from './shapes-mngr/shapes-mngr.component';
 import { AppComponent } from './app.component';
 import { MFormModule } from './modules/mform/mform.module';
 import { ListViewComponent } from './list-view/list-view.component'
-import { ProcessingAnimation } from './processing-animation/processing-animation.component'
+import { ProcessingAnimationComponent } from './processing-animation/processing-animation.component'
+
+
 
 @NgModule({
     imports: [
@@ -19,12 +21,13 @@ import { ProcessingAnimation } from './processing-animation/processing-animation
         BrowserModule,
         ReactiveFormsModule,
         MFormModule
+
     ],
     declarations: [
         AppComponent,
         ShapesMngrComponent,
         ListViewComponent,
-        ProcessingAnimation
+        ProcessingAnimationComponent
     ],
     providers: [
         ShapesMngrService
