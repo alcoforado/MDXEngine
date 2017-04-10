@@ -1,79 +1,67 @@
-﻿import {FormGroup,FormControl,AbstractControl} from '@angular/forms'
+﻿import { FormGroup, FormControl, AbstractControl } from '@angular/forms'
 
 
 export class MFormComponent {
 
-    constructor(public group:FormGroup,public name:string,private isPrimitiveType:boolean) { }
+    constructor(public parent: MFormModel, public name: string) { }
 
-    isPrimitive(): boolean {
-        return this.isPrimitiveType;
-    }
-
+    setValue(obj: any) { }
 
 }
 
-export interface IMFormModel
-{
+export interface IMFormModel {
     getFormComponent(propertyName: string): MFormComponent;
 
 }
 
+export class TypeMember {
+    constructor(
+        public FieldName: string,
+        public LabelName: string,
+        public DirectiveType: string,
+        public JavascriptType: string
+    ) { }
+}
 
-export class MFormModel<T> {
+export class UIType {
+    static primitiveTypes: string[] = ["number", "int", "bool", "string"];
+    constructor(
+        public TypeName: string,
+        public Members: Array<TypeMember>,
+        public TypeLabel: string
+    ) { }
+}
+
+
+export class MFormModel {
 
     root: FormGroup;
-
-    _formComponentCash: {[id:string] : MFormComponent} = {};
-    constructor(public model: T) {
+    _formComponentCash: { [id: string]: MFormComponent } = {};
+    constructor(public model: any, public type: UIType = null) {
         this.root = new FormGroup({});
     }
     getRoot(): FormGroup { return this.root; }
 
+
     getFormComponent(propertyName: string): MFormComponent {
 
-        var type: string = typeof (this.model[propertyName]).toString().toLowerCase();
-
-
-        switch (type) {
-            case "undefined":
-                throw `Error, propertyName ${propertyName} does not exist`;
-            case "number":
-            case "string":
-            case "boolean":
-                {
-                    if (typeof(this._formComponentCash[propertyName])!=="undefined")
-                    {
-                        return this._formComponentCash[propertyName];
-                    }
-
-
-                    
-
-                    var child = new FormControl(this.model[propertyName]);
-                   // this.root.addControl(propertyName, child);
-                    
-                    var enclosureGroup= new FormGroup({});
-                    enclosureGroup.addControl(propertyName,child);
-                    this._formComponentCash[propertyName] =  new MFormComponent(enclosureGroup,propertyName, true);
-                    return this._formComponentCash[propertyName];
-                }
-            case "object":
-                {
-                    if (typeof(this._formComponentCash[propertyName])!=="undefined")
-                    {
-                        return this._formComponentCash[propertyName];
-                    }
-                    let child = new FormGroup(this.model[propertyName]);
-                    this.root.addControl(propertyName, child);
-                    this._formComponentCash[propertyName] = new MFormComponent(child, propertyName, false);
-                    return this._formComponentCash[propertyName];
-                }
-            default:
-                throw `Not valid type ${type} for property ${propertyName}`;
+        if (typeof (this._formComponentCash[propertyName]) !== "undefined") {
+            return this._formComponentCash[propertyName];
         }
+
+
+
+
+        //var child = new FormControl(this.model[propertyName]);
+        // this.root.addControl(propertyName, child);
+
+        //var enclosureGroup= new FormGroup({});
+        this._formComponentCash[propertyName] = new MFormComponent(this, propertyName);
+        return this._formComponentCash[propertyName];
+
     }
-
-    
-
-
 }
+
+
+
+
