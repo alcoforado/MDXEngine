@@ -13,6 +13,8 @@ using Microsoft.Owin.Hosting;
 using Microsoft.Practices.Unity;
 using TestApp.App_Config;
 using TestApp.Services;
+using TestApp.Services.Interfaces;
+
 namespace TestApp
 {
     public class DxApp
@@ -36,7 +38,6 @@ namespace TestApp
             Container.RegisterType<IAppStateProvider,MainWindow>();
 
             //Register Services
-            Container.RegisterType<ISettingsService, SettingsService>();
         }
         
 
@@ -54,7 +55,8 @@ namespace TestApp
         {
             //InitializeContainer
             Container = new UnityContainer();
-            
+            Container.RegisterType<IAppSettings, AppSettings>(new ContainerControlledLifetimeManager());
+
             //Create Main Window
             var menuActionFactory =  new ImplementationFactory<IAppState>(Container, (Type t) =>
             {
@@ -63,7 +65,7 @@ namespace TestApp
                 return result.Distinct().ToList();
             });
 
-            _main = new MainWindow(menuActionFactory);
+            _main = new MainWindow(Container.Resolve<IAppSettings>(),menuActionFactory);
             _control = new DxControl(_main.RenderControl());
 
             

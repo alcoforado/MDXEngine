@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 using MDXEngine;
 using TestApp.Services;
+using TestApp.Services.Interfaces;
+
 namespace TestApp
 {
 
@@ -25,9 +27,9 @@ namespace TestApp
 
         internal DxApp _dxApp;
         private DxControl _dx;
-       
+        private IAppSettings _settings;
         
-        public MainWindow(IFactory<IAppState> menuActionFactory)
+        public MainWindow(IAppSettings appSettings, IFactory<IAppState> menuActionFactory)
         {
             InitializeComponent();
            // _boxWriter = new TextBoxStreamWriter(textBox1);
@@ -38,16 +40,16 @@ namespace TestApp
             //_browserRight = new MWebBrowser();
             //splitContainer1.Panel2.Controls.Add(_browserRight);
             //splitContainer1.Panel2.Dock = DockStyle.Fill;
+            _settings = appSettings;
                 
             this.KeyPreview=true;
             _currentApp = null;
             this.StartPosition = FormStartPosition.Manual;
-            this.Location = Properties.Settings.Default.FormPosition;
-            this.Size =     Properties.Settings.Default.FormSize;
+            this.Location = _settings.FormPosition;
+            this.Size =     _settings.FormSize;
 
             _menuActionFactory = menuActionFactory;
             this.SetMenuActions();
-
         }
         public T GetAppState<T> () where T:class,IAppState
         {
@@ -176,10 +178,8 @@ namespace TestApp
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-             Properties.Settings.Default.FormPosition = this.Location;
-             Properties.Settings.Default.FormSize = this.Size;
-            Properties.Settings.Default.Save();
-            SettingsService.PersistSettings();
+            _settings.FormPosition = this.Location;
+            _settings.FormSize     = this.Size;
         }
         /*
         private void loadTextureToolStripMenuItem_Click(object sender, EventArgs e)
