@@ -48,14 +48,6 @@ export class MFormModel {
         if (typeof (this._formComponentCash[propertyName]) !== "undefined") {
             return this._formComponentCash[propertyName];
         }
-
-
-
-
-        //var child = new FormControl(this.model[propertyName]);
-        // this.root.addControl(propertyName, child);
-
-        //var enclosureGroup= new FormGroup({});
         this._formComponentCash[propertyName] = new MFormComponent(this, propertyName);
         return this._formComponentCash[propertyName];
 

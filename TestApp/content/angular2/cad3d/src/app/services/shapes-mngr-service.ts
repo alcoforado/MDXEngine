@@ -1,19 +1,12 @@
 ﻿import { Http, Response } from '@angular/http'
 import 'rxjs/Rx'
-import {Observable} from 'rxjs/Observable'
-import {InMemMockService} from './mocks'
+import { Observable } from 'rxjs/Observable'
+import { InMemMockService } from './mocks'
 import { Injectable } from '@angular/core';
+import { TypeMember, UIType } from '../modules/mform/mformmodel'
 
 
 
-
-export class UIType {
-    constructor(
-        public TypeName: string,
-        public Members: Array<ShapeMember>,
-        public TypeLabel: string
-    ) { }
-}
 
 export class ShapeUI {
     constructor(
@@ -24,20 +17,14 @@ export class ShapeUI {
     }
 }
 
-export class ShapeMember {
-    constructor(
-        public FieldName: string,
-        public LabelName: string,
-        public DirectiveType: string
-    ) { }
-}
-export type UITypeHash ={[typeName: string]: UIType};
+
+export type UITypeHash = { [typeName: string]: UIType };
 
 @Injectable()
 export class ShapesMngrService {
     private TypesHash: Observable<{ [typeName: string]: UIType }> = null;
     private Types: Observable<Array<UIType>> = null;
-    private RenderTypes:Observable<Array<UIType>> = null;
+    private RenderTypes: Observable<Array<UIType>> = null;
 
     private extractData<T>(res: Response): T {
         let body = res.json();
@@ -50,13 +37,11 @@ export class ShapesMngrService {
 
     }
 
-    getRenderTypes():Observable<Array<UIType>>
-    {
-        if (this.RenderTypes == null)
-        {
+    getRenderTypes(): Observable<Array<UIType>> {
+        if (this.RenderTypes == null) {
             this.RenderTypes = this.$http.get("/api/shapemngr/rendertypes")
-            .map(this.extractData)
-           
+                .map(this.extractData)
+
         }
         return this.RenderTypes;
     }
@@ -64,12 +49,12 @@ export class ShapesMngrService {
         if (this.Types == null) {
             this.Types = this.$http.get("/api/shapemngr/shapetypes").map(this.extractData)
             this.TypesHash = this.Types.map((c: Array<UIType>) => {
-                    let typeHash: { [typeName: string]: UIType } = {};
-                    c.forEach((elem) => {
-                        typeHash[elem.TypeName] = elem;
-                    })
-                    return typeHash;
-                });
+                let typeHash: { [typeName: string]: UIType } = {};
+                c.forEach((elem) => {
+                    typeHash[elem.TypeName] = elem;
+                })
+                return typeHash;
+            });
         }
         return this.TypesHash;
     }
@@ -89,44 +74,42 @@ export class ShapesMngrService {
 
     getShapes(): Observable<Array<ShapeUI>> {
 
-        return this.getTypes().mergeMap((types:{ [typeName: string]: UIType }) => {
+        return this.getTypes().mergeMap((types: { [typeName: string]: UIType }) => {
             return this.$http.get('api/shapemngr/shapes')
                 .map(this.extractData)
-                    .map((shapes: Array<ShapeUI>) => {
-                        shapes.forEach((elem) => {
-                            elem.Type = types[elem.TypeName];
-                        });
-                        return shapes;
+                .map((shapes: Array<ShapeUI>) => {
+                    shapes.forEach((elem) => {
+                        elem.Type = types[elem.TypeName];
                     });
+                    return shapes;
+                });
         });
 
     }
-    createShape(UIType:string):Observable<ShapeUI>
-    {
-        return this.$http.put(`/api/shapemngr/createshape?ShapeTypeId=${UIType}`,"")
-        .map(this.extractData)
-        .mergeMap((sh:ShapeUI)=>
-        { 
-            return this.getTypes()
-            .map(x => {
-                sh.Type=x[sh.TypeName];
-                return sh;
-            })
-        });
+    createShape(UIType: string): Observable<ShapeUI> {
+        return this.$http.put(`/api/shapemngr/createshape?ShapeTypeId=${UIType}`, "")
+            .map(this.extractData)
+            .mergeMap((sh: ShapeUI) => {
+                return this.getTypes()
+                    .map(x => {
+                        sh.Type = x[sh.TypeName];
+                        return sh;
+                    })
+            });
     }
 }
 
 
 InMemMockService.AddFixture('api_shapesmngr_types', [
-    new UIType("OrthoMesh", [new ShapeMember("ElemsX", "Elems X", "int"), new ShapeMember("ElemsY", "Elems Y", "int")],"Ortho Mesh"),
-    new UIType("OrthoMesh3D", [new ShapeMember("ElemsX", "Elems X", "int"), new ShapeMember("ElemsY", "Elems Y", "int"), new ShapeMember("ElemsZ", "Elems Z", "int")],"Ortho Mesh")
+    new UIType("OrthoMesh", [new TypeMember("ElemsX", "Elems X", "int"), new TypeMember("ElemsY", "Elems Y", "int")], "Ortho Mesh"),
+    new UIType("OrthoMesh3D", [new TypeMember("ElemsX", "Elems X", "int"), new TypeMember("ElemsY", "Elems Y", "int"), new TypeMember("ElemsZ", "Elems Z", "int")], "Ortho Mesh")
 ]);
 
 InMemMockService.AddFixture('api_shapesmngr_shapes', [
     new ShapeUI("OrthoMesh", { ElemsX: 1, ElemsY: 2 }, null),
     new ShapeUI("OrthoMesh", { ElemsX: 3, ElemsY: 4 }, null),
     new ShapeUI("OrthoMesh", { ElemsX: 1, ElemsY: 5 }, null),
-    new ShapeUI("OrthoMesh3D", { ElemsX: 1, ElemsY: 6,ElemsZ:5 }, null)
+    new ShapeUI("OrthoMesh3D", { ElemsX: 1, ElemsY: 6, ElemsZ: 5 }, null)
 ]);
 
 
