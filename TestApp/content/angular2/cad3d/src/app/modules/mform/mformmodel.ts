@@ -5,7 +5,19 @@ export class MFormComponent {
 
     constructor(public parent: MFormModel, public name: string) { }
 
-    setValue(obj: any) { }
+    setValue(obj: any) {
+        if (obj == null)
+            throw "MFormComponent needs a non null object"
+        var type = typeof (obj);
+        switch (type) {
+            case "string":
+            case "number":
+            case "boolean":
+
+
+        }
+
+    }
 
 }
 
