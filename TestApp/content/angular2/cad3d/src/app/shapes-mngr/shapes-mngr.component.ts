@@ -1,24 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ShapeUI, ShapesMngrService } from '../services/shapes-mngr-service';
-import { MFormModel, UIType } from '../modules/mform/mformmodel';
+import { ShapeUI, UIType, ShapesMngrService } from '../services/shapes-mngr-service';
+import { MFormModel } from '../modules/mform/mformmodel';
 import { ListViewItem } from '../list-view/list-view.component';
 import { Observable } from 'rxjs/Observable'
 
 
+class ShapeRender {
+    constructor(public shapeForm: ShapeUI) { }
 
-export class RenderControl {
-    data: any;
-    renderType: UIType;
-}
-export class ShapeControl {
-    public selectedRender: any;
 
-    constructor(
-        public shape: ShapeUI,
-        public mform: MFormModel,
-        public renders: Array<RenderControl>)
-    { }
+
+
 }
+
 
 @Component({
     moduleId: module.id.toString(),
@@ -29,41 +23,13 @@ export class ShapesMngrComponent implements OnInit {
 
     ShapeTypes: Array<UIType> = [];
     RenderTypes: Observable<Array<UIType>> = null;
+
     shapes: Array<ShapeUI> = [];
-    shapeControls: Array<ShapeControl> = [];
-    shapeForms: Array<MFormModel>;
+
+    shapeForms: Array<MFormModel<any>>;
     showAddShapeDialog: boolean = false;
     shapesListView: Array<ListViewItem> = [];
     ngOnInit() {
-        var all = Observable.zip(
-            this.shapesMngrService.getTypesAsArray(),
-            this.shapesMngrService.getShapes(),
-            this.shapesMngrService.getRenderTypes()
-        );
-        var that = this;
-        all.subscribe((elems) => {
-            var [types, shapes, renderTypes] = elems;
-            this.shapeControls = [];
-            var rendersData = renderTypes.map(tp => {
-                var obj = {};
-                tp.Members.forEach((member) => {
-                    obj[member.FieldName] = null;
-                });
-                return obj;
-            });
-
-            shapes.map((shape, i) => {
-                return new ShapeControl(
-                    shape,
-                    new MFormModel(sh.ShapeData),
-
-
-
-                );
-            });
-
-        });
-        this.shapesMngrService.getTypesAsArray().combineAll()
         this.shapesMngrService.getTypesAsArray().subscribe(x => {
             this.ShapeTypes = x;
             this.shapesListView = this.ShapeTypes.map(
