@@ -1,18 +1,43 @@
 ﻿import { FormGroup, FormControl, AbstractControl } from '@angular/forms'
 
-
+//7274653768
 export class MFormComponent {
-
+    formControl: FormControl = null;
+    formGroup: FormGroup = null;
     constructor(public parent: MFormModel, public name: string) { }
 
     setValue(obj: any) {
         if (obj == null)
             throw "MFormComponent needs a non null object"
+
         var type = typeof (obj);
         switch (type) {
             case "string":
             case "number":
             case "boolean":
+                if (this.formGroup != null) {
+                    throw "The type of value passed to the method setValue does not match the one of preveous call"
+                }
+                if (this.formControl == null) {
+                    this.formControl = new FormControl();
+                    this.formControl.setValue(obj);
+                    this.parent.getRoot().addControl(this.name, this.formControl);
+                }
+                else { //formControl already initialized, just set the value
+                    this.formControl.setValue(obj);
+                }
+                break;
+            case "object":
+                if (this.formControl != null) {
+                    throw "The type of value passed to the method setValue does not match the one of a preveous call"
+                }
+                if (this.formGroup == null) {
+                    this.formGroup = new FormGroup(obj);
+                    this.parent.getRoot().addControl(this.name, this.formControl);
+                }
+                else { //formControl already initialized, just set the value
+                    this.formControl.setValue(obj);
+                }
 
 
         }
@@ -56,7 +81,6 @@ export class MFormModel {
 
 
     getFormComponent(propertyName: string): MFormComponent {
-
         if (typeof (this._formComponentCash[propertyName]) !== "undefined") {
             return this._formComponentCash[propertyName];
         }
@@ -70,7 +94,6 @@ export class MFormModel {
         //var enclosureGroup= new FormGroup({});
         this._formComponentCash[propertyName] = new MFormComponent(this, propertyName);
         return this._formComponentCash[propertyName];
-
     }
 }
 
