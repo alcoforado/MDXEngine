@@ -12,16 +12,19 @@ import { AppComponent } from './app.component';
 import { MFormModule } from './modules/mform/mform.module';
 import { ListViewComponent } from './list-view/list-view.component'
 import { ProcessingAnimationComponent } from './processing-animation/processing-animation.component'
-
-
-
+import { RouterModule, Routes } from '@angular/router';
+const appRoutes: Routes = [
+    { path: 'shapes', component: ShapesMngrComponent },
+    { path: 'src/index_system.html', component: ShapesMngrComponent },
+    { path: 'src/index_system.html', redirectTo: 'src/index_system.html#shapes', pathMatch: 'full' }
+]
 @NgModule({
     imports: [
         HttpModule,
         BrowserModule,
         ReactiveFormsModule,
-        MFormModule
-
+        MFormModule,
+        RouterModule.forRoot(appRoutes)
     ],
     declarations: [
         AppComponent,
