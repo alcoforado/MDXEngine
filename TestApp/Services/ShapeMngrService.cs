@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Http;
 using MDXEngine;
 using MUtils.Reflection;
 using TestApp.Mappers;
@@ -22,13 +23,15 @@ namespace TestApp.Services
         private int _idCounter = 0;
         private IDxViewControl _dx;
         private Dictionary<string, ShapeUIBase> _shapeCollection;
-
+        private Dictionary<string, RenderBase> _renderCollection ;
         public ShapeMngrService(IDxViewControl dx)
         {
             _dx = dx;
             _shapeCollection = new Dictionary<string, ShapeUIBase>();
+            _renderCollection = new Dictionary<string, RenderBase>();
             _shapeTypes = new Dictionary<string, Type>();
             _renderTypes = new Dictionary<string, Type>();
+
             var shapesT = typeof(ShapeUIBase).GetImplementationsInCurrentAssembly();
             foreach (var type in shapesT)
             {
@@ -40,12 +43,20 @@ namespace TestApp.Services
             {
                 _renderTypes.Add(((RenderBase)Activator.CreateInstance(type)).GetPainterName(), type);
             }
+            
+
         }
 
         public RenderBase CreateRender(string renderType)
         {
-            return (RenderBase)Activator.CreateInstance(_renderTypes[renderType]);
+            var result = (RenderBase)Activator.CreateInstance(_renderTypes[renderType]);
+            _renderCollection.Add(result.Id,result);
+            return result;
         }
+
+
+
+
 
         public Dictionary<string, Type> GetShapeTypes()
         {
@@ -65,6 +76,34 @@ namespace TestApp.Services
         public Dictionary<string, ShapeUIBase> GetShapes()
         {
             return _shapeCollection;
+        }
+
+        public List<RenderBase> GetRenders()
+        {
+            return _renderCollection.Select(x => x.Value).ToList();
+        }
+
+
+
+        public MayNotExist<RenderBase> GetRender(string shapeId)
+        {
+            if (_renderCollection.ContainsKey(shapeId))
+            {
+                return new MayNotExist<RenderBase>(_renderCollection[shapeId]);
+            }
+            else
+                return null;
+        }
+
+        public void RenderChanged(RenderBase render)
+        {
+            foreach (var sh in _shapeCollection.Values)
+            {
+                if (sh.Render == render)
+                {
+                    sh.SetRender(_dx,render);
+                }
+            }
         }
 
         public bool HasShape(string shapeId)
@@ -104,8 +143,8 @@ namespace TestApp.Services
             var render = new SolidColorRender() { Color = SharpDX.Color.Aquamarine };
 
             shape.SetRender(_dx,render);
-
-            shape.Id = "Shape" + Interlocked.Increment(ref _idCounter).ToString();
+            shape.Id= 
+            shape.Name = "Shape" + Interlocked.Increment(ref _idCounter).ToString();
             _shapeCollection.Add(shape.Id, shape);
             return shape;
         }

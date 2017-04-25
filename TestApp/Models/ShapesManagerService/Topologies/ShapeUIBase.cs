@@ -16,11 +16,18 @@ namespace TestApp.Models.ShapesManagerService.Topologies
         internal RenderBase Render { get { return _render; } set { _render = value; } }
 
         public string Id { get; set; }
+        public string Name { get; set; }
         public void SetRender(IDxViewControl dx, RenderBase render)
         {
             _render?.DetachFromShader(dx,_shape);
             _render = render;
             _render.AttachToShader(dx, this.CreateTopology());
+        }
+
+        protected ShapeUIBase()
+        {
+            Id = Guid.NewGuid().ToString();
+            Name = "";
         }
 
         public abstract string GetShapeName();

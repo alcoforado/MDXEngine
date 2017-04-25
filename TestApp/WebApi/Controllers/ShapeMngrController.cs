@@ -61,21 +61,42 @@ namespace TestApp.WebApi.Controllers
             }).ToList();
         }
 
+        [HttpGet]
+        public List<RenderBase> Renders()
+        {
+            return _mngrService.GetRenders();
+        } 
+
+
+
+        [HttpGet]
         public void DeleteShape(string shapeId)
         {
             _mngrService.DeleteShape(shapeId);
         }
 
-
+        [HttpPost]
         public void UpdateShape(UpdateShapeViewModel model)
         {
-            
             ShapeUIBase shape = _mngrService.GetShape(model.ShapeId);
             JsonConvert.PopulateObject(model.ShapeJsonData, shape);
-            
-            var render = _mngrService.CreateRender(model.ShapePainterType);
-            JsonConvert.PopulateObject(model.ShapePainterJsonData,render);
-            _mngrService.SetShapeRender(model.ShapeId, render);
+            if (String.IsNullOrWhiteSpace(model.RenderId))
+            {
+                _mngrService.SetShapeRender(model.ShapeId, null);
+            }
+            else
+            {
+                var render = _mngrService.GetRender(model.RenderId);
+                _mngrService.SetShapeRender(model.ShapeId, render.Value);
+            }
+        }
+
+        [HttpPost]
+        public void UpdateRender(UpdateRenderViewModel model)
+        {
+            RenderBase render = _mngrService.GetRender(model.RenderId).Value;
+            JsonConvert.PopulateObject(model.RenderJsonData, render);
+            _mngrService.RenderChanged(render);
         }
 
         [HttpPut]
@@ -87,12 +108,22 @@ namespace TestApp.WebApi.Controllers
             {
                 TypeName = shapeTypeId,
                 ShapeData = shape,
-                RenderData = shape.Render,
-                RenderType = shape.Render.GetType().Name
+                RenderId = null
             };
         }
 
+        [HttpPut]
+        public RenderViewModel CreateRender(string renderTypeId)
+        {
+            var render = _mngrService.CreateRender(renderTypeId);
 
+            return new RenderViewModel()
+            {
+                TypeName = renderTypeId,
+                RenderData = render
+                
+            };
+        }
 
 
     }

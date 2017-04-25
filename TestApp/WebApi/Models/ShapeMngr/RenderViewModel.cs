@@ -8,10 +8,9 @@ using TestApp.Models.ShapesManagerService.Topologies;
 
 namespace TestApp.WebApi.Models.ShapeMngr
 {
-    public class ShapeViewModel
+    public class RenderViewModel
     {
         public string TypeName { get; set; }
-        public ShapeUIBase ShapeData { get; set; }
-        public string RenderId { get; set; }
+        public RenderBase RenderData { get; set; }
     }
 }

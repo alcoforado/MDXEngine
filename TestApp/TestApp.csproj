@@ -231,6 +231,8 @@
     <Compile Include="Utilities.cs" />
     <Compile Include="Utilities\JSonMethodCaller.cs" />
     <Compile Include="WebApi\Controllers\ShapeMngrController.cs" />
+    <Compile Include="WebApi\Models\ShapeMngr\UpdateRenderViewModel.cs" />
+    <Compile Include="WebApi\Models\ShapeMngr\RenderViewModel.cs" />
     <Compile Include="WebApi\Models\ShapeMngr\ShapeViewModel.cs" />
     <Compile Include="WebApi\Models\ShapeMngr\UpdateShapeViewModel.cs" />
     <EmbeddedResource Include="MainWindow.resx">

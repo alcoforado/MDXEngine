@@ -47,8 +47,7 @@ namespace MDXEngine.Shapes
             _topology.Write(vV1, vI);
            _renderer.Draw(context);
         }
-
-         
+       
 
     }
 

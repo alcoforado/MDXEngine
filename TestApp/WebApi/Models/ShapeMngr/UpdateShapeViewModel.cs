@@ -11,7 +11,6 @@ namespace TestApp.WebApi.Models.ShapeMngr
         public string ShapeId { get; set; }
         public string ShapeType { get; set; }
         public string ShapeJsonData { get; set; }
-        public string ShapePainterType { get; set; }
-        public string ShapePainterJsonData { get; set; }
+        public string RenderId { get; set; }
     }
 }
